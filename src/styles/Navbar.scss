@@ -1,0 +1,36 @@
+.Navbar {
+  position: fixed;
+  width: 100%;
+  align-items: center;
+  z-index: 10;
+  padding: 20px 100px;
+  box-sizing: border-box;
+  a {
+    color: $light-font;
+    margin: 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  display: flex;
+  justify-content: space-between;
+  .brand-name {
+    font-size: 1.4em;
+    font-family: $font-family-tertiary;
+    img {
+      width: 10vw;
+      min-width: 120px;
+    }
+    span {
+      font-family: $font-family-secondary;
+      font-weight: 100;
+    }
+  }
+  .button-link {
+    border: 2px solid $light-font;
+    padding: 3px 6px;
+    &:hover {
+      background-color: $light-font;
+      color: $color-primary;
+    }
+  }
+}

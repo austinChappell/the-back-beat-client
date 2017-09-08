@@ -1,0 +1,19 @@
+$color-primary: #070649;
+$color-secondary: #B8B7D5;
+$dark-font: #000000;
+$light-font: #FFFFFF;
+$tinted-overlay: rgba(7, 6, 73, 0.75);
+$font-family-primary: 'Roboto', sans-serif;
+$font-family-secondary: 'Archivo Black', sans-serif;
+$font-family-tertiary: 'Amiko', sans-serif;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: $color-primary;
+}
+
+@import './Home';
+@import './Navbar';
+@import './SignUpForm';

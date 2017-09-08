@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #070649; }
+
+.Home {
+  background-image: url("./assets/images/desi-mendoza-451.jpg");
+  background-size: cover;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  color: #FFFFFF; }
+  .Home .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(7, 6, 73, 0.75); }
+  .Home .feature-text {
+    text-align: center;
+    margin-top: 15vh; }
+    .Home .feature-text h1 {
+      font-size: 4.5em; }
+    .Home .feature-text h2 {
+      font-size: 2.5em;
+      font-weight: lighter; }
+
+.Navbar {
+  position: fixed;
+  width: 100%;
+  align-items: center;
+  z-index: 10;
+  padding: 20px 100px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between; }
+  .Navbar a {
+    color: #FFFFFF;
+    margin: 10px;
+    text-decoration: none;
+    cursor: pointer; }
+  .Navbar .brand-name {
+    font-size: 1.4em;
+    font-family: "Amiko", sans-serif; }
+    .Navbar .brand-name img {
+      width: 10vw;
+      min-width: 120px; }
+    .Navbar .brand-name span {
+      font-family: "Archivo Black", sans-serif;
+      font-weight: 100; }
+  .Navbar .button-link {
+    border: 2px solid #FFFFFF;
+    padding: 3px 6px; }
+    .Navbar .button-link:hover {
+      background-color: #FFFFFF;
+      color: #070649; }
+
+.SignUpForm {
+  width: 25%;
+  margin-left: 70%;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  background-color: #B8B7D5;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box; }
+  .SignUpForm input, .SignUpForm select {
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    outline: none; }
+  .SignUpForm button {
+    border: 3px solid #070649;
+    background-color: transparent;
+    color: #070649;
+    font-size: 1.3em;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 10px; }
+    .SignUpForm button:hover {
+      background-color: #070649;
+      color: #FFFFFF; }
+  .SignUpForm .form-footer {
+    display: flex; }
+    .SignUpForm .form-footer button {
+      align-self: center; }
+    .SignUpForm .form-footer p {
+      flex-grow: 1;
+      text-align: center; }
+      .SignUpForm .form-footer p span {
+        display: block; }
+      .SignUpForm .form-footer p a {
+        color: #070649; }
