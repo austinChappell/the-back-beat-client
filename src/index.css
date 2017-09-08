@@ -2,32 +2,43 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #070649; }
+  background-color: #FFFFFF; }
 
-.Home {
-  background-image: url("./assets/images/desi-mendoza-451.jpg");
+.Features {
+  color: #070649;
+  text-align: center; }
+  .Features .feature-list {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+    width: 80%;
+    margin: 0 auto; }
+    .Features .feature-list .feature {
+      flex-basis: 33%;
+      padding: 0 60px;
+      box-sizing: border-box; }
+      .Features .feature-list .feature i {
+        font-size: 6.0em; }
+      .Features .feature-list .feature p {
+        text-align: left; }
+
+.Home .landing-page-background {
+  background-image: url("./assets/images/landing-page-background.jpg");
   background-size: cover;
   min-height: 100vh;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  color: #FFFFFF; }
-  .Home .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(7, 6, 73, 0.75); }
-  .Home .feature-text {
+  color: #FFFFFF;
+  padding-bottom: 20px; }
+  .Home .landing-page-background .feature-text {
     text-align: center;
-    margin-top: 15vh; }
-    .Home .feature-text h1 {
+    padding-top: 15vh; }
+    .Home .landing-page-background .feature-text h1 {
       font-size: 4.5em; }
-    .Home .feature-text h2 {
+    .Home .landing-page-background .feature-text h2 {
       font-size: 2.5em;
       font-weight: lighter; }
 
 .Navbar {
-  position: fixed;
+  position: absolute;
   width: 100%;
   align-items: center;
   z-index: 10;
@@ -59,21 +70,30 @@ body {
 .SignUpForm {
   width: 25%;
   margin-left: 70%;
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin-top: 50px;
   background-color: #B8B7D5;
   padding: 20px;
   border-radius: 10px;
   box-sizing: border-box; }
   .SignUpForm input, .SignUpForm select {
     width: 100%;
-    margin-bottom: 20px;
-    font-size: 1.3em;
+    margin-bottom: 10px;
+    font-size: 1.0em;
     padding: 10px;
     border-radius: 5px;
     border: none;
     box-sizing: border-box;
     outline: none; }
+  .SignUpForm select {
+    height: 38px;
+    overflow: hidden;
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    background-size: contain;
+    background-color: #FFFFFF;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* remove default arrow */ }
   .SignUpForm button {
     border: 3px solid #070649;
     background-color: transparent;

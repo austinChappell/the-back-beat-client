@@ -1,21 +1,30 @@
 .SignUpForm {
   width: 25%;
   margin-left: 70%;
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin-top: 50px;
   background-color: $color-secondary;
   padding: 20px;
   border-radius: 10px;
   box-sizing: border-box;
   input, select {
     width: 100%;
-    margin-bottom: 20px;
-    font-size: 1.3em;
+    margin-bottom: 10px;
+    font-size: 1.0em;
     padding: 10px;
     border-radius: 5px;
     border: none;
     box-sizing: border-box;
     outline: none;
+  }
+  select {
+    height: 38px;
+    overflow: hidden;
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    background-size: contain;
+    background-color: $light-font;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;       /* remove default arrow */
   }
   button {
     border: 3px solid $color-primary;
