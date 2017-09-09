@@ -9,7 +9,7 @@ class Features extends Component {
           <div className="feature">
             <i className="fa fa-search" aria-hidden="true"></i>
             <h2>Find local musicians</h2>
-            <p>Search by genre, instrument, or skill level.</p>
+            <p>Search by genre, instrument, or skill level. Form a band on The Back Beat today!</p>
           </div>
           <div className="feature">
             <i className="fa fa-music" aria-hidden="true"></i>

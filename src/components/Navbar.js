@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Navbar extends Component {
   render() {
@@ -11,11 +12,27 @@ class Navbar extends Component {
         <div className="right">
           <NavLink to="/features">Features</NavLink>
           <NavLink to="/contact">Contact</NavLink>
-          <NavLink className="button-link" to="/login">Login</NavLink>
+          <span className="button-link" onClick={this.props.toggleUserAuthForm}>Login</span>
         </div>
       </div>
     )
   }
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    showUserAuthForm: state.showUserAuthForm,
+    userAuthType: state.userAuthType
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleUserAuthForm: () => {
+      const action = { type: 'TOGGLE_USER_AUTH_FORM', userAuthType: 'Login' };
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

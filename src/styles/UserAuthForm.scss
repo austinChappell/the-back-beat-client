@@ -1,0 +1,80 @@
+.hide {
+  display: none;
+}
+
+.UserAuthForm {
+  position: fixed;
+  width: 100%;
+  background: rgba(0,0,0,0.75);
+  height: 100%;
+  z-index: 100;
+  #exit-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    cursor: pointer;
+    &:hover {
+      color: lightgray;
+    }
+  }
+  .form {
+    width: 50%;
+    margin: 150px auto 0;
+    background-color: $color-secondary;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    input, select {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1.0em;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      box-sizing: border-box;
+      outline: none;
+    }
+    select {
+      height: 38px;
+      overflow: hidden;
+      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+      background-size: contain;
+      background-color: $light-font;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;       /* remove default arrow */
+    }
+    button {
+      border: 3px solid $color-primary;
+      background-color: transparent;
+      color: $color-primary;
+      font-size: 1.3em;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 10px;
+      &:hover {
+        background-color: $color-primary;
+        color: $light-font;
+      }
+    }
+    .form-footer {
+      display: flex;
+      button {
+        align-self: center;
+      }
+      p {
+        flex-grow: 1;
+        text-align: center;
+        span {
+          display: block;
+        }
+        .span-link {
+          color: $color-primary;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

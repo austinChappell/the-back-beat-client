@@ -4,9 +4,29 @@ body {
   font-family: sans-serif;
   background-color: #FFFFFF; }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", sans-serif; }
+
+p {
+  font-family: "Amiko", sans-serif; }
+
+.CTAButton button {
+  background-color: #9A6197;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  font-size: 18px;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  cursor: pointer; }
+  .CTAButton button:hover {
+    background-color: #894586; }
+
 .Features {
   color: #070649;
   text-align: center; }
+  .Features h1 {
+    font-size: 3.0em; }
   .Features .feature-list {
     display: flex;
     justify-content: center;
@@ -20,22 +40,33 @@ body {
       .Features .feature-list .feature i {
         font-size: 6.0em; }
       .Features .feature-list .feature p {
-        text-align: left; }
+        text-align: left;
+        line-height: 1.5em;
+        font-size: 1.1em; }
 
 .Home .landing-page-background {
+  text-align: center;
   background-image: url("./assets/images/landing-page-background.jpg");
   background-size: cover;
   min-height: 100vh;
-  color: #FFFFFF;
-  padding-bottom: 20px; }
+  color: #FFFFFF; }
   .Home .landing-page-background .feature-text {
     text-align: center;
-    padding-top: 15vh; }
+    padding-top: 20vh; }
     .Home .landing-page-background .feature-text h1 {
-      font-size: 4.5em; }
+      font-size: 4.5em;
+      margin-bottom: 0; }
     .Home .landing-page-background .feature-text h2 {
-      font-size: 2.5em;
+      margin-top: 10px;
+      margin-bottom: 40px;
+      font-size: 2.0em;
       font-weight: lighter; }
+  .Home .landing-page-background .arrow-wrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    font-size: 50px;
+    text-align: center; }
 
 .Navbar {
   position: absolute;
@@ -62,57 +93,78 @@ body {
       font-weight: 100; }
   .Navbar .button-link {
     border: 2px solid #FFFFFF;
-    padding: 3px 6px; }
+    margin: 10px;
+    padding: 3px 6px;
+    color: #FFFFFF;
+    cursor: pointer; }
     .Navbar .button-link:hover {
       background-color: #FFFFFF;
       color: #070649; }
 
-.SignUpForm {
-  width: 25%;
-  margin-left: 70%;
-  margin-top: 50px;
-  background-color: #B8B7D5;
-  padding: 20px;
-  border-radius: 10px;
-  box-sizing: border-box; }
-  .SignUpForm input, .SignUpForm select {
-    width: 100%;
-    margin-bottom: 10px;
-    font-size: 1.0em;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    box-sizing: border-box;
-    outline: none; }
-  .SignUpForm select {
-    height: 38px;
-    overflow: hidden;
-    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
-    background-size: contain;
-    background-color: #FFFFFF;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    /* remove default arrow */ }
-  .SignUpForm button {
-    border: 3px solid #070649;
-    background-color: transparent;
-    color: #070649;
-    font-size: 1.3em;
-    cursor: pointer;
-    border-radius: 2px;
-    padding: 10px; }
-    .SignUpForm button:hover {
-      background-color: #070649;
-      color: #FFFFFF; }
-  .SignUpForm .form-footer {
-    display: flex; }
-    .SignUpForm .form-footer button {
-      align-self: center; }
-    .SignUpForm .form-footer p {
-      flex-grow: 1;
-      text-align: center; }
-      .SignUpForm .form-footer p span {
-        display: block; }
-      .SignUpForm .form-footer p a {
-        color: #070649; }
+.hide {
+  display: none; }
+
+.UserAuthForm {
+  position: fixed;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  height: 100%;
+  z-index: 100; }
+  .UserAuthForm #exit-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    cursor: pointer; }
+    .UserAuthForm #exit-button:hover {
+      color: lightgray; }
+  .UserAuthForm .form {
+    width: 50%;
+    margin: 150px auto 0;
+    background-color: #B8B7D5;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box; }
+    .UserAuthForm .form input, .UserAuthForm .form select {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1.0em;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      box-sizing: border-box;
+      outline: none; }
+    .UserAuthForm .form select {
+      height: 38px;
+      overflow: hidden;
+      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+      background-size: contain;
+      background-color: #FFFFFF;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      /* remove default arrow */ }
+    .UserAuthForm .form button {
+      border: 3px solid #070649;
+      background-color: transparent;
+      color: #070649;
+      font-size: 1.3em;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 10px; }
+      .UserAuthForm .form button:hover {
+        background-color: #070649;
+        color: #FFFFFF; }
+    .UserAuthForm .form .form-footer {
+      display: flex; }
+      .UserAuthForm .form .form-footer button {
+        align-self: center; }
+      .UserAuthForm .form .form-footer p {
+        flex-grow: 1;
+        text-align: center; }
+        .UserAuthForm .form .form-footer p span {
+          display: block; }
+        .UserAuthForm .form .form-footer p .span-link {
+          color: #070649;
+          text-decoration: underline;
+          cursor: pointer; }

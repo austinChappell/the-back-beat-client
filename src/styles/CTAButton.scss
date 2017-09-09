@@ -1,0 +1,15 @@
+.CTAButton {
+  button {
+    background-color: $color-tertiary;
+    color: $light-font;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    font-size: 18px;
+    border: 1px solid $light-font;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-tertiary-hover;
+    }
+  }
+}
