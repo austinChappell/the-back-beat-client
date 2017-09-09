@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Contact from './Contact';
 import CTAButton from './CTAButton';
 import Features from './Features';
 import UserAuthForm from './UserAuthForm';
@@ -20,6 +21,7 @@ class Home extends Component {
           </div>
         </div>
         <Features />
+        <Contact />
       </div>
     )
   }
