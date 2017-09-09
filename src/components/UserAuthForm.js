@@ -17,12 +17,12 @@ class UserAuthForm extends Component {
       </p>
 
     let form = this.props.userAuthType === 'Login' ?
-      <div>
+      <div className="form-inputs">
         <input type="text" name="username" placeholder="Username" />
         <input type="password" name="password" placeholder="Password" />
       </div>
       :
-      <div>
+      <div className="form-inputs">
         <input type="text" name="first_name" placeholder="First Name" />
         <input type="text" name="last_name" placeholder="Last Name" />
         <input type="email" name="email" placeholder="Email" />

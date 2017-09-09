@@ -5,6 +5,7 @@ import store from '../store/';
 
 import BaseLayout from './BaseLayout';
 import Home from './Home';
+import LoggedIn from './LoggedIn';
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
             <BaseLayout>
               <Switch>
                 <Route path="/" exact component={Home} />
+                <Route path="/backbeat" component={LoggedIn} />
               </Switch>
             </BaseLayout>
           </Router>
