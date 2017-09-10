@@ -11,7 +11,7 @@ class LoggedIn extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:6001/').then((response) => {
+    fetch('http://localhost:6001').then((response) => {
       return response.json();
     }).then((results) => {
       this.setState({ stuff: results });

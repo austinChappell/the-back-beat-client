@@ -16,7 +16,7 @@ class App extends Component {
             <BaseLayout>
               <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/backbeat" component={LoggedIn} />
+                <Route path="/backbeatasdf" component={LoggedIn} />
               </Switch>
             </BaseLayout>
           </Router>

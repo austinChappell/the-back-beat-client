@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 
 const initialState = {
+  authorized: false,
   showUserAuthForm: false,
   userAuthType: '',
   userInfo: {
@@ -28,7 +29,15 @@ const reducer = (state = initialState, action) => {
       let newAuthType = state.userAuthType === 'Login' ? 'Sign Up' : 'Login';
       return Object.assign({}, state, { userAuthType: newAuthType });
     case 'USER_AUTH_FORM_SUBMIT':
-      return Object.assign({}, state, { showUserAuthForm: false, userAuthType: '', userInfo: action.userInfo });
+      const userInfo = {
+        city: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        password: '',
+        username: ''
+      }
+      return Object.assign({}, state, { authorized: true, showUserAuthForm: false, userAuthType: '', userInfo });
     default:
       return state;
   }

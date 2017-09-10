@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 class UserAuthForm extends Component {
 
-  submitForm(authType, userInfo) {
-    const submitType = authType === 'Login' ? 'login' : 'signup';
+  submitForm(userInfo) {
+    const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
+    console.log('type is', submitType);
+    console.log('user info is ', userInfo);
     fetch(`http://localhost:6001/${submitType}`, {
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
@@ -17,8 +18,8 @@ class UserAuthForm extends Component {
       return response.json();
     }).then((results) => {
       const data = results;
-      console.log(data);
-      // this.props.submitForm(data);
+      console.log('DATA', data);
+      this.props.submitForm();
     })
   }
 
@@ -101,7 +102,7 @@ class UserAuthForm extends Component {
           {form}
           <div className="form-footer">
             <button onClick={() => {
-              this.submitForm(this.props.userAuthType, this.props.userInfo);
+              this.submitForm(this.props.userInfo);
             }
             }>{this.props.userAuthType}</button>
             {otherOption}
