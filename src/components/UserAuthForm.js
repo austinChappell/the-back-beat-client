@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class UserAuthForm extends Component {
 
-  submitForm(userInfo) {
+  constructor(props) {
+    super(props);
+  }
+
+  submitForm = (userInfo) => {
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     console.log('type is', submitType);
     console.log('user info is ', userInfo);
@@ -19,11 +23,15 @@ class UserAuthForm extends Component {
     }).then((results) => {
       const data = results;
       console.log('DATA', data);
+      console.log('FUNCTION PROPS', this.props.newProps);
       this.props.submitForm();
+      this.props.newProps.history.push('/');
     })
   }
 
   render() {
+
+    console.log('PASSED PROPS', this.props.newProps);
 
     let otherOption = this.props.userAuthType === 'Login' ?
       <p>
@@ -102,7 +110,7 @@ class UserAuthForm extends Component {
           {form}
           <div className="form-footer">
             <button onClick={() => {
-              this.submitForm(this.props.userInfo);
+              this.submitForm(this.props.userInfo, this.props);
             }
             }>{this.props.userAuthType}</button>
             {otherOption}

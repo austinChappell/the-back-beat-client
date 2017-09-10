@@ -19,6 +19,7 @@ class LoggedIn extends Component {
   };
 
   render() {
+    console.log('LOGGED IN PROPS', this.props);
     return (
       <div className="LoggedIn" style={{ 'color': 'black' }}>
         stuff goes here
