@@ -3,6 +3,25 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class UserAuthForm extends Component {
+
+  submitForm(authType, userInfo) {
+    const submitType = authType === 'Login' ? 'login' : 'signup';
+    fetch(`http://localhost:6001/${submitType}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(userInfo)
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      const data = results;
+      console.log(data);
+      // this.props.submitForm(data);
+    })
+  }
+
   render() {
 
     let otherOption = this.props.userAuthType === 'Login' ?
@@ -82,15 +101,7 @@ class UserAuthForm extends Component {
           {form}
           <div className="form-footer">
             <button onClick={() => {
-              const userInfo = {
-                city: this.props.city,
-                email: this.props.email,
-                firstName: this.props.firstName,
-                lastName: this.props.lastname,
-                password: this.props.password,
-                username: this.props.username
-              };
-              this.props.submitForm(this.props.userAuthType, userInfo);
+              this.submitForm(this.props.userAuthType, this.props.userInfo);
             }
             }>{this.props.userAuthType}</button>
             {otherOption}
