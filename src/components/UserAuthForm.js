@@ -18,17 +18,55 @@ class UserAuthForm extends Component {
 
     let form = this.props.userAuthType === 'Login' ?
       <div className="form-inputs">
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'username')}
+          value={this.props.userInfo.username} />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'password')}
+          value={this.props.userInfo.password} />
       </div>
       :
       <div className="form-inputs">
-        <input type="text" name="first_name" placeholder="First Name" />
-        <input type="text" name="last_name" placeholder="Last Name" />
-        <input type="email" name="email" placeholder="Email" />
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
-        <select name="city">
+        <input
+          type="text"
+          name="first_name"
+          placeholder="First Name"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'firstName')}
+          value={this.props.userInfo.firstName} />
+        <input
+          type="text"
+          name="last_name"
+          placeholder="Last Name"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'lastName')}
+          value={this.props.userInfo.lastName} />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'email')}
+          value={this.props.userInfo.email} />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'username')}
+          value={this.props.userInfo.username} />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'password')}
+          value={this.props.userInfo.password} />
+        <select
+          name="city"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'city')}
+          value={this.props.userInfo.city}>
           <option value="">City...</option>
           <option value="AustinTX">Austin, TX</option>
           <option value="DallasTX">Dallas, TX</option>
@@ -43,7 +81,18 @@ class UserAuthForm extends Component {
         <div className="form">
           {form}
           <div className="form-footer">
-            <button onClick={() => this.props.submitForm(this.props.userAuthType)}>{this.props.userAuthType}</button>
+            <button onClick={() => {
+              const userInfo = {
+                city: this.props.city,
+                email: this.props.email,
+                firstName: this.props.firstName,
+                lastName: this.props.lastname,
+                password: this.props.password,
+                username: this.props.username
+              };
+              this.props.submitForm(this.props.userAuthType, userInfo);
+            }
+            }>{this.props.userAuthType}</button>
             {otherOption}
           </div>
         </div>
@@ -56,21 +105,25 @@ class UserAuthForm extends Component {
 const mapStateToProps = (state) => {
   return {
     showUserAuthForm: state.showUserAuthForm,
-    userAuthType: state.userAuthType
+    userAuthType: state.userAuthType,
+    userInfo: state.userInfo,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
 
-    submitForm: (authType) => {
-      console.log('Form submitted with auth type of ', authType);
-      const action = { type: 'USER_AUTH_FORM_SUBMIT', authType };
+    handleFormInputChange: (evt, input) => {
+      const action = { type: 'HANDLE_FORM_INPUT_CHANGE', input, value: evt.target.value }
+      dispatch(action);
+    },
+
+    submitForm: (authType, userInfo) => {
+      const action = { type: 'USER_AUTH_FORM_SUBMIT', authType, userInfo };
       dispatch(action);
     },
 
     toggleUserAuthForm: () => {
-      console.log('hello');
       const action = { type: 'TOGGLE_USER_AUTH_FORM', userAuthType: '' };
       dispatch(action);
     },

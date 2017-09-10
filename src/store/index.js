@@ -2,19 +2,33 @@ import { createStore } from 'redux';
 
 const initialState = {
   showUserAuthForm: false,
-  userAuthType: ''
+  userAuthType: '',
+  userInfo: {
+    city: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    username: ''
+  }
 }
 
 const reducer = (state = initialState, action) => {
   console.log('reducer running', action);
   switch (action.type) {
+    case 'HANDLE_FORM_INPUT_CHANGE':
+      let updateObject = {};
+      const inputName = action.input;
+      updateObject[inputName] = action.value;
+      let newUserInfo = Object.assign({}, state.userInfo, updateObject);
+      return Object.assign({}, state, { userInfo: newUserInfo });
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType });
     case 'TOGGLE_USER_AUTH_TYPE':
       let newAuthType = state.userAuthType === 'Login' ? 'Sign Up' : 'Login';
       return Object.assign({}, state, { userAuthType: newAuthType });
     case 'USER_AUTH_FORM_SUBMIT':
-      return Object.assign({}, state, { showUserAuthForm: false, userAuthType: '' });
+      return Object.assign({}, state, { showUserAuthForm: false, userAuthType: '', userInfo: action.userInfo });
     default:
       return state;
   }
