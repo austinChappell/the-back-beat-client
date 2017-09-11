@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Features extends Component {
   render() {
     return (
-      <div className="Features">
+      <div className="Features" id="features">
         <h1>Features</h1>
         <div className="feature-list">
           <div className="feature">

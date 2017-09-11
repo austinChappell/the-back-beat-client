@@ -1,0 +1,21 @@
+.ScrollBox {
+  color: $dark-font;
+  margin: 10px;
+  flex-basis: 25%;
+  flex-grow: 1;
+  h2 {
+    font-size: 18px;
+  }
+  h3 {
+    font-size: 14px;
+  }
+  p {
+    font-size: 12px;
+  }
+  ul {
+    padding: 0;
+    li {
+      list-style: none;
+    }
+  }
+}

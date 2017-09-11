@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { connect } from 'react-redux';
 
 class Navbar extends Component {
+
   render() {
+    let rightNavBarItems = this.props.authorized ?
+    <div className="right">
+      <NavLink to="/profile">
+        <i className="fa fa-user" aria-hidden="true"></i> {this.props.username}
+      </NavLink>
+      <NavLink to="/connect">
+        <i className="fa fa-users" aria-hidden="true"></i>
+      </NavLink>
+      <NavLink to="/messages">
+        <i className="fa fa-envelope" aria-hidden="true"></i>
+      </NavLink>
+      <span onClick={this.props.logout}><NavLink to="/login">Logout</NavLink></span>
+    </div>
+    :
+    <div className="right">
+      <HashLink to="/#features">Features</HashLink>
+      <HashLink to="/#contact">Contact</HashLink>
+      <span className="button-link" onClick={this.props.toggleUserAuthForm}>Login</span>
+    </div>
+
     return (
-      <div className="Navbar">
+      <div className={this.props.authorized ? "Navbar logged-in" : "Navbar logged-out"}>
         <div className="left">
           <NavLink className="brand-name" to="/" exact><img src={require("../assets/images/logo.png")} alt="logo" /></NavLink>
         </div>
-        <div className="right">
-          <NavLink to="/features">Features</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
-          <span className="button-link" onClick={this.props.toggleUserAuthForm}>Login</span>
-        </div>
+        {rightNavBarItems}
       </div>
     )
   }
@@ -21,8 +39,10 @@ class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    authorized: state.authorized,
     showUserAuthForm: state.showUserAuthForm,
-    userAuthType: state.userAuthType
+    userAuthType: state.userAuthType,
+    username: state.currentUsername
   }
 }
 
@@ -30,6 +50,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleUserAuthForm: () => {
       const action = { type: 'TOGGLE_USER_AUTH_FORM', userAuthType: 'Login' };
+      dispatch(action);
+    },
+
+    logout: () => {
+      console.log('HELLO FROM THE DISPATCH');
+      const action = { type: 'LOGOUT' };
       dispatch(action);
     }
   }

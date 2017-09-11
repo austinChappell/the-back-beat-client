@@ -8,6 +8,8 @@ $tinted-overlay: rgba(7, 6, 73, 0.75);
 $font-family-primary: 'Roboto', sans-serif;
 $font-family-secondary: 'Archivo Black', sans-serif;
 $font-family-tertiary: 'Amiko', sans-serif;
+$gray-background-light: #EEEEEE;
+$gray-background-dark: #E0E0E0;
 
 body {
   margin: 0;
@@ -25,10 +27,17 @@ p {
   font-family: $font-family-tertiary;
 }
 
+@import './BaseLayout';
 @import './Contact';
 @import './CTAButton';
 @import './Features';
 @import './Footer';
 @import './Home';
+@import './LeftMainPageSideBar';
+@import './Main';
 @import './Navbar';
+@import './NewsFeed';
+@import './Profile';
+@import './RightMainPageSideBar';
+@import './ScrollBox';
 @import './UserAuthForm';

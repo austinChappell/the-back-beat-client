@@ -1,9 +1,18 @@
+.logged-in {
+  background-color: $color-primary;
+  position: fixed;
+  & + div {
+    margin-top: 77px;
+  }
+}
+.logged-out {
+  background-color: transparent;
+}
 .Navbar {
-  position: absolute;
   width: 100%;
   align-items: center;
   z-index: 10;
-  padding: 20px 100px;
+  padding: 20px 150px;
   box-sizing: border-box;
   a {
     color: $light-font;

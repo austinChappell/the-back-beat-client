@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Contact extends Component {
   render() {
     return (
-      <div className="Contact">
+      <div className="Contact" id="contact">
         <h1>Drop A Line...</h1>
         <div className="form">
           <input type="text" name="name" placeholder="Full Name" />

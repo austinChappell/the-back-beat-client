@@ -24,8 +24,14 @@ class UserAuthForm extends Component {
       const data = results;
       console.log('DATA', data);
       console.log('FUNCTION PROPS', this.props.newProps);
-      this.props.submitForm();
-      this.props.newProps.history.push('/');
+      this.props.submitForm(userInfo.username);
+      if (submitType === 'login') {
+        this.props.newProps.history.push('/');
+      } else if (submitType === 'signup') {
+        this.props.newProps.history.push('/profile');
+      } else {
+        this.props.newPorps.history.goBack();
+      }
     })
   }
 
@@ -138,8 +144,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action);
     },
 
-    submitForm: (authType, userInfo) => {
-      const action = { type: 'USER_AUTH_FORM_SUBMIT', authType, userInfo };
+    submitForm: (username) => {
+      const action = { type: 'USER_AUTH_FORM_SUBMIT', username };
       dispatch(action);
     },
 

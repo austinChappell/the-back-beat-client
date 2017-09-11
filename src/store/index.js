@@ -2,6 +2,7 @@ import { createStore } from 'redux';
 
 const initialState = {
   authorized: false,
+  currentUsername: '',
   showUserAuthForm: false,
   userAuthType: '',
   userInfo: {
@@ -23,6 +24,8 @@ const reducer = (state = initialState, action) => {
       updateObject[inputName] = action.value;
       let newUserInfo = Object.assign({}, state.userInfo, updateObject);
       return Object.assign({}, state, { userInfo: newUserInfo });
+    case 'LOGOUT':
+      return Object.assign({}, state, { authorized: false, currentUsername: '' });
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType });
     case 'TOGGLE_USER_AUTH_TYPE':
@@ -37,7 +40,7 @@ const reducer = (state = initialState, action) => {
         password: '',
         username: ''
       }
-      return Object.assign({}, state, { authorized: true, showUserAuthForm: false, userAuthType: '', userInfo });
+      return Object.assign({}, state, { authorized: true, currentUsername: action.username, showUserAuthForm: false, userAuthType: '', userInfo });
     default:
       return state;
   }

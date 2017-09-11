@@ -6,7 +6,10 @@ import store from '../store/';
 import BaseLayout from './BaseLayout';
 import Home from './Home';
 import LoggedIn from './LoggedIn';
+import Logout from './Logout';
+import Main from './Main';
 import PrivateRoute from './PrivateRoute';
+import Profile from './Profile';
 
 class App extends Component {
   render() {
@@ -16,9 +19,11 @@ class App extends Component {
           <Router>
             <BaseLayout>
               <Switch>
-                <PrivateRoute path="/" exact component={LoggedIn} />
+                <PrivateRoute path="/" exact component={Main} />
                 {/* <Route path="/login" component={Home} /> */}
                 <Route path="/login" component={Home} />
+                <PrivateRoute path="/logout" component={Logout} />
+                <PrivateRoute path="/profile" component={Profile} />
               </Switch>
             </BaseLayout>
           </Router>
