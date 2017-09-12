@@ -1,0 +1,14 @@
+.UserProfile {
+  .profile-info {
+    margin-top: 20px;
+    & > span {
+      font-size: 12px;
+      display: inline-block;
+      margin-bottom: 10px;
+      .username {
+        font-weight: bold;
+        color: $color-tertiary-hover;
+      }
+    }
+  }
+}

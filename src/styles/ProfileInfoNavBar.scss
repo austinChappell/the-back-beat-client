@@ -1,0 +1,20 @@
+.ProfileInfoNavBar {
+  display: flex;
+  & > div {
+    flex-grow: 1;
+    border: 1px solid $color-primary;
+    border-right: none;
+    text-align: center;
+    background-color: $light-font;
+    padding: 5px;
+    cursor: pointer;
+    transition: 300ms;
+    &:hover {
+      background-color: $color-tertiary;
+      color: $light-font;
+    }
+  }
+  & > div:last-of-type {
+    border-right: 1px solid $color-primary;
+  }
+}

@@ -27,6 +27,7 @@ const initialState = {
     {title: 'Andy\'s', date: '9/25', time:'9:00pm', details: 'Gig with Ashley Gatta and The Free People. Might go on later.'},
     {title: 'House of Blues', date:'9/30', time: '10:00pm', details: 'Opening for Mutemath. Load in is at 8:00pm, soundcheck at 9:00pm.'}
   ],
+  profileContent: 'main',
   rehearsals: [
     {title: 'United Methodist', date: '9/19', time: '2:00pm', location: 'Cody\'s house'},
     {title: 'Andy\'s', date: '9/22', time:'7:00pm', location: 'Ashley\'s house'},
@@ -44,6 +45,8 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   console.log('reducer running', action);
   switch (action.type) {
+    case 'CHANGE_PROFILE_CONTENT':
+      return Object.assign({}, state, { profileContent: action.value });
     case 'HANDLE_FORM_INPUT_CHANGE':
       let updateObject = {};
       const inputName = action.input;

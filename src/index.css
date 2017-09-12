@@ -42,7 +42,7 @@ p {
   background-color: #FAFAFA;
   border-left: 1px solid #EEEEEE;
   border-right: 1px solid #EEEEEE;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   margin-left: 25%;
   width: 50%;
   box-sizing: border-box;
@@ -249,6 +249,33 @@ p {
   .Profile h2 {
     color: #070649; }
 
+.ProfileContent {
+  background-color: #FFFFFF;
+  padding: 20px;
+  border: 1px solid #070649;
+  border-top: none; }
+
+.ProfileInfo {
+  width: 90%;
+  margin: 20px auto; }
+
+.ProfileInfoNavBar {
+  display: flex; }
+  .ProfileInfoNavBar > div {
+    flex-grow: 1;
+    border: 1px solid #070649;
+    border-right: none;
+    text-align: center;
+    background-color: #FFFFFF;
+    padding: 5px;
+    cursor: pointer;
+    transition: 300ms; }
+    .ProfileInfoNavBar > div:hover {
+      background-color: #9A6197;
+      color: #FFFFFF; }
+  .ProfileInfoNavBar > div:last-of-type {
+    border-right: 1px solid #070649; }
+
 .RehearsalBox {
   margin-bottom: 30px; }
 
@@ -345,3 +372,13 @@ p {
           color: #070649;
           text-decoration: underline;
           cursor: pointer; }
+
+.UserProfile .profile-info {
+  margin-top: 20px; }
+  .UserProfile .profile-info > span {
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px; }
+    .UserProfile .profile-info > span .username {
+      font-weight: bold;
+      color: #894586; }

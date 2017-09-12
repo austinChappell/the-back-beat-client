@@ -11,6 +11,9 @@ class Navbar extends Component {
       <NavLink to="/profile">
         <i className="fa fa-user" aria-hidden="true"></i> {this.props.username}
       </NavLink>
+      <NavLink to="/" exact>
+        <i className="fa fa-newspaper-o" aria-hidden="true"></i>
+      </NavLink>
       <NavLink className="relative-navlink" to="/creatgroup">
         <i className="fa fa-music" aria-hidden="true"></i>
         <i className="fa fa-plus" aria-hidden="true"></i>
