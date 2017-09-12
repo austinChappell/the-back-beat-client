@@ -2,14 +2,46 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class ProfileInfoNavBar extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      navBarItems: [
+        { value: 'main', text: 'Info', active: true },
+        { value: 'events', text: 'Events', active: false },
+        { value: 'connections', text: 'Connections', active: false },
+        { value: 'bands', text: 'Bands', active: false },
+        { value: 'uploads', text: 'Uploads', active: false },
+      ]
+    }
+
+  }
+
+
+  highlightNavItem = (itemValue, index) => {
+    let newList = this.state.navBarItems.slice();
+    let selectedItem = newList.find((item) => item.active);
+    selectedItem.active = false;
+    newList[index].active = true;
+    this.setState({ navBarItems: newList});
+    console.log('new state', this.state);
+    this.props.changeProfileContent(itemValue);
+  }
+
   render() {
     return (
       <div className="ProfileInfoNavBar">
-        <div onClick={(evt) => this.props.changeProfileContent(evt, 'main')} className="tab">Info</div>
-        <div onClick={(evt) => this.props.changeProfileContent(evt, 'events')} className="tab">Events</div>
-        <div onClick={(evt) => this.props.changeProfileContent(evt, 'connections')} className="tab">Connections</div>
-        <div onClick={(evt) => this.props.changeProfileContent(evt, 'bands')} className="tab">Bands</div>
-        <div onClick={(evt) => this.props.changeProfileContent(evt, 'uploads')} className="tab">Uploads</div>
+        {this.state.navBarItems.map((item, index) => {
+          return (
+            <div
+              key={index}
+              onClick={() => this.highlightNavItem(item.value, index)}
+              className={item.active ? "active tab" : "tab"}>
+                {item.text}
+            </div>
+          )
+        })}
       </div>
     )
   }
@@ -17,15 +49,16 @@ class ProfileInfoNavBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    // oldElem: state.profileNav.inactive,
+    // newElem: state.profileNav.active
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeProfileContent: (value) => {
-      let newElem = evt.target;
-      const action = { type: 'CHANGE_PROFILE_CONTENT', value, newElem };
+      // let newElem = evt.target;
+      const action = { type: 'CHANGE_PROFILE_CONTENT', value };
       dispatch(action);
     }
   }

@@ -275,6 +275,9 @@ p {
       color: #FFFFFF; }
   .ProfileInfoNavBar > div:last-of-type {
     border-right: 1px solid #070649; }
+  .ProfileInfoNavBar .active {
+    background-color: #9A6197;
+    color: #FFFFFF; }
 
 .RehearsalBox {
   margin-bottom: 30px; }
