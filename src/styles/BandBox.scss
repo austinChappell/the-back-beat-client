@@ -1,0 +1,21 @@
+.BandBox {
+  h3 {
+    margin: 5px 10px 5px 0;
+  }
+  h3 > a {
+    font-size: 12px;
+    display: inline-block;
+    background-color: $gray-background-light;
+    padding: 6px;
+    color: $color-tertiary-hover;
+    text-decoration: none;
+    &:hover {
+      background-color: $gray-background-dark;
+    }
+  }
+  .band-results {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

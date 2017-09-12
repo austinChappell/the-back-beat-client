@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class NewsFeed extends Component {
   render() {
     return (
-      <div className="NewsFeed">
+      <div className="CenterComponent">
         The NewsFeed Component
       </div>
     )
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    
+
   }
 }
 

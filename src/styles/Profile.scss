@@ -1,3 +1,7 @@
 .Profile {
   background-color: white;
+  display: flex;
+  h2 {
+    color: $color-primary;
+  }
 }

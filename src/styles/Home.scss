@@ -1,11 +1,14 @@
 .Home {
-  margin-top: -72px;
+  position: absolute;
+  top: 0;
   .landing-page-background {
     text-align: center;
     background-image: url('./assets/images/landing-page-background.jpg');
     background-size: cover;
     min-height: 100vh;
     color: $light-font;
+    position: relative;
+    width: 100%;
     .feature-text {
       text-align: center;
       padding-top: 20vh;

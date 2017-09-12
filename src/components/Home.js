@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Contact from './Contact';
 import CTAButton from './CTAButton';
 import Features from './Features';
+import Footer from './Footer';
 import UserAuthForm from './UserAuthForm';
 
 class Home extends Component {
@@ -23,6 +24,7 @@ class Home extends Component {
         </div>
         <Features />
         <Contact />
+        <Footer />
       </div>
     )
   }

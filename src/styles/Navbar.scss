@@ -1,9 +1,7 @@
 .logged-in {
   background-color: $color-primary;
   position: fixed;
-  & + div {
-    margin-top: 77px;
-  }
+  height: 80px;
 }
 .logged-out {
   background-color: transparent;
@@ -19,6 +17,9 @@
     margin: 10px;
     text-decoration: none;
     cursor: pointer;
+    &:hover {
+      color: $gray-background-dark;
+    }
   }
   display: flex;
   justify-content: space-between;
@@ -28,10 +29,21 @@
     img {
       width: 10vw;
       min-width: 120px;
+      max-width: 160px;
     }
     span {
       font-family: $font-family-secondary;
       font-weight: 100;
+    }
+  }
+  .relative-navlink {
+    position: relative;
+    .fa-plus {
+      font-size: 12px;
+      position: absolute;
+      // left: 7px;
+      right: -8px;
+      top: -4px;
     }
   }
   .button-link {

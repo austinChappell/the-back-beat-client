@@ -13,6 +13,7 @@ class UserAuthForm extends Component {
     console.log('type is', submitType);
     console.log('user info is ', userInfo);
     fetch(`http://localhost:6001/${submitType}`, {
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },

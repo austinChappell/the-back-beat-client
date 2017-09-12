@@ -11,13 +11,42 @@ h1, h2, h3, h4, h5, h6 {
 p {
   font-family: "Amiko", sans-serif; }
 
+.BandBox h3 {
+  margin: 5px 10px 5px 0; }
+
+.BandBox h3 > a {
+  font-size: 12px;
+  display: inline-block;
+  background-color: #EEEEEE;
+  padding: 6px;
+  color: #894586;
+  text-decoration: none; }
+  .BandBox h3 > a:hover {
+    background-color: #E0E0E0; }
+
+.BandBox .band-results {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap; }
+
 .BaseLayout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between; }
   .BaseLayout .children {
-    flex-grow: 1; }
+    flex-grow: 1;
+    padding-top: 80px; }
+
+.CenterComponent {
+  background-color: #FAFAFA;
+  border-left: 1px solid #EEEEEE;
+  border-right: 1px solid #EEEEEE;
+  min-height: 100vh;
+  margin-left: 25%;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 20px 40px; }
 
 .Contact {
   padding: 50px;
@@ -99,14 +128,20 @@ p {
   flex-basis: 100%;
   z-index: 10; }
 
+.GigBox {
+  margin-bottom: 30px; }
+
 .Home {
-  margin-top: -72px; }
+  position: absolute;
+  top: 0; }
   .Home .landing-page-background {
     text-align: center;
     background-image: url("./assets/images/landing-page-background.jpg");
     background-size: cover;
     min-height: 100vh;
-    color: #FFFFFF; }
+    color: #FFFFFF;
+    position: relative;
+    width: 100%; }
     .Home .landing-page-background .feature-text {
       text-align: center;
       padding-top: 20vh; }
@@ -126,14 +161,33 @@ p {
       text-align: center; }
 
 .LeftMainPageSideBar {
-  color: white;
-  height: 80vh;
+  color: #030303;
+  height: calc(100vh - 80px);
   position: fixed;
   box-sizing: border-box;
   width: 25%;
   display: flex;
   flex-direction: column;
-  padding-left: 80px; }
+  padding: 20px 40px;
+  overflow: scroll; }
+  .LeftMainPageSideBar h2 {
+    color: #070649; }
+  .LeftMainPageSideBar .see-all-link {
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: #9A6197; }
+  .LeftMainPageSideBar h3 {
+    color: #894586;
+    font-size: 16px; }
+  .LeftMainPageSideBar h4 {
+    font-size: 14px; }
+  .LeftMainPageSideBar p {
+    font-size: 12px;
+    margin-top: 5px; }
+  .LeftMainPageSideBar hr {
+    border-color: #9A6197;
+    border-top: 0; }
 
 .Main {
   background-color: white;
@@ -141,9 +195,8 @@ p {
 
 .logged-in {
   background-color: #070649;
-  position: fixed; }
-  .logged-in + div {
-    margin-top: 77px; }
+  position: fixed;
+  height: 80px; }
 
 .logged-out {
   background-color: transparent; }
@@ -161,15 +214,25 @@ p {
     margin: 10px;
     text-decoration: none;
     cursor: pointer; }
+    .Navbar a:hover {
+      color: #E0E0E0; }
   .Navbar .brand-name {
     font-size: 1.4em;
     font-family: "Amiko", sans-serif; }
     .Navbar .brand-name img {
       width: 10vw;
-      min-width: 120px; }
+      min-width: 120px;
+      max-width: 160px; }
     .Navbar .brand-name span {
       font-family: "Archivo Black", sans-serif;
       font-weight: 100; }
+  .Navbar .relative-navlink {
+    position: relative; }
+    .Navbar .relative-navlink .fa-plus {
+      font-size: 12px;
+      position: absolute;
+      right: -8px;
+      top: -4px; }
   .Navbar .button-link {
     border: 2px solid #FFFFFF;
     margin: 10px;
@@ -180,27 +243,26 @@ p {
       background-color: #FFFFFF;
       color: #070649; }
 
-.NewsFeed {
-  background-color: #EEEEEE;
-  min-height: 100vh;
-  margin-left: 25%;
-  width: 50%;
-  box-sizing: border-box; }
-
 .Profile {
-  background-color: white; }
+  background-color: white;
+  display: flex; }
+  .Profile h2 {
+    color: #070649; }
+
+.RehearsalBox {
+  margin-bottom: 30px; }
 
 .RightMainPageSideBar {
-  background-color: #E0E0E0;
-  color: #FFFFFF;
+  color: #030303;
   min-height: 100vh;
   width: 25%;
   position: fixed;
   box-sizing: border-box;
-  left: 75%; }
+  left: 75%;
+  padding: 20px 40px; }
 
 .ScrollBox {
-  color: #000000;
+  color: #030303;
   margin: 10px;
   flex-basis: 25%;
   flex-grow: 1; }
@@ -234,6 +296,7 @@ p {
       color: lightgray; }
   .UserAuthForm .form {
     width: 50%;
+    max-width: 600px;
     margin: 150px auto 0;
     background-color: #B8B7D5;
     padding: 20px;
