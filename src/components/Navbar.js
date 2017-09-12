@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
     authorized: state.authorized,
     showUserAuthForm: state.showUserAuthForm,
     userAuthType: state.userAuthType,
-    username: state.currentUsername
+    username: state.currentUser.username
   }
 }
 

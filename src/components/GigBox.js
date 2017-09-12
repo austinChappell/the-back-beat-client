@@ -8,9 +8,9 @@ class GigBox extends Component {
       <div className="GigBox">
         <h2>Upcoming Gigs</h2>
         <Link to="/gigs" className="see-all-link">see all</Link>
-        {this.props.gigs.map((gig) => {
+        {this.props.gigs.map((gig, index) => {
           return (
-            <div className="gig">
+            <div key={index} className="gig">
               <h3>{gig.title}</h3>
               <h4>{gig.date} - {gig.time}</h4>
               <p>{gig.details}</p>

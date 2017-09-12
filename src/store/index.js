@@ -3,6 +3,15 @@ import { createStore } from 'redux';
 const initialState = {
   authorized: false,
   currentUsername: '',
+  currentUser: {
+    id: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    city: '',
+    skill_level: ''
+  },
   showUserAuthForm: false,
   userAuthType: '',
   userInfo: {
@@ -42,12 +51,14 @@ const reducer = (state = initialState, action) => {
       let newUserInfo = Object.assign({}, state.userInfo, updateObject);
       return Object.assign({}, state, { userInfo: newUserInfo });
     case 'LOGOUT':
-      return Object.assign({}, state, { authorized: false, currentUsername: '' });
+      return Object.assign({}, state, initialState);
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType });
     case 'TOGGLE_USER_AUTH_TYPE':
       let newAuthType = state.userAuthType === 'Login' ? 'Sign Up' : 'Login';
       return Object.assign({}, state, { userAuthType: newAuthType });
+    case 'UPDATE_USER':
+      return Object.assign({}, state, { currentUser: action.user });
     case 'USER_AUTH_FORM_SUBMIT':
       const userInfo = {
         city: '',

@@ -8,10 +8,20 @@ import UserProfile from './UserProfile';
 class Profile extends Component {
 
   componentDidMount() {
-    fetch(`http://localhost:6001/api/userprofile/${ this.props.currentUsername }`).then((response) => {
+    const url = 'http://localhost:6001/api/profile';
+    console.log('URL', url);
+    fetch(url, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((response) => {
+      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('results', results);
+      console.log('FETCH RESULTS', results);
+      this.props.updateUser(results);
     })
   }
 
@@ -19,7 +29,7 @@ class Profile extends Component {
     return (
       <div className="Profile">
         <LeftMainPageSideBar />
-        <UserProfile />
+        <UserProfile user={this.props.currentUser} />
         <RightMainPageSideBar />
       </div>
     )
@@ -28,8 +38,18 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUsername: state.currentUsername
+    currentUsername: state.currentUsername,
+    currentUser: state.currentUser
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (results) => {
+      const action = { type: 'UPDATE_USER', user: results };
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -8,9 +8,9 @@ class RehearsalBox extends Component {
       <div className="RehearsalBox">
         <h2>Upcoming Rehearsals</h2>
         <Link to="/rehearsals" className="see-all-link">see all</Link>
-        {this.props.rehearsals.map((rehearsal) => {
+        {this.props.rehearsals.map((rehearsal, index) => {
           return (
-            <div className="rehearsal">
+            <div key={index} className="rehearsal">
               <h3>{rehearsal.title}</h3>
               <h4>{rehearsal.date} - {rehearsal.time}</h4>
               <p>{rehearsal.location}</p>

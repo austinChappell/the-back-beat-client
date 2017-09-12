@@ -7,10 +7,10 @@ class BandBox extends Component {
     return (
       <div className="BandBox">
         <h2>Your Bands</h2>
-        <div className="band-results">          
-          {this.props.userBands.map((band) => {
+        <div className="band-results">
+          {this.props.userBands.map((band, index) => {
             return (
-              <div className="band">
+              <div key={index} className="band">
                 <h3><Link to={band.url}>{band.name}</Link></h3>
               </div>
             )
