@@ -25,7 +25,7 @@ class UserAuthForm extends Component {
       const data = results;
       console.log('DATA', data);
       console.log('FUNCTION PROPS', this.props.newProps);
-      this.props.submitForm(userInfo.username);
+      this.props.clearUserInfo(userInfo.username);
       if (submitType === 'login') {
         this.props.newProps.history.push('/');
       } else if (submitType === 'signup') {
@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action);
     },
 
-    submitForm: (username) => {
+    clearUserInfo: (username) => {
       const action = { type: 'USER_AUTH_FORM_SUBMIT', username };
       dispatch(action);
     },
