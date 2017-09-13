@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 
 const initialState = {
+  attemptedLogin: false,
   authorized: false,
   currentUsername: '',
   currentUser: {
@@ -44,6 +45,14 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   console.log('reducer running', action);
+  const blankUserInfo = {
+    city: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    username: ''
+  }
   switch (action.type) {
     case 'CHANGE_PROFILE_CONTENT':
       return Object.assign({}, state, { profileContent: action.value });
@@ -56,22 +65,14 @@ const reducer = (state = initialState, action) => {
     case 'LOGOUT':
       return Object.assign({}, state, initialState);
     case 'TOGGLE_USER_AUTH_FORM':
-      return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType });
+      return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType, userInfo: blankUserInfo });
     case 'TOGGLE_USER_AUTH_TYPE':
       let newAuthType = state.userAuthType === 'Login' ? 'Sign Up' : 'Login';
-      return Object.assign({}, state, { userAuthType: newAuthType });
+      return Object.assign({}, state, { userAuthType: newAuthType, userInfo: blankUserInfo });
     case 'UPDATE_USER':
       return Object.assign({}, state, { currentUser: action.user });
     case 'USER_AUTH_FORM_SUBMIT':
-      const userInfo = {
-        city: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        password: '',
-        username: ''
-      }
-      return Object.assign({}, state, { authorized: true, currentUsername: action.username, showUserAuthForm: false, userAuthType: '', userInfo });
+      return Object.assign({}, state, { authorized: true, currentUsername: action.username, showUserAuthForm: false, userAuthType: '', userInfo: blankUserInfo });
     default:
       return state;
   }

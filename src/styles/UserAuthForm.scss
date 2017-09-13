@@ -59,6 +59,18 @@
         color: $light-font;
       }
     }
+    .no-errors {
+      color: red;
+    }
+    .error-message {
+      color: red;
+      border: 2px solid red;
+      border-radius: 5px;
+      background-color: #F6B1C3;
+      padding: 10px;
+      font-weight: 600;
+      transition: 400ms;
+    }
     .form-footer {
       display: flex;
       button {

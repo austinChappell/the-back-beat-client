@@ -6,9 +6,29 @@ class UserAuthForm extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      flashMessages: [
+        { type: 'usernameTaken', message: 'The username and/or email address is already taken.' },
+        { type: 'invalidCredentials', message: 'The username and/or password entered is incorrect.' }
+      ],
+      errorMessage: null
+    }
   }
 
-  submitForm = (userInfo) => {
+  exitForm = () => {
+    this.setState({ errorMessage: null });
+    this.props.toggleUserAuthForm();
+  }
+
+  changeForm = () => {
+    this.setState({ errorMessage: null });
+    this.props.toggleUserAuthType();
+  }
+
+  submitForm = (evt, userInfo) => {
+    evt.preventDefault();
+    // this.props.attemptLogin();
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     console.log('type is', submitType);
     console.log('user info is ', userInfo);
@@ -20,6 +40,7 @@ class UserAuthForm extends Component {
       method: 'POST',
       body: JSON.stringify(userInfo)
     }).then((response) => {
+      console.log('MIDLLE OF FETCH');
       return response.json();
     }).then((results) => {
       const data = results;
@@ -33,6 +54,13 @@ class UserAuthForm extends Component {
       } else {
         this.props.newPorps.history.goBack();
       }
+    }).catch((err) => {
+      console.log('DID NOT WORK');
+      if (submitType === 'login') {
+        this.setState({ errorMessage: 'The username and/or password is invalid.' });
+      } else if (submitType === 'signup') {
+        this.setState({ errorMessage: 'The username and/or email address is already in use.' });
+      }
     })
   }
 
@@ -43,12 +71,12 @@ class UserAuthForm extends Component {
     let otherOption = this.props.userAuthType === 'Login' ?
       <p>
         <span>Need an account?</span>
-        <span className="span-link" onClick={this.props.toggleUserAuthType}>Sign Up</span>
+        <span className="span-link" onClick={this.changeForm}>Sign Up</span>
       </p>
       :
       <p>
         <span>Already have an account?</span>
-        <span className="span-link" onClick={this.props.toggleUserAuthType}>Login</span>
+        <span className="span-link" onClick={this.changeForm}>Login</span>
       </p>
 
     let form = this.props.userAuthType === 'Login' ?
@@ -112,12 +140,15 @@ class UserAuthForm extends Component {
     return (
 
       <div className={this.props.showUserAuthForm ? "UserAuthForm" : "hide"}>
-        <span id="exit-button" onClick={this.props.toggleUserAuthForm}><i className="fa fa-times" aria-hidden="true"></i></span>
+        <span id="exit-button" onClick={this.exitForm}><i className="fa fa-times" aria-hidden="true"></i></span>
         <form className="form">
           {form}
+          <div className={this.state.errorMessage ? "error-message" : "no-errors"}>
+            {this.state.errorMessage}
+          </div>
           <div className="form-footer">
-            <button onClick={() => {
-              this.submitForm(this.props.userInfo, this.props);
+            <button onClick={(evt) => {
+              this.submitForm(evt, this.props.userInfo);
             }
             }>{this.props.userAuthType}</button>
             {otherOption}
@@ -131,6 +162,8 @@ class UserAuthForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    attemptedLogin: state.attemptedLogin,
+    authorize: state.authorized,
     showUserAuthForm: state.showUserAuthForm,
     userAuthType: state.userAuthType,
     userInfo: state.userInfo,

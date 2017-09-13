@@ -362,6 +362,16 @@ p {
       .UserAuthForm .form button:hover {
         background-color: #070649;
         color: #FFFFFF; }
+    .UserAuthForm .form .no-errors {
+      color: red; }
+    .UserAuthForm .form .error-message {
+      color: red;
+      border: 2px solid red;
+      border-radius: 5px;
+      background-color: #F6B1C3;
+      padding: 10px;
+      font-weight: 600;
+      transition: 400ms; }
     .UserAuthForm .form .form-footer {
       display: flex; }
       .UserAuthForm .form .form-footer button {
