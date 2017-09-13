@@ -73,11 +73,11 @@
     }
     .form-footer {
       display: flex;
+      flex-direction: column-reverse;
       button {
         align-self: center;
       }
       p {
-        flex-grow: 1;
         text-align: center;
         span {
           display: block;

@@ -373,11 +373,11 @@ p {
       font-weight: 600;
       transition: 400ms; }
     .UserAuthForm .form .form-footer {
-      display: flex; }
+      display: flex;
+      flex-direction: column-reverse; }
       .UserAuthForm .form .form-footer button {
         align-self: center; }
       .UserAuthForm .form .form-footer p {
-        flex-grow: 1;
         text-align: center; }
         .UserAuthForm .form .form-footer p span {
           display: block; }
