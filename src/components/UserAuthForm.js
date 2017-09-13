@@ -113,7 +113,7 @@ class UserAuthForm extends Component {
 
       <div className={this.props.showUserAuthForm ? "UserAuthForm" : "hide"}>
         <span id="exit-button" onClick={this.props.toggleUserAuthForm}><i className="fa fa-times" aria-hidden="true"></i></span>
-        <div className="form">
+        <form className="form">
           {form}
           <div className="form-footer">
             <button onClick={() => {
@@ -122,7 +122,7 @@ class UserAuthForm extends Component {
             }>{this.props.userAuthType}</button>
             {otherOption}
           </div>
-        </div>
+        </form>
       </div>
 
     )
