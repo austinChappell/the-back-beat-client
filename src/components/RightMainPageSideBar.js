@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import UserBox from './UserBox';
+
 class RightMainPageSideBar extends Component {
   render() {
     return (
       <div className="RightMainPageSideBar">
         Right Side Bar Component
+        <UserBox />
       </div>
     )
   }
@@ -19,7 +22,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    
+
   }
 }
 
