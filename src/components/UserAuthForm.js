@@ -11,47 +11,41 @@ class UserAuthForm extends Component {
       errorMessage: null,
       checkUsernameMessage: null,
       checkUsernameLength: null,
-      allUsernames: []
     }
-  }
 
-  componentDidMount() {
-    fetch(`${this.props.apiURL}/api/usernames/all`).then((response) => {
-      return response.json();
-    }).then((results) => {
-      let allUsernames = [];
-      results.forEach((userObject) => {
-        allUsernames.push(userObject.username);
-      })
-      this.setState({
-        allUsernames
-      })
-    })
+    this.stopTimeout = undefined;
+
   }
 
   handleChange = (evt, input, checkInputAvailability) => {
-      const inputLength = evt.target.value.length;
-      this.props.handleFormInputChange(evt, input);
+    console.log('THIS', this);
+    let component = this;
+    let value = evt.target.value;
+    clearTimeout(this.stopTimeout);
+    const inputLength = evt.target.value.length;
+    this.props.handleFormInputChange(evt, input);
+    this.stopTimeout = setTimeout(function () {
       if (checkInputAvailability) {
-        fetch(`${this.props.apiURL}/api/${input}/${evt.target.value}`).then((response) => {
+        fetch(`${component.props.apiURL}/api/${input}/${value}`).then((response) => {
           return response.json();
         }).then((results) => {
           if (input === 'username') {
 
             if (inputLength >= 6) {
-              this.setState({ checkUsernameLength: null });
+              component.setState({ checkUsernameLength: null });
             }
 
             if (results.length > 0) {
-              this.setState({ checkUsernameMessage: 'This username is already in use' });
+              component.setState({ checkUsernameMessage: 'This username is already in use' });
             } else {
-              this.setState({ checkUsernameMessage: null });
+              component.setState({ checkUsernameMessage: null });
             }
 
           }
         })
       }
-    }
+    }, 1000);
+  }
 
   checkUserNameLength = (evt) => {
     const inputLength = evt.target.value.length;
