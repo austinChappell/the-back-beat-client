@@ -12,7 +12,24 @@ class UserAuthForm extends Component {
         { type: 'usernameTaken', message: 'The username and/or email address is already taken.' },
         { type: 'invalidCredentials', message: 'The username and/or password entered is incorrect.' }
       ],
-      errorMessage: null
+      errorMessage: null,
+      checkUsernameMessage: null,
+    }
+  }
+
+  handleChange = (evt, input, checkInputAvailability) => {
+    this.props.handleFormInputChange(evt, input);
+    if (checkInputAvailability) {
+      fetch(`${this.props.apiURL}/api/${input}/${evt.target.value}`).then((response) => {
+        return response.json();
+      }).then((results) => {
+        if (results.length > 0 && input === 'username') {
+          console.log('THERE ARE RESULTS AND THE USERNAME IS TAKEN!!!!!!');
+          this.setState({ checkUsernameMessage: 'This username is already in use' });
+        } else {
+          this.setState({ checkUsernameMessage: null });
+        }
+      })
     }
   }
 
@@ -118,7 +135,7 @@ class UserAuthForm extends Component {
           type="text"
           name="username"
           placeholder="Username"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'username')}
+          onChange={(evt) => this.handleChange(evt, 'username', true)}
           value={this.props.userInfo.username} />
         <input
           type="password"
@@ -143,6 +160,9 @@ class UserAuthForm extends Component {
         <span id="exit-button" onClick={this.exitForm}><i className="fa fa-times" aria-hidden="true"></i></span>
         <form className="form">
           {form}
+          <div className={this.state.checkUsernameMessage ? "error-message" : "no-errors"}>
+            {this.state.checkUsernameMessage}
+          </div>
           <div className={this.state.errorMessage ? "error-message" : "no-errors"}>
             {this.state.errorMessage}
           </div>
