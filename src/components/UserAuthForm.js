@@ -26,7 +26,6 @@ class UserAuthForm extends Component {
       this.setState({
         allUsernames
       })
-      console.log('ALL USERNAMES', this.state.allUsernames);
     })
   }
 
@@ -46,7 +45,6 @@ class UserAuthForm extends Component {
   }
 
   checkUserNameLength = (evt) => {
-    console.log('ON BLUR VALUE', evt.target.value);
     const inputLength = evt.target.value.length;
     if (inputLength < 6) {
       this.setState({ checkUsernameLength: 'Username must be at least 6 characters.' });
@@ -67,7 +65,6 @@ class UserAuthForm extends Component {
 
   submitForm = (evt, userInfo) => {
     evt.preventDefault();
-    // this.props.attemptLogin();
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     console.log('type is', submitType);
     console.log('user info is ', userInfo);
@@ -79,12 +76,9 @@ class UserAuthForm extends Component {
       method: 'POST',
       body: JSON.stringify(userInfo)
     }).then((response) => {
-      console.log('MIDLLE OF FETCH');
       return response.json();
     }).then((results) => {
       const data = results;
-      console.log('DATA', data);
-      console.log('FUNCTION PROPS', this.props.newProps);
       this.props.clearUserInfo(userInfo.username);
       if (submitType === 'login') {
         this.props.newProps.history.push('/');
@@ -94,7 +88,6 @@ class UserAuthForm extends Component {
         this.props.newPorps.history.goBack();
       }
     }).catch((err) => {
-      console.log('DID NOT WORK');
       if (submitType === 'login') {
         this.setState({ errorMessage: 'The username and/or password is invalid.' });
       } else if (submitType === 'signup') {
@@ -104,8 +97,6 @@ class UserAuthForm extends Component {
   }
 
   render() {
-
-    console.log('PASSED PROPS', this.props.newProps);
 
     let otherOption = this.props.userAuthType === 'Login' ?
       <p>
