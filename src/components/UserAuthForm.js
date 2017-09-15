@@ -9,7 +9,7 @@ class UserAuthForm extends Component {
 
     this.state = {
       flashMessages: [
-        { type: 'usernameTaken', message: 'The username and/or email address is already taken.' },
+        { type: 'usernameTaken', message: 'There is already an account associated with this email address.' },
         { type: 'invalidCredentials', message: 'The username and/or password entered is incorrect.' }
       ],
       errorMessage: null,
@@ -91,7 +91,7 @@ class UserAuthForm extends Component {
       if (submitType === 'login') {
         this.setState({ errorMessage: 'The username and/or password is invalid.' });
       } else if (submitType === 'signup') {
-        this.setState({ errorMessage: 'The username and/or email address is already in use.' });
+        this.setState({ errorMessage: 'There is already an account associated with this email address.' });
       }
     })
   }
