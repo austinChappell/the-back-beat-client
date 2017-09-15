@@ -386,6 +386,9 @@ p {
           text-decoration: underline;
           cursor: pointer; }
 
+.UserBox .hidden {
+  display: none; }
+
 .UserProfile .profile-info {
   margin-top: 20px; }
   .UserProfile .profile-info > span {
