@@ -30,19 +30,28 @@ class UserAuthForm extends Component {
   }
 
   handleChange = (evt, input, checkInputAvailability) => {
-    const inputLength = evt.target.value.length;
-    this.props.handleFormInputChange(evt, input);
-    if (checkInputAvailability && input === 'username') {
-      if (inputLength >= 6) {
-        this.setState({ checkUsernameLength: null });
-      }
-      if (this.state.allUsernames.indexOf(evt.target.value) !== -1) {
-        this.setState({ checkUsernameMessage: 'This username is already in use' });
-      } else {
-        this.setState({ checkUsernameMessage: null });
+      const inputLength = evt.target.value.length;
+      this.props.handleFormInputChange(evt, input);
+      if (checkInputAvailability) {
+        fetch(`${this.props.apiURL}/api/${input}/${evt.target.value}`).then((response) => {
+          return response.json();
+        }).then((results) => {
+          if (input === 'username') {
+
+            if (inputLength >= 6) {
+              this.setState({ checkUsernameLength: null });
+            }
+
+            if (results.length > 0) {
+              this.setState({ checkUsernameMessage: 'This username is already in use' });
+            } else {
+              this.setState({ checkUsernameMessage: null });
+            }
+
+          }
+        })
       }
     }
-  }
 
   checkUserNameLength = (evt) => {
     const inputLength = evt.target.value.length;
