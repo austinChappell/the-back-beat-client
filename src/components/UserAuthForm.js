@@ -32,7 +32,7 @@ class UserAuthForm extends Component {
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     console.log('type is', submitType);
     console.log('user info is ', userInfo);
-    fetch(`http://localhost:6001/${submitType}`, {
+    fetch(`${this.props.apiURL}/${submitType}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -162,6 +162,7 @@ class UserAuthForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     attemptedLogin: state.attemptedLogin,
     authorize: state.authorized,
     showUserAuthForm: state.showUserAuthForm,
