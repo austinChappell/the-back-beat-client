@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 
 const initialState = {
+  apiURL: 'http://localhost:6001',
   attemptedLogin: false,
   authorized: false,
   currentUsername: '',
