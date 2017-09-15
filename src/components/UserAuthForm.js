@@ -8,33 +8,40 @@ class UserAuthForm extends Component {
     super(props);
 
     this.state = {
-      flashMessages: [
-        { type: 'usernameTaken', message: 'There is already an account associated with this email address.' },
-        { type: 'invalidCredentials', message: 'The username and/or password entered is incorrect.' }
-      ],
       errorMessage: null,
       checkUsernameMessage: null,
-      checkUsernameLength: null
+      checkUsernameLength: null,
+      allUsernames: []
     }
+  }
+
+  componentDidMount() {
+    fetch(`${this.props.apiURL}/api/usernames/all`).then((response) => {
+      return response.json();
+    }).then((results) => {
+      let allUsernames = [];
+      results.forEach((userObject) => {
+        allUsernames.push(userObject.username);
+      })
+      this.setState({
+        allUsernames
+      })
+      console.log('ALL USERNAMES', this.state.allUsernames);
+    })
   }
 
   handleChange = (evt, input, checkInputAvailability) => {
     const inputLength = evt.target.value.length;
     this.props.handleFormInputChange(evt, input);
-    if (checkInputAvailability) {
-      fetch(`${this.props.apiURL}/api/${input}/${evt.target.value}`).then((response) => {
-        return response.json();
-      }).then((results) => {
-        if (inputLength >= 6) {
-          this.setState({ checkUsernameLength: null });
-        }
-
-        if (results.length > 0 && input === 'username') {
-          this.setState({ checkUsernameMessage: 'This username is already in use' });
-        } else {
-          this.setState({ checkUsernameMessage: null });
-        }
-      })
+    if (checkInputAvailability && input === 'username') {
+      if (inputLength >= 6) {
+        this.setState({ checkUsernameLength: null });
+      }
+      if (this.state.allUsernames.indexOf(evt.target.value) !== -1) {
+        this.setState({ checkUsernameMessage: 'This username is already in use' });
+      } else {
+        this.setState({ checkUsernameMessage: null });
+      }
     }
   }
 
@@ -49,12 +56,12 @@ class UserAuthForm extends Component {
   }
 
   exitForm = () => {
-    this.setState({ errorMessage: null });
+    this.setState({ errorMessage: null, checkUsernameMessage: null, checkUsernameLength: null });
     this.props.toggleUserAuthForm();
   }
 
   changeForm = () => {
-    this.setState({ errorMessage: null });
+    this.setState({ errorMessage: null, checkUsernameMessage: null, checkUsernameLength: null });
     this.props.toggleUserAuthType();
   }
 
