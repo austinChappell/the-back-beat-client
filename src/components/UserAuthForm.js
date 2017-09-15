@@ -14,22 +14,37 @@ class UserAuthForm extends Component {
       ],
       errorMessage: null,
       checkUsernameMessage: null,
+      checkUsernameLength: null
     }
   }
 
   handleChange = (evt, input, checkInputAvailability) => {
+    const inputLength = evt.target.value.length;
     this.props.handleFormInputChange(evt, input);
     if (checkInputAvailability) {
       fetch(`${this.props.apiURL}/api/${input}/${evt.target.value}`).then((response) => {
         return response.json();
       }).then((results) => {
+        if (inputLength >= 6) {
+          this.setState({ checkUsernameLength: null });
+        }
+
         if (results.length > 0 && input === 'username') {
-          console.log('THERE ARE RESULTS AND THE USERNAME IS TAKEN!!!!!!');
           this.setState({ checkUsernameMessage: 'This username is already in use' });
         } else {
           this.setState({ checkUsernameMessage: null });
         }
       })
+    }
+  }
+
+  checkUserNameLength = (evt) => {
+    console.log('ON BLUR VALUE', evt.target.value);
+    const inputLength = evt.target.value.length;
+    if (inputLength < 6) {
+      this.setState({ checkUsernameLength: 'Username must be at least 6 characters.' });
+    } else {
+      this.setState({ checkUsernameLength: null });
     }
   }
 
@@ -136,6 +151,7 @@ class UserAuthForm extends Component {
           name="username"
           placeholder="Username"
           onChange={(evt) => this.handleChange(evt, 'username', true)}
+          onBlur={(evt) => this.checkUserNameLength(evt)}
           value={this.props.userInfo.username} />
         <input
           type="password"
@@ -160,6 +176,9 @@ class UserAuthForm extends Component {
         <span id="exit-button" onClick={this.exitForm}><i className="fa fa-times" aria-hidden="true"></i></span>
         <form className="form">
           {form}
+          <div className={this.state.checkUsernameLength ? "error-message" : "no-errors"}>
+            {this.state.checkUsernameLength}
+          </div>
           <div className={this.state.checkUsernameMessage ? "error-message" : "no-errors"}>
             {this.state.checkUsernameMessage}
           </div>
