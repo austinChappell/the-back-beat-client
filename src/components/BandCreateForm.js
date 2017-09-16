@@ -8,6 +8,7 @@ class BandCreateForm extends Component {
     bandGenre: '',
     bandLevel: '',
     bandCity: '',
+    searchMember: ''
   }
 
   handleInputChange = (evt, input) => {
@@ -39,6 +40,24 @@ class BandCreateForm extends Component {
       console.log('PROPS', this.props);
     }).catch((err) => {
       throw err;
+    })
+  }
+
+  filterMembers = (evt) => {
+    const value = evt.target.value;
+    const url = this.props.apiURL;
+    this.setState({searchMember: value}, () => {
+      console.log('input changing');
+      fetch(`${url}/api/searchusernames/${value}`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        console.log(results.rows);
+      })
     })
   }
 
@@ -84,7 +103,14 @@ class BandCreateForm extends Component {
 
           <div className="form-group">
             <label>Members:</label>
-            <input type="text" name="member" /><button><i className="fa fa-plus" aria-hidden="true"></i></button>
+            <input
+              type="text"
+              name="member"
+              value={this.state.searchMember}
+              onChange={(evt) => this.filterMembers(evt)} />
+              <button>
+                <i className="fa fa-plus" aria-hidden="true"></i>
+              </button>
           </div>
 
           <button onClick={(evt) => this.submitForm(evt)}>Create Band</button>
