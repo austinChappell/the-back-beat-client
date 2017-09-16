@@ -63,11 +63,15 @@ class BandCreateForm extends Component {
     })
   }
 
+  addMember = (evt, userId) => {
+    console.log('User Id', userId);
+  }
+
   render() {
 
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
       return (
-        <div className="single-search-result">
+        <div className="single-search-result" onClick={(evt) => this.addMember(evt, user.id)}>
           <h4>{user.first_name} {user.last_name} <span>{user.city}</span></h4>
         </div>
       )
@@ -76,10 +80,9 @@ class BandCreateForm extends Component {
     if (this.state.searchMember.length === 0) {
       searchResultsDisplay = null
     } else if (this.state.searchMember.length > 0 && this.state.searchMemberResuts.length === 0) {
-      searchResultsDisplay = <div className="single-search-result">
-                <h4>(No results)</h4>
-              </div>
-
+      searchResultsDisplay = <div className="no-results">
+          <span>(No results)</span>
+        </div>
     }
 
     return (
@@ -127,6 +130,7 @@ class BandCreateForm extends Component {
               type="text"
               name="member"
               value={this.state.searchMember}
+              placeholder="Add Member"
               onChange={(evt) => this.filterMembers(evt)} />
             <button>
               <i className="fa fa-plus" aria-hidden="true"></i>

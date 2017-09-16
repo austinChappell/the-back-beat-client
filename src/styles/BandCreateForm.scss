@@ -38,6 +38,11 @@
           background-color: #EEE;
         }
       }
+      .no-results {
+        font-size: 16px;
+        color: gray;
+        padding: 3px;
+      }
       border: 1px solid $color-primary;
     }
     .hidden {
