@@ -18,14 +18,13 @@ class BandCreateForm extends Component {
 
   submitForm = (evt) => {
     evt.preventDefault();
-    console.log(this.props.apiURL);
     const url = this.props.apiURL;
     const formBody = {
       bandName: this.state.bandName,
       bandGenre: this.state.bandGenre,
       bandLevel: this.state.bandLevel,
       bandCity: this.state.bandCity
-    }
+    };
     fetch(`${url}/band/create`, {
       credentials: 'include',
       headers: {
@@ -36,8 +35,10 @@ class BandCreateForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.setState({bandName: '', bandGenre: '', bandLevel: '', bandCity: ''})
-      console.log(results);
+      this.setState({bandName: '', bandGenre: '', bandLevel: '', bandCity: ''});
+      console.log('PROPS', this.props);
+    }).catch((err) => {
+      throw err;
     })
   }
 

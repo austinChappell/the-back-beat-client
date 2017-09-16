@@ -69,8 +69,6 @@ class UserAuthForm extends Component {
   submitForm = (evt, userInfo) => {
     evt.preventDefault();
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
-    console.log('type is', submitType);
-    console.log('user info is ', userInfo);
     fetch(`${this.props.apiURL}/${submitType}`, {
       credentials: 'include',
       headers: {
@@ -88,7 +86,7 @@ class UserAuthForm extends Component {
       } else if (submitType === 'signup') {
         this.props.newProps.history.push('/profile');
       } else {
-        this.props.newPorps.history.goBack();
+        this.props.newProps.history.goBack();
       }
     }).catch((err) => {
       if (submitType === 'login') {
