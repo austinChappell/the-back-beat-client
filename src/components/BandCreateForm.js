@@ -36,6 +36,7 @@ class BandCreateForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
+      this.setState({bandName: '', bandGenre: '', bandLevel: '', bandCity: ''})
       console.log(results);
     })
   }
