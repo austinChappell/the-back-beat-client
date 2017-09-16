@@ -8,7 +8,8 @@ class BandCreateForm extends Component {
     bandGenre: '',
     bandLevel: '',
     bandCity: '',
-    searchMember: ''
+    searchMember: '',
+    searchMemberResuts: []
   }
 
   handleInputChange = (evt, input) => {
@@ -57,11 +58,30 @@ class BandCreateForm extends Component {
         return response.json();
       }).then((results) => {
         console.log(results.rows);
+        this.setState({searchMemberResuts: results.rows});
       })
     })
   }
 
   render() {
+
+    let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
+      return (
+        <div className="single-search-result">
+          <h4>{user.first_name} {user.last_name} <span>{user.city}</span></h4>
+        </div>
+      )
+    });
+
+    if (this.state.searchMember.length === 0) {
+      searchResultsDisplay = null
+    } else if (this.state.searchMember.length > 0 && this.state.searchMemberResuts.length === 0) {
+      searchResultsDisplay = <div className="single-search-result">
+                <h4>(No results)</h4>
+              </div>
+
+    }
+
     return (
       <div className="BandCreateForm">
         <form>
@@ -108,9 +128,13 @@ class BandCreateForm extends Component {
               name="member"
               value={this.state.searchMember}
               onChange={(evt) => this.filterMembers(evt)} />
-              <button>
-                <i className="fa fa-plus" aria-hidden="true"></i>
-              </button>
+            <button>
+              <i className="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <br />
+            <div className={this.state.searchMember.length > 0 ? "search-results-display" : "hidden"}>
+              {searchResultsDisplay}
+            </div>
           </div>
 
           <button onClick={(evt) => this.submitForm(evt)}>Create Band</button>

@@ -46,6 +46,24 @@ p {
       border: none;
       border-radius: 50%;
       margin-left: 5px; }
+  .BandCreateForm form .search-results-display {
+    display: inline-grid;
+    max-height: 60px;
+    overflow: scroll;
+    border: 1px solid #070649; }
+    .BandCreateForm form .search-results-display .single-search-result {
+      cursor: pointer;
+      padding: 0 3px; }
+      .BandCreateForm form .search-results-display .single-search-result h4 {
+        display: inline-block;
+        font-size: 16px; }
+        .BandCreateForm form .search-results-display .single-search-result h4 span {
+          color: gray;
+          font-size: 12px; }
+      .BandCreateForm form .search-results-display .single-search-result:hover {
+        background-color: #EEE; }
+  .BandCreateForm form .hidden {
+    display: none; }
 
 .BaseLayout {
   display: flex;
