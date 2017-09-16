@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import store from '../store/';
 
+import BandCreateForm from './BandCreateForm';
 import BaseLayout from './BaseLayout';
 import Home from './Home';
 import LoggedIn from './LoggedIn';
@@ -24,6 +25,7 @@ class App extends Component {
                 <Route path="/login" component={Home} />
                 <PrivateRoute path="/logout" component={Logout} />
                 <PrivateRoute path="/profile" component={Profile} />
+                <PrivateRoute path="/band/create" component={BandCreateForm} />
               </Switch>
             </BaseLayout>
           </Router>

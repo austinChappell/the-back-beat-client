@@ -29,6 +29,24 @@ p {
   display: flex;
   flex-wrap: wrap; }
 
+.BandCreateForm form {
+  width: 80%;
+  margin: 20px auto;
+  border: 1px solid #070649;
+  padding: 20px;
+  font-size: 20px; }
+  .BandCreateForm form .form-group {
+    margin: 10px; }
+    .BandCreateForm form .form-group label {
+      display: block;
+      margin-bottom: 5px; }
+    .BandCreateForm form .form-group button {
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      margin-left: 5px; }
+
 .BaseLayout {
   display: flex;
   flex-direction: column;
