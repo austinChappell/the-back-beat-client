@@ -72,6 +72,11 @@ p {
       padding: 3px; }
   .BandCreateForm form .hidden {
     display: none; }
+  .BandCreateForm form .charCount {
+    font-size: 12px;
+    margin: 0; }
+  .BandCreateForm form .lowCount {
+    color: red; }
 
 .BaseLayout {
   display: flex;

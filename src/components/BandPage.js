@@ -36,6 +36,7 @@ class BandPage extends Component {
       <h1>{bandData.band_name} - <span>{bandData.band_city}</span></h1>
       <h2>Genre: {bandData.band_genre}</h2>
       <h3>Type: {bandData.band_skill_level}</h3>
+      <p>{bandData.band_description}</p>
       <div className="members">
         <h3>Members:</h3>
         {this.state.bandInfoArr.map((member, index) => {

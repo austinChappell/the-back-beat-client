@@ -9,9 +9,11 @@ class BandCreateForm extends Component {
     bandGenre: '',
     bandLevel: '',
     bandCity: '',
+    bandDescription: '',
     searchMember: '',
     searchMemberResuts: [],
-    members: []
+    members: [],
+    descriptionCount: 500
   }
 
   componentDidMount() {
@@ -19,10 +21,16 @@ class BandCreateForm extends Component {
     let user = Object.assign({}, this.props.currentUser, { admin: true })
     members.push(user);
     this.setState({ members });
-
   }
 
   handleInputChange = (evt, input) => {
+
+    if (input === 'bandDescription') {
+      console.log('This is from the band description');
+      console.log(evt.target.value.length);
+      this.setState({ descriptionCount: 500 - evt.target.value.length });
+    }
+
     const updateStateObject = {};
     updateStateObject[input] = evt.target.value;
     this.setState(updateStateObject);
@@ -84,6 +92,16 @@ class BandCreateForm extends Component {
     const member = Object.assign({}, user, { admin: false });
     members.push(member);
     this.setState({ members, searchMember: '' });
+  }
+
+  removeMember = (userId) => {
+    let members = this.state.members.slice();
+    let memberToRemove = members.find((member) => {
+      return member.id === userId;
+    });
+    let index = members.indexOf(memberToRemove);
+    members.splice(index, 1);
+    this.setState({ members });
   }
 
   addMembersToBand = (bandId, members) => {
@@ -166,10 +184,26 @@ class BandCreateForm extends Component {
           </div>
 
           <div className="form-group">
+            <label>Description:</label>
+            <textarea name="description" value={this.state.bandDescription} onChange={(evt) => this.handleInputChange(evt, 'bandDescription')}>
+            </textarea>
+            <p className={this.state.descriptionCount > 20 ? "charCount" : "charCount lowCount"}>Characters Remaining: {this.state.descriptionCount}</p>
+          </div>
+
+          <div className="form-group">
             <label>Members:</label>
             <ul>
               {this.state.members.map((member) => {
-                let adminLabel = member.admin ? <span>(admin)</span> : null;
+                let adminLabel = member.admin ?
+                <span>(admin)</span>
+                :
+                <span>
+                  <i
+                    className="fa fa-times-circle"
+                    aria-hidden="true"
+                    onClick={() => this.removeMember(member.id)}>
+                  </i>
+                </span>;
                 return (
                   <div key={member.id} className="member">
                     <h3>{member.first_name} {member.last_name} {adminLabel}</h3>
@@ -183,9 +217,6 @@ class BandCreateForm extends Component {
               value={this.state.searchMember}
               placeholder="Add Member"
               onChange={(evt) => this.filterMembers(evt)} />
-            <button>
-              <i className="fa fa-plus" aria-hidden="true"></i>
-            </button>
             <br />
             <div className={this.state.searchMember.length > 0 ? "search-results-display" : "hidden"}>
               {searchResultsDisplay}

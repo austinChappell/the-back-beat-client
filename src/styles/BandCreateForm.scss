@@ -54,5 +54,12 @@
     .hidden {
       display: none;
     }
+    .charCount {
+      font-size: 12px;
+      margin: 0;
+    }
+    .lowCount {
+      color: red;
+    }
   }
 }
