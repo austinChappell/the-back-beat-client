@@ -27,6 +27,7 @@ class App extends Component {
                 <PrivateRoute path="/logout" component={Logout} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/band/create" component={BandCreateForm} />
+                <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
               </Switch>
             </BaseLayout>

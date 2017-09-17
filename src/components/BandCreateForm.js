@@ -13,14 +13,109 @@ class BandCreateForm extends Component {
     searchMember: '',
     searchMemberResuts: [],
     members: [],
-    descriptionCount: 500
+    descriptionCount: 500,
+    isEditing: false,
+    genreOptionsArr: [
+      {
+        value: '',
+        text: '---'
+      },
+      {
+        value: 'Rock',
+        text: 'Rock',
+      },
+      {
+        value: 'Jazz',
+        text: 'Jazz',
+      },
+      {
+        value: 'Country',
+        text: 'Country'
+      }
+    ],
+    skillOptionsArr: [
+      {
+        value: '',
+        text: '---'
+      },
+      {
+        value: 'Professional',
+        text: 'Professional'
+      },
+      {
+        value: 'Semi-Professional',
+        text: 'Semi-Professional'
+      },
+      {
+        value: 'Amateur',
+        text: 'Amateur'
+      },
+      {
+        value: 'Novice',
+        text: 'Novice'
+      }
+    ],
+    cityOptionsArr: [
+      {
+        value: '',
+        text: '---'
+      },
+      {
+        value: 'Austin, TX',
+        text: 'Austin, TX'
+      },
+      {
+        value: 'Dallas, TX',
+        text: 'Dallas, TX'
+      }
+    ]
   }
 
   componentDidMount() {
+    if (this.props.match.params.bandId) {
+      this.loadBandData(this.props.match.params.bandId);
+    }
     let members = this.state.members.slice();
     let user = Object.assign({}, this.props.currentUser, { admin: true })
     members.push(user);
     this.setState({ members });
+  }
+
+  loadBandData = (bandId) => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/band/${bandId}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('BAND DATA', results.rows);
+      const bandData = results.rows[0];
+      const members = [];
+      results.rows.forEach((member) => {
+        const newMember = {
+          id: member.id,
+          first_name: member.first_name,
+          last_name: member.last_name
+        }
+        if (member.id === bandData.band_admin_id) {
+          newMember.admin = true;
+        }
+        members.push(newMember)
+      });
+      const bandInfo = {
+        bandName: bandData.band_name,
+        bandGenre: bandData.band_genre,
+        bandLevel: bandData.band_skill_level,
+        bandCity: bandData.band_city,
+        bandDescription: bandData.band_description,
+        members,
+        isEditing: true
+      };
+      this.setState(bandInfo);
+    })
   }
 
   handleInputChange = (evt, input) => {
@@ -39,13 +134,15 @@ class BandCreateForm extends Component {
   submitForm = (evt) => {
     evt.preventDefault();
     const url = this.props.apiURL;
+    const submitType = this.state.isEditing ? `edit/${this.props.match.params.bandId}` : 'create';
     const formBody = {
       bandName: this.state.bandName,
       bandGenre: this.state.bandGenre,
       bandLevel: this.state.bandLevel,
-      bandCity: this.state.bandCity
+      bandCity: this.state.bandCity,
+      bandDescription: this.state.bandDescription
     };
-    fetch(`${url}/band/create`, {
+    fetch(`${url}/band/${submitType}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -144,6 +241,8 @@ class BandCreateForm extends Component {
         </div>
     }
 
+    let submitButtonText = this.state.isEditing ? 'Update Band' : 'Create Band';
+
     return (
       <div className="BandCreateForm">
         <form>
@@ -156,30 +255,39 @@ class BandCreateForm extends Component {
           <div className="form-group">
             <label>Genre:</label>
             <select name="genre" value={this.state.bandGenre} onChange={(evt) => this.handleInputChange(evt, 'bandGenre')}>
-              <option value={null}>----</option>
-              <option value="rock">Rock</option>
-              <option value="jazz">Jazz</option>
-              <option value="country">Country</option>
+              {this.state.genreOptionsArr.map((genre) => {
+                if (genre.value === this.state.bandGenre) {
+                  return <option value={genre.value} selected>{genre.text}</option>;
+                } else {
+                  return <option value={genre.value}>{genre.text}</option>
+                }
+              })}
             </select>
           </div>
 
           <div className="form-group">
             <label>Skill Level:</label>
             <select name="level" value={this.state.bandLevel} onChange={(evt) => this.handleInputChange(evt, 'bandLevel')}>
-              <option value={null}>----</option>
-              <option value="pro">Professional</option>
-              <option value="semi-pro">Semi-Professional</option>
-              <option value="amateur">Amateur</option>
-              <option value="novice">Novice</option>
+              {this.state.skillOptionsArr.map((skill) => {
+                if (skill.value === this.state.bandLevel) {
+                  return <option value={skill.value} selected>{skill.text}</option>;
+                } else {
+                  return <option value={skill.value}>{skill.text}</option>;
+                }
+              })}
             </select>
           </div>
 
           <div className="form-group">
             <label>City:</label>
             <select name="city" value={this.state.bandCity} onChange={(evt) => this.handleInputChange(evt, 'bandCity')}>
-              <option value={null}>----</option>
-              <option value="Austin, TX">Austin, TX</option>
-              <option value="Dallas, TX">Dallas, TX</option>
+              {this.state.cityOptionsArr.map((city) => {
+                if (city.value === this.state.bandCity) {
+                  return <option value={city.value} selected>{city.text}</option>;
+                } else {
+                  return <option value={city.text}>{city.text}</option>
+                }
+              })}
             </select>
           </div>
 
@@ -223,7 +331,7 @@ class BandCreateForm extends Component {
             </div>
           </div>
 
-          <button onClick={(evt) => this.submitForm(evt)}>Create Band</button>
+          <button onClick={(evt) => this.submitForm(evt)}>{ submitButtonText }</button>
 
         </form>
       </div>

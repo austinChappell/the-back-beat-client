@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 class BandPage extends Component {
 
   state = {
@@ -27,7 +29,10 @@ class BandPage extends Component {
     let editButton;
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
-      editButton = this.props.currentUser.id === bandData.band_admin_id ? <button>Edit Band</button> : null;
+      editButton = this.props.currentUser.id === bandData.band_admin_id ?
+      <Link to={`/band/${bandData.band_id}/edit`}>Edit Band</Link>
+      :
+      null;
     }
 
     let bandInfo = bandData === undefined ? null :
