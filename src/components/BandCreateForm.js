@@ -9,7 +9,8 @@ class BandCreateForm extends Component {
     bandLevel: '',
     bandCity: '',
     searchMember: '',
-    searchMemberResuts: []
+    searchMemberResuts: [],
+    members: []
   }
 
   handleInputChange = (evt, input) => {
@@ -37,6 +38,8 @@ class BandCreateForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
+      console.log('RESULTS ARE', results);
+      this.addMembersToBand(results.rows[0].band_id, this.state.members);
       this.setState({bandName: '', bandGenre: '', bandLevel: '', bandCity: ''});
       console.log('PROPS', this.props);
     }).catch((err) => {
@@ -63,15 +66,39 @@ class BandCreateForm extends Component {
     })
   }
 
-  addMember = (evt, userId) => {
-    console.log('User Id', userId);
+  addMember = (evt, user) => {
+    console.log('User Id', user);
+    let members = this.state.members.slice();
+    members.push(user);
+    this.setState({ members, searchMember: '' })
+  }
+
+  addMembersToBand = (bandId, members) => {
+    console.log('BAND ID IS', bandId);
+    const url = this.props.apiURL;
+    this.state.members.forEach((member) => {
+      let memberId = member.id;
+      fetch(`${url}/editband/${bandId}/addmember/${memberId}`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ bandId, memberId })
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        console.log('ADD MEMBER RESULTS', results);
+        this.setState({ members: [] });
+      })
+    })
   }
 
   render() {
 
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
       return (
-        <div className="single-search-result" onClick={(evt) => this.addMember(evt, user.id)}>
+        <div className="single-search-result" onClick={(evt) => this.addMember(evt, user)}>
           <h4>{user.first_name} {user.last_name} <span>{user.city}</span></h4>
         </div>
       )
@@ -126,6 +153,15 @@ class BandCreateForm extends Component {
 
           <div className="form-group">
             <label>Members:</label>
+            <ul>
+              {this.state.members.map((member) => {
+                return (
+                  <div key={member.id} className="member">
+                    <h3>{member.first_name} {member.last_name}</h3>
+                  </div>
+                )
+              })}
+            </ul>
             <input
               type="text"
               name="member"
