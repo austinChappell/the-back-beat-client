@@ -24,8 +24,10 @@ class BandPage extends Component {
 
   render() {
     let bandData;
+    let editButton;
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
+      editButton = this.props.currentUser.id === bandData.band_admin_id ? <button>Edit Band</button> : null;
     }
 
     let bandInfo = bandData === undefined ? null :
@@ -43,6 +45,7 @@ class BandPage extends Component {
           )
         })}
       </div>
+      { editButton }
     </div>
 
     return (
@@ -55,7 +58,8 @@ class BandPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    apiURL: state.apiURL
+    apiURL: state.apiURL,
+    currentUser: state.currentUser
   }
 }
 
