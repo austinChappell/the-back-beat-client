@@ -78,6 +78,9 @@ p {
   .BandCreateForm form .lowCount {
     color: red; }
 
+.BandPage .hide {
+  display: none; }
+
 .BaseLayout {
   display: flex;
   flex-direction: column;

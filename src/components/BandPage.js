@@ -9,7 +9,8 @@ class BandPage extends Component {
     bandInfoArr: [],
     searchMember: '',
     searchMemberResuts: [],
-    members: []
+    members: [],
+    showDeleteForm: false
   }
 
   componentDidMount() {
@@ -92,6 +93,29 @@ class BandPage extends Component {
     })
   }
 
+  toggleDeleteForm = () => {
+    console.log('DELETE BUTTON CLICKED');
+    this.setState({showDeleteForm: !this.state.showDeleteForm});
+  }
+
+  deleteBand = () => {
+    const url = this.props.apiURL;
+    const bandId = this.props.match.params.bandId;
+    fetch(`${url}/band/delete/${bandId}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+      body: JSON.stringify({ bandId })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('THE FUNCTION MADE IT THIS FAR');
+      this.props.history.push('/');
+    })
+  }
+
   render() {
 
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
@@ -113,6 +137,8 @@ class BandPage extends Component {
     let bandData;
     let addMembers;
     let editButton;
+    let deleteButton;
+    let confirmDeleteForm;
 
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
@@ -135,6 +161,24 @@ class BandPage extends Component {
 
       editButton = this.props.currentUser.id === bandData.band_admin_id ?
       <Link to={`/band/${bandData.band_id}/edit`}>Edit Band</Link>
+      :
+      null;
+
+      deleteButton = this.props.currentUser.id === bandData.band_admin_id
+      ?
+      <button
+        className={this.state.showDeleteForm ? "hide" : ""}
+        onClick={this.toggleDeleteForm}>Delete Band</button>
+      :
+      null;
+
+      confirmDeleteForm = this.props.currentUser.id === bandData.band_admin_id
+      ?
+      <div className={this.state.showDeleteForm ? "" : "hide"}>
+        <h3>Are you sure you want to permanently delete "{bandData.band_name}"?</h3>
+        <button onClick={this.deleteBand}>Yes, delete</button>
+        <button onClick={this.toggleDeleteForm}>Nevermind</button>
+      </div>
       :
       null;
     }
@@ -169,6 +213,8 @@ class BandPage extends Component {
         { addMembers }
       </div>
       { editButton }
+      { deleteButton }
+      { confirmDeleteForm }
 
     </div>
 
