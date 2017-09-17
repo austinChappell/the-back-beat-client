@@ -10,7 +10,6 @@ class BandPage extends Component {
   componentDidMount() {
     const url = this.props.apiURL;
     const bandId = this.props.match.params.bandId;
-    console.log('FUNCTION RUNNING');
     fetch(`${url}/api/band/${bandId}`, {
       credentials: 'include',
       headers: {
@@ -19,13 +18,11 @@ class BandPage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('BAND PAGE RESULTS', results);
       this.setState({ bandInfoArr: results.rows });
     })
   }
 
   render() {
-    console.log('BAND PAGE PROPS', this.props.match.params.bandId);
     let bandData;
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
@@ -40,15 +37,13 @@ class BandPage extends Component {
       <div className="members">
         <h3>Members:</h3>
         {this.state.bandInfoArr.map((member, index) => {
-          let adminLabel = member.admin ? <span>(admin)</span> : null;
+          let adminLabel = bandData.band_admin_id === member.id ? <span>(admin)</span> : null;
           return (
             <h4 key={index}>{member.first_name} {member.last_name} - {member.city} {adminLabel}</h4>
           )
         })}
       </div>
     </div>
-
-    console.log('BAND INFO', bandInfo);
 
     return (
       <div className="BandPage">
