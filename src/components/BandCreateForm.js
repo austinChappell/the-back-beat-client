@@ -135,6 +135,7 @@ class BandCreateForm extends Component {
     evt.preventDefault();
     const url = this.props.apiURL;
     const submitType = this.state.isEditing ? `edit/${this.props.match.params.bandId}` : 'create';
+    const fetchMethod = this.state.isEditing ? 'PUT' : 'POST';
     const formBody = {
       bandName: this.state.bandName,
       bandGenre: this.state.bandGenre,
@@ -147,7 +148,7 @@ class BandCreateForm extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      method: 'POST',
+      method: fetchMethod,
       body: JSON.stringify(formBody)
     }).then((response) => {
       return response.json();
