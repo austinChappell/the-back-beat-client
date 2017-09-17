@@ -16,58 +16,22 @@ class BandCreateForm extends Component {
     descriptionCount: 500,
     isEditing: false,
     genreOptionsArr: [
-      {
-        value: '',
-        text: '---'
-      },
-      {
-        value: 'Rock',
-        text: 'Rock',
-      },
-      {
-        value: 'Jazz',
-        text: 'Jazz',
-      },
-      {
-        value: 'Country',
-        text: 'Country'
-      }
+      { value: '', text: '---' },
+      { value: 'Rock', text: 'Rock' },
+      { value: 'Jazz', text: 'Jazz'},
+      { value: 'Country', text: 'Country'}
     ],
     skillOptionsArr: [
-      {
-        value: '',
-        text: '---'
-      },
-      {
-        value: 'Professional',
-        text: 'Professional'
-      },
-      {
-        value: 'Semi-Professional',
-        text: 'Semi-Professional'
-      },
-      {
-        value: 'Amateur',
-        text: 'Amateur'
-      },
-      {
-        value: 'Novice',
-        text: 'Novice'
-      }
+      { value: '', text: '---' },
+      { value: 'Professional', text: 'Professional' },
+      { value: 'Semi-Professional', text: 'Semi-Professional' },
+      { value: 'Amateur', text: 'Amateur' },
+      { value: 'Novice', text: 'Novice' }
     ],
     cityOptionsArr: [
-      {
-        value: '',
-        text: '---'
-      },
-      {
-        value: 'Austin, TX',
-        text: 'Austin, TX'
-      },
-      {
-        value: 'Dallas, TX',
-        text: 'Dallas, TX'
-      }
+      { value: '', text: '---' },
+      { value: 'Austin, TX', text: 'Austin, TX' },
+      { value: 'Dallas, TX', text: 'Dallas, TX' }
     ]
   }
 
@@ -165,43 +129,12 @@ class BandCreateForm extends Component {
     })
   }
 
-  filterMembers = (evt) => {
-    const value = evt.target.value;
-    const url = this.props.apiURL;
-    this.setState({searchMember: value}, () => {
-      console.log('input changing');
-      if (this.state.searchMember !== '') {
-        fetch(`${url}/api/searchusernames/${value}`, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then((response) => {
-          return response.json();
-        }).then((results) => {
-          console.log(results.rows);
-          this.setState({searchMemberResuts: results.rows});
-        })
-      }
-    })
-  }
-
   addMember = (evt, user) => {
     console.log('User Id', user);
     let members = this.state.members.slice();
     const member = Object.assign({}, user, { admin: false });
     members.push(member);
     this.setState({ members, searchMember: '' });
-  }
-
-  removeMember = (userId) => {
-    let members = this.state.members.slice();
-    let memberToRemove = members.find((member) => {
-      return member.id === userId;
-    });
-    let index = members.indexOf(memberToRemove);
-    members.splice(index, 1);
-    this.setState({ members });
   }
 
   addMembersToBand = (bandId, members) => {
