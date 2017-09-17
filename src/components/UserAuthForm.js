@@ -163,8 +163,8 @@ class UserAuthForm extends Component {
           onChange={(evt) => this.props.handleFormInputChange(evt, 'city')}
           value={this.props.userInfo.city}>
           <option value="">City...</option>
-          <option value="AustinTX">Austin, TX</option>
-          <option value="DallasTX">Dallas, TX</option>
+          <option value="Austin, TX">Austin, TX</option>
+          <option value="Dallas, TX">Dallas, TX</option>
         </select>
       </div>
 

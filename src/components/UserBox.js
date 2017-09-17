@@ -26,18 +26,8 @@ class UserBox extends Component {
       console.log('DATA', data);
       this.setState({
         users: data
-      // },
-    // this.startCounter());
-    })
-  // }
-
-  // const startCounter = () => {
-  //   setInterval(() => {
-  //     this.setState({
-  //       userIndex: this.state.userIndex + 1
       });
-  //     console.log('User Index', this.state.userIndex);
-  //   }, 3000)
+    });
   }
 
   goToNextUser = () => {
@@ -61,19 +51,20 @@ class UserBox extends Component {
     console.log('USER LENGTH', this.state.users.length);
     return (
       <div className="UserBox">
-        <h1>UserBox Component</h1>
+        <h2>Browse Musicians</h2>
         <div className="user-box-results">
           {this.state.users.map((user, index) => {
             return (
               <div
                 key={index}
                 className={ index === this.state.userIndex ? "single-user" : "hidden" }>
-                <h2>{user.first_name} {user.last_name}</h2>
-                <span><strong>Email:</strong> {user.email}</span> <br />
+                <h3>{user.first_name} {user.last_name}</h3>
+                <span><strong>City:</strong> {user.city}</span> <br />
                 <span><strong>Skill:</strong> {user.skill_level}</span>
-                <hr />
-                <button onClick={this.goToPrevUser}>Prev</button>
-                <button onClick={this.goToNextUser}>Next</button>
+                <div className="buttons">
+                  <button onClick={this.goToPrevUser}>Prev</button>
+                  <button onClick={this.goToNextUser}>Next</button>
+                </div>
               </div>
             )
           })}

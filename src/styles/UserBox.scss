@@ -1,5 +1,16 @@
-.UserBox {  
+.UserBox {
   .hidden {
     display: none;
+  }
+  h2 {
+    color: $color-primary;
+  }
+  .user-box-results {
+    h3 {
+      color: $color-tertiary;
+    }
+    strong {
+      color: $color-primary;
+    }
   }
 }

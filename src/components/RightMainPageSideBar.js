@@ -7,7 +7,6 @@ class RightMainPageSideBar extends Component {
   render() {
     return (
       <div className="RightMainPageSideBar">
-        Right Side Bar Component
         <UserBox />
       </div>
     )

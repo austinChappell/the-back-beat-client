@@ -40,6 +40,10 @@ p {
     .BandCreateForm form .form-group label {
       display: block;
       margin-bottom: 5px; }
+    .BandCreateForm form .form-group ul {
+      padding: 0; }
+      .BandCreateForm form .form-group ul h3 {
+        font-size: 14px; }
     .BandCreateForm form .form-group button {
       background-color: green;
       color: white;
@@ -428,6 +432,15 @@ p {
 
 .UserBox .hidden {
   display: none; }
+
+.UserBox h2 {
+  color: #070649; }
+
+.UserBox .user-box-results h3 {
+  color: #9A6197; }
+
+.UserBox .user-box-results strong {
+  color: #070649; }
 
 .UserProfile .profile-info {
   margin-top: 20px; }

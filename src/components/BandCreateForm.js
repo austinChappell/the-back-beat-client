@@ -160,8 +160,8 @@ class BandCreateForm extends Component {
             <label>City:</label>
             <select name="city" value={this.state.bandCity} onChange={(evt) => this.handleInputChange(evt, 'bandCity')}>
               <option value={null}>----</option>
-              <option value="AustinTX">Austin, TX</option>
-              <option value="DallasTX">Dallas, TX</option>
+              <option value="Austin, TX">Austin, TX</option>
+              <option value="Dallas, TX">Dallas, TX</option>
             </select>
           </div>
 
