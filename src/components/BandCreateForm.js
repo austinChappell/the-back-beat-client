@@ -301,39 +301,6 @@ class BandCreateForm extends Component {
             <p className={this.state.descriptionCount > 20 ? "charCount" : "charCount lowCount"}>Characters Remaining: {this.state.descriptionCount}</p>
           </div>
 
-          <div className="form-group">
-            <label>Members:</label>
-            <ul>
-              {this.state.members.map((member) => {
-                let adminLabel = member.admin ?
-                <span>(admin)</span>
-                :
-                <span>
-                  <i
-                    className="fa fa-times-circle"
-                    aria-hidden="true"
-                    onClick={() => this.removeMember(member.id)}>
-                  </i>
-                </span>;
-                return (
-                  <div key={member.id} className="member">
-                    <h3>{member.first_name} {member.last_name} {adminLabel}</h3>
-                  </div>
-                )
-              })}
-            </ul>
-            <input
-              type="text"
-              name="member"
-              value={this.state.searchMember}
-              placeholder="Add Member"
-              onChange={(evt) => this.filterMembers(evt)} />
-            <br />
-            <div className={this.state.searchMember.length > 0 ? "search-results-display" : "hidden"}>
-              {searchResultsDisplay}
-            </div>
-          </div>
-
           <button onClick={(evt) => this.submitForm(evt)}>{ submitButtonText }</button>
 
         </form>
