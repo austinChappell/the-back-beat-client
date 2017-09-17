@@ -3,15 +3,37 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class BandBox extends Component {
+
+  state = {
+    bands: []
+  }
+
+  componentDidMount() {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/bands`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('FETCH BANDS RESULTS', results);
+      this.setState({ bands: results.rows });
+    })
+
+  }
+
   render() {
     return (
       <div className="BandBox">
         <h2>Your Bands</h2>
         <div className="band-results">
-          {this.props.userBands.map((band, index) => {
+          {this.state.bands.map((band, index) => {
             return (
               <div key={index} className="band">
-                <h3><Link to={band.url}>{band.name}</Link></h3>
+                <h3><Link to={`/band/${band.band_id}`}>{band.band_name}</Link></h3>
               </div>
             )
           })}
@@ -23,7 +45,7 @@ class BandBox extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    userBands: state.userBands
+    apiURL: state.apiURL,
   }
 }
 

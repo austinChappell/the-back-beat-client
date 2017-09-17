@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import store from '../store/';
 
 import BandCreateForm from './BandCreateForm';
+import BandPage from './BandPage';
 import BaseLayout from './BaseLayout';
 import Home from './Home';
 import LoggedIn from './LoggedIn';
@@ -26,6 +27,7 @@ class App extends Component {
                 <PrivateRoute path="/logout" component={Logout} />
                 <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/band/create" component={BandCreateForm} />
+                <PrivateRoute path="/band/:bandId" component={BandPage} />
               </Switch>
             </BaseLayout>
           </Router>

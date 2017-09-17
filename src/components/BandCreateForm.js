@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 class BandCreateForm extends Component {
 
   state = {
+    bands: [],
     bandName: '',
     bandGenre: '',
     bandLevel: '',
@@ -11,6 +12,14 @@ class BandCreateForm extends Component {
     searchMember: '',
     searchMemberResuts: [],
     members: []
+  }
+
+  componentDidMount() {
+    let members = this.state.members.slice();
+    let user = Object.assign({}, this.props.currentUser, { admin: true })
+    members.push(user);
+    this.setState({ members });
+
   }
 
   handleInputChange = (evt, input) => {
@@ -40,8 +49,9 @@ class BandCreateForm extends Component {
     }).then((results) => {
       console.log('RESULTS ARE', results);
       this.addMembersToBand(results.rows[0].band_id, this.state.members);
-      this.setState({bandName: '', bandGenre: '', bandLevel: '', bandCity: ''});
-      console.log('PROPS', this.props);
+      let bands = this.state.bands.slice();
+      bands.push(results.rows[0]);
+      this.setState({ bands, bandName: '', bandGenre: '', bandLevel: '', bandCity: '' });
     }).catch((err) => {
       throw err;
     })
@@ -52,25 +62,28 @@ class BandCreateForm extends Component {
     const url = this.props.apiURL;
     this.setState({searchMember: value}, () => {
       console.log('input changing');
-      fetch(`${url}/api/searchusernames/${value}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((response) => {
-        return response.json();
-      }).then((results) => {
-        console.log(results.rows);
-        this.setState({searchMemberResuts: results.rows});
-      })
+      if (this.state.searchMember !== '') {
+        fetch(`${url}/api/searchusernames/${value}`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then((response) => {
+          return response.json();
+        }).then((results) => {
+          console.log(results.rows);
+          this.setState({searchMemberResuts: results.rows});
+        })
+      }
     })
   }
 
   addMember = (evt, user) => {
     console.log('User Id', user);
     let members = this.state.members.slice();
-    members.push(user);
-    this.setState({ members, searchMember: '' })
+    const member = Object.assign({}, user, { admin: false });
+    members.push(member);
+    this.setState({ members, searchMember: '' });
   }
 
   addMembersToBand = (bandId, members) => {
@@ -90,6 +103,7 @@ class BandCreateForm extends Component {
       }).then((results) => {
         console.log('ADD MEMBER RESULTS', results);
         this.setState({ members: [] });
+        this.props.history.push('/');
       })
     })
   }
@@ -155,9 +169,10 @@ class BandCreateForm extends Component {
             <label>Members:</label>
             <ul>
               {this.state.members.map((member) => {
+                let adminLabel = member.admin ? <span>(admin)</span> : null;
                 return (
                   <div key={member.id} className="member">
-                    <h3>{member.first_name} {member.last_name}</h3>
+                    <h3>{member.first_name} {member.last_name} {adminLabel}</h3>
                   </div>
                 )
               })}
@@ -187,7 +202,8 @@ class BandCreateForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    apiURL: state.apiURL
+    apiURL: state.apiURL,
+    currentUser: state.currentUser
   }
 }
 

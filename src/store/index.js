@@ -35,13 +35,6 @@ const initialState = {
     {title: 'Andy\'s', date: '9/22', time:'7:00pm', location: 'Ashley\'s house'},
     {title: 'House of Blues', date:'9/28', time: '8:00pm', location: 'Silver Studios in Dallas'}
   ],
-  userBands: [
-    {name: 'Ashley Gatta and The Free People', url: '/ashleygattandthefreepeople'},
-    {name: 'Karyna Micaela', url: '/karynamicaela'},
-    {name: 'Zach Balch', url: '/zachbalch'},
-    {name: 'Mouse Rat', url: '/mouserat'},
-    {name: 'Stevie Wonder', url: '/steviewonder'}
-  ]
 }
 
 const reducer = (state = initialState, action) => {
