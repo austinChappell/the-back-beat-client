@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class ConnectResults extends Component {
   render() {
@@ -11,7 +12,7 @@ class ConnectResults extends Component {
       searchResults = this.props.data.map((user) => {
         return (
           <div className="single-search-result">
-            <h2>{user.first_name} {user.last_name} - {user.city}</h2>
+            <h2><Link to={`profile/${user.username}`}>{user.first_name} {user.last_name} - {user.city}</Link></h2>
           </div>
         )
       });
@@ -19,7 +20,7 @@ class ConnectResults extends Component {
       searchResults = this.props.data.map((band) => {
         return (
           <div className="single-search-result">
-            <h2>{band.band_name} - {band.band_city}</h2>
+            <h2><Link to={`/band/${band.band_id}`}>{band.band_name} - {band.band_city}</Link></h2>
           </div>
         )
       });
