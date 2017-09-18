@@ -40,7 +40,7 @@ class BandCreateForm extends Component {
       this.loadBandData(this.props.match.params.bandId);
     }
     let members = this.state.members.slice();
-    let user = Object.assign({}, this.props.currentUser, { admin: true })
+    let user = Object.assign({}, this.props.loggedInUser, { admin: true })
     members.push(user);
     this.setState({ members });
   }
@@ -249,7 +249,8 @@ class BandCreateForm extends Component {
 const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    loggedInUser: state.loggedInUser
   }
 }
 

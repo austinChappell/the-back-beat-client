@@ -143,7 +143,7 @@ class BandPage extends Component {
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
 
-      addMembers = this.props.currentUser.id === bandData.band_admin_id ?
+      addMembers = this.props.loggedInUser.id === bandData.band_admin_id ?
       <div>
         <input
           type="text"
@@ -159,12 +159,12 @@ class BandPage extends Component {
       :
       null;
 
-      editButton = this.props.currentUser.id === bandData.band_admin_id ?
+      editButton = this.props.loggedInUser.id === bandData.band_admin_id ?
       <Link to={`/band/${bandData.band_id}/edit`}>Edit Band</Link>
       :
       null;
 
-      deleteButton = this.props.currentUser.id === bandData.band_admin_id
+      deleteButton = this.props.loggedInUser.id === bandData.band_admin_id
       ?
       <button
         className={this.state.showDeleteForm ? "hide" : ""}
@@ -172,7 +172,7 @@ class BandPage extends Component {
       :
       null;
 
-      confirmDeleteForm = this.props.currentUser.id === bandData.band_admin_id
+      confirmDeleteForm = this.props.loggedInUser.id === bandData.band_admin_id
       ?
       <div className={this.state.showDeleteForm ? "" : "hide"}>
         <h3>Are you sure you want to permanently delete "{bandData.band_name}"?</h3>
@@ -194,7 +194,7 @@ class BandPage extends Component {
         {this.state.members.map((member, index) => {
           let removeButton;
 
-          removeButton = this.props.currentUser.id === bandData.band_admin_id
+          removeButton = this.props.loggedInUser.id === bandData.band_admin_id
           ?
           <i className="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeMember(member.id, index)}></i>
           :
@@ -229,7 +229,7 @@ class BandPage extends Component {
 const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
-    currentUser: state.currentUser
+    loggedInUser: state.loggedInUser
   }
 }
 
