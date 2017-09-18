@@ -84,7 +84,7 @@ class UserAuthForm extends Component {
       if (submitType === 'login') {
         this.props.newProps.history.push('/');
       } else if (submitType === 'signup') {
-        this.props.newProps.history.push('/profile');
+        this.props.newProps.history.push(`/profile/${userInfo.username}`);
       } else {
         this.props.newProps.history.goBack();
       }

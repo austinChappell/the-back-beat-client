@@ -120,10 +120,14 @@ class BandCreateForm extends Component {
       return response.json();
     }).then((results) => {
       console.log('RESULTS ARE', results);
-      this.addMembersToBand(results.rows[0].band_id, this.state.members);
       let bands = this.state.bands.slice();
       bands.push(results.rows[0]);
       this.setState({ bands, bandName: '', bandGenre: '', bandLevel: '', bandCity: '' });
+      if (this.state.isEditing === false) {
+        this.addMembersToBand(results.rows[0].band_id, this.state.members);
+      } else {
+        this.props.history.push(`/band/${results.rows[0].band_id}`)
+      }
     }).catch((err) => {
       throw err;
     })

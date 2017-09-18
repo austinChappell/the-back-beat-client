@@ -6,8 +6,9 @@
     color: $color-primary;
   }
   .user-box-results {
-    h3 {
+    h3 a {
       color: $color-tertiary;
+      text-decoration: none;
     }
     strong {
       color: $color-primary;

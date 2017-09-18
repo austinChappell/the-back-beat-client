@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ProfileInfo from './ProfileInfo';
+import MyProfileInfo from './MyProfileInfo';
 
-class UserProfile extends Component {
+class MyUserProfile extends Component {
   render() {
     const user = this.props.user;
     return (
@@ -18,10 +18,10 @@ class UserProfile extends Component {
       <div className="CenterComponent UserProfile">
         This is the userprofile component
         <h2>{user.first_name} {user.last_name}</h2>
-        <ProfileInfo />
+        <MyProfileInfo />
       </div>
     )
   }
 }
 
-export default UserProfile;
+export default MyUserProfile;

@@ -444,8 +444,9 @@ p {
 .UserBox h2 {
   color: #070649; }
 
-.UserBox .user-box-results h3 {
-  color: #9A6197; }
+.UserBox .user-box-results h3 a {
+  color: #9A6197;
+  text-decoration: none; }
 
 .UserBox .user-box-results strong {
   color: #070649; }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class UserBox extends Component {
 
@@ -58,7 +60,7 @@ class UserBox extends Component {
               <div
                 key={index}
                 className={ index === this.state.userIndex ? "single-user" : "hidden" }>
-                <h3>{user.first_name} {user.last_name}</h3>
+                <h3><Link onClick={() => this.props.updateUser(user)} to={`/profile/${user.username}`}>{user.first_name} {user.last_name}</Link></h3>
                 <span><strong>City:</strong> {user.city}</span> <br />
                 <span><strong>Skill:</strong> {user.skill_level}</span>
                 <div className="buttons">
@@ -74,4 +76,19 @@ class UserBox extends Component {
   }
 }
 
-export default UserBox;
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => {
+      const action = { type: 'UPDATE_USER', user };
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserBox);

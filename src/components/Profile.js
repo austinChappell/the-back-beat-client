@@ -8,9 +8,11 @@ import UserProfile from './UserProfile';
 class Profile extends Component {
 
   componentDidMount() {
-    const url = 'http://localhost:6001/api/profile';
+    // const url = 'http://localhost:6001/api/profile';
+    const url = this.props.apiURL;
     console.log('URL', url);
-    fetch(url, {
+    const username = this.props.match.params.username;
+    fetch(`${url}/api/profile/${username}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -23,6 +25,10 @@ class Profile extends Component {
       console.log('FETCH RESULTS', results);
       this.props.updateUser(results);
     })
+  }
+
+  componentWillUnmount() {
+    this.props.clearUser();
   }
 
   render() {
@@ -38,6 +44,7 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     currentUsername: state.currentUsername,
     currentUser: state.currentUser
   }
@@ -47,6 +54,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (results) => {
       const action = { type: 'UPDATE_USER', user: results };
+      dispatch(action);
+    },
+    clearUser: () => {
+      const action = { type: 'UPDATE_USER', user: {} };
       dispatch(action);
     }
   }

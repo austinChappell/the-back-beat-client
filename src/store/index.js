@@ -14,6 +14,7 @@ const initialState = {
     city: '',
     skill_level: ''
   },
+  loggedInUser: {},
   showUserAuthForm: false,
   userAuthType: '',
   userInfo: {
@@ -48,6 +49,9 @@ const reducer = (state = initialState, action) => {
     username: ''
   }
   switch (action.type) {
+    case 'ADD_LOGGED_IN_USER':
+      const loggedInUser = action.user;
+      return Object.assign({}, state, { loggedInUser });
     case 'CHANGE_PROFILE_CONTENT':
       return Object.assign({}, state, { profileContent: action.value });
     case 'HANDLE_FORM_INPUT_CHANGE':
@@ -66,7 +70,7 @@ const reducer = (state = initialState, action) => {
     case 'UPDATE_USER':
       return Object.assign({}, state, { currentUser: action.user });
     case 'USER_AUTH_FORM_SUBMIT':
-      return Object.assign({}, state, { authorized: true, currentUsername: action.username, showUserAuthForm: false, userAuthType: '', userInfo: blankUserInfo });
+      return Object.assign({}, state, { authorized: true, currentUsername: action.username, showUserAuthForm: false, userAuthType: '' });
     default:
       return state;
   }

@@ -5,10 +5,32 @@ import { connect } from 'react-redux';
 
 class Navbar extends Component {
 
+  setUser = () => {
+    const url = this.props.apiURL;
+    fetch(`${url}/myprofile`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('PROFILE RESULTS', results.rows[0]);
+      const loggedInUser = results.rows[0];
+      console.log('LOGGED IN USER', loggedInUser);
+      this.props.addLoggedInUser(loggedInUser);
+    })
+  }
+
   render() {
+
+    if (this.props.authorized) {
+      this.setUser();
+    }
+
     let rightNavBarItems = this.props.authorized ?
     <div className="right">
-      <NavLink to="/profile">
+      <NavLink to={`/myprofile`}>
         <i className="fa fa-user" aria-hidden="true"></i> {this.props.username}
       </NavLink>
       <NavLink to="/" exact>
@@ -50,15 +72,22 @@ class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     authorized: state.authorized,
     showUserAuthForm: state.showUserAuthForm,
     userAuthType: state.userAuthType,
-    username: state.currentUser.username
+    username: state.currentUsername
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addLoggedInUser: (user) => {
+      console.log('ADD LOGGED IN USER FUNCTION RUNNING');
+      const action = { type: 'ADD_LOGGED_IN_USER', user };
+      dispatch(action);
+    },
+
     toggleUserAuthForm: () => {
       const action = { type: 'TOGGLE_USER_AUTH_FORM', userAuthType: 'Login' };
       dispatch(action);
