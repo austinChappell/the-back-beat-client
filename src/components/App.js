@@ -6,6 +6,7 @@ import store from '../store/';
 import BandCreateForm from './BandCreateForm';
 import BandPage from './BandPage';
 import BaseLayout from './BaseLayout';
+import ConnectPage from './ConnectPage';
 import Home from './Home';
 import LoggedIn from './LoggedIn';
 import Logout from './Logout';
@@ -29,6 +30,7 @@ class App extends Component {
                 <PrivateRoute path="/band/create" component={BandCreateForm} />
                 <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
+                <PrivateRoute path="/connect" component={ConnectPage} />
               </Switch>
             </BaseLayout>
           </Router>

@@ -154,7 +154,7 @@ class BandCreateForm extends Component {
       }).then((results) => {
         console.log('ADD MEMBER RESULTS', results);
         this.setState({ members: [] });
-        this.props.history.push('/');
+        this.props.history.push(`/band/${bandId}`);
       })
     })
   }
