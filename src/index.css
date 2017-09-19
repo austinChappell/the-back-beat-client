@@ -245,6 +245,21 @@ p {
   background-color: white;
   display: flex; }
 
+.MessageDisplay {
+  flex-basis: 80%;
+  box-sizing: border-box; }
+
+.MessageHistorySideBar {
+  flex-basis: 20%;
+  box-sizing: border-box; }
+
+.MessagePage {
+  display: flex;
+  flex-wrap: wrap; }
+
+.MessageSearchBar {
+  flex-basis: 100%; }
+
 .logged-in {
   background-color: #070649;
   position: fixed;

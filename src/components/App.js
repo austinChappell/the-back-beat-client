@@ -11,6 +11,7 @@ import Home from './Home';
 import LoggedIn from './LoggedIn';
 import Logout from './Logout';
 import Main from './Main';
+import MessagePage from './MessagePage';
 import MyProfile from './MyProfile';
 import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
@@ -33,6 +34,7 @@ class App extends Component {
                 <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
                 <PrivateRoute path="/connect" component={ConnectPage} />
+                <PrivateRoute path="/messages" component={MessagePage} />
               </Switch>
             </BaseLayout>
           </Router>
