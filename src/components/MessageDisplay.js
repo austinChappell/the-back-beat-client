@@ -90,7 +90,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearCurrentMessageText: () => {
-      const action = { type: 'CLEAR_CURRENT_MESSAGE_TEXT' }
+      const action = { type: 'CLEAR_CURRENT_MESSAGE_TEXT' };
+      dispatch(action);
     },
 
     handleChange: (evt) => {
