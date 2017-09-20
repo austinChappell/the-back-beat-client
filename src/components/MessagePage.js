@@ -13,6 +13,27 @@ class MessagePage extends Component {
     users: []
   }
 
+  componentDidMount() {
+    const url = this.props.apiURL;
+    const fetchAllMessages = () => {
+      fetch(`${url}/messages/all`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        console.log('ALL MESSAGES', results.rows);
+        this.props.setAllMessages(results.rows);
+      })
+    }
+    fetchAllMessages();
+    setInterval(() => {
+      fetchAllMessages();
+    }, 3000);
+  }
+
   fetchUsers = () => {
     const url = this.props.apiURL;
     const val = this.state.searchValue;
@@ -69,9 +90,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputChange: (evt) => {
+    setAllMessages: (allMessages) => {
+      const action = { type: 'SET_ALL_MESSAGES', allMessages };
+      dispatch(action);
     }
   }
 }
 
-export default connect(mapStateToProps)(MessagePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MessagePage);

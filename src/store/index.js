@@ -37,6 +37,7 @@ const initialState = {
     {title: 'House of Blues', date:'9/28', time: '8:00pm', location: 'Silver Studios in Dallas'}
   ],
   currentMessage: '',
+  allMessages: [],
   messageSearchBarVal: '',
   selectedMessages: [],
   currentRecipient: null,
@@ -73,6 +74,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, initialState);
     case 'RESET_CURRENT_MESSAGE':
       return Object.assign({}, state, { currentMessage: '' });
+    case 'SET_ALL_MESSAGES':
+      return Object.assign({}, state, { allMessages: action.allMessages });
     case 'SET_CURRENT_RECIPIENT_AND_MESSAGES':
       return Object.assign({}, state, { currentRecipient: action.user, users: [], messageSearchBarVal: '', selectedMessages: action.messages });
     case 'TOGGLE_USER_AUTH_FORM':

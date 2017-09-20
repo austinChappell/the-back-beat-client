@@ -16,24 +16,20 @@ class MessageDisplay extends Component {
       return response.json();
     }).then((results) => {
       console.log('RESULTS', results.rows);
-      this.getMessages(this.props.currentRecipient);
+      this.filterMessages(this.props.currentRecipient);
       this.props.clearCurrentMessageText();
     })
   };
 
-  getMessages = (user) => {
-    const url = this.props.apiURL;
-    fetch(`${url}/messages/${user.id}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
+  filterMessages = (user) => {
+    const filteredMessages = [];
+    this.props.allMessages.map((message) => {
+      if (message.sender_id === user.id || message.recipient_id === user.id) {
+        filteredMessages.push(message);
       }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      console.log('RESULTS', results.rows);
-      this.props.setCurrentRecipientAndMessages(user, results.rows);
-    })
+    });
+    console.log('FILTERED MESSAGES', filteredMessages);
+    // TODO: Add a set interval in here to refresh the current message string
   }
 
   render() {
@@ -79,6 +75,7 @@ class MessageDisplay extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    allMessages: state.allMessages,
     apiURL: state.apiURL,
     currentMessage: state.currentMessage,
     currentRecipient: state.currentRecipient,

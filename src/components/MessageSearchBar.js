@@ -23,19 +23,15 @@ class MessageSearchBar extends Component {
     }
   }
 
-  getMessages = (user) => {
-    const url = this.props.apiURL;
-    fetch(`${url}/messages/${user.id}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
+  filterMessages = (user) => {
+    const filteredMessages = [];
+    this.props.allMessages.map((message) => {
+      if (message.sender_id === user.id || message.recipient_id === user.id) {
+        filteredMessages.push(message);
       }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      console.log('RESULTS', results.rows);
-      this.props.setCurrentRecipientAndMessages(user, results.rows);
-    })
+    });
+    this.props.setCurrentRecipientAndMessages(user, filteredMessages);
+    console.log('FILTERED MESSAGES', filteredMessages);
   }
 
   render() {
@@ -46,7 +42,7 @@ class MessageSearchBar extends Component {
         <div className="display-search-results">
           {this.props.users.map((user, index) => {
             return (
-              <div key={index} className="search-result" onClick={() => this.getMessages(user)}>
+              <div key={index} className="search-result" onClick={() => this.filterMessages(user)}>
                 <h2>{user.first_name} {user.last_name}</h2>
               </div>
             )
@@ -59,6 +55,7 @@ class MessageSearchBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    allMessages: state.allMessages,
     apiURL: state.apiURL,
     messageSearchBarVal: state.messageSearchBarVal,
     users: state.users
