@@ -246,29 +246,32 @@ p {
   display: flex; }
 
 .MessageDisplay {
-  flex-basis: 80%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 160px);
-  width: 80%;
-  max-width: 500px;
-  margin: 0 auto; }
+  flex-basis: 50%;
+  box-sizing: border-box; }
+  .MessageDisplay .message-box {
+    height: calc(100vh - 160px);
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; }
   .MessageDisplay .messages {
     flex-grow: 1;
-    border: 1px solid black; }
+    border: 1px solid black;
+    overflow: scroll; }
     .MessageDisplay .messages .message {
       margin: 10px;
       position: relative; }
-      .MessageDisplay .messages .message .received {
+      .MessageDisplay .messages .message .sent {
         background-color: teal;
         color: #FFFFFF; }
       .MessageDisplay .messages .message .message-wrapper {
+        max-width: 70%;
         display: inline-block;
         border: 1px solid #070649;
         border-radius: 15px;
         padding: 0 10px; }
-    .MessageDisplay .messages .received {
+    .MessageDisplay .messages .sent {
       text-align: right; }
   .MessageDisplay .message-date {
     color: #E0E0E0; }
@@ -285,11 +288,13 @@ p {
   box-sizing: border-box; }
 
 .MessagePage {
+  padding-top: 40px;
   display: flex;
   flex-wrap: wrap; }
 
 .MessageSearchBar {
-  flex-basis: 100%; }
+  flex-basis: 20%;
+  box-sizing: border-box; }
 
 .logged-in {
   background-color: #070649;

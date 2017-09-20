@@ -39,7 +39,7 @@ const initialState = {
   currentMessage: '',
   messageSearchBarVal: '',
   selectedMessages: [],
-  currentRecipient: {},
+  currentRecipient: null,
   users: []
 }
 
@@ -59,6 +59,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { loggedInUser });
     case 'CHANGE_PROFILE_CONTENT':
       return Object.assign({}, state, { profileContent: action.value });
+    case 'CLEAR_CURRENT_MESSAGE_TEXT':
+      return Object.assign({}, state, { currentMessage: '' });
     case 'HANDLE_FORM_INPUT_CHANGE':
       let updateObject = {};
       const inputName = action.input;

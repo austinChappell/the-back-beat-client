@@ -3,14 +3,6 @@ import { connect } from 'react-redux';
 
 class MessageDisplay extends Component {
 
-  constructor() {
-    super();
-
-    this.state = {
-      messages: []
-    }
-  }
-
   sendMessage = () => {
     const api = this.props.apiURL;
     fetch(`${api}/message/send`, {
@@ -24,12 +16,14 @@ class MessageDisplay extends Component {
       return response.json();
     }).then((results) => {
       console.log('RESULTS', results.rows);
+      this.getMessages(this.props.currentRecipient);
+      this.props.clearCurrentMessageText();
     })
   };
 
-  getMessages = () => {
+  getMessages = (user) => {
     const url = this.props.apiURL;
-    fetch(`${url}/messages/${this.props.currentRecipient.id}`, {
+    fetch(`${url}/messages/${user.id}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -37,8 +31,8 @@ class MessageDisplay extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('RESULTS FROM GET MESSAGES', results.rows);
-      this.setState({messages: results.rows});
+      console.log('RESULTS', results.rows);
+      this.props.setCurrentRecipientAndMessages(user, results.rows);
     })
   }
 
@@ -46,8 +40,10 @@ class MessageDisplay extends Component {
     const loggedInUserId = this.props.loggedInUser.id;
     console.log('MY ID', loggedInUserId);
     const recipient = this.props.currentRecipient ? <h2>{this.props.currentRecipient.first_name} {this.props.currentRecipient.last_name}</h2> : null;
-    return (
-      <div className="MessageDisplay">
+    let messageDisplay;
+
+    if (recipient !== null) {
+      messageDisplay = <div className="message-box">
         <div className="currentRecipient">
           {recipient}
         </div>
@@ -67,6 +63,16 @@ class MessageDisplay extends Component {
           <button onClick={this.sendMessage}>Send</button>
         </div>
       </div>
+    } else {
+      messageDisplay = <div>
+        <h1>Looking to hire someone for a gig? Want to find out where your friends are playing next? Write them a message!</h1>
+      </div>
+    }
+
+    return (
+      <div className="MessageDisplay">
+        {messageDisplay}
+      </div>
     )
   }
 }
@@ -83,6 +89,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearCurrentMessageText: () => {
+      const action = { type: 'CLEAR_CURRENT_MESSAGE_TEXT' }
+    },
+
     handleChange: (evt) => {
       const action = { type: 'UPDATE_CURRENT_MESSAGE', val: evt.target.value };
       dispatch(action);
@@ -91,7 +101,13 @@ const mapDispatchToProps = (dispatch) => {
     resetMessage: () => {
       const action = { type: 'RESET_CURRENT_MESSAGE' };
       dispatch(action);
+    },
+
+    setCurrentRecipientAndMessages: (user, messages) => {
+      const action = { type: 'SET_CURRENT_RECIPIENT_AND_MESSAGES', user, messages };
+      dispatch(action);
     }
+
   }
 }
 
