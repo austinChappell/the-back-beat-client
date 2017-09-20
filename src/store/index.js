@@ -36,6 +36,11 @@ const initialState = {
     {title: 'Andy\'s', date: '9/22', time:'7:00pm', location: 'Ashley\'s house'},
     {title: 'House of Blues', date:'9/28', time: '8:00pm', location: 'Silver Studios in Dallas'}
   ],
+  currentMessage: '',
+  messageSearchBarVal: '',
+  selectedMessages: [],
+  currentRecipient: {},
+  users: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -60,13 +65,21 @@ const reducer = (state = initialState, action) => {
       updateObject[inputName] = action.value;
       let newUserInfo = Object.assign({}, state.userInfo, updateObject);
       return Object.assign({}, state, { userInfo: newUserInfo });
+    case 'HANDLE_MESSAGE_SEARCH_VAL_CHANGE':
+      return Object.assign({}, state, { messageSearchBarVal: action.val, users: action.users });
     case 'LOGOUT':
       return Object.assign({}, state, initialState);
+    case 'RESET_CURRENT_MESSAGE':
+      return Object.assign({}, state, { currentMessage: '' });
+    case 'SET_CURRENT_RECIPIENT_AND_MESSAGES':
+      return Object.assign({}, state, { currentRecipient: action.user, users: [], messageSearchBarVal: '', selectedMessages: action.messages });
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType, userInfo: blankUserInfo });
     case 'TOGGLE_USER_AUTH_TYPE':
       let newAuthType = state.userAuthType === 'Login' ? 'Sign Up' : 'Login';
       return Object.assign({}, state, { userAuthType: newAuthType, userInfo: blankUserInfo });
+    case 'UPDATE_CURRENT_MESSAGE':
+      return Object.assign({}, state, { currentMessage: action.val });
     case 'UPDATE_USER':
       return Object.assign({}, state, { currentUser: action.user });
     case 'USER_AUTH_FORM_SUBMIT':

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import MessageDisplay from './MessageDisplay';
 import MessageHistorySideBar from './MessageHistorySideBar';
 import MessageSearchBar from './MessageSearchBar';
-import MessageUserSideBar from './MessageUserSideBar';
 
 class MessagePage extends Component {
 
@@ -52,8 +51,7 @@ class MessagePage extends Component {
     return (
       <div className="MessagePage">
         {/* TODO this needs to go to redux instead, including these child components */}
-        <MessageSearchBar searchValue={this.state.searchValue} handleChange={(evt) => this.handleChange(evt)} setCurrentRecipient={(user) => this.setCurrentRecipient(user)} />
-        <MessageUserSideBar users={this.state.users} />
+        <MessageSearchBar />
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
         <MessageHistorySideBar />
       </div>
@@ -63,7 +61,16 @@ class MessagePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    apiURL: state.apiURL
+    apiURL: state.apiURL,
+    messageSearchBarVal: state.messageSearchBarVal,
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleInputChange: (evt) => {
+    }
   }
 }
 

@@ -247,7 +247,38 @@ p {
 
 .MessageDisplay {
   flex-basis: 80%;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto; }
+  .MessageDisplay .messages {
+    flex-grow: 1;
+    border: 1px solid black; }
+    .MessageDisplay .messages .message {
+      margin: 10px;
+      position: relative; }
+      .MessageDisplay .messages .message .received {
+        background-color: teal;
+        color: #FFFFFF; }
+      .MessageDisplay .messages .message .message-wrapper {
+        display: inline-block;
+        border: 1px solid #070649;
+        border-radius: 15px;
+        padding: 0 10px; }
+    .MessageDisplay .messages .received {
+      text-align: right; }
+  .MessageDisplay .message-date {
+    color: #E0E0E0; }
+  .MessageDisplay .message-editor {
+    width: 100%;
+    margin: 10px auto;
+    display: flex; }
+    .MessageDisplay .message-editor textarea {
+      flex-grow: 1;
+      resize: none; }
 
 .MessageHistorySideBar {
   flex-basis: 20%;

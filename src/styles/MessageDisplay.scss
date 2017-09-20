@@ -1,4 +1,43 @@
 .MessageDisplay {
   flex-basis: 80%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+  .messages {
+    flex-grow: 1;
+    border: 1px solid black;
+    .message {
+      margin: 10px;
+      position: relative;
+      .received {
+        background-color: teal;
+        color: $light-font;
+      }
+      .message-wrapper {
+        display: inline-block;
+        border: 1px solid $color-primary;
+        border-radius: 15px;
+        padding: 0 10px;
+      }
+    }
+    .received {
+      text-align: right;
+    }
+  }
+  .message-date {
+    color: $gray-background-dark;
+  }
+  .message-editor {
+    width: 100%;
+    margin: 10px auto;
+    display: flex;
+    textarea {
+      flex-grow: 1;
+      resize: none;
+    }
+  }
 }
