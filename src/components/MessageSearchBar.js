@@ -3,6 +3,14 @@ import { connect } from 'react-redux';
 
 class MessageSearchBar extends Component {
 
+  state = {
+    searchBarActive: false
+  }
+
+  stopFetch = () => {
+    this.setState({ searchBarActive: true });
+  }
+
   handleChangeAndFetch = (evt) => {
     const url = this.props.apiURL;
     const val = evt.target.value;
@@ -24,7 +32,12 @@ class MessageSearchBar extends Component {
   }
 
   filterMessages = (user) => {
+    this.setState({ searchBarActive: false });
     let stopFetch = setInterval(() => {
+
+      if (this.state.searchBarActive === true) {
+        clearInterval(stopFetch);
+      }
 
       const filteredMessages = [];
       this.props.allMessages.map((message) => {
@@ -34,7 +47,8 @@ class MessageSearchBar extends Component {
       });
       this.props.setCurrentRecipientAndMessages(user, filteredMessages);
       console.log('FILTERED MESSAGES', filteredMessages);
-    }, 1000);
+    }, 100);
+
 
   }
 
@@ -42,7 +56,7 @@ class MessageSearchBar extends Component {
     return (
       <div className="MessageSearchBar">
         Message Search Bar
-        <input value={this.props.messageSearchBarVal} onChange={(evt) => this.handleChangeAndFetch(evt)} />
+        <input value={this.props.messageSearchBarVal} onFocus={this.stopFetch} onChange={(evt) => this.handleChangeAndFetch(evt)} />
         <div className="display-search-results">
           {this.props.users.map((user, index) => {
             return (

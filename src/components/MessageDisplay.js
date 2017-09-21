@@ -3,6 +3,21 @@ import { connect } from 'react-redux';
 
 class MessageDisplay extends Component {
 
+  state = {
+    numOfSelectedMessages: 0
+  }
+
+  componentDidUpdate() {
+    // this.refs.messageBox.scrollTop = 200;
+    if (this.props.currentRecipient && this.props.selectedMessages.length !== this.state.numOfSelectedMessages) {
+      this.setState({
+        numOfSelectedMessages: this.props.selectedMessages.length
+      }, () => {
+        this.refs.messageBox.scrollTop = this.refs.messageBox.scrollHeight;
+      })
+    }
+  }
+
   sendMessage = () => {
     const api = this.props.apiURL;
     fetch(`${api}/message/send`, {
@@ -33,6 +48,7 @@ class MessageDisplay extends Component {
   // }
 
   render() {
+
     const loggedInUserId = this.props.loggedInUser.id;
     console.log('MY ID', loggedInUserId);
     const recipient = this.props.currentRecipient ? <h2>{this.props.currentRecipient.first_name} {this.props.currentRecipient.last_name}</h2> : null;
@@ -43,7 +59,7 @@ class MessageDisplay extends Component {
         <div className="currentRecipient">
           {recipient}
         </div>
-        <div className="messages">
+        <div className="messages" ref="messageBox">
           {this.props.selectedMessages.map((message, index) => {
             return (
               <div key={index} className={message.sender_id === loggedInUserId ? "message sent" : "message received"}>
@@ -55,7 +71,7 @@ class MessageDisplay extends Component {
           })}
         </div>
         <div className="message-editor">
-          <textarea value={this.props.currentMessage} onChange={(evt) => this.props.handleChange(evt)}></textarea>
+          <textarea rows="1" value={this.props.currentMessage} onChange={(evt) => this.props.handleChange(evt)}></textarea>
           <button onClick={this.sendMessage}>Send</button>
         </div>
       </div>

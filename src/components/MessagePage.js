@@ -32,7 +32,7 @@ class MessagePage extends Component {
     fetchAllMessages();
     setInterval(() => {
       fetchAllMessages();
-    }, 3000);
+    }, 100);
   }
 
   fetchUsers = () => {

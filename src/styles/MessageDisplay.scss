@@ -10,7 +10,7 @@
     flex-direction: column;
   }
   .messages {
-    flex-grow: 1;
+    flex-basis: 80%;
     border: 1px solid black;
     overflow: scroll;
     .message {

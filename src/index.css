@@ -256,7 +256,7 @@ p {
     display: flex;
     flex-direction: column; }
   .MessageDisplay .messages {
-    flex-grow: 1;
+    flex-basis: 80%;
     border: 1px solid black;
     overflow: scroll; }
     .MessageDisplay .messages .message {
