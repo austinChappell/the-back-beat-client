@@ -9,6 +9,10 @@ class Navbar extends Component {
     numOfUnreadMessages: 0
   }
 
+  componentDidMount() {
+    this.getUnreadMessages();
+  }
+
   getUnreadMessages = () => {
     const url = this.props.apiURL;
 
@@ -57,7 +61,6 @@ class Navbar extends Component {
 
     if (this.props.authorized) {
       this.setUser();
-      this.getUnreadMessages();
     }
 
     let rightNavBarItems = this.props.authorized ?

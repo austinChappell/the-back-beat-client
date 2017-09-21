@@ -8,6 +8,7 @@ class MessageSearchBar extends Component {
   }
 
   stopFetch = () => {
+    console.log('STOP FETCH RUNNING');
     this.setState({ searchBarActive: true });
   }
 
@@ -46,7 +47,7 @@ class MessageSearchBar extends Component {
         }
       });
       filteredMessages.map((message) => {
-        if (message.read === false) {
+        if (message.read === false && message.sender_id === user.id) {
           message.read = true;
           fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
             credentials: 'include',
