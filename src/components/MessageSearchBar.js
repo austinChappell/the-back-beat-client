@@ -24,14 +24,18 @@ class MessageSearchBar extends Component {
   }
 
   filterMessages = (user) => {
-    const filteredMessages = [];
-    this.props.allMessages.map((message) => {
-      if (message.sender_id === user.id || message.recipient_id === user.id) {
-        filteredMessages.push(message);
-      }
-    });
-    this.props.setCurrentRecipientAndMessages(user, filteredMessages);
-    console.log('FILTERED MESSAGES', filteredMessages);
+    let stopFetch = setInterval(() => {
+
+      const filteredMessages = [];
+      this.props.allMessages.map((message) => {
+        if (message.sender_id === user.id || message.recipient_id === user.id) {
+          filteredMessages.push(message);
+        }
+      });
+      this.props.setCurrentRecipientAndMessages(user, filteredMessages);
+      console.log('FILTERED MESSAGES', filteredMessages);
+    }, 1000);
+
   }
 
   render() {

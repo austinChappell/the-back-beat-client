@@ -14,6 +14,7 @@ class MessagePage extends Component {
   }
 
   componentDidMount() {
+    this.props.clearCurrentRecipient();
     const url = this.props.apiURL;
     const fetchAllMessages = () => {
       fetch(`${url}/messages/all`, {
@@ -71,7 +72,6 @@ class MessagePage extends Component {
   render() {
     return (
       <div className="MessagePage">
-        {/* TODO this needs to go to redux instead, including these child components */}
         <MessageSearchBar />
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
         <MessageHistorySideBar />
@@ -82,6 +82,7 @@ class MessagePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    allMessages: state.allMessages,
     apiURL: state.apiURL,
     messageSearchBarVal: state.messageSearchBarVal,
 
@@ -90,6 +91,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearCurrentRecipient: () => {
+      const action = { type: 'CLEAR_CURRENT_RECIPIENT' };
+      dispatch(action);
+    },
+
     setAllMessages: (allMessages) => {
       const action = { type: 'SET_ALL_MESSAGES', allMessages };
       dispatch(action);

@@ -16,21 +16,21 @@ class MessageDisplay extends Component {
       return response.json();
     }).then((results) => {
       console.log('RESULTS', results.rows);
-      this.filterMessages(this.props.currentRecipient);
+      // this.filterMessages(this.props.currentRecipient);
       this.props.clearCurrentMessageText();
     })
   };
 
-  filterMessages = (user) => {
-    const filteredMessages = [];
-    this.props.allMessages.map((message) => {
-      if (message.sender_id === user.id || message.recipient_id === user.id) {
-        filteredMessages.push(message);
-      }
-    });
-    console.log('FILTERED MESSAGES', filteredMessages);
-    // TODO: Add a set interval in here to refresh the current message string
-  }
+  // filterMessages = (user) => {
+  //   const filteredMessages = [];
+  //   this.props.allMessages.map((message) => {
+  //     if (message.sender_id === user.id || message.recipient_id === user.id) {
+  //       filteredMessages.push(message);
+  //     }
+  //   });
+  //   console.log('FILTERED MESSAGES', filteredMessages);
+  //   // TODO: Add a set interval in here to refresh the current message string
+  // }
 
   render() {
     const loggedInUserId = this.props.loggedInUser.id;

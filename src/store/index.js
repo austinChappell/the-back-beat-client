@@ -62,6 +62,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { profileContent: action.value });
     case 'CLEAR_CURRENT_MESSAGE_TEXT':
       return Object.assign({}, state, { currentMessage: '' });
+    case 'CLEAR_CURRENT_RECIPIENT':
+      return Object.assign({}, state, { currentRecipient: null });
     case 'HANDLE_FORM_INPUT_CHANGE':
       let updateObject = {};
       const inputName = action.input;
