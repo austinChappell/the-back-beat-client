@@ -45,6 +45,18 @@ class MessageSearchBar extends Component {
           filteredMessages.push(message);
         }
       });
+      filteredMessages.map((message) => {
+        if (message.read === false) {
+          message.read = true;
+          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'PUT'
+          })
+        }
+      })
       this.props.setCurrentRecipientAndMessages(user, filteredMessages);
       console.log('FILTERED MESSAGES', filteredMessages);
     }, 100);

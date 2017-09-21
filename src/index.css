@@ -312,6 +312,8 @@ p {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between; }
+  .Navbar .hidden {
+    display: none; }
   .Navbar a {
     color: #FFFFFF;
     margin: 10px;
@@ -345,6 +347,12 @@ p {
     .Navbar .button-link:hover {
       background-color: #FFFFFF;
       color: #070649; }
+  .Navbar .fa-circle {
+    color: red;
+    font-size: 10px;
+    position: absolute;
+    top: -3px;
+    right: -5px; }
 
 .Profile {
   background-color: white;

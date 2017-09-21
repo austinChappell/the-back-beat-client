@@ -5,6 +5,37 @@ import { connect } from 'react-redux';
 
 class Navbar extends Component {
 
+  state = {
+    numOfUnreadMessages: 0
+  }
+
+  getUnreadMessages = () => {
+    const url = this.props.apiURL;
+
+    const fetchData = () => {
+
+      fetch(`${url}/messages/unread`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        console.log('UNREAD MESSAGES', results.rows);
+        this.setState({ numOfUnreadMessages: results.rows.length });
+      })
+
+    }
+
+    fetchData();
+
+    setInterval(() => {
+      fetchData();
+    }, 5000);
+
+  }
+
   setUser = () => {
     const url = this.props.apiURL;
     fetch(`${url}/myprofile`, {
@@ -26,6 +57,7 @@ class Navbar extends Component {
 
     if (this.props.authorized) {
       this.setUser();
+      this.getUnreadMessages();
     }
 
     let rightNavBarItems = this.props.authorized ?
@@ -47,8 +79,9 @@ class Navbar extends Component {
       <NavLink to="/connect">
         <i className="fa fa-users" aria-hidden="true"></i>
       </NavLink>
-      <NavLink to="/messages">
+      <NavLink className="relative-navlink" to="/messages">
         <i className="fa fa-envelope" aria-hidden="true"></i>
+        <i className={this.state.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>
       <span onClick={this.props.logout}><NavLink to="/login">Logout</NavLink></span>
     </div>
