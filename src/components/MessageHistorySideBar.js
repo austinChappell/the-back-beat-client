@@ -4,13 +4,18 @@ import { connect } from 'react-redux';
 class MessageHistorySideBar extends Component {
 
   state = {
+    fetchHistory: true,
     messageHistory: []
   }
 
   componentDidMount() {
-    let stopFetch = setInterval(() => {
-      this.getMessageHistory();
-    }, 500);
+    // this.setState({fetchHistory: true});
+    this.getMessageHistory();
+  }
+
+  componentWillUnmount() {
+    console.log('COMPONENT UNMOUNTING');
+    // this.setState({ fetchHistory: false }, () => console.log('STATE AFTER COMPONENT UNMOUNTING', this.state));
   }
 
   setRecipient = (id) => {
@@ -30,32 +35,45 @@ class MessageHistorySideBar extends Component {
   // TODO: FIND A WAY TO INITIALIZE THE FILTER MESSAGES FUNCTION IN MESSAGEPAGE COMPONENT WHILE PASSING IN THE USER AT THE TOP OF THE MESSAGE HISTORY LIST
 
   getMessageHistory = () => {
-    const output = [];
-    const messages = this.props.allMessages;
-    const loggedInUser = this.props.loggedInUser;
-    for (let i = messages.length - 1; i >= 0; i--) {
-      let found = false;
-      output.forEach((item) => {
-        if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
-          found = true;
+
+    let stopFetch = setInterval(() => {
+
+      if (this.props.fetchHistory === true) {
+
+        console.log('THIS IS STILL RUNNING');
+
+        const output = [];
+        const messages = this.props.allMessages;
+        const loggedInUser = this.props.loggedInUser;
+        for (let i = messages.length - 1; i >= 0; i--) {
+          let found = false;
+          output.forEach((item) => {
+            if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
+              found = true;
+            }
+          })
+          if (!found) {
+            output.push(messages[i]);
+          }
         }
-      })
-      if (!found) {
-        output.push(messages[i]);
+        // console.log('ALL MESSAGES LENGTH', messages.length);
+        // console.log('MESSAGE HISTORY', output);
+        this.setState({ messageHistory: output })
+
+      } else {
+        console.log('THIS RAN');
+        clearInterval(stopFetch);
       }
-    }
-    // console.log('ALL MESSAGES LENGTH', messages.length);
-    // console.log('MESSAGE HISTORY', output);
-    this.setState({ messageHistory: output })
+    })
   }
 
   render() {
 
     let messageHistoryDisplay = null;
 
-    if (this.state.messageHistory.length > 0) {
+    if (this.props.messageHistory.length > 0) {
       messageHistoryDisplay = <div>
-        {this.state.messageHistory.map((message, index) => {
+        {this.props.messageHistory.map((message, index) => {
           let recipientId;
           let displayName;
           let msgPreview;

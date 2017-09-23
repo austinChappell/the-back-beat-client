@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 
 class MessageSearchBar extends Component {
 
-  state = {
-    searchBarActive: false
-  }
-
-  stopFetch = () => {
-    console.log('STOP FETCH RUNNING');
-    this.setState({ searchBarActive: true });
-  }
+  // state = {
+  //   searchBarActive: false
+  // }
+  //
+  // stopFetch = () => {
+  //   console.log('STOP FETCH RUNNING');
+  //   this.setState({ searchBarActive: true });
+  // }
 
   handleChangeAndFetch = (evt) => {
     const url = this.props.apiURL;

@@ -9,6 +9,8 @@ class MessagePage extends Component {
 
   state = {
     currentRecipient: {},
+    fetchHistory: true,
+    messageHistory: [],
     searchBarActive: false,
     searchValue: '',
     users: []
@@ -28,29 +30,70 @@ class MessagePage extends Component {
       }).then((results) => {
         // console.log('ALL MESSAGES', results.rows);
         this.props.setAllMessages(results.rows);
+        this.getMessageHistory();
       })
     }
+
     fetchAllMessages();
     setInterval(() => {
       fetchAllMessages();
-      // if (this.props.currentRecipient) {
-      //   this.filterMessages(this.props.currentRecipient);
-      // }
+      if (this.props.currentRecipient && this.state.searchBarActive === false) {
+        this.filterMessages(this.props.currentRecipient);
+      }
     }, 100);
+  }
+
+  componentDidUnmount() {
+    console.log('MESSAGE PAGE IS UNMOUNTING');
+    this.stopFetch();
   }
 
   stopFetch = () => {
     console.log('STOP FETCH RUNNING');
-    this.setState({ searchBarActive: true },
+    this.setState({ searchBarActive: true, fetchHistory: false },
     () => {
       console.log('THE STATE IS ', this.state);
     });
   }
 
+  getMessageHistory = () => {
+
+    let stopFetch = setInterval(() => {
+
+      if (this.state.fetchHistory === true) {
+
+        console.log('THIS IS STILL RUNNING');
+
+        const output = [];
+        const messages = this.props.allMessages;
+        const loggedInUser = this.props.loggedInUser;
+        for (let i = messages.length - 1; i >= 0; i--) {
+          let found = false;
+          output.forEach((item) => {
+            if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
+              found = true;
+            }
+          })
+          if (!found) {
+            output.push(messages[i]);
+          }
+        }
+        // console.log('ALL MESSAGES LENGTH', messages.length);
+        // console.log('MESSAGE HISTORY', output);
+        this.setState({ messageHistory: output })
+
+      } else {
+        console.log('THIS RAN');
+        clearInterval(stopFetch);
+        // this.setState({ messageHistory: [] });
+      }
+    })
+  }
+
   filterMessages = (user) => {
     let newUser = user;
     this.props.setCurrentRecipient(newUser);
-    this.setState({ searchBarActive: false });
+    this.setState({ searchBarActive: false, fetchHistory: true });
     let stopFetch = setInterval(() => {
 
       if (this.state.searchBarActive === true) {
@@ -129,7 +172,7 @@ class MessagePage extends Component {
       <div className="MessagePage">
         <MessageSearchBar stopFetch={this.stopFetch} filterMessages={this.filterMessages} />
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
-        <MessageHistorySideBar />
+        <MessageHistorySideBar messageHistory={this.state.messageHistory} />
       </div>
     )
   }
@@ -140,6 +183,7 @@ const mapStateToProps = (state) => {
     allMessages: state.allMessages,
     apiURL: state.apiURL,
     currentRecipient: state.currentRecipient,
+    loggedInUser: state.loggedInUser,
     messageSearchBarVal: state.messageSearchBarVal,
 
   }

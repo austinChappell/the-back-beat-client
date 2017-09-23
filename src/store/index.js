@@ -39,6 +39,7 @@ const initialState = {
   currentMessage: '',
   allMessages: [],
   messageSearchBarVal: '',
+  messageHistory: [],
   selectedMessages: [],
   currentRecipient: null,
   users: []
