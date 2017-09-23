@@ -9,7 +9,8 @@ class MessageDisplay extends Component {
 
   componentDidUpdate() {
     // this.refs.messageBox.scrollTop = 200;
-    if (this.props.currentRecipient && this.props.selectedMessages.length !== this.state.numOfSelectedMessages) {
+    let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
+    if (this.props.currentRecipient && selectedMessages.length !== this.state.numOfSelectedMessages) {
       this.setState({
         numOfSelectedMessages: this.props.selectedMessages.length
       }, () => {
@@ -55,9 +56,10 @@ class MessageDisplay extends Component {
   render() {
 
     const loggedInUserId = this.props.loggedInUser.id;
-    console.log('MY ID', loggedInUserId);
+    // console.log('MY ID', loggedInUserId);
     const recipient = this.props.currentRecipient ? <h2>{this.props.currentRecipient.first_name} {this.props.currentRecipient.last_name}</h2> : null;
     let messageDisplay;
+    let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
 
     if (recipient !== null) {
       messageDisplay = <div className="message-box">
@@ -65,7 +67,7 @@ class MessageDisplay extends Component {
           {recipient}
         </div>
         <div className="messages" ref="messageBox">
-          {this.props.selectedMessages.map((message, index) => {
+          {selectedMessages.map((message, index) => {
             return (
               <div key={index} className={message.sender_id === loggedInUserId ? "message sent" : "message received"}>
                 <div className={message.sender_id === loggedInUserId ? "message-wrapper sent" : "message-wrapper received"}>

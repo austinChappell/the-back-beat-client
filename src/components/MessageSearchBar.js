@@ -32,44 +32,53 @@ class MessageSearchBar extends Component {
     }
   }
 
-  filterMessages = (user) => {
-    this.setState({ searchBarActive: false });
-    let stopFetch = setInterval(() => {
-
-      if (this.state.searchBarActive === true) {
-        clearInterval(stopFetch);
-      }
-
-      const filteredMessages = [];
-      this.props.allMessages.map((message) => {
-        if (message.sender_id === user.id || message.recipient_id === user.id) {
-          filteredMessages.push(message);
-        }
-      });
-      filteredMessages.map((message) => {
-        if (message.read === false && message.sender_id === user.id) {
-          message.read = true;
-          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            method: 'PUT'
-          })
-        }
-      })
-      this.props.setCurrentRecipientAndMessages(user, filteredMessages);
-      console.log('FILTERED MESSAGES', filteredMessages);
-    }, 100);
-
-
-  }
-
+  // filterMessages = (user) => {
+  //   let newUser = user;
+  //   this.props.setCurrentRecipient(newUser);
+  //   this.setState({ searchBarActive: false });
+  //   let stopFetch = setInterval(() => {
+  //
+  //     if (this.state.searchBarActive === true) {
+  //       clearInterval(stopFetch);
+  //     }
+  //
+  //     if (this.props.currentRecipient) {
+  //
+  //       newUser = this.props.currentRecipient;
+  //
+  //       const filteredMessages = [];
+  //       this.props.allMessages.map((message) => {
+  //         if (message.sender_id === newUser.id || message.recipient_id === newUser.id) {
+  //           filteredMessages.push(message);
+  //         }
+  //       });
+  //       filteredMessages.map((message) => {
+  //         if (message.read === false && message.sender_id === newUser.id) {
+  //           message.read = true;
+  //           fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
+  //             credentials: 'include',
+  //             headers: {
+  //               'Content-Type': 'application/json'
+  //             },
+  //             method: 'PUT'
+  //           })
+  //         }
+  //       })
+  //       this.props.setCurrentMessages(filteredMessages);
+  //       // console.log('FILTERED MESSAGES', filteredMessages);
+  //
+  //     }
+  //
+  //   }, 100);
+  //
+  //
+  // }
+  //
   render() {
     return (
       <div className="MessageSearchBar">
         Message Search Bar
-        <input value={this.props.messageSearchBarVal} onFocus={this.stopFetch} onChange={(evt) => this.handleChangeAndFetch(evt)} />
+        <input value={this.props.messageSearchBarVal} onFocus={() => this.props.stopFetch()} onChange={(evt) => this.handleChangeAndFetch(evt)} />
         <div className="display-search-results">
           {this.props.users.map((user, index) => {
             return (
@@ -88,6 +97,7 @@ const mapStateToProps = (state) => {
   return {
     allMessages: state.allMessages,
     apiURL: state.apiURL,
+    currentRecipient: state.currentRecipient,
     messageSearchBarVal: state.messageSearchBarVal,
     users: state.users
   }
@@ -100,8 +110,13 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action);
     },
 
-    setCurrentRecipientAndMessages: (user, messages) => {
-      const action = { type: 'SET_CURRENT_RECIPIENT_AND_MESSAGES', user, messages };
+    setCurrentRecipient: (user) => {
+      const action = { type: 'SET_CURRENT_RECIPIENT', user };
+      dispatch(action);
+    },
+
+    setCurrentMessages: (messages) => {
+      const action = { type: 'SET_CURRENT_MESSAGES', messages };
       dispatch(action);
     }
   }

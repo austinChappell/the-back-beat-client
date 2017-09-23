@@ -10,7 +10,21 @@ class MessageHistorySideBar extends Component {
   componentDidMount() {
     let stopFetch = setInterval(() => {
       this.getMessageHistory();
-    }, 2000);
+    }, 500);
+  }
+
+  setRecipient = (id) => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/${id}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setCurrentRecipient(results);
+    })
   }
 
   getMessageHistory = () => {
@@ -28,8 +42,8 @@ class MessageHistorySideBar extends Component {
         output.push(messages[i]);
       }
     }
-    console.log('ALL MESSAGES LENGTH', messages.length);
-    console.log('MESSAGE HISTORY', output);
+    // console.log('ALL MESSAGES LENGTH', messages.length);
+    // console.log('MESSAGE HISTORY', output);
     this.setState({ messageHistory: output })
   }
 
@@ -39,13 +53,16 @@ class MessageHistorySideBar extends Component {
 
     if (this.state.messageHistory.length > 0) {
       messageHistoryDisplay = <div>
-        {this.state.messageHistory.map((message) => {
+        {this.state.messageHistory.map((message, index) => {
+          let recipientId;
           let displayName;
           let msgPreview;
           if (message.sender_id === this.props.loggedInUser.id) {
             displayName = message.recipient_name;
+            recipientId = message.recipient_id;
           } else {
             displayName = message.sender_name;
+            recipientId = message.sender_id;
           }
           if (message.message_text.length > 40) {
             msgPreview = message.message_text.slice(0, 40) + '...';
@@ -53,7 +70,7 @@ class MessageHistorySideBar extends Component {
             msgPreview = message.message_text;
           }
           return (
-            <div>
+            <div className="message-history-result" key={index} onClick={() => this.setRecipient(recipientId)}>
               <h4>{displayName}</h4>
               <p>{msgPreview}</p>
             </div>
@@ -72,6 +89,7 @@ class MessageHistorySideBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     allMessages: state.allMessages,
     loggedInUser: state.loggedInUser
   }
@@ -79,7 +97,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    setCurrentRecipient: (user) => {
+      const action = { type: 'SET_CURRENT_RECIPIENT', user };
+      dispatch(action);
+    }
   }
 }
 

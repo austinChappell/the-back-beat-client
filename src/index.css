@@ -281,11 +281,22 @@ p {
     display: flex; }
     .MessageDisplay .message-editor textarea {
       flex-grow: 1;
-      resize: none; }
+      resize: none;
+      font-size: 16px; }
 
 .MessageHistorySideBar {
   flex-basis: 20%;
   box-sizing: border-box; }
+  .MessageHistorySideBar .message-history-result {
+    border: 1px solid black;
+    padding: 5px 20px;
+    cursor: pointer; }
+    .MessageHistorySideBar .message-history-result:hover {
+      background-color: #EEEEEE; }
+    .MessageHistorySideBar .message-history-result h4 {
+      margin-bottom: 5px; }
+    .MessageHistorySideBar .message-history-result p {
+      margin: 0 0 0 15px; }
 
 .MessagePage {
   padding-top: 40px;
