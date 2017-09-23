@@ -27,6 +27,8 @@ class MessageHistorySideBar extends Component {
     })
   }
 
+  // TODO: FIND A WAY TO INITIALIZE THE FILTER MESSAGES FUNCTION IN MESSAGEPAGE COMPONENT WHILE PASSING IN THE USER AT THE TOP OF THE MESSAGE HISTORY LIST
+
   getMessageHistory = () => {
     const output = [];
     const messages = this.props.allMessages;

@@ -33,15 +33,18 @@ class MessagePage extends Component {
     fetchAllMessages();
     setInterval(() => {
       fetchAllMessages();
-      if (this.props.currentRecipient) {
-        this.filterMessages(this.props.currentRecipient);
-      }
+      // if (this.props.currentRecipient) {
+      //   this.filterMessages(this.props.currentRecipient);
+      // }
     }, 100);
   }
 
   stopFetch = () => {
     console.log('STOP FETCH RUNNING');
-    this.setState({ searchBarActive: true });
+    this.setState({ searchBarActive: true },
+    () => {
+      console.log('THE STATE IS ', this.state);
+    });
   }
 
   filterMessages = (user) => {
@@ -52,6 +55,7 @@ class MessagePage extends Component {
 
       if (this.state.searchBarActive === true) {
         clearInterval(stopFetch);
+        console.log('THIS RAN');
       }
 
       if (this.props.currentRecipient) {
@@ -123,7 +127,7 @@ class MessagePage extends Component {
   render() {
     return (
       <div className="MessagePage">
-        <MessageSearchBar stopFetch={() => this.stopFetch()} />
+        <MessageSearchBar stopFetch={this.stopFetch} filterMessages={this.filterMessages} />
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
         <MessageHistorySideBar />
       </div>
