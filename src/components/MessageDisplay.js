@@ -26,7 +26,12 @@ class MessageDisplay extends Component {
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({ message: this.props.currentMessage, recipientId: this.props.currentRecipient.id })
+      body: JSON.stringify({
+        message: this.props.currentMessage,
+        recipientId: this.props.currentRecipient.id,
+        recipientFirstName: this.props.currentRecipient.first_name,
+        recipientLastName: this.props.currentRecipient.last_name
+      })
     }).then((response) => {
       return response.json();
     }).then((results) => {

@@ -7,8 +7,10 @@ class MessageHistorySideBar extends Component {
     messageHistory: []
   }
 
-  componentDidUpdate() {
-    this.getMessageHistory();
+  componentDidMount() {
+    let stopFetch = setInterval(() => {
+      this.getMessageHistory();
+    }, 2000);
   }
 
   getMessageHistory = () => {
@@ -33,15 +35,28 @@ class MessageHistorySideBar extends Component {
 
   render() {
 
-    // TODO: Change message table in DB to have a Full Name field of the sender/recipient. This will be used to efficiently display the name in the message history display, as opposed to calling an API to get their name with their ID.
-
     let messageHistoryDisplay = null;
 
     if (this.state.messageHistory.length > 0) {
       messageHistoryDisplay = <div>
         {this.state.messageHistory.map((message) => {
+          let displayName;
+          let msgPreview;
+          if (message.sender_id === this.props.loggedInUser.id) {
+            displayName = message.recipient_name;
+          } else {
+            displayName = message.sender_name;
+          }
+          if (message.message_text.length > 40) {
+            msgPreview = message.message_text.slice(0, 40) + '...';
+          } else {
+            msgPreview = message.message_text;
+          }
           return (
-            <div>{message.sender_id}</div>
+            <div>
+              <h4>{displayName}</h4>
+              <p>{msgPreview}</p>
+            </div>
           )
         })}
       </div>
