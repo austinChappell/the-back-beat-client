@@ -38,9 +38,9 @@ class MessageHistorySideBar extends Component {
 
     let stopFetch = setInterval(() => {
 
-      if (this.props.fetchHistory === true) {
+      // if (this.props.fetchHistory === true) {
 
-        console.log('THIS IS STILL RUNNING');
+        // console.log('THIS IS STILL RUNNING');
 
         const output = [];
         const messages = this.props.allMessages;
@@ -58,12 +58,13 @@ class MessageHistorySideBar extends Component {
         }
         // console.log('ALL MESSAGES LENGTH', messages.length);
         // console.log('MESSAGE HISTORY', output);
-        this.setState({ messageHistory: output })
+        this.props.setMessageHistory(output);
+        // this.setState({ messageHistory: output })
 
-      } else {
-        console.log('THIS RAN');
-        clearInterval(stopFetch);
-      }
+      // } else {
+      //   console.log('THIS RAN');
+      //   clearInterval(stopFetch);
+      // }
     })
   }
 
@@ -111,7 +112,8 @@ const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
     allMessages: state.allMessages,
-    loggedInUser: state.loggedInUser
+    loggedInUser: state.loggedInUser,
+    messageHistory: state.messageHistory
   }
 }
 
@@ -120,7 +122,13 @@ const mapDispatchToProps = (dispatch) => {
     setCurrentRecipient: (user) => {
       const action = { type: 'SET_CURRENT_RECIPIENT', user };
       dispatch(action);
+    },
+
+    setMessageHistory: (output) => {
+      const action = { type: 'SET_MSG_HISTORY', output };
+      dispatch(action);
     }
+
   }
 }
 

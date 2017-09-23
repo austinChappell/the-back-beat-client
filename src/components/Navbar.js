@@ -26,7 +26,7 @@ class Navbar extends Component {
       }).then((response) => {
         return response.json();
       }).then((results) => {
-        console.log('UNREAD MESSAGES', results.rows);
+        // console.log('UNREAD MESSAGES', results.rows);
         this.setState({ numOfUnreadMessages: results.rows.length });
       })
 
@@ -50,9 +50,9 @@ class Navbar extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('PROFILE RESULTS', results.rows[0]);
+      // console.log('PROFILE RESULTS', results.rows[0]);
       const loggedInUser = results.rows[0];
-      console.log('LOGGED IN USER', loggedInUser);
+      // console.log('LOGGED IN USER', loggedInUser);
       this.props.addLoggedInUser(loggedInUser);
     })
   }
@@ -119,7 +119,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addLoggedInUser: (user) => {
-      console.log('ADD LOGGED IN USER FUNCTION RUNNING');
+      // console.log('ADD LOGGED IN USER FUNCTION RUNNING');
       const action = { type: 'ADD_LOGGED_IN_USER', user };
       dispatch(action);
     },

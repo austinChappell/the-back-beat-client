@@ -83,6 +83,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentRecipient: action.user, users: [], messageSearchBarVal: '', });
     case 'SET_CURRENT_MESSAGES':
       return Object.assign({}, state, { selectedMessages: action.messages });
+    case 'SET_MSG_HISTORY':
+      return Object.assign({}, state, { messageHistory: action.output });
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType, userInfo: blankUserInfo });
     case 'TOGGLE_USER_AUTH_TYPE':

@@ -67,7 +67,7 @@ class BandPage extends Component {
       return response.json();
     }).then((results) => {
       console.log('ADD MEMBER', results);
-      console.log('User Id', user);
+      // console.log('User Id', user);
       let members = this.state.members.slice();
       const member = Object.assign({}, user, { admin: false });
       members.push(member);

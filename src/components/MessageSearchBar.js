@@ -78,7 +78,7 @@ class MessageSearchBar extends Component {
     return (
       <div className="MessageSearchBar">
         Message Search Bar
-        <input value={this.props.messageSearchBarVal} onFocus={this.props.stopFetch} onChange={(evt) => this.handleChangeAndFetch(evt)} />
+        <input value={this.props.messageSearchBarVal} onChange={(evt) => this.handleChangeAndFetch(evt)} />
         <div className="display-search-results">
           {this.props.users.map((user, index) => {
             return (

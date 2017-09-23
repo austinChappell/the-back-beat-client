@@ -134,7 +134,7 @@ class BandCreateForm extends Component {
   }
 
   addMember = (evt, user) => {
-    console.log('User Id', user);
+    // console.log('User Id', user);
     let members = this.state.members.slice();
     const member = Object.assign({}, user, { admin: false });
     members.push(member);
