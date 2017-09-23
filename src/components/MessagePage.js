@@ -29,7 +29,6 @@ class MessagePage extends Component {
       }).then((response) => {
         return response.json();
       }).then((results) => {
-        // console.log('ALL MESSAGES', results.rows);
         this.props.setAllMessages(results.rows);
       })
     }
@@ -44,85 +43,60 @@ class MessagePage extends Component {
     }, 100);
   }
 
-
-
-
   componentWillUnmount() {
-    console.log('MESSAGE PAGE IS UNMOUNTING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    // this.setState({ searchBarActive: true, fetchHistory: false });
     clearInterval(this.stopFetch);
   }
 
   getMessageHistory = () => {
 
-    // let stopFetch = setInterval(() => {
-
-      // if (this.state.fetchHistory === true) {
-
-        const output = [];
-        const messages = this.props.allMessages;
-        const loggedInUser = this.props.loggedInUser;
-        for (let i = messages.length - 1; i >= 0; i--) {
-          let found = false;
-          output.forEach((item) => {
-            if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
-              found = true;
-            }
-          })
-          if (!found) {
-            output.push(messages[i]);
-          }
+    const output = [];
+    const messages = this.props.allMessages;
+    const loggedInUser = this.props.loggedInUser;
+    for (let i = messages.length - 1; i >= 0; i--) {
+      let found = false;
+      output.forEach((item) => {
+        if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
+          found = true;
         }
-        this.setState({ messageHistory: output })
+      })
+      if (!found) {
+        output.push(messages[i]);
+      }
+    }
+    this.setState({ messageHistory: output })
 
-      // } else {
-      //   console.log('THIS RAN');
-      //   clearInterval(stopFetch);
-      // }
-    // })
   }
 
 
   filterMessages = () => {
-    let newUser = this.props.currentRecipient;
-    // this.props.setCurrentRecipient(newUser);
-    this.setState({ searchBarActive: false, fetchHistory: true });
-    // let stopFetch = setInterval(() => {
 
-      // if (this.state.searchBarActive === true) {
-      //   clearInterval(stopFetch);
-      //   console.log('THIS RAN');
-      // }
+    if (this.props.currentRecipient) {
 
-      if (this.props.currentRecipient) {
+      let newUser = this.props.currentRecipient;
 
-        newUser = this.props.currentRecipient;
+      const filteredMessages = [];
+      this.props.allMessages.map((message) => {
+        if (message.sender_id === newUser.id || message.recipient_id === newUser.id) {
+          filteredMessages.push(message);
+        }
+      });
 
-        const filteredMessages = [];
-        this.props.allMessages.map((message) => {
-          if (message.sender_id === newUser.id || message.recipient_id === newUser.id) {
-            filteredMessages.push(message);
-          }
-        });
-        filteredMessages.map((message) => {
-          if (message.read === false && message.sender_id === newUser.id) {
-            message.read = true;
-            fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
-              credentials: 'include',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              method: 'PUT'
-            })
-          }
-        })
-        this.props.setCurrentMessages(filteredMessages);
-        // console.log('FILTERED MESSAGES', filteredMessages);
+      filteredMessages.map((message) => {
+        if (message.read === false && message.sender_id === newUser.id) {
+          message.read = true;
+          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'PUT'
+          })
+        }
+      })
 
-      }
+      this.props.setCurrentMessages(filteredMessages);
 
-    // }, 100);
-
+    }
 
   }
 
@@ -135,7 +109,6 @@ class MessagePage extends Component {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-      console.log('THIS IS THE RESPONSE SECTION');
       return response.json();
     }).then((results) => {
       this.setState({ users: results.rows });
@@ -154,10 +127,6 @@ class MessagePage extends Component {
         this.fetchUsers();
       });
     }
-  }
-
-  setCurrentRecipient = (user) => {
-    console.log('USER', user);
   }
 
   render() {
@@ -191,11 +160,6 @@ const mapDispatchToProps = (dispatch) => {
 
     setAllMessages: (allMessages) => {
       const action = { type: 'SET_ALL_MESSAGES', allMessages };
-      dispatch(action);
-    },
-
-    setCurrentRecipient: (user) => {
-      const action = { type: 'SET_CURRENT_RECIPIENT', user };
       dispatch(action);
     },
 
