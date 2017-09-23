@@ -92,7 +92,7 @@ class MessagePage extends Component {
 
   filterMessages = (user) => {
     let newUser = user;
-    this.props.setCurrentRecipient(newUser);
+    // this.props.setCurrentRecipient(newUser);
     this.setState({ searchBarActive: false, fetchHistory: true });
     // let stopFetch = setInterval(() => {
 
@@ -170,7 +170,7 @@ class MessagePage extends Component {
   render() {
     return (
       <div className="MessagePage">
-        <MessageSearchBar stopFetch={this.stopFetch} filterMessages={this.filterMessages} />
+        <MessageSearchBar stopFetch={this.stopFetch} />
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
         <MessageHistorySideBar messageHistory={this.state.messageHistory} />
       </div>

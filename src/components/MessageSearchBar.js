@@ -82,7 +82,7 @@ class MessageSearchBar extends Component {
         <div className="display-search-results">
           {this.props.users.map((user, index) => {
             return (
-              <div key={index} className="search-result" onClick={() => this.props.filterMessages(user)}>
+              <div key={index} className="search-result" onClick={() => this.props.setCurrentRecipient(user)}>
                 <h2>{user.first_name} {user.last_name}</h2>
               </div>
             )
