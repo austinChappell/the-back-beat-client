@@ -94,12 +94,12 @@ class MessagePage extends Component {
     let newUser = user;
     this.props.setCurrentRecipient(newUser);
     this.setState({ searchBarActive: false, fetchHistory: true });
-    let stopFetch = setInterval(() => {
+    // let stopFetch = setInterval(() => {
 
-      if (this.state.searchBarActive === true) {
-        clearInterval(stopFetch);
-        console.log('THIS RAN');
-      }
+      // if (this.state.searchBarActive === true) {
+      //   clearInterval(stopFetch);
+      //   console.log('THIS RAN');
+      // }
 
       if (this.props.currentRecipient) {
 
@@ -128,7 +128,7 @@ class MessagePage extends Component {
 
       }
 
-    }, 100);
+    // }, 100);
 
 
   }
