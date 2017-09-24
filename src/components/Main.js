@@ -8,7 +8,7 @@ import RightMainPageSideBar from './RightMainPageSideBar';
 class Main extends Component {
 
   componentDidMount() {
-    const url = 'http://localhost:6001/api/profile';
+    const url = `http://localhost:6001/api/profile/${this.props.currentUsername}`;
     console.log('URL', url);
     fetch(url, {
       credentials: 'include',

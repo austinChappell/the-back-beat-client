@@ -26,7 +26,7 @@ class Navbar extends Component {
       }).then((response) => {
         return response.json();
       }).then((results) => {
-        // console.log('UNREAD MESSAGES', results.rows);
+        console.log('UNREAD MESSAGES', results.rows);
         this.setState({ numOfUnreadMessages: results.rows.length });
       })
 
