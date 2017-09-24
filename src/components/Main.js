@@ -27,7 +27,9 @@ class Main extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.loggedInUser.onboarding_stage < 1) {
+    console.log('ONBOARDING STAGE', this.props.onboardingStage);
+    console.log('MAX STAGE', this.props.onboardingMaxStage);
+    if (this.props.onboardingStage <= this.props.onboardingMaxStage) {
       console.log('ONBOARDING IS LESS THAN 1', this.props);
       this.props.history.push('/onboarding');
     }
@@ -49,7 +51,8 @@ const mapStateToProps = (state) => {
   return {
     currentUsername: state.currentUsername,
     currentUser: state.currentUser,
-    loggedInUser: state.loggedInUser
+    onboardingStage: state.loggedInUser.onboarding_stage,
+    onboardingMaxStage: state.onboardingMaxStage
   }
 }
 
