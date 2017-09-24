@@ -11,10 +11,14 @@ class OnboardingForm extends Component {
       pendingGenre: '',
       selectedGenres: [],
       selectedGenreMax: 5,
+      selectedGenreMin: 1,
       instrumentOptions: [],
       pendingInstrument: '',
       selectedInstruments: [],
-      selectedInstrumentMax: 3
+      selectedInstrumentMax: 3,
+      selectedInstrumentMin: 1,
+      seekingInstrumentMax: 3,
+      seekingInstrumentMin: 0
     }
   }
 
@@ -80,8 +84,8 @@ class OnboardingForm extends Component {
     });
   }
 
-  continue = (onboardingCategory, max, query) => {
-    if (this.state[onboardingCategory].length > 0 && this.state[onboardingCategory].length <= max) {
+  continue = (onboardingCategory, max, min, query) => {
+    if (this.state[onboardingCategory].length >= min && this.state[onboardingCategory].length <= max) {
       const url = this.props.apiURL;
       this.state[onboardingCategory].forEach((item) => {
 
@@ -116,6 +120,9 @@ class OnboardingForm extends Component {
       }).then((results) => {
         console.log(results);
         this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
+        const updateState = {};
+        updateState[onboardingCategory] = [];
+        this.setState(updateState);
       })
 
     }
@@ -144,7 +151,10 @@ class OnboardingForm extends Component {
       })
     }
 
+
     if (stage === 0) {
+
+
       form = <div>
         <h1>What genres do you listen to/play?</h1>
         <span>*You must select at least 1 and no more than 5</span>
@@ -157,9 +167,13 @@ class OnboardingForm extends Component {
         {this.state.selectedGenres.map((genre, index) => {
           return <h3 key={index}>{genre.value}</h3>
         })}
-        <button onClick={() => this.continue('selectedGenres', this.state.selectedGenreMax, 'genres/add')}>Continue</button>
+        <button onClick={() => this.continue('selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add')}>Continue</button>
       </div>
+
+
     } else if (stage === 1) {
+
+
       form = <div>
         <h1>Choose your instrument(s).</h1>
         <span>*You must select at least 1 and no more than 3</span>
@@ -172,8 +186,28 @@ class OnboardingForm extends Component {
         {this.state.selectedInstruments.map((instrument, index) => {
           return <h3 key={index}>{instrument.value}</h3>
         })}
-        <button onClick={() => this.continue('selectedInstruments', this.state.selectedInstrumentMax, 'instruments/add')}>Continue</button>
+        <button onClick={() => this.continue('selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add')}>Continue</button>
       </div>
+
+
+    } else if (stage == 2) {
+
+
+      form = <div>
+        <h1>What type of musician(s) are you searching for?</h1>
+        <form>
+          <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument')}>
+            {instrumentOptions}
+          </select>
+          <button onClick={(evt) => {this.handleSubmit(evt, 'selectedInstruments', 'pendingInstrument', this.state.seekingInstrumentMax)}}>Add Instrument</button>
+        </form>
+        {this.state.selectedInstruments.map((instrument, index) => {
+          return <h3 key={index}>{instrument.value}</h3>
+        })}
+        <button onClick={() => this.continue('selectedInstruments', this.state.seekingInstrumentMax, this.state.seekingInstrumentMin, 'instruments_seeking/add')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
+      </div>
+
+
     }
     //
     // switch(stage) {

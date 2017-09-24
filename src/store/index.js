@@ -45,7 +45,7 @@ const initialState = {
   currentRecipient: null,
   users: [],
   onboardingStage: 0,
-  onboardingMaxStage: 1,
+  onboardingMaxStage: 2,
   skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice']
 }
 
