@@ -26,7 +26,15 @@ class Main extends Component {
     })
   }
 
+  componentDidUpdate() {
+    if (this.props.loggedInUser.onboarding_stage < 1) {
+      console.log('ONBOARDING IS LESS THAN 1', this.props);
+      this.props.history.push('/onboarding');
+    }
+  }
+
   render() {
+
     return (
       <div className="Main">
         <LeftMainPageSideBar />
@@ -40,7 +48,8 @@ class Main extends Component {
 const mapStateToProps = (state) => {
   return {
     currentUsername: state.currentUsername,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    loggedInUser: state.loggedInUser
   }
 }
 

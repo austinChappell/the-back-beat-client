@@ -81,13 +81,28 @@ class UserAuthForm extends Component {
     }).then((results) => {
       const data = results;
       this.props.clearUserInfo(userInfo.username);
+
+      console.log('DATA', data);
+      //
+      // if (this.props.onboardingStage === 0) {
+      //   this.props.newProps.history.push('/onboarding');
+      // } else if (this.props.onboardingStage === 1) {
+      //   this.props.newProps.history.push('/');
+      // } else {
+      //   this.props.newProps.history.goBack();
+      // }
+
+
       if (submitType === 'login') {
         this.props.newProps.history.push('/');
       } else if (submitType === 'signup') {
-        this.props.newProps.history.push(`/profile/${userInfo.username}`);
+        this.props.newProps.history.push('/onboarding');
+        // this.props.newProps.history.push(`/profile/${userInfo.username}`);
       } else {
         this.props.newProps.history.goBack();
       }
+
+
     }).catch((err) => {
       if (submitType === 'login') {
         this.setState({ errorMessage: 'The username and/or password is invalid.' });
@@ -203,6 +218,7 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     attemptedLogin: state.attemptedLogin,
     authorize: state.authorized,
+    onboardingStage: state.onboardingStage,
     showUserAuthForm: state.showUserAuthForm,
     userAuthType: state.userAuthType,
     userInfo: state.userInfo,

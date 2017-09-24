@@ -1,0 +1,150 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+class OnboardingForm extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      genreOptions: [],
+      pendingGenre: '',
+      selectedGenres: [],
+      selectedGenreMax: 5
+    }
+  }
+
+  componentDidMount() {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/genres`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log(results.rows);
+      this.setState({
+        genreOptions: results.rows,
+        pendingGenre: {
+          value: results.rows[0].style_name,
+          id: results.rows[0].style_id
+        }
+      })
+    })
+  }
+
+  handleChange = (evt, category) => {
+    const updateState = {};
+    updateState[category] = {
+      id: evt.target.children[evt.target.selectedIndex].id,
+      value: evt.target.value
+    };
+    this.setState(updateState);
+  }
+
+  handleSubmit = (evt, array, element, max) => {
+    evt.preventDefault();
+    const updateState = {};
+    updateState[array] = this.state[array].slice();
+    // PREVENT DUPLICATES IN THE ARRAY AND DO NOT ALLOW THE ARRAY TO EXCEED 5 ELEMENTS
+    if (updateState[array].indexOf(this.state[element]) === -1 && updateState[array].length < max) {
+      updateState[array].push(this.state[element]);
+    }
+    this.setState(updateState, () => {
+      console.log(this.state);
+    });
+  }
+
+  continue = (onboardingCategory, max, query) => {
+    if (this.state[onboardingCategory].length > 0 && this.state[onboardingCategory].length <= max) {
+      const url = this.props.apiURL;
+      this.state.selectedGenres.forEach((genre) => {
+
+
+        console.log('continue button works');
+        fetch(`${url}/api/${query}`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            genre: genre
+          }),
+          method: 'POST'
+        }).then((response) => {
+          return response.json();
+        }).then((results) => {
+          console.log('RESULTS', results);
+        })
+
+
+      })
+
+      fetch(`${url}/user/onboarding/plus`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT'
+      })
+
+    }
+  }
+
+  render() {
+
+    let stage = this.props.onboardingStage;
+    let form;
+    let genreOptions = <option>---</option>;
+
+    if (this.state.genreOptions.length > 0) {
+      genreOptions = this.state.genreOptions.map((option) => {
+        return (
+          <option key={option.style_id} id={option.style_id} value={option.style_name}>{option.style_name}</option>
+        )
+      })
+    }
+
+    switch(stage) {
+      case 0:
+        form = <div>
+          <h1>What genres do you listen to/play?</h1>
+          <span>*You must select at least 1 and no more than 5</span>
+          <form>
+            <select onChange={(evt) => this.handleChange(evt, 'pendingGenre')}>
+              {genreOptions}
+            </select>
+            <button onClick={(evt) => {this.handleSubmit(evt, 'selectedGenres', 'pendingGenre', this.state.selectedGenreMax)}}>Add Another Genre</button>
+          </form>
+          {this.state.selectedGenres.map((genre, index) => {
+            return <h3 key={index}>{genre.value}</h3>
+          })}
+          <button onClick={() => this.continue('selectedGenres', this.state.selectedGenreMax, 'genres/add')}>Continue</button>
+        </div>
+      default: null;
+    }
+
+    return (
+      <div className="OnboardingForm">
+        Onboarding Form Component
+        { form }
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    apiURL: state.apiURL,
+    onboardingStage: state.onboardingStage
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+   return {
+
+   }
+ }
+export default connect(mapStateToProps, mapDispatchToProps)(OnboardingForm);

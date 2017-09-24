@@ -110,6 +110,7 @@ const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
     authorized: state.authorized,
+    loggedInUser: state.loggedInUser,
     showUserAuthForm: state.showUserAuthForm,
     userAuthType: state.userAuthType,
     username: state.currentUsername

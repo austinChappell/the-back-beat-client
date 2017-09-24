@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
     currentUsername: state.currentUsername,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
   }
 }
 

@@ -13,6 +13,7 @@ import Logout from './Logout';
 import Main from './Main';
 import MessagePage from './MessagePage';
 import MyProfile from './MyProfile';
+import Onboarding from './Onboarding';
 import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
 
@@ -35,6 +36,7 @@ class App extends Component {
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
                 <PrivateRoute path="/connect" component={ConnectPage} />
                 <PrivateRoute path="/messages" component={MessagePage} />
+                <PrivateRoute path="/onboarding" component={Onboarding} />
               </Switch>
             </BaseLayout>
           </Router>

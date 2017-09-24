@@ -24,6 +24,7 @@ const initialState = {
     lastName: '',
     password: '',
     username: '',
+    skillLevel: '',
   },
   gigs: [
     {title: 'United Methodist', date: '9/23', time: '7:00pm', details: 'Playing a Sunday night service at First United Methodist Church of Lewisville.'},
@@ -42,7 +43,8 @@ const initialState = {
   messageHistory: [],
   selectedMessages: [],
   currentRecipient: null,
-  users: []
+  users: [],
+  onboardingStage: 0
 }
 
 const reducer = (state = initialState, action) => {
