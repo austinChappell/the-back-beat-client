@@ -297,6 +297,9 @@ p {
       margin-bottom: 5px; }
     .MessageHistorySideBar .message-history-result p {
       margin: 0 0 0 15px; }
+  .MessageHistorySideBar .unread {
+    background-color: #9A6197;
+    color: #FFFFFF; }
 
 .MessagePage {
   padding-top: 40px;

@@ -91,7 +91,7 @@ class MessageHistorySideBar extends Component {
             msgPreview = message.message_text;
           }
           return (
-            <div className="message-history-result" key={index} onClick={() => this.setRecipient(recipientId)}>
+            <div className={!message.read && message.recipient_id === this.props.loggedInUser.id ? "message-history-result unread" : "message-history-result"} key={index} onClick={() => this.setRecipient(recipientId)}>
               <h4>{displayName}</h4>
               <p>{msgPreview}</p>
             </div>

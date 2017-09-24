@@ -15,4 +15,8 @@
       margin: 0 0 0 15px;
     }
   }
+  .unread {
+    background-color: $color-tertiary;
+    color: $light-font;
+  }
 }
