@@ -181,6 +181,14 @@ class UserAuthForm extends Component {
           <option value="Austin, TX">Austin, TX</option>
           <option value="Dallas, TX">Dallas, TX</option>
         </select>
+        <select
+          name="skillLevel"
+          onChange={(evt) => this.props.handleFormInputChange(evt, 'skillLevel')}>
+          <option value="">Skill Level...</option>
+          {this.props.skillLevels.map((skillLevel, index) => {
+            return <option key={index} value={skillLevel}>{skillLevel}</option>
+          })}
+        </select>
       </div>
 
 
@@ -220,6 +228,7 @@ const mapStateToProps = (state) => {
     authorize: state.authorized,
     onboardingStage: state.onboardingStage,
     showUserAuthForm: state.showUserAuthForm,
+    skillLevels: state.skillLevels,
     userAuthType: state.userAuthType,
     userInfo: state.userInfo,
   }

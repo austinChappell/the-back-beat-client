@@ -8,6 +8,7 @@ class OnboardingForm extends Component {
 
     this.state = {
       genreOptions: [],
+      onboardingStage: 0,
       pendingGenre: '',
       selectedGenres: [],
       selectedGenreMax: 5
@@ -32,7 +33,8 @@ class OnboardingForm extends Component {
         pendingGenre: {
           value: results.rows[0].style_name,
           id: results.rows[0].style_id
-        }
+        },
+        onboardingStage: this.props.loggedInUser.onboarding_stage
       })
     })
   }
@@ -94,6 +96,7 @@ class OnboardingForm extends Component {
         return response.json();
       }).then((results) => {
         console.log(results);
+        this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
       })
 
     }
@@ -101,7 +104,9 @@ class OnboardingForm extends Component {
 
   render() {
 
-    let stage = this.props.onboardingStage;
+    console.log('ONBOARDING STAGE', this.state.onboardingStage);
+
+    let stage = this.state.onboardingStage;
     let form;
     let genreOptions = <option>---</option>;
 
@@ -144,13 +149,17 @@ class OnboardingForm extends Component {
 const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
-    onboardingStage: state.onboardingStage
+    loggedInUser: state.loggedInUser,
+    onboardingMaxStage: state.onboardingMaxStage
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-   return {
-
-   }
- }
+  return {
+    updateOnboardingStage: (stage) => {
+      const action = {type: 'UPDATE_ONBOARDING_STAGE', stage};
+      dispatch(action);
+    }
+  }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingForm);

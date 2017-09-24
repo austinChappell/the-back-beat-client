@@ -44,7 +44,9 @@ const initialState = {
   selectedMessages: [],
   currentRecipient: null,
   users: [],
-  onboardingStage: 0
+  onboardingStage: 0,
+  onboardingMaxStage: 0,
+  skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice']
 }
 
 const reducer = (state = initialState, action) => {
@@ -94,6 +96,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { userAuthType: newAuthType, userInfo: blankUserInfo });
     case 'UPDATE_CURRENT_MESSAGE':
       return Object.assign({}, state, { currentMessage: action.val });
+    case 'UPDATE_ONBOARDING_STAGE':
+      return Object.assign({}, state, { onboardingStage: action.stage });
     case 'UPDATE_USER':
       return Object.assign({}, state, { currentUser: action.user });
     case 'USER_AUTH_FORM_SUBMIT':
