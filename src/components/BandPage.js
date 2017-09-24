@@ -139,6 +139,7 @@ class BandPage extends Component {
     let editButton;
     let deleteButton;
     let confirmDeleteForm;
+    let searchMembersLink;
 
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
@@ -181,6 +182,14 @@ class BandPage extends Component {
       </div>
       :
       null;
+
+      searchMembersLink = this.props.loggedInUser.id === bandData.band_admin_id
+      ?
+      <div className="search-members-link">
+        <Link to={`/band/${bandData.band_id}/search_musicians/admin/${bandData.band_admin_id}`}>Browse Members</Link>
+      </div>
+      :
+      null;
     }
 
     let bandInfo = bandData === undefined ? null :
@@ -215,6 +224,7 @@ class BandPage extends Component {
       { editButton }
       { deleteButton }
       { confirmDeleteForm }
+      { searchMembersLink }
 
     </div>
 
