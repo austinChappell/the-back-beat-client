@@ -3,28 +3,6 @@ import { connect } from 'react-redux';
 
 class ProfileInfoMain extends Component {
 
-  // state = {
-  //   userInstruments: []
-  // }
-  //
-  // componentDidMount() {
-  //
-  //   const url = this.props.apiURL;
-  //   fetch(`${url}/api/instrumentuser/${this.props.user.id}`, {
-  //     credentials: 'include',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then((response) => {
-  //     return response.json();
-  //   }).then((results) => {
-  //     console.log('INSTRUMENTS', results.rows);
-  //     this.props.addInstrumentsToCurrentUser(results.rows);
-  //     this.setState({ userInstruments: results.rows })
-  //   })
-  //
-  // }
-
   render() {
 
     const user = this.props.user;
