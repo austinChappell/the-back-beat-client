@@ -15,6 +15,8 @@ class OnboardingForm extends Component {
   }
 
   componentDidMount() {
+    // TODO: Create variable of onboarding_stage_max so we can add more onboarding steps later if necessary. This onbaording_stage will be stored to each users data.
+
     const url = this.props.apiURL;
     fetch(`${url}/api/genres`, {
       credentials: 'include',
@@ -88,6 +90,10 @@ class OnboardingForm extends Component {
           'Content-Type': 'application/json'
         },
         method: 'PUT'
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        console.log(results);
       })
 
     }
