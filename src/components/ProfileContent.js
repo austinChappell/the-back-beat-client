@@ -9,13 +9,41 @@ import ProfileUploads from './ProfileUploads';
 
 class ProfileContent extends Component {
 
+  state = {
+    userInstruments: []
+  }
+
+  componentDidMount() {
+    this.getInstruments();
+  }
+
+  componentDidUpdate() {
+    this.getInstruments();
+  }
+
+  getInstruments = () => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/instrumentuser/${this.props.user.id}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setState({ userInstruments: results.rows })
+    })
+
+  }
+
   render() {
 
     const contentType = this.props.profileContent;
     let content;
 
     if (contentType === 'main') {
-      content = <ProfileInfoMain user={this.props.user} />;
+      content = <ProfileInfoMain user={this.props.user} instruments={this.state.userInstruments} />;
     } else if (contentType === 'events') {
       content = <ProfileEvents user={this.props.user} />;
     } else if (contentType === 'connections') {
@@ -38,6 +66,7 @@ class ProfileContent extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     profileContent: state.profileContent
   }
 }

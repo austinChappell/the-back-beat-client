@@ -23,6 +23,7 @@ class Main extends Component {
       console.log('FETCH RESULTS', results);
       this.props.updateUser(results);
       window.localStorage.username = results.username;
+      this.props.setOnboardingStage(results.onboarding_stage);
     })
   }
 
@@ -58,6 +59,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setOnboardingStage: (stage) => {
+      const action = { type: 'SET_ONBOARDING_STAGE', stage };
+      dispatch(action);
+    },
+
     updateUser: (results) => {
       const action = { type: 'UPDATE_USER', user: results };
       dispatch(action);

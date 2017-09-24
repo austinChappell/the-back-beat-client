@@ -60,6 +60,10 @@ const reducer = (state = initialState, action) => {
     username: ''
   }
   switch (action.type) {
+    case 'ADD_INSTRUMENTS_TO_CURRENT_USER':
+      const currentUser = state.currentUser;
+      currentUser.instruments = action.instrumentArray;
+      return Object.assign({}, state, currentUser);
     case 'ADD_LOGGED_IN_USER':
       const loggedInUser = action.user;
       return Object.assign({}, state, { loggedInUser });
@@ -89,6 +93,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { selectedMessages: action.messages });
     case 'SET_MSG_HISTORY':
       return Object.assign({}, state, { messageHistory: action.output });
+    case 'SET_ONBOARDING_STAGE':
+      return Object.assign({}, state, { onboardingStage: action.stage });
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType, userInfo: blankUserInfo });
     case 'TOGGLE_USER_AUTH_TYPE':

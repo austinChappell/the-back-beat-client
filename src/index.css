@@ -381,6 +381,11 @@ p {
   width: 90%;
   margin: 20px auto; }
 
+.ProfileInfoMain .user-instruments {
+  padding-left: 20px; }
+  .ProfileInfoMain .user-instruments span {
+    display: block; }
+
 .ProfileInfoNavBar {
   display: flex; }
   .ProfileInfoNavBar > div {

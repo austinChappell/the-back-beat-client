@@ -13,7 +13,6 @@ class UserBox extends Component {
     }
   }
 
-
   componentDidMount() {
     const url = 'http://localhost:6001/api/users';
     fetch(url, {

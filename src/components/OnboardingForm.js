@@ -47,6 +47,7 @@ class OnboardingForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
+      console.log('INSTRUMENT RESULTS', results);
       this.setState({
         instrumentOptions: results.rows,
         pendingInstrument: {
