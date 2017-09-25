@@ -14,11 +14,12 @@ class MusicianCarousel extends Component {
     let resultsDisplay;
 
     if (this.props.searchResults.length > 0) {
-      resultsDisplay = <div>
+      resultsDisplay = <div className="slider">
         {this.props.searchResults.map((result, index) => {
           return (
             <div key={index} className='single-result'>
               <h1>{result.first_name} {result.last_name}</h1>
+              <span>Message</span>
             </div>
           )
         })}

@@ -1,0 +1,16 @@
+// TODO: work on styling the slider carousel
+
+.MusicianCarousel {
+  width: 60%;
+  margin: 30px auto;
+  .slider {
+    position: relative;
+  }
+  .single-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid $color-primary;
+    width: 100%;
+  }
+}

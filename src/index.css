@@ -310,6 +310,18 @@ p {
   flex-basis: 20%;
   box-sizing: border-box; }
 
+.MusicianCarousel {
+  width: 60%;
+  margin: 30px auto; }
+  .MusicianCarousel .slider {
+    position: relative; }
+  .MusicianCarousel .single-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #070649;
+    width: 100%; }
+
 .logged-in {
   background-color: #070649;
   position: fixed;
