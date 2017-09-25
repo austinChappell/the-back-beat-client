@@ -1,9 +1,17 @@
 import { createStore } from 'redux';
 
 const initialState = {
+
+  // GENERAL ITEMS
   apiURL: 'http://localhost:6001',
   attemptedLogin: false,
   authorized: false,
+  showUserAuthForm: false,
+  userAuthType: '',
+  skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice'],
+  onboardingMaxStage: 2,
+
+  // USER INFO
   currentUsername: '',
   currentUser: {
     id: '',
@@ -15,8 +23,6 @@ const initialState = {
     skill_level: ''
   },
   loggedInUser: {},
-  showUserAuthForm: false,
-  userAuthType: '',
   userInfo: {
     city: '',
     email: '',
@@ -26,6 +32,9 @@ const initialState = {
     username: '',
     skillLevel: '',
   },
+  onboardingStage: 0,
+
+  // EVENT INFO
   gigs: [
     {title: 'United Methodist', date: '9/23', time: '7:00pm', details: 'Playing a Sunday night service at First United Methodist Church of Lewisville.'},
     {title: 'Andy\'s', date: '9/25', time:'9:00pm', details: 'Gig with Ashley Gatta and The Free People. Might go on later.'},
@@ -37,16 +46,15 @@ const initialState = {
     {title: 'Andy\'s', date: '9/22', time:'7:00pm', location: 'Ashley\'s house'},
     {title: 'House of Blues', date:'9/28', time: '8:00pm', location: 'Silver Studios in Dallas'}
   ],
+
+  // MESSAGE INFO
   currentMessage: '',
   allMessages: [],
   messageSearchBarVal: '',
   messageHistory: [],
   selectedMessages: [],
   currentRecipient: null,
-  users: [],
-  onboardingStage: 0,
-  onboardingMaxStage: 2,
-  skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice']
+  users: []
 }
 
 const reducer = (state = initialState, action) => {
