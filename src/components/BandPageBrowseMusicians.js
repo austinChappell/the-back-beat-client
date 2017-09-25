@@ -14,9 +14,16 @@ class BandPageBrowseMusicians extends Component {
     skillIndexArray: [],
   }
 
+  componentWillMount() {
+
+    // TODO: WE MIGHT NEED TO FIND A WAY FOR THE JS INSIDE DID MOUNT TO RUN AFTER THE SET STATE IN checkAuth()
+
+    this.checkAuth();
+
+  }
+
   componentDidMount() {
     const url = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
 
     fetch(`${url}/api/instruments`, {
       credentials: 'include',
@@ -35,8 +42,38 @@ class BandPageBrowseMusicians extends Component {
         }
       }, () => {
         console.log('STATE AFTER MOUNT', this.state);
+        const bandInfo = this.state.bandInfo;
+        let skillIndex;
+
+        if (bandInfo.band_skill_level) {
+
+          skillIndex = this.findSkillIndex();
+          console.log('SKILL INDEX', skillIndex);
+          let skillIndexArray;
+
+          if (skillIndex === 0) {
+            skillIndexArray = [skillIndex, skillIndex + 1];
+          } else if (skillIndex === this.props.skillLevels.length - 1) {
+            skillIndexArray = [skillIndex, skillIndex - 1];
+          } else {
+            skillIndexArray = [skillIndex, skillIndex + 1, skillIndex - 1];
+          }
+
+          console.log('SKILL INDEX ARRAY', skillIndexArray);
+
+          this.setState({ skillIndexArray: skillIndexArray });
+
+        }
+
       })
     })
+
+  }
+
+  checkAuth = () => {
+
+    const url = this.props.apiURL;
+    const bandId = this.props.match.params.bandId;
 
     fetch(`${url}/api/band/${bandId}`, {
       credentials: 'include',
@@ -51,30 +88,6 @@ class BandPageBrowseMusicians extends Component {
 
   }
 
-  componentDidUpdate() {
-
-    const bandInfo = this.state.bandInfo;
-    let skillIndex;
-
-    if (bandInfo.band_skill_level) {
-
-      skillIndex = this.findSkillIndex();
-      let skillIndexArray;
-
-      if (skillIndex === 0) {
-        skillIndexArray = [skillIndex, skillIndex + 1];
-      } else if (skillIndex === this.props.skillLevels.length - 1) {
-        skillIndexArray = [skillIndex, skillIndex - 1];
-      } else {
-        skillIndexArray = [skillIndex, skillIndex + 1, skillIndex - 1];
-      }
-
-      this.setState({ skillIndexArray });
-
-    }
-
-  }
-
   findSkillIndex = () => {
     return this.props.skillLevels.indexOf(this.state.bandInfo.band_skill_level);
   }
@@ -84,6 +97,7 @@ class BandPageBrowseMusicians extends Component {
     const city = this.state.bandInfo.band_city;
     const searchResults = [];
 
+    console.log('CHANGE FUNCTION RUNNING', instrumentId, this.state.skillIndexArray);
     this.state.skillIndexArray.forEach((skillIndex) => {
 
       fetch(`${url}/api/users/${instrumentId}/${city}/${skillIndex}`, {
