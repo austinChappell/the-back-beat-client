@@ -22,7 +22,7 @@ class BandPageBrowseMusicians extends Component {
 
   }
 
-  componentDidMount() {
+  fetchInstruments = () => {
     const url = this.props.apiURL;
 
     fetch(`${url}/api/instruments`, {
@@ -83,7 +83,9 @@ class BandPageBrowseMusicians extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.setState({ bandInfo: results.rows[0] });
+      this.setState({ bandInfo: results.rows[0] }, () => {
+        this.fetchInstruments();
+      });
     })
 
   }
@@ -95,12 +97,14 @@ class BandPageBrowseMusicians extends Component {
   fetchUsersByInstrumentId = (instrumentId) => {
     const url = this.props.apiURL;
     const city = this.state.bandInfo.band_city;
-    const searchResults = [];
+    let searchResults = [];
 
     console.log('CHANGE FUNCTION RUNNING', instrumentId, this.state.skillIndexArray);
     this.state.skillIndexArray.forEach((skillIndex) => {
 
-      fetch(`${url}/api/users/${instrumentId}/${city}/${skillIndex}`, {
+      const skillLevel = this.props.skillLevels[skillIndex];
+
+      fetch(`${url}/api/users/${instrumentId}/${city}/${skillLevel}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
@@ -108,10 +112,12 @@ class BandPageBrowseMusicians extends Component {
       }).then((response) => {
         return response.json();
       }).then((results) => {
-        console.log('USER RESULTS', results.rows);
-        searchResults.concat(results.rows);
+        searchResults = searchResults.concat(results.rows);
+        console.log('USER RESULTS', searchResults);
       }).then(() => {
-        this.setState({ searchResults });
+        this.setState({ searchResults: searchResults }, () => {
+          console.log('CURRENT STATE', this.state);
+        });
       })
 
     })
@@ -157,7 +163,7 @@ class BandPageBrowseMusicians extends Component {
           {instrumentOptions}
         </select>
 
-        <MusicianCarousel />
+        <MusicianCarousel searchResults={this.state.searchResults} />
       </div>
 
     )

@@ -36,7 +36,7 @@ class Navbar extends Component {
 
     setInterval(() => {
       fetchData();
-    }, 1000);
+    }, 5000);
 
   }
 
