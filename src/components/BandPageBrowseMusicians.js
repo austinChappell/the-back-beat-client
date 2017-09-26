@@ -9,9 +9,11 @@ class BandPageBrowseMusicians extends Component {
     bandInfo: {},
     instruments: [],
     instrumentOptions: [],
+    noResultsMsg: null,
     pendingInstrument: {},
     searchResults: [],
     skillIndexArray: [],
+    sliderPosition: 0
   }
 
   componentWillMount() {
@@ -98,6 +100,7 @@ class BandPageBrowseMusicians extends Component {
     const url = this.props.apiURL;
     const city = this.state.bandInfo.band_city;
     let searchResults = [];
+    let noResultsMsg;
 
     console.log('CHANGE FUNCTION RUNNING', instrumentId, this.state.skillIndexArray);
     this.state.skillIndexArray.forEach((skillIndex) => {
@@ -114,8 +117,14 @@ class BandPageBrowseMusicians extends Component {
       }).then((results) => {
         searchResults = searchResults.concat(results.rows);
         console.log('USER RESULTS', searchResults);
+
+        if (searchResults.length === 0) {
+          noResultsMsg = 'There are no musicians matching this criteria at this time.';
+        } else {
+          noResultsMsg = null;
+        }
       }).then(() => {
-        this.setState({ searchResults: searchResults }, () => {
+        this.setState({ noResultsMsg, searchResults: searchResults, sliderPosition: 0 }, () => {
           console.log('CURRENT STATE', this.state);
         });
       })
@@ -128,6 +137,13 @@ class BandPageBrowseMusicians extends Component {
     if (evt.target.value !== '') {
       const instrumentId = evt.target.children[evt.target.selectedIndex].id;
       this.fetchUsersByInstrumentId(instrumentId);
+    }
+  }
+
+  slideCarousel = (positionDiff) => {
+    let newSliderPosition = this.state.sliderPosition + positionDiff;
+    if (newSliderPosition <= 0 && newSliderPosition >= (this.state.searchResults.length - 1) * -100) {
+      this.setState({ sliderPosition: newSliderPosition});
     }
   }
 
@@ -163,7 +179,11 @@ class BandPageBrowseMusicians extends Component {
           {instrumentOptions}
         </select>
 
-        <MusicianCarousel searchResults={this.state.searchResults} />
+        <MusicianCarousel
+          noResultsMsg={this.state.noResultsMsg}
+          searchResults={this.state.searchResults}
+          sliderPosition={this.state.sliderPosition}
+          slideCarousel={this.slideCarousel} />
       </div>
 
     )

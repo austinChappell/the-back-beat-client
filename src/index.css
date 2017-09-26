@@ -312,14 +312,29 @@ p {
 
 .MusicianCarousel {
   width: 60%;
-  margin: 30px auto; }
+  margin: 30px auto;
+  display: flex;
+  align-items: center; }
+  .MusicianCarousel .disabled-btn {
+    color: lightgray; }
+  .MusicianCarousel i {
+    flex-basis: 10%;
+    text-align: center;
+    font-size: 3.0em;
+    cursor: pointer; }
   .MusicianCarousel .slider {
-    position: relative; }
+    position: relative;
+    flex-basis: 80%;
+    overflow: hidden;
+    height: 80px;
+    box-sizing: border-box;
+    border: 1px solid #070649; }
   .MusicianCarousel .single-result {
+    transition: 500ms;
     position: absolute;
+    text-align: center;
     top: 0;
     left: 0;
-    border: 1px solid #070649;
     width: 100%; }
 
 .logged-in {

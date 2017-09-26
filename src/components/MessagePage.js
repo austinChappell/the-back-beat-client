@@ -40,7 +40,7 @@ class MessagePage extends Component {
       if (this.props.currentRecipient) {
         this.filterMessages();
       }
-    }, 100);
+    }, 500);
   }
 
   componentWillUnmount() {
