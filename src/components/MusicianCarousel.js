@@ -27,6 +27,8 @@ class MusicianCarousel extends Component {
               className='single-result'
               style={{left: left + '%'}}>
               <h1>{result.first_name} {result.last_name}</h1>
+              <h2>{result.city}</h2>
+              <h2>{result.skill_level}</h2>
               <span>Message</span>
             </div>
           )
