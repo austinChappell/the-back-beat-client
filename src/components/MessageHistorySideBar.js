@@ -65,7 +65,7 @@ class MessageHistorySideBar extends Component {
       //   console.log('THIS RAN');
       //   clearInterval(stopFetch);
       // }
-    }, 1000)
+    }, 15000)
   }
 
   render() {
