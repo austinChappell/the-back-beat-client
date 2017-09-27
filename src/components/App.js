@@ -7,6 +7,7 @@ import BandCreateForm from './BandCreateForm';
 import BandPage from './BandPage';
 import BandPageBrowseMusicians from './BandPageBrowseMusicians';
 import BaseLayout from './BaseLayout';
+import CalendarPage from './CalendarPage';
 import ConnectPage from './ConnectPage';
 import Home from './Home';
 import LoggedIn from './LoggedIn';
@@ -36,6 +37,7 @@ class App extends Component {
                 <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
                 <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
+                <PrivateRoute path="/calendar" component={CalendarPage} />
                 <PrivateRoute path="/connect" component={ConnectPage} />
                 <PrivateRoute path="/messages" component={MessagePage} />
                 <PrivateRoute path="/onboarding" component={Onboarding} />

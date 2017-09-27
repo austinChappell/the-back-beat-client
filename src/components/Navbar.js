@@ -75,7 +75,7 @@ class Navbar extends Component {
         <i className="fa fa-music" aria-hidden="true"></i>
         <i className="fa fa-plus" aria-hidden="true"></i>
       </NavLink>
-      <NavLink className="relative-navlink" to="/addtocalendar">
+      <NavLink className="relative-navlink" to="/calendar">
         <i className="fa fa-calendar" aria-hidden="true"></i>
         <i className="fa fa-plus" aria-hidden="true"></i>
       </NavLink>
