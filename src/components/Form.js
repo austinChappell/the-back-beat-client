@@ -7,6 +7,7 @@ class Form extends Component {
       <div className="Form">
         <form>
           {this.props.children}
+          <button onClick={(evt) => this.props.onSubmit(evt)}>{this.props.submitBtnText}</button>
         </form>
       </div>
     )

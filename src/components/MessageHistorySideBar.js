@@ -37,6 +37,7 @@ class MessageHistorySideBar extends Component {
   getMessageHistory = () => {
 
     let stopFetch = setInterval(() => {
+      console.log('MESSAGE HISTORY SIDEBAR');
 
       // if (this.props.fetchHistory === true) {
 

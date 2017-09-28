@@ -35,6 +35,7 @@ class MessagePage extends Component {
 
     fetchAllMessages();
     this.stopFetch = setInterval(() => {
+      console.log('FETCH ALL MESSAGES');
       fetchAllMessages();
       this.getMessageHistory();
       if (this.props.currentRecipient) {

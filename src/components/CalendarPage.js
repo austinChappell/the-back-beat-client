@@ -25,7 +25,7 @@ class CalendarPage extends Component {
       { value: 'jam session', text: 'Jam Session' },
       { value: 'rehearsal', text: 'Rehearsal' }
     ],
-    eventTypeSelected: '',
+    eventType: '',
     eventVenue: '',
     startDate: moment()
   }
@@ -37,9 +37,7 @@ class CalendarPage extends Component {
   handleInputChange = (evt, name) => {
     const newStateObj = {};
     newStateObj[name] = evt.target.value;
-    this.setState(newStateObj, () => {
-      console.log('INPUT CHANGED', this.state);
-    });
+    this.setState(newStateObj);
   }
 
   convertDate = (date) => {
@@ -56,9 +54,47 @@ class CalendarPage extends Component {
   }
 
   onTimeChange = (value) => {
-    console.log(value && value.format(format));
     const time = value && value.format(format);
     this.setState({ eventTime: time });
+  }
+
+  submitForm = (evt) => {
+    evt.preventDefault();
+    console.log('SUBMIT FUNCTION RUNNING');
+    const apiURL = this.props.apiURL;
+    console.log('API URL', apiURL);
+    fetch(`${apiURL}/api/calendar/add`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        eventTitle: this.state.eventTitle,
+        eventType: this.state.eventType,
+        eventVenue: this.state.eventVenu,
+        eventDateTime: this.state.eventDate
+      })
+    }).then((response) => {
+      console.log('WE MADE IT THIS FAR');
+      return response.json();
+    }).then((results) => {
+      console.log('RESULTS', results.rows);
+    }).then(() => {
+      this.setState({
+        eventDate: '',
+        eventTime: '',
+        eventTitle: '',
+        eventTypes: [
+          { value: 'concert', text: 'Concert' },
+          { value: 'jam session', text: 'Jam Session' },
+          { value: 'rehearsal', text: 'Rehearsal' }
+        ],
+        eventType: '',
+        eventVenue: '',
+        startDate: moment()
+      })
+    })
   }
 
   render() {
@@ -70,7 +106,10 @@ class CalendarPage extends Component {
     return (
       <div className="CalendarPage">
 
-        <Form>
+        <Form
+          onSubmit={(evt) => this.submitForm(evt)}
+          submitBtnText="Add To Calendar"
+        >
 
           <FormInput
             name="eventTitle"
@@ -95,7 +134,7 @@ class CalendarPage extends Component {
           />
 
           <FormSelect
-            name="eventTypeSelected"
+            name="eventType"
             onChange={this.handleInputChange}
             options={this.state.eventTypes}
             value={this.state.eventTypeSelected}
@@ -119,7 +158,7 @@ class CalendarPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    apiURL: state.apiURL
   }
 }
 
