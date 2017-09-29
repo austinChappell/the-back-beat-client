@@ -67,6 +67,7 @@ class UserAuthForm extends Component {
   }
 
   submitForm = (evt, userInfo) => {
+    console.log('signing in');
     evt.preventDefault();
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     fetch(`${this.props.apiURL}/${submitType}`, {
@@ -113,6 +114,8 @@ class UserAuthForm extends Component {
   }
 
   render() {
+
+    // console.log('render user auth page');
 
     let otherOption = this.props.userAuthType === 'Login' ?
       <p>

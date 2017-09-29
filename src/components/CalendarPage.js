@@ -16,9 +16,11 @@ const now = moment().hour(0).minute(0);
 
 class CalendarPage extends Component {
 
+  // TODO: Work on fixing time value
+
   state = {
     eventDate: '',
-    eventTime: '',
+    eventTime: '12:00 am',
     eventTitle: '',
     eventTypes: [
       { value: 'concert', text: 'Concert' },
@@ -27,11 +29,14 @@ class CalendarPage extends Component {
     ],
     eventType: '',
     eventVenue: '',
-    startDate: moment()
+    initialTimeVal: now,
+    startDate: moment(),
+    unconvertedDate: ''
   }
 
   componentDidMount() {
-    this.convertDate(this.state.startDate);
+    this.convertDate(this.state.startDate, this.state.eventTime);
+    this.setState({ eventType: this.state.eventTypes[0].value })
   }
 
   handleInputChange = (evt, name) => {
@@ -40,22 +45,26 @@ class CalendarPage extends Component {
     this.setState(newStateObj);
   }
 
-  convertDate = (date) => {
+  convertDate = (date, time) => {
     const shortDate = date._d.toString().slice(0, 15);
-    this.setState({ eventDate: shortDate });
+    this.setState({ eventDate: shortDate + ' ' + time }, () => {
+      console.log('CONVERT DATE', this.state);
+    });
   }
 
   handleDateChange = (date) => {
     this.setState({
       startDate: date
     }, () => {
-      this.convertDate(this.state.startDate)
+      this.convertDate(this.state.startDate, this.state.eventTime)
     });
   }
 
   onTimeChange = (value) => {
     const time = value && value.format(format);
-    this.setState({ eventTime: time });
+    this.setState({ eventTime: time }, () => {
+      this.convertDate(this.state.startDate, time);
+    });
   }
 
   submitForm = (evt) => {
@@ -72,7 +81,7 @@ class CalendarPage extends Component {
       body: JSON.stringify({
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
-        eventVenue: this.state.eventVenu,
+        eventVenue: this.state.eventVenue,
         eventDateTime: this.state.eventDate
       })
     }).then((response) => {
@@ -83,17 +92,22 @@ class CalendarPage extends Component {
     }).then(() => {
       this.setState({
         eventDate: '',
-        eventTime: '',
+        eventTime: '12:00am',
         eventTitle: '',
         eventTypes: [
           { value: 'concert', text: 'Concert' },
           { value: 'jam session', text: 'Jam Session' },
           { value: 'rehearsal', text: 'Rehearsal' }
         ],
-        eventType: '',
+        eventType: this.state.eventTypes[0].value,
         eventVenue: '',
+        initialTimeVal: now,
         startDate: moment()
+      }, () => {
+        this.convertDate(this.state.startDate);
       })
+    }).catch((err) => {
+      console.log('FAILED', err);
     })
   }
 
