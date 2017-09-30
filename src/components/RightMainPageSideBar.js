@@ -7,7 +7,47 @@ import UserBox from './UserBox';
 class RightMainPageSideBar extends Component {
 
   state = {
-    eventIndex: 0
+    eventIndex: 0,
+    eventIndexRange: [0, 1],
+    musician: {
+      name: '',
+      url: '',
+      city: '',
+      skillLevel: '',
+      instruments: []
+    },
+    musicianIndex: 0,
+    musicianIndexRange: [0, 1],
+    musicians: []
+  }
+
+  componentDidMount() {
+    const apiURL = this.props.apiURL;
+    // const url = 'http://localhost:6001/api/users';
+    fetch(`${apiURL}/api/users`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log('DATA', data);
+      this.setState({
+        musicians: data
+      });
+    });
+  }
+
+  swipe = (itemsArray, itemIndexName, direction) => {
+    const updateObj = {};
+    if (this.state[itemIndexName] === this.state[itemsArray].length - 1) {
+      updateObj[itemIndexName] = 0;
+    } else {
+      updateObj[itemIndexName] = this.state[itemIndexName] + direction;
+    }
+    this.setState(updateObj);
   }
 
   render() {
@@ -18,10 +58,10 @@ class RightMainPageSideBar extends Component {
         <UserBox />
 
         <BrowseBox
-          displayTitle={this.musician.name}
-          displayTitleURL={this.msu}
-          goToPrev={this.goToPrev}
-          goToNext={this.goToNext}
+          displayTitle={this.state.musician.name}
+          displayTitleURL={this.state.musician.url}
+          goToPrev={() => this.swipe('musicians', 'musicianIndex', -1)}
+          goToPrev={() => this.swipe('musicians', 'musicianIndex', 1)}
           index={this.state.eventIndex}
           title="Musicians Near You"
         />
@@ -40,7 +80,7 @@ class RightMainPageSideBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    apiURL: state.apiURL
   }
 }
 
