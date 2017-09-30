@@ -107,7 +107,7 @@ class BandPageBrowseMusicians extends Component {
 
       const skillLevel = this.props.skillLevels[skillIndex];
 
-      fetch(`${url}/api/users/${instrumentId}/${city}/${skillLevel}`, {
+      fetch(`${url}/api/users/instrumentid/${instrumentId}/city/${city}/skilllevel/${skillLevel}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'

@@ -8,8 +8,18 @@ class BrowseBox extends Component {
         <h2>{this.props.title}</h2>
         {this.props.children}
         <div className="buttons">
-          <button onClick={this.props.goToPrev}>Prev</button>
-          <button onClick={this.props.goToNext}>Next</button>
+          <button
+            disabled={this.props.currentIndex === 0}
+            onClick={this.props.currentIndex > 0 ? this.props.goToPrev : () => {}}
+          >
+            Prev
+          </button>
+          <button
+            disabled={this.props.currentIndex === this.props.maxIndex}
+            onClick={this.props.currentIndex < this.props.maxIndex ? this.props.goToNext : () => {}}
+          >
+            Next
+          </button>
         </div>
       </div>
     )

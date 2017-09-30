@@ -1,11 +1,18 @@
-.UserBox {
-  .hidden {
-    display: none;
-  }
+.BrowseBox {
   h2 {
     color: $color-primary;
   }
-  .user-box-results {
+  .browse-box-container {
+    height: 200px;
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    .show-item {
+      position: absolute;
+      padding: 10px;
+      width: 100%;
+      transition: 500ms;
+    }
     h3 a {
       color: $color-tertiary;
       text-decoration: none;

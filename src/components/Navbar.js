@@ -11,6 +11,11 @@ class Navbar extends Component {
 
   componentDidMount() {
     this.getUnreadMessages();
+    // TODO: Maybe move setUser out to UserAuth component
+    // TODO: Store loggedInUser differently. The code immediately after this comment is not storing loggedInUser.
+    if (this.props.authorized) {
+      this.setUser();
+    }
   }
 
   getUnreadMessages = () => {
@@ -59,10 +64,6 @@ class Navbar extends Component {
   }
 
   render() {
-
-    if (this.props.authorized) {
-      this.setUser();
-    }
 
     let rightNavBarItems = this.props.authorized ?
     <div className="right">

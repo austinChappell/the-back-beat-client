@@ -74,6 +74,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, currentUser);
     case 'ADD_LOGGED_IN_USER':
       const loggedInUser = action.user;
+      console.log('Save User');
       return Object.assign({}, state, { loggedInUser });
     case 'CHANGE_PROFILE_CONTENT':
       return Object.assign({}, state, { profileContent: action.value });

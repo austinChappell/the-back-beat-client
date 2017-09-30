@@ -90,18 +90,24 @@ p {
     flex-grow: 1;
     padding-top: 80px; }
 
-.UserBox .hidden {
-  display: none; }
-
-.UserBox h2 {
+.BrowseBox h2 {
   color: #070649; }
 
-.UserBox .user-box-results h3 a {
-  color: #9A6197;
-  text-decoration: none; }
-
-.UserBox .user-box-results strong {
-  color: #070649; }
+.BrowseBox .browse-box-container {
+  height: 200px;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden; }
+  .BrowseBox .browse-box-container .show-item {
+    position: absolute;
+    padding: 10px;
+    width: 100%;
+    transition: 500ms; }
+  .BrowseBox .browse-box-container h3 a {
+    color: #9A6197;
+    text-decoration: none; }
+  .BrowseBox .browse-box-container strong {
+    color: #070649; }
 
 .CenterComponent {
   background-color: #FAFAFA;
