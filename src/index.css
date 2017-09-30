@@ -90,6 +90,19 @@ p {
     flex-grow: 1;
     padding-top: 80px; }
 
+.UserBox .hidden {
+  display: none; }
+
+.UserBox h2 {
+  color: #070649; }
+
+.UserBox .user-box-results h3 a {
+  color: #9A6197;
+  text-decoration: none; }
+
+.UserBox .user-box-results strong {
+  color: #070649; }
+
 .CenterComponent {
   background-color: #FAFAFA;
   border-left: 1px solid #EEEEEE;
@@ -542,19 +555,6 @@ p {
           color: #070649;
           text-decoration: underline;
           cursor: pointer; }
-
-.UserBox .hidden {
-  display: none; }
-
-.UserBox h2 {
-  color: #070649; }
-
-.UserBox .user-box-results h3 a {
-  color: #9A6197;
-  text-decoration: none; }
-
-.UserBox .user-box-results strong {
-  color: #070649; }
 
 .UserProfile .profile-info {
   margin-top: 20px; }
