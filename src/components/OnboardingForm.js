@@ -23,7 +23,7 @@ class OnboardingForm extends Component {
       pendingVideoTitle: '',
       pendingVideoDescription: '',
       selectedVideos: [],
-      primaryVidIndex: null,
+      primaryVidIndex: 0,
       videoMin: 0,
       videoMax: 10
     }

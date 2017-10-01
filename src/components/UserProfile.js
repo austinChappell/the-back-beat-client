@@ -16,7 +16,6 @@ class UserProfile extends Component {
       //   </div>
       // </div>
       <div className="CenterComponent UserProfile">
-        This is the userprofile component
         <h2>{user.first_name} {user.last_name}</h2>
         <ProfileInfo />
       </div>

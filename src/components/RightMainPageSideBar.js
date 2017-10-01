@@ -126,23 +126,6 @@ class RightMainPageSideBar extends Component {
 
             {this.props.compatibleMusicians.map((musician, index) => {
 
-              let vidID = null;
-              const url = this.props.apiURL;
-              fetch(`${url}/api/user/vidprimary/${musician.id}`, {
-                credentials: 'include',
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              }).then((response) => {
-                return response.json();
-              }).then((results) => {
-                if (results.rows.length > 0) {
-                  vidID = results.rows[0].youtube_id;
-                }
-              }).then(() => {
-                console.log('VID ID', vidID);
-              })
-
               const startingPosition = (index) * 100;
               const leftString = String(startingPosition + this.state.musicianOffset) + '%';
               let video = null;
