@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import BrowseBox from './BrowseBox';
+import YouTube from 'react-youtube';
 
 class RightMainPageSideBar extends Component {
 
@@ -20,6 +21,7 @@ class RightMainPageSideBar extends Component {
   }
 
   swipe = (itemsArray, itemIndexName, direction) => {
+
     const updateObj = {
       musicianOffset: this.state.musicianOffset + (direction * -100)
     };
@@ -99,7 +101,15 @@ class RightMainPageSideBar extends Component {
                     <Link onClick={() => this.updateUser(musician)} to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
                   </h3>
                   <span><strong>City:</strong> {musician.city}</span> <br />
-                  <span><strong>Skill:</strong> {musician.skill_level}</span>
+                  {/* <span><strong>Skill:</strong> {musician.skill_level}</span> */}
+
+                  <YouTube
+                    videoId="EgfiYz4jo8I"
+                    opts={{width: '200', height: '130'}}
+                    ref={'video' + index}
+                  />
+
+                  {/* <iframe width="200" height="130" src="https://www.youtube.com/watch?v=EgfiYz4jo8I"></iframe> */}
 
                 </div>
 
