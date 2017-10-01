@@ -21,6 +21,7 @@ class OnboardingForm extends Component {
       seekingInstrumentMin: 0,
       pendingVideo: '',
       pendingVideoTitle: '',
+      pendingVideoDescription: '',
       selectedVideos: [],
       primaryVidIndex: null,
       videoMin: 0,
@@ -110,7 +111,7 @@ class OnboardingForm extends Component {
     });
   }
 
-  handleVidLinkSubmit = (evt, array, url, title) => {
+  handleVidLinkSubmit = (evt, array, url, title, description) => {
     evt.preventDefault();
     const updateState = {};
     const updateArray = this.state[array].slice();
@@ -127,12 +128,14 @@ class OnboardingForm extends Component {
 
     updateArray.push({
       set_as_primary: false,
+      video_description: this.state[description],
       video_title: this.state[title],
       youtube_id: vidID
     });
     updateState[array] = updateArray;
     updateState[url] = '';
     updateState[title] = '';
+    updateState[description] = '';
     this.setState(updateState, () => {
       console.log('STATE', this.state);
     });
@@ -278,9 +281,22 @@ class OnboardingForm extends Component {
           <h3>(This is strongly recommended)</h3>
           <p>Provide links to YouTube videos of yourself performing below.</p>
           <form>
-            <input onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')} value={this.state.pendingVideo} />
-            <input onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')} value={this.state.pendingVideoTitle} />
-            <button onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle')}}>Add Video</button>
+            <input
+              onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
+              placeholder="YouTube Link"
+              value={this.state.pendingVideo}
+            />
+            <input
+              onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
+              placeholder="Video Title"
+              value={this.state.pendingVideoTitle}
+            />
+            <input
+              onChange={(evt) => this.handleInputChange(evt, 'pendingVideoDescription')}
+              placeholder="Video Description"
+              value={this.state.pendingVideoDescription}
+            />
+            <button onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}>Add Video</button>
           </form>
           {this.state.selectedVideos.map((video, index) => {
             return (
@@ -299,7 +315,7 @@ class OnboardingForm extends Component {
               </div>
             )
           })}
-          <button onClick={() => this.continue('selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
+          <button onClick={() => this.continue('selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids')}>{this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
         </div>
 
     }

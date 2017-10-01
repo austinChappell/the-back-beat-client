@@ -20,6 +20,25 @@ class RightMainPageSideBar extends Component {
     this.updateUserInstruments(user.id);
   }
 
+  getPrimaryVideo = (userid) => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/vidprimary/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      if (results.rows.length > 0) {
+        console.log('YOUTUBE ID', results.rows[0].youtube_id);
+        return results;
+      } else {
+        return undefined;
+      }
+    })
+  }
+
   swipe = (itemsArray, itemIndexName, direction) => {
 
     const updateObj = {
@@ -36,8 +55,10 @@ class RightMainPageSideBar extends Component {
   }
 
   updateUser = (user) => {
+    console.log('UPDATING USER');
     this.props.updateUser(user);
     this.updateUserInstruments(user.id);
+    this.updateUserVids(user.id);
   }
 
   updateUserInstruments = (userid) => {
@@ -54,6 +75,21 @@ class RightMainPageSideBar extends Component {
       this.props.updateUserInstruments(results.rows);
     })
 
+  }
+
+  updateUserVids = (userid) => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/vids/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setCurrentUserVids(results.rows);
+    });
   }
 
   render() {
@@ -90,8 +126,36 @@ class RightMainPageSideBar extends Component {
 
             {this.props.compatibleMusicians.map((musician, index) => {
 
+              let vidID = null;
+              const url = this.props.apiURL;
+              fetch(`${url}/api/user/vidprimary/${musician.id}`, {
+                credentials: 'include',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }).then((response) => {
+                return response.json();
+              }).then((results) => {
+                if (results.rows.length > 0) {
+                  vidID = results.rows[0].youtube_id;
+                }
+              }).then(() => {
+                console.log('VID ID', vidID);
+              })
+
               const startingPosition = (index) * 100;
               const leftString = String(startingPosition + this.state.musicianOffset) + '%';
+              let video = null;
+              if (this.getPrimaryVideo(musician.id) !== undefined) {
+                let videoID = this.getPrimaryVideo(musician.id);
+                console.log('VIDEO ID', videoID);
+                video = <YouTube
+                    videoId="2b97bMh-tGI"
+                    opts={{width: '200', height: '130'}}
+                    ref={'video' + index}
+                  />
+
+              }
 
               return (
 
@@ -103,12 +167,7 @@ class RightMainPageSideBar extends Component {
                   <span><strong>City:</strong> {musician.city}</span> <br />
                   {/* <span><strong>Skill:</strong> {musician.skill_level}</span> */}
 
-                  <YouTube
-                    videoId="EgfiYz4jo8I"
-                    opts={{width: '200', height: '130'}}
-                    ref={'video' + index}
-                  />
-
+                  {video}
                   {/* <iframe width="200" height="130" src="https://www.youtube.com/watch?v=EgfiYz4jo8I"></iframe> */}
 
                 </div>
@@ -147,6 +206,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setCurrentUserVids: (videos) => {
+      const action = { type: 'SET_CURRENT_USER_VIDS', videos };
+      dispatch(action);
+    },
+
     updateUser: (user) => {
       const action = { type: 'UPDATE_USER', user };
       dispatch(action);

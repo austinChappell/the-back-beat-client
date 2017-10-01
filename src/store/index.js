@@ -24,6 +24,7 @@ const initialState = {
     skill_level: ''
   },
   currentUserInstruments: [],
+  currentUserVids: [],
   loggedInUser: {},
   userInfo: {
     city: '',
@@ -101,6 +102,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentMessage: '' });
     case 'SET_ALL_MESSAGES':
       return Object.assign({}, state, { allMessages: action.allMessages });
+    case 'SET_CURRENT_USER_VIDS':
+      return Object.assign({}, state, { currentUserVids: action.videos });
     case 'SET_CURRENT_RECIPIENT':
       return Object.assign({}, state, { currentRecipient: action.user, users: [], messageSearchBarVal: '', });
     case 'SET_CURRENT_MESSAGES':

@@ -6,20 +6,20 @@ import ProfileInfoNavBar from './ProfileInfoNavBar';
 
 class ProfileInfo extends Component {
 
-  componentDidMount() {
-    const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/profile`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.props.updateUser(results);
-    })
-  }
+  // componentDidMount() {
+  //   const apiURL = this.props.apiURL;
+  //   fetch(`${apiURL}/api/profile`, {
+  //     credentials: 'include',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     }
+  //   }).then((response) => {
+  //     return response.json();
+  //   }).then((results) => {
+  //     this.props.updateUser(results);
+  //   })
+  // }
 
   render() {
     return (
