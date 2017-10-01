@@ -80,6 +80,7 @@ class UserAuthForm extends Component {
     let styleidthree = styleids[2];
 
     if (userSkillIndex === 0) {
+      
       skill_level_one = 'no_skill';
     }
 
