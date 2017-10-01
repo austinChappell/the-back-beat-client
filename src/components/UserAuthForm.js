@@ -66,7 +66,7 @@ class UserAuthForm extends Component {
     this.props.toggleUserAuthType();
   }
 
-  getMusicians = (user) => {
+  getMusicians = (user, styleids) => {
 
     const skillLevels = this.props.skillLevels;
 
@@ -75,6 +75,9 @@ class UserAuthForm extends Component {
     let skill_level_one = skillLevels[userSkillIndex - 1];
     let skill_level_two = skillLevels[userSkillIndex];
     let skill_level_three = skillLevels[userSkillIndex + 1];
+    let styleidone = styleids[0];
+    let styleidtwo = styleids[1];
+    let styleidthree = styleids[2];
 
     if (userSkillIndex === 0) {
       skill_level_one = 'no_skill';
@@ -84,12 +87,11 @@ class UserAuthForm extends Component {
       skill_level_three = 'no_skill';
     }
 
-    console.log('USER SKILL INDEX', userSkillIndex);
-    console.log('USER SKILL ONE', skill_level_one);
-    console.log('USER SKILL TWO', skill_level_two);
-    console.log('USER SKILL THREE', skill_level_three);
-    console.log('USER CITY', user.city);
-    fetch(`${apiURL}/api/users/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`, {
+    // const urlone = `${apiURL}/api/users/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
+
+    const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
+
+    fetch(url, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -98,10 +100,44 @@ class UserAuthForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('COMPATIBLE MUSICIANS', results.rows);
-      this.props.getMusicians(results.rows);
+
+      function randomize (arr) {
+        const newArray = [];
+
+        while (arr.length > 0) {
+          let randomNum = Math.random() * arr.length;
+          let item = arr.splice(randomNum, 1);
+          newArray.push(item[0]);
+        }
+
+        return newArray;
+      }
+
+      let randomResults = randomize(results.rows);
+      let limitedResults = randomResults.splice(0, 25);
+
+      this.props.getMusicians(limitedResults);
     });
 
+  }
+
+  getUserStyles = (loggedInUser) => {
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/user/styles`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      const styles = [];
+      results.rows.forEach((style) => {
+        styles.push(style.style_id);
+      });
+      console.log('STYLES', styles);
+      this.getMusicians(loggedInUser, styles);
+    })
   }
 
   setUser = () => {
@@ -117,8 +153,11 @@ class UserAuthForm extends Component {
       // console.log('PROFILE RESULTS', results.rows[0]);
       const loggedInUser = results.rows[0];
       // console.log('LOGGED IN USER', loggedInUser);
-      this.getMusicians(loggedInUser);
+      this.getUserStyles(loggedInUser);
       this.props.addLoggedInUser(loggedInUser);
+      return loggedInUser;
+    // }).then((loggedInUser) => {
+    //   this.getMusicians(loggedInUser);
     })
   }
 
@@ -289,6 +328,7 @@ const mapStateToProps = (state) => {
     skillLevels: state.skillLevels,
     userAuthType: state.userAuthType,
     userInfo: state.userInfo,
+    userStyleIds: state.userStyleIds
   }
 }
 
@@ -313,6 +353,11 @@ const mapDispatchToProps = (dispatch) => {
 
     getMusicians: (data) => {
       const action = { type: 'GET_COMPATIBLE_MUSICIANS', data };
+      dispatch(action);
+    },
+
+    setStyles: (styles) => {
+      const action = { type: 'SET_USER_STYLE_IDS', styles };
       dispatch(action);
     },
 

@@ -34,6 +34,7 @@ const initialState = {
     username: '',
     skillLevel: '',
   },
+  userStyleIds: [],
   onboardingStage: 0,
 
   // EVENT INFO
@@ -108,6 +109,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { messageHistory: action.output });
     case 'SET_ONBOARDING_STAGE':
       return Object.assign({}, state, { onboardingStage: action.stage });
+    case 'SET_USER_STYLE_IDS':
+      return Object.assign({}, state, { userStyleIds: action.styles });
     case 'TOGGLE_USER_AUTH_FORM':
       return Object.assign({}, state, { showUserAuthForm: !state.showUserAuthForm, userAuthType: action.userAuthType, userInfo: blankUserInfo });
     case 'TOGGLE_USER_AUTH_TYPE':

@@ -130,7 +130,8 @@ const mapStateToProps = (state) => {
     currentUser: state.currentUser,
     loggedInUser: state.loggedInUser,
     loggedInUserSkill: state.loggedInUser.skill_level,
-    skillLevels: state.skillLevels
+    skillLevels: state.skillLevels,
+    userStyleIds: state.userStyleIds
   }
 }
 
