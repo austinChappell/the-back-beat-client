@@ -20,7 +20,11 @@ class OnboardingForm extends Component {
       seekingInstrumentMax: 3,
       seekingInstrumentMin: 0,
       pendingVideo: '',
-      selectedVideos: []
+      pendingVideoTitle: '',
+      selectedVideos: [],
+      primaryVidIndex: null,
+      videoMin: 0,
+      videoMax: 10
     }
   }
 
@@ -79,6 +83,20 @@ class OnboardingForm extends Component {
     this.setState(updateState);
   }
 
+  handleRadioChange = (evt, index) => {
+    let newVidArray = this.state.selectedVideos.slice();
+    for (let i = 0; i < newVidArray.length; i++) {
+      if (index === i) {
+        newVidArray[i].set_as_primary = true;
+      } else {
+        newVidArray[i].set_as_primary = false;
+      }
+    }
+    this.setState({ primaryVidIndex: index, selectedVideos: newVidArray }, () => {
+      console.log('STATE', this.state);
+    });
+  }
+
   handleSubmit = (evt, array, element, max) => {
     evt.preventDefault();
     const updateState = {};
@@ -92,14 +110,40 @@ class OnboardingForm extends Component {
     });
   }
 
-  handleInputSubmit = (evt, array, inputVal) => {
+  handleVidLinkSubmit = (evt, array, url, title) => {
     evt.preventDefault();
     const updateState = {};
     const updateArray = this.state[array].slice();
-    updateArray.push(this.state[inputVal]);
+
+    function getYouTubeId (videoURL) {
+
+      let queryIndex = videoURL.indexOf('?v=');
+      let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
+      return vidID;
+
+    }
+
+    let vidID = getYouTubeId(this.state[url]);
+
+    updateArray.push({
+      set_as_primary: false,
+      video_title: this.state[title],
+      youtube_id: vidID
+    });
     updateState[array] = updateArray;
-    updateState[inputVal] = '';
-    this.setState(updateState);
+    updateState[url] = '';
+    updateState[title] = '';
+    this.setState(updateState, () => {
+      console.log('STATE', this.state);
+    });
+  }
+
+  removeItem = (arrayName, index) => {
+    const updateObject = {};
+    let newArray = this.state[arrayName].slice();
+    newArray.splice(index, 1);
+    updateObject[arrayName] = newArray;
+    this.setState(updateObject);
   }
 
   continue = (onboardingCategory, max, min, query) => {
@@ -232,60 +276,33 @@ class OnboardingForm extends Component {
         form = <div>
           <h1>Add some vids</h1>
           <h3>(This is strongly recommended)</h3>
+          <p>Provide links to YouTube videos of yourself performing below.</p>
           <form>
             <input onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')} value={this.state.pendingVideo} />
-            <button onClick={(evt) => {this.handleInputSubmit(evt, 'selectedVideos', 'pendingVideo', this.state.selectedVideoMax)}}>Add Instrument</button>
+            <input onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')} value={this.state.pendingVideoTitle} />
+            <button onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle')}}>Add Video</button>
           </form>
           {this.state.selectedVideos.map((video, index) => {
             return (
               <div key={index}>
-                <input type="radio" />
-                <h3 style={{ display: 'inline-block' }}>{video}</h3>
+                <input
+                  type="radio"
+                  checked={index === this.state.primaryVidIndex}
+                  onClick={(evt) => this.handleRadioChange(evt, index)}
+                />
+                <h3 style={{ display: 'inline-block' }}>{video.video_title}</h3>
+                <i
+                  className="fa fa-times-circle remove-button"
+                  aria-hidden="true"
+                  onClick={() => this.removeItem('selectedVideos', index)}
+                ></i>
               </div>
             )
           })}
-          <button onClick={() => this.continue('selectedInstruments', this.state.seekingInstrumentMax, this.state.seekingInstrumentMin, 'instruments_seeking/add')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
+          <button onClick={() => this.continue('selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
         </div>
 
-
     }
-    //
-    // switch(stage) {
-    //
-    //   case 0:
-    //     form = <div>
-    //       <h1>What genres do you listen to/play?</h1>
-    //       <span>*You must select at least 1 and no more than 5</span>
-    //       <form>
-    //         <select onChange={(evt) => this.handleChange(evt, 'pendingGenre')}>
-    //           {genreOptions}
-    //         </select>
-    //         <button onClick={(evt) => {this.handleSubmit(evt, 'selectedGenres', 'pendingGenre', this.state.selectedGenreMax)}}>Add Genre</button>
-    //       </form>
-    //       {this.state.selectedGenres.map((genre, index) => {
-    //         return <h3 key={index}>{genre.value}</h3>
-    //       })}
-    //       <button onClick={() => this.continue('selectedGenres', this.state.selectedGenreMax, 'genres/add')}>Continue</button>
-    //     </div>
-    //
-    //   case 1:
-    //     form = <div>
-    //       <h1>Choose your instrument(s).</h1>
-    //       <span>*You must select at least 1 and no more than 3</span>
-    //       <form>
-    //         <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument')}>
-    //           {instrumentOptions}
-    //         </select>
-    //         <button onClick={(evt) => {this.handleSubmit(evt, 'selectedInstruments', 'pendingInstrument', this.state.selectedInstrumentMax)}}>Add Instrument</button>
-    //       </form>
-    //       {this.state.selectedInstruments.map((instrument, index) => {
-    //         return <h3 key={index}>{instrument.value}</h3>
-    //       })}
-    //       <button onClick={() => this.continue('selectedInstruments', this.state.selectedInstrumentMax, 'instruments/add')}>Continue</button>
-    //     </div>
-    //
-    //   default: null;
-    // }
 
     return (
       <div className="OnboardingForm">
@@ -293,6 +310,7 @@ class OnboardingForm extends Component {
         { form }
       </div>
     )
+
   }
 }
 
