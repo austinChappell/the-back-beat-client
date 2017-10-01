@@ -12,7 +12,6 @@ class UserBands extends Component {
   }
 
   componentDidMount() {
-    // const url = this.props.apiURL;
     // fetch(`${url}/api/user/bands`, {
     //   credentials: 'include',
     //   headers: {
@@ -21,7 +20,6 @@ class UserBands extends Component {
     // }).then((response) => {
     //   return response.json();
     // }).then((results) => {
-    //   console.log('FETCH BANDS RESULTS', results);
     //   this.setState({ bands: results.rows });
     // })
   }

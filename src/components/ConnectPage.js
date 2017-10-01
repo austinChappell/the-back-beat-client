@@ -37,7 +37,6 @@ class ConnectPage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('FETCHED RESULTS ARE', results);
       this.setState({data: results.rows});
     })
   }

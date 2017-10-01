@@ -14,17 +14,13 @@ class ProfileContent extends Component {
   }
 
   componentDidMount() {
-    this.getInstruments();
+    this.updateUserInstruments(this.props.user.id);
   }
 
-  componentDidUpdate() {
-    this.getInstruments();
-  }
-
-  getInstruments = () => {
+  updateUserInstruments = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/instrumentuser/${this.props.user.id}`, {
+    fetch(`${url}/api/instrumentuser/${userid}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -32,7 +28,7 @@ class ProfileContent extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.setState({ userInstruments: results.rows })
+      this.props.updateUserInstruments(results.rows);
     })
 
   }
@@ -43,7 +39,7 @@ class ProfileContent extends Component {
     let content;
 
     if (contentType === 'main') {
-      content = <ProfileInfoMain user={this.props.user} instruments={this.state.userInstruments} />;
+      content = <ProfileInfoMain user={this.props.user} instruments={this.props.currentUserInstruments} />;
     } else if (contentType === 'events') {
       content = <ProfileEvents user={this.props.user} />;
     } else if (contentType === 'connections') {
@@ -67,12 +63,18 @@ class ProfileContent extends Component {
 const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
+    currentUserInstruments: state.currentUserInstruments,
     profileContent: state.profileContent
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    updateUserInstruments: (instruments) => {
+      const action = { type: 'UPDATE_INSTRUMENTS', instruments };
+      dispatch(action);
+    }
 
   }
 }

@@ -19,7 +19,6 @@ class BandBox extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('FETCH BANDS RESULTS', results);
       this.setState({ bands: results.rows });
     })
 

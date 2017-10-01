@@ -10,7 +10,6 @@ class Profile extends Component {
   componentDidMount() {
     // const url = 'http://localhost:6001/api/profile';
     const url = this.props.apiURL;
-    console.log('URL', url);
     const username = this.props.match.params.username;
     fetch(`${url}/api/profile/${username}`, {
       credentials: 'include',
@@ -19,10 +18,8 @@ class Profile extends Component {
         'Accept': 'application/json'
       }
     }).then((response) => {
-      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('FETCH RESULTS', results);
       this.props.updateUser(results);
     })
   }

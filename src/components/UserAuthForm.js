@@ -66,8 +66,44 @@ class UserAuthForm extends Component {
     this.props.toggleUserAuthType();
   }
 
+  getMusicians = (user) => {
+
+    const apiURL = this.props.apiURL;
+    const userSkillIndex = this.props.skillLevels.indexOf(user.skill_level);
+    console.log('USER SKILL INDEX', userSkillIndex);
+    fetch(`${apiURL}/api/users`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      this.props.getMusicians(data);
+    });
+
+  }
+
+  setUser = () => {
+    const url = this.props.apiURL;
+    fetch(`${url}/myprofile`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      // console.log('PROFILE RESULTS', results.rows[0]);
+      const loggedInUser = results.rows[0];
+      // console.log('LOGGED IN USER', loggedInUser);
+      this.getMusicians(loggedInUser);
+      this.props.addLoggedInUser(loggedInUser);
+    })
+  }
+
   submitForm = (evt, userInfo) => {
-    console.log('signing in');
     evt.preventDefault();
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     fetch(`${this.props.apiURL}/${submitType}`, {
@@ -82,8 +118,8 @@ class UserAuthForm extends Component {
     }).then((results) => {
       const data = results;
       this.props.clearUserInfo(userInfo.username);
+      this.setUser();
 
-      console.log('DATA', data);
       //
       // if (this.props.onboardingStage === 0) {
       //   this.props.newProps.history.push('/onboarding');
@@ -240,6 +276,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
 
+    addLoggedInUser: (user) => {
+      console.log('ADD LOGGED IN USER FUNCTION RUNNING', user);
+      const action = { type: 'ADD_LOGGED_IN_USER', user };
+      dispatch(action);
+    },
+
     handleFormInputChange: (evt, input) => {
       const action = { type: 'HANDLE_FORM_INPUT_CHANGE', input, value: evt.target.value }
       dispatch(action);
@@ -247,6 +289,11 @@ const mapDispatchToProps = (dispatch) => {
 
     clearUserInfo: (username) => {
       const action = { type: 'USER_AUTH_FORM_SUBMIT', username };
+      dispatch(action);
+    },
+
+    getMusicians: (data) => {
+      const action = { type: 'GET_COMPATIBLE_MUSICIANS', data };
       dispatch(action);
     },
 

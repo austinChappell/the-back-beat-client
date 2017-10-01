@@ -24,7 +24,6 @@ class BandPage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('DID MOUNT', results);
       let members = [];
       results.rows.forEach((member) => {
         members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city });
@@ -37,7 +36,6 @@ class BandPage extends Component {
     const value = evt.target.value;
     const url = this.props.apiURL;
     this.setState({searchMember: value}, () => {
-      console.log('input changing');
       if (this.state.searchMember !== '') {
         fetch(`${url}/api/searchusernames/${value}`, {
           credentials: 'include',
@@ -63,11 +61,8 @@ class BandPage extends Component {
       method: 'POST',
       body: JSON.stringify({ bandId: this.props.match.params.bandId, memberId: user.id })
     }).then((response) => {
-      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('ADD MEMBER', results);
-      // console.log('User Id', user);
       let members = this.state.members.slice();
       const member = Object.assign({}, user, { admin: false });
       members.push(member);
@@ -86,7 +81,6 @@ class BandPage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('DELETE RESULTS', results);
       let members = this.state.members.slice();
       members.splice(index, 1);
       this.setState({ members });
@@ -94,7 +88,6 @@ class BandPage extends Component {
   }
 
   toggleDeleteForm = () => {
-    console.log('DELETE BUTTON CLICKED');
     this.setState({showDeleteForm: !this.state.showDeleteForm});
   }
 

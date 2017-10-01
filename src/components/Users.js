@@ -17,7 +17,6 @@ class Users extends Component {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log('DATA', data);
       this.setState({
         users: data
       })

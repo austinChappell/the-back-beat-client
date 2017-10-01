@@ -8,19 +8,16 @@ import RightMainPageSideBar from './RightMainPageSideBar';
 class Main extends Component {
 
   componentDidMount() {
-    const url = `http://localhost:6001/api/profile/${this.props.currentUsername}`;
-    console.log('URL', url);
-    fetch(url, {
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/profile/${this.props.currentUsername}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     }).then((response) => {
-      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('FETCH RESULTS', results);
       this.props.updateUser(results);
       window.localStorage.username = results.username;
       this.props.setOnboardingStage(results.onboarding_stage);
@@ -28,10 +25,7 @@ class Main extends Component {
   }
 
   componentDidUpdate() {
-    console.log('ONBOARDING STAGE', this.props.onboardingStage);
-    console.log('MAX STAGE', this.props.onboardingMaxStage);
     if (this.props.onboardingStage <= this.props.onboardingMaxStage) {
-      console.log('ONBOARDING IS LESS THAN 1', this.props);
       this.props.history.push('/onboarding');
     }
   }
@@ -50,6 +44,7 @@ class Main extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     currentUsername: state.currentUsername,
     currentUser: state.currentUser,
     onboardingStage: state.loggedInUser.onboarding_stage,

@@ -8,7 +8,6 @@ import UserAuthForm from './UserAuthForm';
 
 class Home extends Component {
   render() {
-    console.log('HOME PROPS', this.props);
     return (
       <div className="Home">
         <div className="landing-page-background">

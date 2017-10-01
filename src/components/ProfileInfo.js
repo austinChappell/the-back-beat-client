@@ -7,19 +7,16 @@ import ProfileInfoNavBar from './ProfileInfoNavBar';
 class ProfileInfo extends Component {
 
   componentDidMount() {
-    const url = 'http://localhost:6001/api/profile';
-    console.log('URL', url);
-    fetch(url, {
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/profile`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     }).then((response) => {
-      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('FETCH RESULTS', results);
       this.props.updateUser(results);
     })
   }
@@ -36,6 +33,7 @@ class ProfileInfo extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     currentUsername: state.currentUsername,
     currentUser: state.currentUser
   }

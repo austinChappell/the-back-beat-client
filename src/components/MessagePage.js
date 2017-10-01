@@ -17,7 +17,6 @@ class MessagePage extends Component {
   }
 
   componentDidMount() {
-    console.log('COMPONENT MOUNTED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     this.props.clearCurrentRecipient();
     const url = this.props.apiURL;
     const fetchAllMessages = () => {
@@ -35,7 +34,6 @@ class MessagePage extends Component {
 
     fetchAllMessages();
     this.stopFetch = setInterval(() => {
-      console.log('FETCH ALL MESSAGES');
       fetchAllMessages();
       this.getMessageHistory();
       if (this.props.currentRecipient) {
@@ -117,7 +115,6 @@ class MessagePage extends Component {
   }
 
   handleChange = (evt) => {
-    console.log('changed', evt.target.value);
     if (evt.target.value.length === 0) {
       this.setState({
         users: [],

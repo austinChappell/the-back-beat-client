@@ -13,9 +13,9 @@ class Navbar extends Component {
     this.getUnreadMessages();
     // TODO: Maybe move setUser out to UserAuth component
     // TODO: Store loggedInUser differently. The code immediately after this comment is not storing loggedInUser.
-    if (this.props.authorized) {
-      this.setUser();
-    }
+    // if (this.props.authorized) {
+    //   this.setUser();
+    // }
   }
 
   getUnreadMessages = () => {
@@ -40,7 +40,6 @@ class Navbar extends Component {
     fetchData();
 
     setInterval(() => {
-      console.log('FETCH DATA');
       fetchData();
     }, 25000);
 
@@ -122,7 +121,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addLoggedInUser: (user) => {
-      // console.log('ADD LOGGED IN USER FUNCTION RUNNING');
       const action = { type: 'ADD_LOGGED_IN_USER', user };
       dispatch(action);
     },
@@ -133,7 +131,6 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     logout: () => {
-      console.log('HELLO FROM THE DISPATCH');
       const action = { type: 'LOGOUT' };
       dispatch(action);
     }

@@ -12,6 +12,7 @@ const initialState = {
   onboardingMaxStage: 2,
 
   // USER INFO
+  compatibleMusicians: [],
   currentUsername: '',
   currentUser: {
     id: '',
@@ -22,6 +23,7 @@ const initialState = {
     city: '',
     skill_level: ''
   },
+  currentUserInstruments: [],
   loggedInUser: {},
   userInfo: {
     city: '',
@@ -82,6 +84,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentMessage: '' });
     case 'CLEAR_CURRENT_RECIPIENT':
       return Object.assign({}, state, { currentRecipient: null });
+    case 'GET_COMPATIBLE_MUSICIANS':
+      return Object.assign({}, state, { compatibleMusicians: action.data });
     case 'HANDLE_FORM_INPUT_CHANGE':
       let updateObject = {};
       const inputName = action.input;
@@ -111,6 +115,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { userAuthType: newAuthType, userInfo: blankUserInfo });
     case 'UPDATE_CURRENT_MESSAGE':
       return Object.assign({}, state, { currentMessage: action.val });
+    case 'UPDATE_INSTRUMENTS':
+      return Object.assign({}, state, { currentUserInstruments: action.instruments });
     case 'UPDATE_ONBOARDING_STAGE':
       return Object.assign({}, state, { onboardingStage: action.stage });
     case 'UPDATE_USER':
