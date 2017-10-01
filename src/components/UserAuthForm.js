@@ -68,10 +68,28 @@ class UserAuthForm extends Component {
 
   getMusicians = (user) => {
 
+    const skillLevels = this.props.skillLevels;
+
     const apiURL = this.props.apiURL;
-    const userSkillIndex = this.props.skillLevels.indexOf(user.skill_level);
+    const userSkillIndex = skillLevels.indexOf(user.skill_level);
+    let skill_level_one = skillLevels[userSkillIndex - 1];
+    let skill_level_two = skillLevels[userSkillIndex];
+    let skill_level_three = skillLevels[userSkillIndex + 1];
+
+    if (userSkillIndex === 0) {
+      skill_level_one = 'no_skill';
+    }
+
+    if (userSkillIndex === skillLevels.length - 1) {
+      skill_level_three = 'no_skill';
+    }
+
     console.log('USER SKILL INDEX', userSkillIndex);
-    fetch(`${apiURL}/api/users`, {
+    console.log('USER SKILL ONE', skill_level_one);
+    console.log('USER SKILL TWO', skill_level_two);
+    console.log('USER SKILL THREE', skill_level_three);
+    console.log('USER CITY', user.city);
+    fetch(`${apiURL}/api/users/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -79,8 +97,9 @@ class UserAuthForm extends Component {
       }
     }).then((response) => {
       return response.json();
-    }).then((data) => {
-      this.props.getMusicians(data);
+    }).then((results) => {
+      console.log('COMPATIBLE MUSICIANS', results.rows);
+      this.props.getMusicians(results.rows);
     });
 
   }

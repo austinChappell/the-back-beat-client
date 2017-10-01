@@ -82,7 +82,7 @@ class RightMainPageSideBar extends Component {
           minIndex={0}
           maxIndex={this.props.compatibleMusicians.length - 1}
           index={this.state.musicianIndex}
-          title="Musicians Near You"
+          title="Musicians You Might Like"
         >
           <div className="browse-box-container">
 
