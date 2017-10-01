@@ -18,7 +18,9 @@ class OnboardingForm extends Component {
       selectedInstrumentMax: 3,
       selectedInstrumentMin: 1,
       seekingInstrumentMax: 3,
-      seekingInstrumentMin: 0
+      seekingInstrumentMin: 0,
+      pendingVideo: '',
+      selectedVideos: []
     }
   }
 
@@ -71,6 +73,12 @@ class OnboardingForm extends Component {
     this.setState(updateState);
   }
 
+  handleInputChange = (evt, category) => {
+    const updateState = {};
+    updateState[category] = evt.target.value;
+    this.setState(updateState);
+  }
+
   handleSubmit = (evt, array, element, max) => {
     evt.preventDefault();
     const updateState = {};
@@ -82,6 +90,16 @@ class OnboardingForm extends Component {
     this.setState(updateState, () => {
       console.log(this.state);
     });
+  }
+
+  handleInputSubmit = (evt, array, inputVal) => {
+    evt.preventDefault();
+    const updateState = {};
+    const updateArray = this.state[array].slice();
+    updateArray.push(this.state[inputVal]);
+    updateState[array] = updateArray;
+    updateState[inputVal] = '';
+    this.setState(updateState);
   }
 
   continue = (onboardingCategory, max, min, query) => {
@@ -206,6 +224,28 @@ class OnboardingForm extends Component {
         })}
         <button onClick={() => this.continue('selectedInstruments', this.state.seekingInstrumentMax, this.state.seekingInstrumentMin, 'instruments_seeking/add')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
       </div>
+
+
+    } else if (stage == 3) {
+
+
+        form = <div>
+          <h1>Add some vids</h1>
+          <h3>(This is strongly recommended)</h3>
+          <form>
+            <input onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')} value={this.state.pendingVideo} />
+            <button onClick={(evt) => {this.handleInputSubmit(evt, 'selectedVideos', 'pendingVideo', this.state.selectedVideoMax)}}>Add Instrument</button>
+          </form>
+          {this.state.selectedVideos.map((video, index) => {
+            return (
+              <div key={index}>
+                <input type="radio" />
+                <h3 style={{ display: 'inline-block' }}>{video}</h3>
+              </div>
+            )
+          })}
+          <button onClick={() => this.continue('selectedInstruments', this.state.seekingInstrumentMax, this.state.seekingInstrumentMin, 'instruments_seeking/add')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
+        </div>
 
 
     }
