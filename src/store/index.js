@@ -39,6 +39,8 @@ const initialState = {
   onboardingStage: 0,
 
   // EVENT INFO
+  allEventsInCity: ['event 1', 'event 2'],
+  loggedInUserEvents: [],
   gigs: [
     {title: 'United Methodist', date: '9/23', time: '7:00pm', details: 'Playing a Sunday night service at First United Methodist Church of Lewisville.'},
     {title: 'Andy\'s', date: '9/25', time:'9:00pm', details: 'Gig with Ashley Gatta and The Free People. Might go on later.'},
@@ -96,6 +98,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { userInfo: newUserInfo });
     case 'HANDLE_MESSAGE_SEARCH_VAL_CHANGE':
       return Object.assign({}, state, { messageSearchBarVal: action.val, users: action.users });
+    case 'LOAD_EVENTS':
+      return Object.assign({}, state, { allEventsInCity: action.events });
     case 'LOGOUT':
       return Object.assign({}, state, initialState);
     case 'RESET_CURRENT_MESSAGE':
