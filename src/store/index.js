@@ -39,7 +39,7 @@ const initialState = {
   onboardingStage: 0,
 
   // EVENT INFO
-  allEventsInCity: ['event 1', 'event 2'],
+  allEventsInCity: [],
   loggedInUserEvents: [],
   gigs: [
     {title: 'United Methodist', date: '9/23', time: '7:00pm', details: 'Playing a Sunday night service at First United Methodist Church of Lewisville.'},
