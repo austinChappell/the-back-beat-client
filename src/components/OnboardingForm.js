@@ -149,13 +149,33 @@ class OnboardingForm extends Component {
     this.setState(updateObject);
   }
 
+  addPrimaryToUser = (videoId) => {
+    const url = this.props.apiURL;
+    console.log('ADD PRIMARY TO USER FUNCTION', videoId);
+
+    fetch(`${url}/api/user/vidprimary/${videoId}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('PRIMARY VID RESULTS', results.rows);
+    })
+
+    // TODO: Add API to add primary vid ID to user
+
+
+  }
+
   continue = (onboardingCategory, max, min, query) => {
     if (this.state[onboardingCategory].length >= min && this.state[onboardingCategory].length <= max) {
       const url = this.props.apiURL;
+
       this.state[onboardingCategory].forEach((item) => {
 
-
-        console.log('continue button works');
         fetch(`${url}/api/${query}`, {
           credentials: 'include',
           headers: {
@@ -169,8 +189,11 @@ class OnboardingForm extends Component {
           return response.json();
         }).then((results) => {
           console.log('RESULTS', results);
+          // If statement for checking if result is set as primary goes here. If it is, add it to the user in backbeatuser.
+          if (results.rows[0].set_as_primary) {
+            this.addPrimaryToUser(results.rows[0].youtube_id);
+          }
         })
-
 
       })
 

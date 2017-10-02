@@ -129,11 +129,9 @@ class RightMainPageSideBar extends Component {
               const startingPosition = (index) * 100;
               const leftString = String(startingPosition + this.state.musicianOffset) + '%';
               let video = null;
-              if (this.getPrimaryVideo(musician.id) !== undefined) {
-                let videoID = this.getPrimaryVideo(musician.id);
-                console.log('VIDEO ID', videoID);
+              if (musician.primary_vid_id) {
                 video = <YouTube
-                    videoId="2b97bMh-tGI"
+                    videoId={musician.primary_vid_id}
                     opts={{width: '200', height: '130'}}
                     ref={'video' + index}
                   />
@@ -149,9 +147,9 @@ class RightMainPageSideBar extends Component {
                   </h3>
                   <span><strong>City:</strong> {musician.city}</span> <br />
                   {/* <span><strong>Skill:</strong> {musician.skill_level}</span> */}
+                  {/* <iframe width="200" height="130" src="https://www.youtube.com/watch?v=EgfiYz4jo8I"></iframe> */}
 
                   {video}
-                  {/* <iframe width="200" height="130" src="https://www.youtube.com/watch?v=EgfiYz4jo8I"></iframe> */}
 
                 </div>
 
