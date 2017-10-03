@@ -518,6 +518,32 @@ p {
   box-sizing: border-box;
   left: 75%;
   padding: 20px 40px; }
+  .RightMainPageSideBar .buttons {
+    margin-top: 20px; }
+    .RightMainPageSideBar .buttons h3 {
+      font-size: 14px;
+      color: #030303; }
+    .RightMainPageSideBar .buttons i {
+      margin: 4px;
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 4px;
+      transition: 250ms; }
+      .RightMainPageSideBar .buttons i.yes {
+        border: 2px solid green;
+        color: green; }
+        .RightMainPageSideBar .buttons i.yes:hover, .RightMainPageSideBar .buttons i.yes.selected {
+          background-color: green;
+          color: white; }
+      .RightMainPageSideBar .buttons i.no {
+        border: 2px solid red;
+        color: red; }
+        .RightMainPageSideBar .buttons i.no:hover, .RightMainPageSideBar .buttons i.no.selected {
+          background-color: red;
+          color: white; }
 
 .ScrollBox {
   color: #030303;

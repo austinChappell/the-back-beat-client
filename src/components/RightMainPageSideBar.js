@@ -10,9 +10,45 @@ class RightMainPageSideBar extends Component {
   state = {
     eventIndex: 0,
     eventIndexRange: [0, 1],
+    eventOffset: 0,
     musicianIndex: 0,
     musicianIndexRange: [0, 1],
     musicianOffset: 0,
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.loadEvents();
+    }, 1000);
+  }
+
+  loadEvents = () => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/events/city/${this.props.loggedInUser.city}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('EVENTS', results.rows);
+      if (results.rows) {
+        this.props.loadEvents(results.rows);
+        this.setState({ loading: false });
+      }
+    })
+  }
+
+  handleAttendance = (evt) => {
+    console.log('Hovering', evt.target.classList);
+    if (evt.target.classList.contains('yes')) {
+      evt.target.classList.add('selected');
+      evt.target.nextElementSibling.style.display = 'none';
+    } else if (evt.target.classList.contains('no')) {
+      evt.target.classList.add('selected');
+      evt.target.previousElementSibling.style.display = 'none';
+    }
   }
 
   changeUser = (user) => {
@@ -39,11 +75,12 @@ class RightMainPageSideBar extends Component {
     })
   }
 
-  swipe = (itemsArray, itemIndexName, direction) => {
+  swipe = (itemsArray, itemIndexName, itemOffset, direction) => {
 
-    const updateObj = {
-      musicianOffset: this.state.musicianOffset + (direction * -100)
-    };
+    console.log('button clicked', itemsArray, itemIndexName, itemOffset, direction);
+
+    const updateObj = {};
+    updateObj[itemOffset] = this.state[itemOffset] + (direction * -100);
     if (this.state[itemIndexName] === this.props[itemsArray].length - 1 && direction === 1) {
       updateObj[itemIndexName] = 0;
     } else if (this.state[itemIndexName] === 0 && direction === -1) {
@@ -115,8 +152,8 @@ class RightMainPageSideBar extends Component {
 
         <BrowseBox
           currentIndex={this.state.musicianIndex}
-          goToPrev={() => this.swipe('compatibleMusicians', 'musicianIndex', -1)}
-          goToNext={() => this.swipe('compatibleMusicians', 'musicianIndex', 1)}
+          goToPrev={() => this.swipe('compatibleMusicians', 'musicianIndex', 'musicianOffset', -1)}
+          goToNext={() => this.swipe('compatibleMusicians', 'musicianIndex', 'musicianOffset', 1)}
           minIndex={0}
           maxIndex={this.props.compatibleMusicians.length - 1}
           index={this.state.musicianIndex}
@@ -139,22 +176,16 @@ class RightMainPageSideBar extends Component {
               }
 
               return (
-
                 <div key={index} className="show-item" style={{left: leftString}}>
 
                   <h3>
                     <Link onClick={() => this.updateUser(musician)} to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
                   </h3>
                   <span><strong>City:</strong> {musician.city}</span> <br />
-                  {/* <span><strong>Skill:</strong> {musician.skill_level}</span> */}
-                  {/* <iframe width="200" height="130" src="https://www.youtube.com/watch?v=EgfiYz4jo8I"></iframe> */}
-
                   {video}
 
                 </div>
-
               )
-
             })}
 
         </div>
@@ -162,11 +193,77 @@ class RightMainPageSideBar extends Component {
         </BrowseBox>
 
         <BrowseBox
-          goToPrev={this.goToPrev}
-          goToNext={this.goToNext}
+          currentIndex={this.state.eventIndex}
+          goToPrev={() => this.swipe('allEventsInCity', 'eventIndex', 'eventOffset', -1)}
+          goToNext={() => this.swipe('allEventsInCity', 'eventIndex', 'eventOffset', 1)}
+          minIndex={0}
+          maxIndex={this.props.allEventsInCity.length - 1}
           index={this.state.eventIndex}
           title="Events"
-        />
+        >
+
+          <div className="browse-box-container">
+
+            {this.props.allEventsInCity.map((event, index) => {
+
+              const startingPosition = (index) * 100;
+              const leftString = String(startingPosition + this.state.eventOffset) + '%';
+
+              let date = event.event_date_time;
+              let formattedDate = String(new Date(date));
+              let shortDate = `${formattedDate.slice(0, 10)}, ${formattedDate.slice(11, 15)}`;
+              let hour = Number(formattedDate.slice(16, 18));
+              let minute = formattedDate.slice(18, 21);
+              let period = 'PM';
+              let successColor = 'green';
+              const changeSuccessColor = () => {
+                successColor = 'blue';
+              }
+
+              const reverseSuccessColor = () => {
+                successColor = 'green';
+              }
+
+              if (hour === 0) {
+                hour = 12;
+                period = 'AM';
+              } else if (hour < 12) {
+                period = 'AM';
+              } else if (hour > 12) {
+                hour = hour - 12;
+              }
+
+              let formattedTime = `${String(hour)}${minute} ${period}`;
+
+              return (
+                <div key={index} className="show-item" style={{left: leftString}}>
+
+                  <h3>
+                    {event.event_title}
+                  </h3>
+                  <span>{shortDate} - {formattedTime}</span> <br />
+                  <span><strong>City:</strong> {event.event_city}</span> <br />
+                  <span><strong>Venue:</strong> {event.event_location}</span>
+
+                  <div className="buttons">
+                    <h3>Going?</h3>
+                    <i
+                      className="fa fa-check yes"
+                      onClick={(evt) => this.handleAttendance(evt, event.event_id)}
+                      aria-hidden="true"></i>
+                    <i
+                      className="fa fa-times no"
+                      onClick={(evt) => this.handleAttendance(evt, event.event_id)}
+                      aria-hidden="true"></i>
+                  </div>
+
+                </div>
+              )
+            })}
+
+        </div>
+
+        </BrowseBox>
 
       </div>
     )
@@ -175,6 +272,7 @@ class RightMainPageSideBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    allEventsInCity: state.allEventsInCity,
     apiURL: state.apiURL,
     compatibleMusicians: state.compatibleMusicians,
     currentUser: state.currentUser,
@@ -187,6 +285,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    loadEvents: (events) => {
+      const action = {type: 'LOAD_EVENTS', events};
+      dispatch(action);
+    },
+
     setCurrentUserVids: (videos) => {
       const action = { type: 'SET_CURRENT_USER_VIDS', videos };
       dispatch(action);
