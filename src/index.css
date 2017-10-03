@@ -109,6 +109,16 @@ p {
   .BrowseBox .browse-box-container strong {
     color: #070649; }
 
+.CenterComponent {
+  background-color: #FAFAFA;
+  border-left: 1px solid #EEEEEE;
+  border-right: 1px solid #EEEEEE;
+  min-height: calc(100vh - 80px);
+  margin-left: 25%;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 20px 40px; }
+
 .Contact {
   padding: 50px;
   background-color: #F5F5F5;
