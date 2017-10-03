@@ -91,11 +91,11 @@ class NewsFeed extends Component {
                   <h3>Going?</h3>
                   <i
                     className="fa fa-check yes"
-                    onClick={(evt) => this.handleAttendance(evt)}
+                    onClick={(evt) => this.handleAttendance(evt, event.event_id)}
                     aria-hidden="true"></i>
                   <i
                     className="fa fa-times no"
-                    onClick={(evt) => this.handleAttendance(evt)}
+                    onClick={(evt) => this.handleAttendance(evt, event.event_id)}
                     aria-hidden="true"></i>
                 </div>
               </div>
