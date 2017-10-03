@@ -109,16 +109,6 @@ p {
   .BrowseBox .browse-box-container strong {
     color: #070649; }
 
-.CenterComponent {
-  background-color: #FAFAFA;
-  border-left: 1px solid #EEEEEE;
-  border-right: 1px solid #EEEEEE;
-  min-height: calc(100vh - 80px);
-  margin-left: 25%;
-  width: 50%;
-  box-sizing: border-box;
-  padding: 20px 40px; }
-
 .Contact {
   padding: 50px;
   background-color: #F5F5F5;
@@ -413,6 +403,58 @@ p {
     position: absolute;
     top: -3px;
     right: -5px; }
+
+.NewsFeed {
+  background-color: #FAFAFA;
+  border-left: 1px solid #EEEEEE;
+  border-right: 1px solid #EEEEEE;
+  min-height: calc(100vh - 80px);
+  margin-left: 25%;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 20px 40px; }
+  .NewsFeed .event {
+    border: 1px solid black;
+    padding: 20px 40px;
+    cursor: pointer;
+    transition: 300ms; }
+    .NewsFeed .event:hover {
+      color: #894586;
+      background-color: #FFFFFF; }
+    .NewsFeed .event p {
+      margin: 0; }
+    .NewsFeed .event .event-header {
+      display: flex;
+      align-items: center; }
+      .NewsFeed .event .event-header .text {
+        flex-grow: 1;
+        margin-bottom: 10px; }
+      .NewsFeed .event .event-header .buttons {
+        text-align: center; }
+        .NewsFeed .event .event-header .buttons h3 {
+          font-size: 14px;
+          color: #030303; }
+        .NewsFeed .event .event-header .buttons i {
+          margin: 4px;
+          font-size: 12px;
+          height: 12px;
+          width: 12px;
+          cursor: pointer;
+          border-radius: 50%;
+          padding: 4px;
+          transition: 250ms; }
+          .NewsFeed .event .event-header .buttons i.yes {
+            border: 2px solid green;
+            color: green; }
+            .NewsFeed .event .event-header .buttons i.yes:hover, .NewsFeed .event .event-header .buttons i.yes.selected {
+              background-color: green;
+              color: white; }
+          .NewsFeed .event .event-header .buttons i.no {
+            border: 2px solid red;
+            color: red; }
+            .NewsFeed .event .event-header .buttons i.no:hover, .NewsFeed .event .event-header .buttons i.no.selected {
+              background-color: red;
+              color: white; }
 
 .Profile {
   background-color: white;

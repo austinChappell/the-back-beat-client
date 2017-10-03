@@ -19,13 +19,14 @@ class CalendarPage extends Component {
   // TODO: Work on fixing time value
 
   state = {
+    eventCity: '',
     eventDate: '',
     eventTime: '12:00 am',
     eventTitle: '',
     eventTypes: [
       { value: 'concert', text: 'Concert' },
-      { value: 'jam session', text: 'Jam Session' },
-      { value: 'rehearsal', text: 'Rehearsal' }
+      { value: 'Jam Session', text: 'Jam Session' },
+      { value: 'Rehearsal', text: 'Rehearsal' }
     ],
     eventType: '',
     eventVenue: '',
@@ -42,7 +43,9 @@ class CalendarPage extends Component {
   handleInputChange = (evt, name) => {
     const newStateObj = {};
     newStateObj[name] = evt.target.value;
-    this.setState(newStateObj);
+    this.setState(newStateObj, () => {
+      console.log('STATE', this.state);
+    });
   }
 
   convertDate = (date, time) => {
@@ -82,7 +85,9 @@ class CalendarPage extends Component {
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
         eventVenue: this.state.eventVenue,
-        eventDateTime: this.state.eventDate
+        eventDateTime: this.state.eventDate,
+        eventCity: this.state.eventCity,
+        userCity: this.props.loggedInUser.city,
       })
     }).then((response) => {
       console.log('WE MADE IT THIS FAR');
@@ -96,8 +101,8 @@ class CalendarPage extends Component {
         eventTitle: '',
         eventTypes: [
           { value: 'concert', text: 'Concert' },
-          { value: 'jam session', text: 'Jam Session' },
-          { value: 'rehearsal', text: 'Rehearsal' }
+          { value: 'Jam Session', text: 'Jam Session' },
+          { value: 'Rehearsal', text: 'Rehearsal' }
         ],
         eventType: this.state.eventTypes[0].value,
         eventVenue: '',
@@ -127,6 +132,7 @@ class CalendarPage extends Component {
 
           <FormInput
             name="eventTitle"
+            placeholder="Title"
             onChange={this.handleInputChange}
             type="text"
             value={this.state.eventTitle}
@@ -156,9 +162,18 @@ class CalendarPage extends Component {
 
           <FormInput
             name="eventVenue"
+            placeholder="Venue"
             onChange={this.handleInputChange}
             type="text"
             value={this.state.eventVenue}
+          />
+
+          <FormInput
+            name="eventCity"
+            placeholder="City"
+            onChange={this.handleInputChange}
+            type="text"
+            value={this.state.eventCity}
           />
 
           {/* // TODO: Make submit button and add functionality to post to database */}
@@ -172,7 +187,8 @@ class CalendarPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    apiURL: state.apiURL
+    apiURL: state.apiURL,
+    loggedInUser: state.loggedInUser
   }
 }
 
