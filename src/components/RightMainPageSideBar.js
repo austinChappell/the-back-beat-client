@@ -40,15 +40,29 @@ class RightMainPageSideBar extends Component {
     })
   }
 
-  handleAttendance = (evt) => {
-    console.log('Hovering', evt.target.classList);
-    if (evt.target.classList.contains('yes')) {
-      evt.target.classList.add('selected');
+  handleAttendance = (evt, eventId, attending) => {
+    const url = this.props.apiURL;
+    evt.target.classList.add('selected');
+    if (attending) {
       evt.target.nextElementSibling.style.display = 'none';
-    } else if (evt.target.classList.contains('no')) {
-      evt.target.classList.add('selected');
+    } else {
       evt.target.previousElementSibling.style.display = 'none';
     }
+    fetch(`${url}/api/event/attendance`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        eventId,
+        attending
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log(results);
+    })
   }
 
   changeUser = (user) => {
@@ -249,11 +263,11 @@ class RightMainPageSideBar extends Component {
                     <h3>Going?</h3>
                     <i
                       className="fa fa-check yes"
-                      onClick={(evt) => this.handleAttendance(evt, event.event_id)}
+                      onClick={(evt) => this.handleAttendance(evt, event.event_id, true)}
                       aria-hidden="true"></i>
                     <i
                       className="fa fa-times no"
-                      onClick={(evt) => this.handleAttendance(evt, event.event_id)}
+                      onClick={(evt) => this.handleAttendance(evt, event.event_id, false)}
                       aria-hidden="true"></i>
                   </div>
 

@@ -31,13 +31,29 @@ class CalendarPage extends Component {
     eventType: '',
     eventVenue: '',
     initialTimeVal: now,
+    myEvents: [],
     startDate: moment(),
     unconvertedDate: ''
   }
 
   componentDidMount() {
     this.convertDate(this.state.startDate, this.state.eventTime);
+    this.fetchMyEvents();
     this.setState({ eventType: this.state.eventTypes[0].value })
+  }
+
+  fetchMyEvents = () => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/events/attending`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setState({ myEvents: results.rows });
+    })
   }
 
   handleInputChange = (evt, name) => {
