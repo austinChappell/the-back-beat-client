@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 
+import EventList from './EventList';
 import Form from './Form';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
@@ -21,6 +22,7 @@ class CalendarPage extends Component {
   state = {
     eventCity: '',
     eventDate: '',
+    eventList: [],
     eventTime: '12:00 am',
     eventTitle: '',
     eventTypes: [
@@ -52,23 +54,37 @@ class CalendarPage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.setState({ myEvents: results.rows });
+      this.setState({ myEvents: results.rows }, () => {
+        this.state.myEvents.map((event) => {
+          this.fetchEventDetails(event.event_id);
+        })
+      });
+    })
+  }
+
+  fetchEventDetails = (id) => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/event/${id}/details`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setState({ eventList: this.state.eventList.concat(results.rows) });
     })
   }
 
   handleInputChange = (evt, name) => {
     const newStateObj = {};
     newStateObj[name] = evt.target.value;
-    this.setState(newStateObj, () => {
-      console.log('STATE', this.state);
-    });
+    this.setState(newStateObj);
   }
 
   convertDate = (date, time) => {
     const shortDate = date._d.toString().slice(0, 15);
-    this.setState({ eventDate: shortDate + ' ' + time }, () => {
-      console.log('CONVERT DATE', this.state);
-    });
+    this.setState({ eventDate: shortDate + ' ' + time });
   }
 
   handleDateChange = (date) => {
@@ -88,9 +104,7 @@ class CalendarPage extends Component {
 
   submitForm = (evt) => {
     evt.preventDefault();
-    console.log('SUBMIT FUNCTION RUNNING');
     const apiURL = this.props.apiURL;
-    console.log('API URL', apiURL);
     fetch(`${apiURL}/api/calendar/add`, {
       credentials: 'include',
       headers: {
@@ -106,11 +120,8 @@ class CalendarPage extends Component {
         userCity: this.props.loggedInUser.city,
       })
     }).then((response) => {
-      console.log('WE MADE IT THIS FAR');
       return response.json();
     }).then((results) => {
-      console.log('RESULTS', results.rows);
-    }).then(() => {
       this.setState({
         eventDate: '',
         eventTime: '12:00am',
@@ -128,15 +139,11 @@ class CalendarPage extends Component {
         this.convertDate(this.state.startDate);
       })
     }).catch((err) => {
-      console.log('FAILED', err);
+      throw err;
     })
   }
 
   render() {
-
-    if (this.state.eventDate !== null) {
-      console.log('DATE IS', this.state.eventDate);
-    }
 
     return (
       <div className="CalendarPage">
@@ -195,6 +202,10 @@ class CalendarPage extends Component {
           {/* // TODO: Make submit button and add functionality to post to database */}
 
         </Form>
+
+        <EventList
+          data={this.state.eventList}
+        />
 
       </div>
     )
