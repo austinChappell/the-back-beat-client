@@ -40,13 +40,14 @@ class CalendarPage extends Component {
 
   componentDidMount() {
     this.convertDate(this.state.startDate, this.state.eventTime);
-    this.fetchMyEvents();
+    this.fetchUserEvents();
     this.setState({ eventType: this.state.eventTypes[0].value })
   }
 
-  fetchMyEvents = () => {
+  fetchUserEvents = () => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/events/attending`, {
+    const userid = this.props.loggedInUser.id
+    fetch(`${url}/api/events/attending/${userid}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
