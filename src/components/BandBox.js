@@ -10,8 +10,18 @@ class BandBox extends Component {
 
   componentDidMount() {
 
+    setTimeout(() => {
+      this.getBands();
+    }, 100);
+
+  }
+
+  getBands = () => {
+
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/bands`, {
+    const userId = this.props.loggedInUser.id;
+    console.log('LOGGED IN USER ID', userId);
+    fetch(`${url}/api/bands/user/${userId}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -19,10 +29,12 @@ class BandBox extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.setState({ bands: results.rows });
+      this.setState({ bands: results.rows }, () => {
+        console.log(this.state);
+      });
     })
 
-  }
+  };
 
   render() {
     return (
@@ -45,6 +57,7 @@ class BandBox extends Component {
 const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
+    loggedInUser: state.loggedInUser
   }
 }
 
