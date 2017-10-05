@@ -3,10 +3,18 @@ import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
+import EventCreator from './EventCreator';
+import EventList from './EventList';
+
 class BandPage extends Component {
 
   state = {
+    bandEvents: [],
     bandInfoArr: [],
+    eventTypes: [
+      { value: 'Gig', text: 'Gig' },
+      { value: 'Rehearsal', text: 'Rehearsal' }
+    ],
     searchMember: '',
     searchMemberResuts: [],
     members: [],
@@ -30,6 +38,8 @@ class BandPage extends Component {
       })
       this.setState({ bandInfoArr: results.rows, members });
     })
+
+    this.getEvents();
   }
 
   filterMembers = (evt) => {
@@ -49,6 +59,21 @@ class BandPage extends Component {
           this.setState({searchMemberResuts: results.rows});
         })
       }
+    })
+  }
+
+  getEvents = () => {
+    const url = this.props.apiURL;
+    const bandId = this.props.match.params.bandId;
+    fetch(`${url}/api/gig/band/${bandId}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setState({ bandEvents: results.rows });
     })
   }
 
@@ -224,6 +249,13 @@ class BandPage extends Component {
     return (
       <div className="BandPage">
         {bandInfo}
+        <EventCreator
+          eventTypes={this.state.eventTypes}
+          submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
+        />
+        <EventList
+          data={this.state.bandEvents}
+        />
       </div>
     )
   }

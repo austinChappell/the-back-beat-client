@@ -4,10 +4,10 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 
-import EventList from './EventList';
 import Form from './Form';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
+import TextArea from './TextArea';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-time-picker/assets/index.css';
@@ -15,21 +15,15 @@ import 'rc-time-picker/assets/index.css';
 const format = 'h:mm a';
 const now = moment().hour(0).minute(0);
 
-class CalendarPage extends Component {
-
-  // TODO: Work on fixing time value
+class EventCreator extends Component {
 
   state = {
     eventCity: '',
     eventDate: '',
+    eventDetails: '',
     eventList: [],
     eventTime: '12:00 am',
     eventTitle: '',
-    eventTypes: [
-      { value: 'Concert', text: 'Concert' },
-      { value: 'Jam Session', text: 'Jam Session' },
-      { value: 'Rehearsal', text: 'Rehearsal' }
-    ],
     eventType: '',
     eventVenue: '',
     initialTimeVal: now,
@@ -40,41 +34,7 @@ class CalendarPage extends Component {
 
   componentDidMount() {
     this.convertDate(this.state.startDate, this.state.eventTime);
-    this.fetchUserEvents();
-    this.setState({ eventType: this.state.eventTypes[0].value })
-  }
-
-  fetchUserEvents = () => {
-    const url = this.props.apiURL;
-    const userid = this.props.loggedInUser.id
-    fetch(`${url}/api/events/attending/${userid}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.setState({ myEvents: results.rows }, () => {
-        this.state.myEvents.map((event) => {
-          this.fetchEventDetails(event.event_id);
-        })
-      });
-    })
-  }
-
-  fetchEventDetails = (id) => {
-    const url = this.props.apiURL;
-    fetch(`${url}/api/event/${id}/details`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.setState({ eventList: this.state.eventList.concat(results.rows) });
-    })
+    this.setState({ eventType: this.props.eventTypes[0].value })
   }
 
   handleInputChange = (evt, name) => {
@@ -106,18 +66,20 @@ class CalendarPage extends Component {
   submitForm = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/calendar/add`, {
+    const url = `${apiURL}/${this.props.submitQuery}`
+    fetch(url, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'POST',
       body: JSON.stringify({
+        eventCity: this.state.eventCity,
+        eventDateTime: this.state.eventDate,
+        eventDetails: this.state.eventDetails,
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
         eventVenue: this.state.eventVenue,
-        eventDateTime: this.state.eventDate,
-        eventCity: this.state.eventCity,
         userCity: this.props.loggedInUser.city,
       })
     }).then((response) => {
@@ -125,9 +87,10 @@ class CalendarPage extends Component {
     }).then((results) => {
       this.setState({
         eventDate: '',
+        eventDetails: '',
         eventTime: '12:00am',
         eventTitle: '',
-        eventType: this.state.eventTypes[0].value,
+        eventType: this.props.eventTypes[0].value,
         eventVenue: '',
         initialTimeVal: now,
         startDate: moment()
@@ -140,13 +103,11 @@ class CalendarPage extends Component {
   }
 
   render() {
-
     return (
-      <div className="CalendarPage">
-
+      <div className="EventCreator">
         <Form
           onSubmit={(evt) => this.submitForm(evt)}
-          submitBtnText="Add To Calendar"
+          submitBtnText={`Add ${this.state.eventType}`}
         >
 
           <FormInput
@@ -172,10 +133,18 @@ class CalendarPage extends Component {
             use12Hours
           />
 
+          <TextArea
+            name="eventDetails"
+            placeholder="Description"
+            charLimit={150}
+            onChange={this.handleInputChange}
+            value={this.state.eventDetails}
+          />
+
           <FormSelect
             name="eventType"
             onChange={this.handleInputChange}
-            options={this.state.eventTypes}
+            options={this.props.eventTypes}
             value={this.state.eventTypeSelected}
           />
 
@@ -195,14 +164,7 @@ class CalendarPage extends Component {
             value={this.state.eventCity}
           />
 
-          {/* // TODO: Make submit button and add functionality to post to database */}
-
         </Form>
-
-        <EventList
-          data={this.state.eventList}
-        />
-
       </div>
     )
   }
@@ -221,4 +183,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EventCreator);

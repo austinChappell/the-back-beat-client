@@ -11,9 +11,9 @@ class RehearsalBox extends Component {
         {this.props.rehearsals.map((rehearsal, index) => {
           return (
             <div key={index} className="rehearsal">
-              <h3>{rehearsal.title}</h3>
-              <h4>{rehearsal.date} - {rehearsal.time}</h4>
-              <p>{rehearsal.location}</p>
+              <h3>{rehearsal.event_title}</h3>
+              <h4>{rehearsal.event_date_time}</h4>
+              <p>{rehearsal.event_location}</p>
               <hr />
             </div>
           )

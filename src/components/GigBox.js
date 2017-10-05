@@ -11,9 +11,9 @@ class GigBox extends Component {
         {this.props.gigs.map((gig, index) => {
           return (
             <div key={index} className="gig">
-              <h3>{gig.title}</h3>
-              <h4>{gig.date} - {gig.time}</h4>
-              <p>{gig.details}</p>
+              <h3>{gig.event_title}</h3>
+              <h4>{gig.event_date_time}</h4>
+              <p>{gig.event_details}</p>
               <hr />
             </div>
           )
