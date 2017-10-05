@@ -78,6 +78,9 @@ p {
   .BandCreateForm form .lowCount {
     color: red; }
 
+.BandEventBox {
+  margin-bottom: 30px; }
+
 .BandPage .hide {
   display: none; }
 
@@ -198,9 +201,6 @@ p {
   padding: 10px;
   flex-basis: 100%;
   z-index: 10; }
-
-.GigBox {
-  margin-bottom: 30px; }
 
 .Home {
   position: absolute;
@@ -506,9 +506,6 @@ p {
   .ProfileInfoNavBar .active {
     background-color: #9A6197;
     color: #FFFFFF; }
-
-.RehearsalBox {
-  margin-bottom: 30px; }
 
 .RightMainPageSideBar {
   color: #030303;

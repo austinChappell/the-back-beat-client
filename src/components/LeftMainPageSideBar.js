@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import BandBox from './BandBox';
-import GigBox from './GigBox';
-import RehearsalBox from './RehearsalBox';
+import BandEventBox from './BandEventBox';
 
 class LeftMainPageSideBar extends Component {
 
@@ -35,8 +34,16 @@ class LeftMainPageSideBar extends Component {
   render() {
     return (
       <div className="LeftMainPageSideBar">
-        <GigBox />
-        <RehearsalBox />
+        <BandEventBox
+          events={this.props.gigs}
+          title="Upcoming Gigs"
+          type="gig"
+        />
+        <BandEventBox
+          events={this.props.rehearsals}
+          title="Upcoming Rehearsals"
+          type="rehearsal"
+        />
         <BandBox />
       </div>
     )
@@ -45,7 +52,9 @@ class LeftMainPageSideBar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    apiURL: state.apiURL
+    apiURL: state.apiURL,
+    gigs: state.gigs,
+    rehearsals: state.rehearsals
   }
 }
 
