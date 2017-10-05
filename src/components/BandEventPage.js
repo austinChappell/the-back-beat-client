@@ -56,9 +56,10 @@ class BandEventPage extends Component {
       // TODO: FINISH FILLING IN INFO. WILL NEED TO FORMAT DATE AND TIME
 
       <div className="BandEventPage">
-        <h1>{eventData.event_type} Info</h1> <h2>Band: {eventData.band_name}</h2>
-        <h2>When: {shortDate} - {formattedTime}</h2>
-        <h2>Where: {eventData.event_location}</h2>
+        <h1>{eventData.event_type} Info</h1> <p><strong>Band:</strong> {eventData.band_name}</p>
+        <p><strong>Date:</strong> {shortDate}</p>
+        <p><strong>Time:</strong> {formattedTime}</p>
+        <p><strong>Where:</strong> {eventData.event_location}</p>
       </div>
     )
   }
