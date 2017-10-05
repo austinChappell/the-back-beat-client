@@ -31,7 +31,7 @@ class BandEventBox extends Component {
       if (index < 3) {
         return (
           <div key={index} className="gig">
-            <h3>{event.event_title}</h3>
+            <h3><Link to={`/band_event/gigid`}>{event.event_title}</Link></h3>
             <h4>{shortDate} - {formattedTime}</h4>
             <p>{event.event_details}</p>
             <hr />
