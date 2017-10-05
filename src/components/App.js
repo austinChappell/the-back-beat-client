@@ -9,6 +9,7 @@ import BandPageBrowseMusicians from './BandPageBrowseMusicians';
 import BaseLayout from './BaseLayout';
 import CalendarPage from './CalendarPage';
 import ConnectPage from './ConnectPage';
+import GigPage from './GigPage';
 import Home from './Home';
 import LoggedIn from './LoggedIn';
 import Logout from './Logout';
@@ -18,6 +19,7 @@ import MyProfile from './MyProfile';
 import Onboarding from './Onboarding';
 import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
+import RehearsalPage from './RehearsalPage';
 
 class App extends Component {
   render() {
@@ -39,8 +41,10 @@ class App extends Component {
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
                 <PrivateRoute path="/calendar" component={CalendarPage} />
                 <PrivateRoute path="/connect" component={ConnectPage} />
+                <PrivateRoute path="/gigs" component={GigPage} />
                 <PrivateRoute path="/messages" component={MessagePage} />
                 <PrivateRoute path="/onboarding" component={Onboarding} />
+                <PrivateRoute path="/rehearsals" component={RehearsalPage} />
               </Switch>
             </BaseLayout>
           </Router>

@@ -28,14 +28,16 @@ class BandEventBox extends Component {
 
       let formattedTime = `${String(hour)}${minute} ${period}`;
 
-      return (
-        <div key={index} className="gig">
-          <h3>{event.event_title}</h3>
-          <h4>{shortDate} - {formattedTime}</h4>
-          <p>{event.event_details}</p>
-          <hr />
-        </div>
-      )
+      if (index < 3) {
+        return (
+          <div key={index} className="gig">
+            <h3>{event.event_title}</h3>
+            <h4>{shortDate} - {formattedTime}</h4>
+            <p>{event.event_details}</p>
+            <hr />
+          </div>
+        )
+      }
     }) : <p>{`No ${this.props.type}s scheduled.`}</p>;
 
     return (

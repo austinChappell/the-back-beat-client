@@ -12,10 +12,9 @@ class LeftMainPageSideBar extends Component {
   }
 
   getMyEvents = (type) => {
-    console.log('TYPE', type);
     const url = this.props.apiURL;
-    console.log('URL', url);
-    fetch(`${url}/api/my_band_events/${type}`, {
+    const limit = 'nolimit';
+    fetch(`${url}/api/my_band_events/${type}/${limit}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
