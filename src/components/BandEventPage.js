@@ -32,13 +32,33 @@ class BandEventPage extends Component {
 
     const eventData = this.state.eventData;
 
+    let date = eventData.event_date_time;
+    let formattedDate = String(new Date(date));
+    let shortDate = `${formattedDate.slice(0, 10)}, ${formattedDate.slice(11, 15)}`;
+    let hour = Number(formattedDate.slice(16, 18));
+    let minute = formattedDate.slice(18, 21);
+    let period = 'PM';
+    let successColor = 'green';
+
+    if (hour === 0) {
+      hour = 12;
+      period = 'AM';
+    } else if (hour < 12) {
+      period = 'AM';
+    } else if (hour > 12) {
+      hour = hour - 12;
+    }
+
+    let formattedTime = `${String(hour)}${minute} ${period}`;
+
     return (
 
       // TODO: FINISH FILLING IN INFO. WILL NEED TO FORMAT DATE AND TIME
 
       <div className="BandEventPage">
-        <h1>{eventData.event_type} with {eventData.band_name}</h1>
-        <h2>{eventData.event_title}</h2>
+        <h1>{eventData.event_type} Info</h1> <h2>Band: {eventData.band_name}</h2>
+        <h2>When: {shortDate} - {formattedTime}</h2>
+        <h2>Where: {eventData.event_location}</h2>
       </div>
     )
   }
