@@ -29,16 +29,22 @@ class ConnectPage extends Component {
     const val = this.state.searchValue;
     const cat = this.state.searchCategory;
     const url = this.props.apiURL;
-    fetch(`${url}/api/${cat}/${val}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.setState({data: results.rows});
-    })
+    if (val.length > 0) {
+
+      fetch(`${url}/api/${cat}/${val}`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        this.setState({ data: results.rows });
+      })
+
+    } else {
+      this.setState({ data: [] });
+    }
   }
 
   render() {
