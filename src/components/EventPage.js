@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class BandEventPage extends Component {
+class EventPage extends Component {
 
   state = {
     eventData: {}
@@ -55,7 +55,7 @@ class BandEventPage extends Component {
 
       // TODO: FINISH FILLING IN INFO. WILL NEED TO FORMAT DATE AND TIME
 
-      <div className="BandEventPage">
+      <div className="EventPage">
         <h1>{eventData.event_type} Info</h1> <p><strong>Band:</strong> {eventData.band_name}</p>
         <p><strong>Date:</strong> {shortDate}</p>
         <p><strong>Time:</strong> {formattedTime}</p>
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BandEventPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EventPage);
