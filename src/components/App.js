@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import store from '../store/';
 
 import BandCreateForm from './BandCreateForm';
+import BandEventPage from './BandEventPage';
 import BandPage from './BandPage';
 import BandPageBrowseMusicians from './BandPageBrowseMusicians';
 import BaseLayout from './BaseLayout';
@@ -39,6 +40,7 @@ class App extends Component {
                 <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
                 <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
                 <PrivateRoute path="/band/:bandId" component={BandPage} />
+                <PrivateRoute path="/band_event/:eventId" component={BandEventPage} />
                 <PrivateRoute path="/calendar" component={CalendarPage} />
                 <PrivateRoute path="/connect" component={ConnectPage} />
                 <PrivateRoute path="/gigs" component={GigPage} />
