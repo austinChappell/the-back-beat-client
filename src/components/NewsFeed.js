@@ -74,7 +74,7 @@ class NewsFeed extends Component {
   }
 
   play = (mp3) => {
-    if (this.state.isPlaying === true && mp3 === this.state.mp3) {
+    if (this.state.isPlaying && mp3 === this.state.mp3) {
       this.setState({ mp3: '', isPlaying: false });
     } else {
       this.setState({ mp3, isPlaying: true });
