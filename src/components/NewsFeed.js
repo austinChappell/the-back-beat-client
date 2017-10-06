@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 
 import FormInput from './FormInput';
 import NewsFeedEvent from './NewsFeedEvent';
+import ReactAudioPlayer from 'react-audio-player';
 
 class NewsFeed extends Component {
 
   state = {
     artistSearch: '',
-    songUrl: '',
+    isPlaying: false,
+    mp3: '',
     musicResults: [],
     loading: true,
     news: []
@@ -71,6 +73,17 @@ class NewsFeed extends Component {
     })
   }
 
+  play = (mp3) => {
+    if (this.state.isPlaying === true && mp3 === this.state.mp3) {
+      this.setState({ mp3: '', isPlaying: false });
+    } else {
+      this.setState({ mp3, isPlaying: true });
+      setTimeout(() => {
+        this.setState({ isPlaying: false, mp3: '' });
+      }, 30000)
+    }
+  }
+
   render() {
     return (
       <div className="NewsFeed">
@@ -92,77 +105,25 @@ class NewsFeed extends Component {
             })}
           </div>
         </div>
-        <audio controls>
-          <source src="https://itunes.apple.com/us/album/cant-stop-the-feeling/id1154238159?i=1154239184&uo=4" type="audio/mp3" />
-        </audio>
-        {this.state.news.map((event) => {
+        <ReactAudioPlayer
+          src={this.state.mp3}
+          autoPlay
+          controls
+          style={{display: 'none'}}
+        />
+        {this.state.news.map((event, index) => {
           return (
-            <NewsFeedEvent event={event} />
+            <NewsFeedEvent
+              key={index}
+              event={event}
+              play={this.play}
+              currentmp3={this.state.mp3}
+              isPlaying={this.state.isPlaying}
+            />
           )
         })}
       </div>
     )
-    //
-    // let loadingMessage = this.state.loading ? <p>Loading Newsfeed...</p> : null;
-    //
-    // return (
-    //   <div className="NewsFeed">
-    //     {loadingMessage}
-    //     {this.props.allEventsInCity.map((event, index) => {
-    //
-    //       let date = event.event_date_time;
-    //       let formattedDate = String(new Date(date));
-    //       let shortDate = `${formattedDate.slice(0, 10)}, ${formattedDate.slice(11, 15)}`;
-    //       let hour = Number(formattedDate.slice(16, 18));
-    //       let minute = formattedDate.slice(18, 21);
-    //       let period = 'PM';
-    //       let successColor = 'green';
-    //       const changeSuccessColor = () => {
-    //         successColor = 'blue';
-    //       }
-    //
-    //       const reverseSuccessColor = () => {
-    //         successColor = 'green';
-    //       }
-    //
-    //       if (hour === 0) {
-    //         hour = 12;
-    //         period = 'AM';
-    //       } else if (hour < 12) {
-    //         period = 'AM';
-    //       } else if (hour > 12) {
-    //         hour = hour - 12;
-    //       }
-    //
-    //       let formattedTime = `${String(hour)}${minute} ${period}`;
-    //
-    //       return (
-    //         <div key={index} className="event">
-    //           <div className="event-header">
-    //             <div className="text">
-    //               <p><strong>{event.event_type} - {shortDate}</strong></p>
-    //               <span>{formattedTime}</span>
-    //             </div>
-    //             <div className="buttons">
-    //               <h3>Going?</h3>
-    //               <i
-    //                 className="fa fa-check yes"
-    //                 onClick={(evt) => this.handleAttendance(evt, event.event_id)}
-    //                 aria-hidden="true"></i>
-    //               <i
-    //                 className="fa fa-times no"
-    //                 onClick={(evt) => this.handleAttendance(evt, event.event_id)}
-    //                 aria-hidden="true"></i>
-    //             </div>
-    //           </div>
-    //           <div className="event-body">
-    //             <p>{event.event_title} at {event.event_location}.</p>
-    //           </div>
-    //         </div>
-    //       )
-    //     })}
-    //   </div>
-    // )
   }
 }
 
