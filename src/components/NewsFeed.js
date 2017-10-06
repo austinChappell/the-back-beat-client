@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import FormInput from './FormInput';
+import NewsFeedEvent from './NewsFeedEvent';
+
 class NewsFeed extends Component {
 
   state = {
+    artistSearch: '',
+    musicResults: [],
     loading: true,
+    news: []
+  }
+
+  componentDidMount() {
+    this.getNews();
   }
 
   // componentDidMount() {
@@ -45,10 +55,85 @@ class NewsFeed extends Component {
   //   }
   // }
 
+  handleInputChange = (evt) => {
+    let value = evt.target.value;
+    this.setState({ artistSearch: evt.target.value }, () => {
+      setTimeout(() => {
+        if (value === this.state.artistSearch) {
+          fetch(`https://itunes.apple.com/search?term=${value}&limit=15`, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then((response) => {
+            return response.json();
+          }).then((results) => {
+            console.log('SEARCH RESULTS', results.results);
+            this.setState({ musicResults: results.results });
+          })
+        }
+      }, 250);
+    });
+  }
+
+  addSong = (result) => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/addsong`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(result)
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      let array = this.state.news.slice();
+      array.unshift(results.rows[0]);
+      this.setState({ news: array, artistSearch: '', musicResults: [] });
+    })
+  }
+
+  getNews = () => {
+    const url = this.props.apiURL;
+    fetch(`${url}/api/getnews`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('NEWS', results.rows);
+      this.setState({ news: results.rows });
+    })
+  }
+
   render() {
     return (
       <div className="NewsFeed">
-
+        <div>
+          <FormInput
+            name="artistSearch"
+            placeholder="Who are you listening to?"
+            onChange={this.handleInputChange}
+            type="text"
+            value={this.state.artistSearch}
+          />
+          <div>
+            {this.state.musicResults.map((result, index) => {
+              return (
+                <div key={index} className="result" onClick={() => this.addSong(result)}>
+                  <p><span>{result.trackName}</span> by {result.artistName}<br /><span>{result.collectionCensoredName}</span></p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+        {this.state.news.map((event) => {
+          return (
+            <NewsFeedEvent event={event} />
+          )
+        })}
       </div>
     )
     //
