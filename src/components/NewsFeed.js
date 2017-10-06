@@ -8,6 +8,7 @@ class NewsFeed extends Component {
 
   state = {
     artistSearch: '',
+    songUrl: '',
     musicResults: [],
     loading: true,
     news: []
@@ -16,44 +17,6 @@ class NewsFeed extends Component {
   componentDidMount() {
     this.getNews();
   }
-
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.loadEvents();
-  //     setInterval(() => {
-  //       this.loadEvents();
-  //     }, 15000);
-  //   }, 1000);
-  // }
-  //
-  // loadEvents = () => {
-  //   const url = this.props.apiURL;
-  //   fetch(`${url}/api/events/city/${this.props.loggedInUser.city}`, {
-  //     credentials: 'include',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }).then((response) => {
-  //     return response.json();
-  //   }).then((results) => {
-  //     console.log('EVENTS', results.rows);
-  //     if (results.rows) {
-  //       this.props.loadEvents(results.rows);
-  //       this.setState({ loading: false });
-  //     }
-  //   })
-  // }
-  //
-  // handleAttendance = (evt) => {
-  //   console.log('Hovering', evt.target.classList);
-  //   if (evt.target.classList.contains('yes')) {
-  //     evt.target.classList.add('selected');
-  //     evt.target.nextElementSibling.style.display = 'none';
-  //   } else if (evt.target.classList.contains('no')) {
-  //     evt.target.classList.add('selected');
-  //     evt.target.previousElementSibling.style.display = 'none';
-  //   }
-  // }
 
   handleInputChange = (evt) => {
     let value = evt.target.value;
@@ -129,6 +92,9 @@ class NewsFeed extends Component {
             })}
           </div>
         </div>
+        <audio controls>
+          <source src="https://itunes.apple.com/us/album/cant-stop-the-feeling/id1154238159?i=1154239184&uo=4" type="audio/mp3" />
+        </audio>
         {this.state.news.map((event) => {
           return (
             <NewsFeedEvent event={event} />
