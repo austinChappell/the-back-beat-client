@@ -18,7 +18,6 @@ class UserAuthForm extends Component {
   }
 
   handleChange = (evt, input, checkInputAvailability) => {
-    console.log('THIS', this);
     let component = this;
     let value = evt.target.value;
     clearTimeout(this.stopTimeout);
@@ -80,7 +79,7 @@ class UserAuthForm extends Component {
     let styleidthree = styleids[2];
 
     if (userSkillIndex === 0) {
-      
+
       skill_level_one = 'no_skill';
     }
 

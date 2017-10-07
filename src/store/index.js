@@ -10,6 +10,7 @@ const initialState = {
   userAuthType: '',
   skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice'],
   onboardingMaxStage: 2,
+  onboardingReqMaxStage: 1,
 
   // USER INFO
   compatibleMusicians: [],

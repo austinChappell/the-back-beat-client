@@ -199,7 +199,7 @@ class OnboardingForm extends Component {
 
   }
 
-  continue = (evt, onboardingCategory, max, min, query, onboardingStageIncrease) => {
+  continue = (evt, onboardingCategory, max, min, query) => {
     evt.preventDefault();
     if (this.state[onboardingCategory].length >= min && this.state[onboardingCategory].length <= max) {
       const url = this.props.apiURL;
@@ -227,25 +227,21 @@ class OnboardingForm extends Component {
 
       })
 
-      if (onboardingStageIncrease) {
-
-        fetch(`${url}/user/onboarding/plus`, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          method: 'PUT'
-        }).then((response) => {
-          return response.json();
-        }).then((results) => {
-          console.log(results);
-          this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
-          const updateState = {};
-          updateState[onboardingCategory] = [];
-          this.setState(updateState);
-        })
-
-      }
+      fetch(`${url}/user/onboarding/plus`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT'
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        console.log(results);
+        this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
+        const updateState = {};
+        updateState[onboardingCategory] = [];
+        this.setState(updateState);
+      })
 
     } else {
       this.setState({
@@ -255,6 +251,8 @@ class OnboardingForm extends Component {
   }
 
   render() {
+
+    console.log('SESSION STAGE', this.state.sessionOnboardingStage, this.props.onboardingStage);
 
     let stage = this.props.onboardingStage;
     let form;
@@ -421,6 +419,7 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     loggedInUser: state.loggedInUser,
     onboardingMaxStage: state.onboardingMaxStage,
+    onboardingReqMaxStage: state.onboardingReqMaxStage,
     onboardingStage: state.onboardingStage
   }
 }
