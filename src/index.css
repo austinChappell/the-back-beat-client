@@ -93,24 +93,42 @@ p {
     flex-grow: 1;
     padding-top: 80px; }
 
-.BrowseBox h2 {
-  color: #070649; }
-
-.BrowseBox .browse-box-container {
-  height: 200px;
-  border: 1px solid black;
-  position: relative;
-  overflow: hidden; }
-  .BrowseBox .browse-box-container .show-item {
-    position: absolute;
-    padding: 10px;
-    width: 100%;
-    transition: 500ms; }
-  .BrowseBox .browse-box-container h3 a {
+.BrowseBox {
+  text-align: center; }
+  .BrowseBox .browse-box-flex {
+    display: flex;
+    align-items: center; }
+  .BrowseBox .chevron {
+    font-size: 40px;
+    cursor: pointer;
     color: #9A6197;
-    text-decoration: none; }
-  .BrowseBox .browse-box-container strong {
+    transition: 300ms; }
+    .BrowseBox .chevron:hover {
+      color: #894586; }
+  .BrowseBox .hidden {
+    opacity: 0; }
+  .BrowseBox h2 {
     color: #070649; }
+  .BrowseBox .browse-box-container {
+    width: 600px;
+    height: 350px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden; }
+    .BrowseBox .browse-box-container .show-item {
+      position: absolute;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: 500ms; }
+    .BrowseBox .browse-box-container h3 a {
+      color: #9A6197;
+      text-decoration: none;
+      transition: 300ms; }
+      .BrowseBox .browse-box-container h3 a:hover {
+        color: #894586; }
+    .BrowseBox .browse-box-container strong {
+      color: #070649; }
 
 .CenterComponent {
   background-color: #FAFAFA;
@@ -263,6 +281,42 @@ p {
 .Main {
   background-color: white;
   display: flex; }
+
+.MainFeed {
+  justify-content: space-between;
+  background-color: #FAFAFA;
+  color: #030303;
+  min-height: calc(100vh - 80px);
+  width: 50%;
+  box-sizing: border-box;
+  margin-left: 25%;
+  padding: 20px 40px; }
+  .MainFeed .buttons {
+    margin-top: 20px; }
+    .MainFeed .buttons h3 {
+      font-size: 14px;
+      color: #030303; }
+    .MainFeed .buttons i {
+      margin: 4px;
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 4px;
+      transition: 250ms; }
+      .MainFeed .buttons i.yes {
+        border: 2px solid green;
+        color: green; }
+        .MainFeed .buttons i.yes:hover, .MainFeed .buttons i.yes.selected {
+          background-color: green;
+          color: white; }
+      .MainFeed .buttons i.no {
+        border: 2px solid red;
+        color: red; }
+        .MainFeed .buttons i.no:hover, .MainFeed .buttons i.no.selected {
+          background-color: red;
+          color: white; }
 
 .MessageDisplay {
   flex-basis: 50%;
@@ -562,8 +616,9 @@ p {
 .NewsFeed {
   border-left: 1px solid #EEEEEE;
   border-right: 1px solid #EEEEEE;
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
   position: fixed;
+  overflow: scroll;
   left: 75%;
   width: 25%;
   box-sizing: border-box;
@@ -651,42 +706,6 @@ p {
   .ProfileInfoNavBar .active {
     background-color: #9A6197;
     color: #FFFFFF; }
-
-.RightMainPageSideBar {
-  background-color: #FAFAFA;
-  color: #030303;
-  min-height: 100vh;
-  width: 50%;
-  position: fixed;
-  box-sizing: border-box;
-  left: 25%;
-  padding: 20px 40px; }
-  .RightMainPageSideBar .buttons {
-    margin-top: 20px; }
-    .RightMainPageSideBar .buttons h3 {
-      font-size: 14px;
-      color: #030303; }
-    .RightMainPageSideBar .buttons i {
-      margin: 4px;
-      font-size: 12px;
-      height: 12px;
-      width: 12px;
-      cursor: pointer;
-      border-radius: 50%;
-      padding: 4px;
-      transition: 250ms; }
-      .RightMainPageSideBar .buttons i.yes {
-        border: 2px solid green;
-        color: green; }
-        .RightMainPageSideBar .buttons i.yes:hover, .RightMainPageSideBar .buttons i.yes.selected {
-          background-color: green;
-          color: white; }
-      .RightMainPageSideBar .buttons i.no {
-        border: 2px solid red;
-        color: red; }
-        .RightMainPageSideBar .buttons i.no:hover, .RightMainPageSideBar .buttons i.no.selected {
-          background-color: red;
-          color: white; }
 
 .ScrollBox {
   color: #030303;

@@ -1,8 +1,10 @@
 .NewsFeed {
   border-left: 1px solid $gray-background-light;
   border-right: 1px solid $gray-background-light;
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
+  // min-height: calc(100vh);
   position: fixed;
+  overflow: scroll;
   left: 75%;
   width: 25%;
   box-sizing: border-box;

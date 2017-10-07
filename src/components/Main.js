@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import LeftMainPageSideBar from './LeftMainPageSideBar';
 import NewsFeed from './NewsFeed';
-import RightMainPageSideBar from './RightMainPageSideBar';
+import MainFeed from './MainFeed';
 
 class Main extends Component {
 
@@ -35,7 +35,7 @@ class Main extends Component {
     return (
       <div className="Main">
         <LeftMainPageSideBar />
-        <RightMainPageSideBar />
+        <MainFeed />
         <NewsFeed />
       </div>
     )
