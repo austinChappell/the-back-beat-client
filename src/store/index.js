@@ -9,7 +9,7 @@ const initialState = {
   showUserAuthForm: false,
   userAuthType: '',
   skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice'],
-  onboardingMaxStage: 3,
+  onboardingMaxStage: 2,
 
   // USER INFO
   compatibleMusicians: [],

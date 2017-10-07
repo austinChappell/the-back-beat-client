@@ -87,6 +87,9 @@ class OnboardingForm extends Component {
   }
 
   handleInputChange = (evt, category) => {
+    if (this.state.errorMessage) {
+      this.setState({ errorMessage: null });
+    }
     const updateState = {};
     updateState[category] = evt.target.value;
     this.setState(updateState);
@@ -133,32 +136,38 @@ class OnboardingForm extends Component {
 
   handleVidLinkSubmit = (evt, array, url, title, description) => {
     evt.preventDefault();
-    const updateState = {};
-    const updateArray = this.state[array].slice();
+    if (this.state.pendingVideo != false && this.state.pendingVideoTitle != false && this.state.pendingVideoDescription != false) {
+      const updateState = {};
+      const updateArray = this.state[array].slice();
 
-    function getYouTubeId (videoURL) {
+      function getYouTubeId (videoURL) {
 
-      let queryIndex = videoURL.indexOf('?v=');
-      let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
-      return vidID;
+        let queryIndex = videoURL.indexOf('?v=');
+        let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
+        return vidID;
 
+      }
+
+      let vidID = getYouTubeId(this.state[url]);
+
+      updateArray.push({
+        set_as_primary: false,
+        video_description: this.state[description],
+        video_title: this.state[title],
+        youtube_id: vidID
+      });
+      updateState[array] = updateArray;
+      updateState[url] = '';
+      updateState[title] = '';
+      updateState[description] = '';
+      this.setState(updateState, () => {
+        console.log('STATE', this.state);
+      });
+    } else {
+      this.setState({
+        errorMessage: 'You must complete all fields before adding a video'
+      })
     }
-
-    let vidID = getYouTubeId(this.state[url]);
-
-    updateArray.push({
-      set_as_primary: false,
-      video_description: this.state[description],
-      video_title: this.state[title],
-      youtube_id: vidID
-    });
-    updateState[array] = updateArray;
-    updateState[url] = '';
-    updateState[title] = '';
-    updateState[description] = '';
-    this.setState(updateState, () => {
-      console.log('STATE', this.state);
-    });
   }
 
   removeItem = (arrayName, index) => {
@@ -190,7 +199,7 @@ class OnboardingForm extends Component {
 
   }
 
-  continue = (evt, onboardingCategory, max, min, query) => {
+  continue = (evt, onboardingCategory, max, min, query, onboardingStageIncrease) => {
     evt.preventDefault();
     if (this.state[onboardingCategory].length >= min && this.state[onboardingCategory].length <= max) {
       const url = this.props.apiURL;
@@ -218,21 +227,25 @@ class OnboardingForm extends Component {
 
       })
 
-      fetch(`${url}/user/onboarding/plus`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'PUT'
-      }).then((response) => {
-        return response.json();
-      }).then((results) => {
-        console.log(results);
-        this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
-        const updateState = {};
-        updateState[onboardingCategory] = [];
-        this.setState(updateState);
-      })
+      if (onboardingStageIncrease) {
+
+        fetch(`${url}/user/onboarding/plus`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'PUT'
+        }).then((response) => {
+          return response.json();
+        }).then((results) => {
+          console.log(results);
+          this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
+          const updateState = {};
+          updateState[onboardingCategory] = [];
+          this.setState(updateState);
+        })
+
+      }
 
     } else {
       this.setState({
@@ -293,7 +306,7 @@ class OnboardingForm extends Component {
 
         {errorMessage}
 
-        <button onClick={(evt) => this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add')}>Continue</button>
+        <button onClick={(evt) => this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add', true)}>Continue</button>
       </div>
 
     } else if (stage === 1) {
@@ -318,60 +331,77 @@ class OnboardingForm extends Component {
 
         {errorMessage}
 
-        <button onClick={(evt) => this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add')}>Continue</button>
+        <button onClick={(evt) => this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add', true)}>Continue</button>
       </div>
 
     } else if (stage == 2) {
 
-        form = <div>
-          <h1>Add some vids</h1>
-          <h3>(This is strongly recommended)</h3>
-          <p>Provide links to YouTube videos of yourself performing below.</p>
-          <form className="flex-form">
-            <i
-              className="fa fa-plus add-video-button"
-              onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}
-              aria-hidden="true"></i>
-            <div className="vid-form">
-              <div className="flex-inputs">
-                <input
-                  onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
-                  placeholder="YouTube Link"
-                  value={this.state.pendingVideo}
-                />
-                <input
-                  onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
-                  placeholder="Video Title"
-                  value={this.state.pendingVideoTitle}
-                />
-              </div>
+      let videoListTitle = null;
+
+      if (this.state.selectedVideos.length > 0) {
+        videoListTitle = <div className="video-list-title">
+          <div className="vid-primary-header">
+            Primary
+          </div>
+          <div className="vid-title-header">
+            Title
+          </div>
+          <div className="vid-remove-header">
+            Remove
+          </div>
+        </div>
+      }
+
+      form = <div className="video-modal">
+        <h1>Add Videos</h1>
+        <h3>Upload videos of yourself playing. Choose one as the primary, and make a great first impression!</h3>
+        <form className="flex-form">
+          <i
+            className="fa fa-plus add-video-button"
+            onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}
+            aria-hidden="true"></i>
+          <div className="vid-form">
+            <div className="flex-inputs">
               <input
-                className="half-width-input"
-                onChange={(evt) => this.handleInputChange(evt, 'pendingVideoDescription')}
-                placeholder="Video Description"
-                value={this.state.pendingVideoDescription}
+                onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
+                placeholder="YouTube Link"
+                value={this.state.pendingVideo}
+              />
+              <input
+                onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
+                placeholder="Video Title"
+                value={this.state.pendingVideoTitle}
               />
             </div>
-          </form>
-          {this.state.selectedVideos.map((video, index) => {
-            return (
-              <div key={index}>
-                <input
-                  type="radio"
-                  checked={index === this.state.primaryVidIndex}
-                  onClick={(evt) => this.handleRadioChange(evt, index)}
-                />
-                <h3 style={{ display: 'inline-block' }}>{video.video_title}</h3>
-                <i
-                  className="fa fa-times-circle remove-button"
-                  aria-hidden="true"
-                  onClick={() => this.removeItem('selectedVideos', index)}
-                ></i>
-              </div>
-            )
-          })}
-          <button onClick={() => this.continue('selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids')}>{this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
-        </div>
+            <input
+              className="half-width-input"
+              onChange={(evt) => this.handleInputChange(evt, 'pendingVideoDescription')}
+              placeholder="Video Description"
+              value={this.state.pendingVideoDescription}
+            />
+          </div>
+        </form>
+        {videoListTitle}
+        {this.state.selectedVideos.map((video, index) => {
+          return (
+            <div key={index} className="added-videos">
+              <input
+                type="radio"
+                checked={index === this.state.primaryVidIndex || this.state.selectedVideos.length === 1}
+                onClick={(evt) => this.handleRadioChange(evt, index)}
+              />
+              <h3 style={{ display: 'inline-block' }}>{video.video_title}</h3>
+              <i
+                className="fa fa-times-circle remove-button"
+                aria-hidden="true"
+                onClick={() => this.removeItem('selectedVideos', index)}
+              ></i>
+            </div>
+          )
+        })}
+        {errorMessage}
+        <button onClick={(evt) => this.continue(evt, 'selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids', this.state.selectedVideos.length > 0)}>{this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
+      </div>
 
     }
 
