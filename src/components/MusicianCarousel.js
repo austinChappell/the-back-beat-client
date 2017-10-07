@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import YouTube from 'react-youtube';
+
 class MusicianCarousel extends Component {
 
   state = {
@@ -16,20 +18,29 @@ class MusicianCarousel extends Component {
 
     let resultsDisplay;
     let slider;
-
     if (this.props.searchResults.length > 0) {
       resultsDisplay = <div className="slider">
-        {this.props.searchResults.map((result, index) => {
+        {this.props.searchResults.map((musician, index) => {
+          let primaryVid;
+          if (musician.primary_vid_id) {
+            primaryVid = <YouTube
+              videoId={musician.primary_vid_id}
+              opts={{width: '400', height: '260'}}
+              ref={'video' + index}
+            />
+          }
+
           let left = (index * 100) + this.props.sliderPosition;
           return (
             <div
               key={index}
               className='single-result'
               style={{left: left + '%'}}>
-              <h1>{result.first_name} {result.last_name}</h1>
-              <h2>{result.city}</h2>
-              <h2>{result.skill_level}</h2>
+              <h1>{musician.first_name} {musician.last_name}</h1>
+              <h2>{musician.city}</h2>
+              <h2>{musician.skill_level}</h2>
               <span>Message</span>
+              {primaryVid}
 
             </div>
           )

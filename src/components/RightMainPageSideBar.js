@@ -70,25 +70,6 @@ class RightMainPageSideBar extends Component {
     this.updateUserInstruments(user.id);
   }
 
-  getPrimaryVideo = (userid) => {
-    const url = this.props.apiURL;
-    fetch(`${url}/api/user/vidprimary/${userid}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      if (results.rows.length > 0) {
-        console.log('YOUTUBE ID', results.rows[0].youtube_id);
-        return results;
-      } else {
-        return undefined;
-      }
-    })
-  }
-
   swipe = (itemsArray, itemIndexName, itemOffset, direction) => {
 
     console.log('button clicked', itemsArray, itemIndexName, itemOffset, direction);
