@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import LeftMainPageSideBar from './LeftMainPageSideBar';
-import MainFeed from './MainFeed';
+import NewsFeed from './NewsFeed';
 import UserProfile from './UserProfile';
 
 class Profile extends Component {
@@ -33,7 +33,7 @@ class Profile extends Component {
       <div className="Profile">
         <LeftMainPageSideBar />
         <UserProfile user={this.props.currentUser} />
-        <MainFeed />
+        <NewsFeed />
       </div>
     )
   }
