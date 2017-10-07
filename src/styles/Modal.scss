@@ -1,0 +1,74 @@
+.Modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  top: 0;
+  left: 0;
+  z-index: 100;
+  text-align: center;
+  #exit-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    cursor: pointer;
+    color: $light-font;
+    &:hover {
+      color: lightgray;
+    }
+  }
+  .full-background {
+    width: 50%;
+    max-width: 600px;
+    margin: 150px auto 0;
+    background-color: $color-secondary;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    input, select {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1.0em;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      box-sizing: border-box;
+      outline: none;
+    }
+    select {
+      height: 38px;
+      overflow: hidden;
+      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+      background-size: contain;
+      background-color: $light-font;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;       /* remove default arrow */
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 18px;
+      resize: none;
+      margin: 0;
+      outline: none;
+    }
+    button {
+      margin-top: 20px;
+      border: 3px solid $color-primary;
+      background-color: transparent;
+      color: $color-primary;
+      font-size: 1.3em;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 10px;
+      &:hover {
+        background-color: $color-primary;
+        color: $light-font;
+      }
+    }
+  }
+}

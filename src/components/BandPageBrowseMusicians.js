@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Modal from './Modal';
 import MusicianCarousel from './MusicianCarousel';
+import TextArea from './TextArea';
 
 class BandPageBrowseMusicians extends Component {
 
   state = {
     bandInfo: {},
+    displayModal: false,
     instruments: [],
     instrumentOptions: [],
+    message: '',
     noResultsMsg: null,
     pendingInstrument: {},
     searchResults: [],
@@ -133,6 +137,10 @@ class BandPageBrowseMusicians extends Component {
 
   }
 
+  exitClick = () => {
+    this.setState({ displayModal: false, message: '' });
+  }
+
   filterSearch = (evt) => {
     if (evt.target.value !== '') {
       const instrumentId = evt.target.children[evt.target.selectedIndex].id;
@@ -140,11 +148,48 @@ class BandPageBrowseMusicians extends Component {
     }
   }
 
+  handleTextAreaChange = (evt, message) => {
+    const value = evt.target.value;
+    const updateObj = {};
+    updateObj[message] = evt.target.value;
+    this.setState(updateObj);
+  }
+
   slideCarousel = (positionDiff) => {
     let newSliderPosition = this.state.sliderPosition + positionDiff;
     if (newSliderPosition <= 0 && newSliderPosition >= (this.state.searchResults.length - 1) * -100) {
       this.setState({ sliderPosition: newSliderPosition});
     }
+  }
+
+  sendMessage = (evt) => {
+    evt.preventDefault();
+    let message = this.state.message;
+    let musicianIndex = Math.abs(this.state.sliderPosition / 100);
+    let musician = this.state.searchResults[musicianIndex];
+    const url = this.props.apiURL;
+    fetch(`${url}/message/send`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        message,
+        recipientId: musician.id,
+        recipientFirstName: musician.first_name,
+        recipientLastName: musician.last_name
+      })
+    }).then(() => {
+      this.setState({ message: '', displayModal: false });
+    })
+  }
+
+  writeMessage = () => {
+    let musicianIndex = Math.abs(this.state.sliderPosition / 100);
+    let musician = this.state.searchResults[musicianIndex];
+    this.setState({ displayModal: true });
+    console.log(musician);
   }
 
   render() {
@@ -183,7 +228,27 @@ class BandPageBrowseMusicians extends Component {
           noResultsMsg={this.state.noResultsMsg}
           searchResults={this.state.searchResults}
           sliderPosition={this.state.sliderPosition}
-          slideCarousel={this.slideCarousel} />
+          slideCarousel={this.slideCarousel}
+          writeMessage={this.writeMessage}
+        />
+
+        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick}>
+
+          <form className="full-background">
+
+            <TextArea
+              name="message"
+              placeholder="Send a message..."
+              onChange={this.handleTextAreaChange}
+              rows="10"
+              value={this.state.message}
+            />
+
+            <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button>
+
+          </form>
+
+        </Modal>
       </div>
 
     )

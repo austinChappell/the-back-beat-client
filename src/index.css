@@ -329,8 +329,75 @@ p {
   flex-basis: 20%;
   box-sizing: border-box; }
 
+.Modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  z-index: 100;
+  text-align: center; }
+  .Modal #exit-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    cursor: pointer;
+    color: #FFFFFF; }
+    .Modal #exit-button:hover {
+      color: lightgray; }
+  .Modal .full-background {
+    width: 50%;
+    max-width: 600px;
+    margin: 150px auto 0;
+    background-color: #B8B7D5;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box; }
+    .Modal .full-background input, .Modal .full-background select {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1.0em;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      box-sizing: border-box;
+      outline: none; }
+    .Modal .full-background select {
+      height: 38px;
+      overflow: hidden;
+      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+      background-size: contain;
+      background-color: #FFFFFF;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      /* remove default arrow */ }
+    .Modal .full-background textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 18px;
+      resize: none;
+      margin: 0;
+      outline: none; }
+    .Modal .full-background button {
+      margin-top: 20px;
+      border: 3px solid #070649;
+      background-color: transparent;
+      color: #070649;
+      font-size: 1.3em;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 10px; }
+      .Modal .full-background button:hover {
+        background-color: #070649;
+        color: #FFFFFF; }
+
 .MusicianCarousel {
-  width: 60%;
+  width: 50%;
   margin: 30px auto;
   display: flex;
   align-items: center; }
@@ -345,7 +412,7 @@ p {
     position: relative;
     flex-basis: 80%;
     overflow: hidden;
-    height: 280px;
+    height: 450px;
     box-sizing: border-box;
     border: 1px solid #070649; }
   .MusicianCarousel .single-result {
@@ -355,6 +422,18 @@ p {
     top: 0;
     left: 0;
     width: 100%; }
+  .MusicianCarousel .message-link {
+    position: absolute;
+    bottom: 10px;
+    right: 10px; }
+    .MusicianCarousel .message-link .message-icon {
+      background-color: #9A6197;
+      color: #FFFFFF;
+      font-size: 38px;
+      padding: 15px 12px 15px 18px;
+      border-radius: 50%; }
+      .MusicianCarousel .message-link .message-icon:hover {
+        background-color: #894586; }
 
 .logged-in {
   background-color: #070649;

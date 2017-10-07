@@ -36,15 +36,18 @@ class MusicianCarousel extends Component {
               key={index}
               className='single-result'
               style={{left: left + '%'}}>
-              <h1>{musician.first_name} {musician.last_name}</h1>
-              <h2>{musician.city}</h2>
-              <h2>{musician.skill_level}</h2>
-              <span>Message</span>
+              <h1 className="name">{musician.first_name} {musician.last_name}</h1>
+              <h2 className="skill">{musician.skill_level}</h2>
               {primaryVid}
-
             </div>
           )
         })}
+        <div className="message-link">
+          <i
+            className="fa fa-pencil-square-o message-icon"
+            onClick={this.props.writeMessage}
+            aria-hidden="true"></i>
+        </div>
       </div>
     } else {
       resultsDisplay = <div className="no-results">

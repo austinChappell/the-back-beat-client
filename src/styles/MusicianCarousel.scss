@@ -1,7 +1,7 @@
 // TODO: work on styling the slider carousel
 
 .MusicianCarousel {
-  width: 60%;
+  width: 50%;
   margin: 30px auto;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@
     position: relative;
     flex-basis: 80%;
     overflow: hidden;
-    height: 280px;
+    height: 450px;
     box-sizing: border-box;
     border: 1px solid $color-primary;
   }
@@ -29,5 +29,20 @@
     top: 0;
     left: 0;
     width: 100%;
+  }
+  .message-link {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    .message-icon {
+      background-color: $color-tertiary;
+      color: $light-font;
+      font-size: 38px;
+      padding: 15px 12px 15px 18px;
+      border-radius: 50%;
+      &:hover {
+        background-color: $color-tertiary-hover;
+      }
+    }
   }
 }
