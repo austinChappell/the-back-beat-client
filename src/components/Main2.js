@@ -35,8 +35,8 @@ class Main extends Component {
     return (
       <div className="Main">
         <LeftMainPageSideBar />
-        <RightMainPageSideBar />
         <NewsFeed />
+        <RightMainPageSideBar />
       </div>
     )
   }

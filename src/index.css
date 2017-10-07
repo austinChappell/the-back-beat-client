@@ -560,12 +560,12 @@ p {
     right: -5px; }
 
 .NewsFeed {
-  background-color: #FAFAFA;
   border-left: 1px solid #EEEEEE;
   border-right: 1px solid #EEEEEE;
   min-height: calc(100vh - 80px);
-  margin-left: 25%;
-  width: 50%;
+  position: fixed;
+  left: 75%;
+  width: 25%;
   box-sizing: border-box;
   padding: 20px 40px; }
   .NewsFeed .event {
@@ -653,12 +653,13 @@ p {
     color: #FFFFFF; }
 
 .RightMainPageSideBar {
+  background-color: #FAFAFA;
   color: #030303;
   min-height: 100vh;
-  width: 25%;
+  width: 50%;
   position: fixed;
   box-sizing: border-box;
-  left: 75%;
+  left: 25%;
   padding: 20px 40px; }
   .RightMainPageSideBar .buttons {
     margin-top: 20px; }
