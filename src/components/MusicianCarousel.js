@@ -30,6 +30,7 @@ class MusicianCarousel extends Component {
               <h2>{result.city}</h2>
               <h2>{result.skill_level}</h2>
               <span>Message</span>
+
             </div>
           )
         })}
