@@ -1,21 +1,44 @@
 .BrowseBox {
+  text-align: center;
+  .browse-box-flex {
+    display: flex;
+    align-items: center;
+  }
+  .chevron {
+    font-size: 40px;
+    cursor: pointer;
+    color: $color-tertiary;
+    transition: 300ms;
+    &:hover {
+      color: $color-tertiary-hover;
+    }
+  }
+  .hidden {
+    opacity: 0;
+  }
   h2 {
     color: $color-primary;
   }
   .browse-box-container {
-    height: 200px;
-    border: 1px solid black;
+    width: 600px;
+    height: 350px;
+    margin: 0 auto;
     position: relative;
     overflow: hidden;
     .show-item {
       position: absolute;
       padding: 10px;
       width: 100%;
+      box-sizing: border-box;
       transition: 500ms;
     }
     h3 a {
       color: $color-tertiary;
       text-decoration: none;
+      transition: 300ms;
+      &:hover {
+        color: $color-tertiary-hover;
+      }
     }
     strong {
       color: $color-primary;

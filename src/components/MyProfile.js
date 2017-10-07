@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import LeftMainPageSideBar from './LeftMainPageSideBar';
-import RightMainPageSideBar from './RightMainPageSideBar';
+import MainFeed from './MainFeed';
 import MyUserProfile from './MyUserProfile';
 
 class MyProfile extends Component {
@@ -12,7 +12,7 @@ class MyProfile extends Component {
       <div className="Profile">
         <LeftMainPageSideBar />
         <MyUserProfile user={this.props.loggedInUser} />
-        <RightMainPageSideBar />
+        <MainFeed />
       </div>
     )
   }

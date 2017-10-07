@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import BrowseBox from './BrowseBox';
 import YouTube from 'react-youtube';
 
-class RightMainPageSideBar extends Component {
+class MainFeed extends Component {
 
   state = {
     eventIndex: 0,
@@ -143,7 +143,7 @@ class RightMainPageSideBar extends Component {
     }
 
     return (
-      <div className="RightMainPageSideBar">
+      <div className="MainFeed">
 
         <BrowseBox
           currentIndex={this.state.musicianIndex}
@@ -164,7 +164,7 @@ class RightMainPageSideBar extends Component {
               if (musician.primary_vid_id) {
                 video = <YouTube
                     videoId={musician.primary_vid_id}
-                    opts={{width: '200', height: '130'}}
+                    opts={{width: '400', height: '260'}}
                     ref={'video' + index}
                   />
 
@@ -177,6 +177,7 @@ class RightMainPageSideBar extends Component {
                     <Link onClick={() => this.updateUser(musician)} to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
                   </h3>
                   <span><strong>City:</strong> {musician.city}</span> <br />
+                  <span><strong>Skill Level:</strong> {musician.skill_level}</span> <br />
                   {video}
 
                 </div>
@@ -303,4 +304,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RightMainPageSideBar);
+export default connect(mapStateToProps, mapDispatchToProps)(MainFeed);

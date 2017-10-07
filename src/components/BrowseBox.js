@@ -6,20 +6,16 @@ class BrowseBox extends Component {
     return (
       <div className="BrowseBox">
         <h2>{this.props.title}</h2>
-        {this.props.children}
-        <div className="buttons">
-          <button
-            disabled={this.props.currentIndex === 0}
+        <div className="browse-box-flex">
+          <i
+            className={this.props.currentIndex === 0 ? "fa fa-chevron-left chevron hidden" : "fa fa-chevron-left chevron"}
             onClick={this.props.currentIndex > 0 ? this.props.goToPrev : () => {}}
-          >
-            Prev
-          </button>
-          <button
-            disabled={this.props.currentIndex === this.props.maxIndex}
+            aria-hidden="true"></i>
+          {this.props.children}
+          <i
+            className={this.props.currentIndex === this.props.maxIndex ? "fa fa-chevron-right chevron hidden" : "fa fa-chevron-right chevron"}
             onClick={this.props.currentIndex < this.props.maxIndex ? this.props.goToNext : () => {}}
-          >
-            Next
-          </button>
+            aria-hidden="true"></i>
         </div>
       </div>
     )
