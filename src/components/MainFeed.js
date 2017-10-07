@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import BandBox from './BandBox';
 import BrowseBox from './BrowseBox';
 import YouTube from 'react-youtube';
 
@@ -188,78 +189,7 @@ class MainFeed extends Component {
 
         </BrowseBox>
 
-        <BrowseBox
-          currentIndex={this.state.eventIndex}
-          goToPrev={() => this.swipe('allEventsInCity', 'eventIndex', 'eventOffset', -1)}
-          goToNext={() => this.swipe('allEventsInCity', 'eventIndex', 'eventOffset', 1)}
-          minIndex={0}
-          maxIndex={this.props.allEventsInCity.length - 1}
-          index={this.state.eventIndex}
-          title="Events"
-        >
-
-          <div className="browse-box-container">
-
-            {this.props.allEventsInCity.map((event, index) => {
-
-              const startingPosition = (index) * 100;
-              const leftString = String(startingPosition + this.state.eventOffset) + '%';
-
-              let date = event.event_date_time;
-              let formattedDate = String(new Date(date));
-              let shortDate = `${formattedDate.slice(0, 10)}, ${formattedDate.slice(11, 15)}`;
-              let hour = Number(formattedDate.slice(16, 18));
-              let minute = formattedDate.slice(18, 21);
-              let period = 'PM';
-              let successColor = 'green';
-              const changeSuccessColor = () => {
-                successColor = 'blue';
-              }
-
-              const reverseSuccessColor = () => {
-                successColor = 'green';
-              }
-
-              if (hour === 0) {
-                hour = 12;
-                period = 'AM';
-              } else if (hour < 12) {
-                period = 'AM';
-              } else if (hour > 12) {
-                hour = hour - 12;
-              }
-
-              let formattedTime = `${String(hour)}${minute} ${period}`;
-
-              return (
-                <div key={index} className="show-item" style={{left: leftString}}>
-
-                  <h3>
-                    {event.event_title}
-                  </h3>
-                  <span>{shortDate} - {formattedTime}</span> <br />
-                  <span><strong>City:</strong> {event.event_city}</span> <br />
-                  <span><strong>Venue:</strong> {event.event_location}</span>
-
-                  <div className="buttons">
-                    <h3>Going?</h3>
-                    <i
-                      className="fa fa-check yes"
-                      onClick={(evt) => this.handleAttendance(evt, event.event_id, true)}
-                      aria-hidden="true"></i>
-                    <i
-                      className="fa fa-times no"
-                      onClick={(evt) => this.handleAttendance(evt, event.event_id, false)}
-                      aria-hidden="true"></i>
-                  </div>
-
-                </div>
-              )
-            })}
-
-        </div>
-
-        </BrowseBox>
+        <BandBox />
 
       </div>
     )
