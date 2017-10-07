@@ -14,7 +14,11 @@ class Modal extends Component {
             aria-hidden="true"></i>
         </div>
 
-        {this.props.children}
+        <form className="full-background">
+
+          {this.props.children}
+
+        </form>
 
       </div>
     )

@@ -234,8 +234,6 @@ class BandPageBrowseMusicians extends Component {
 
         <Modal displayModal={this.state.displayModal} exitClick={this.exitClick}>
 
-          <form className="full-background">
-
             <TextArea
               name="message"
               placeholder="Send a message..."
@@ -245,8 +243,6 @@ class BandPageBrowseMusicians extends Component {
             />
 
             <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button>
-
-          </form>
 
         </Modal>
       </div>
