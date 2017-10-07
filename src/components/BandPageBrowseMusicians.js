@@ -13,9 +13,11 @@ class BandPageBrowseMusicians extends Component {
     instruments: [],
     instrumentOptions: [],
     message: '',
+    modalStage: 0,
     noResultsMsg: null,
     pendingInstrument: {},
     searchResults: [],
+    showExitButton: true,
     skillIndexArray: [],
     sliderPosition: 0
   }
@@ -181,7 +183,11 @@ class BandPageBrowseMusicians extends Component {
         recipientLastName: musician.last_name
       })
     }).then(() => {
-      this.setState({ message: '', displayModal: false });
+      this.setState({ message: '', modalStage: 1, showExitButton: false }, () => {
+        setTimeout(() => {
+          this.setState({ displayModal: false, modalStage: 0, showExitButton: true });
+        }, 2000);
+      });
     })
   }
 
@@ -213,6 +219,31 @@ class BandPageBrowseMusicians extends Component {
       })
     }
 
+    let modalContent;
+
+    switch(this.state.modalStage) {
+      case 0:
+        modalContent = <div>
+          <TextArea
+            name="message"
+            placeholder="Send a message..."
+            onChange={this.handleTextAreaChange}
+            rows="10"
+            value={this.state.message}
+          />
+          <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button>
+        </div>
+        break;
+      case 1:
+        modalContent = <div className="message-confirm-modal">
+          <h1>Message Sent!</h1>
+          <i className="fa fa-check message-sent-check" aria-hidden="true"></i>
+        </div>
+        break;
+      default:
+        modalContent = null;
+    }
+
     return (
 
       <div className="BandPageBrowseMusicians">
@@ -232,19 +263,12 @@ class BandPageBrowseMusicians extends Component {
           writeMessage={this.writeMessage}
         />
 
-        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick}>
+        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}>
 
-            <TextArea
-              name="message"
-              placeholder="Send a message..."
-              onChange={this.handleTextAreaChange}
-              rows="10"
-              value={this.state.message}
-            />
-
-            <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button>
+          {modalContent}
 
         </Modal>
+
       </div>
 
     )

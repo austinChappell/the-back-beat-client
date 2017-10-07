@@ -348,13 +348,23 @@ p {
     .Modal #exit-button:hover {
       color: lightgray; }
   .Modal .full-background {
+    box-shadow: 2px 2px 45px #030303;
     width: 50%;
     max-width: 600px;
     margin: 150px auto 0;
     background-color: #B8B7D5;
     padding: 20px;
     border-radius: 10px;
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    min-height: 50vh; }
+    .Modal .full-background .message-confirm-modal .message-sent-check {
+      background-color: #137F15;
+      color: #FFFFFF;
+      font-size: 60px;
+      padding: 10px;
+      border-radius: 50%;
+      border: 4px solid #FFFFFF;
+      margin-top: 70px; }
     .Modal .full-background input, .Modal .full-background select {
       width: 100%;
       margin-bottom: 10px;

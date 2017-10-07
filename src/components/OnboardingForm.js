@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Modal from './Modal';
+
 class OnboardingForm extends Component {
 
   constructor() {
     super();
 
     this.state = {
+      displayModal: true,
       genreOptions: [],
       pendingGenre: '',
       selectedGenres: [],
       selectedGenreMax: 5,
-      selectedGenreMin: 1,
+      selectedGenreMin: 3,
       instrumentOptions: [],
       pendingInstrument: '',
       selectedInstruments: [],
@@ -19,6 +22,7 @@ class OnboardingForm extends Component {
       selectedInstrumentMin: 1,
       seekingInstrumentMax: 3,
       seekingInstrumentMin: 0,
+      showExitButton: false,
       pendingVideo: '',
       pendingVideoTitle: '',
       pendingVideoDescription: '',
@@ -245,9 +249,10 @@ class OnboardingForm extends Component {
 
       form = <div>
         <h1>What genres do you listen to/play?</h1>
-        <span>*You must select at least 1 and no more than 5</span>
+        <span>*Choose between 3 and 5 genres</span>
         <form>
           <select onChange={(evt) => this.handleChange(evt, 'pendingGenre')}>
+            <option value=''>Select Genre</option>
             {genreOptions}
           </select>
           <button onClick={(evt) => {this.handleSubmit(evt, 'selectedGenres', 'pendingGenre', this.state.selectedGenreMax)}}>Add Genre</button>
@@ -345,8 +350,9 @@ class OnboardingForm extends Component {
 
     return (
       <div className="OnboardingForm">
-        Onboarding Form Component
-        { form }
+        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}>
+          {form}
+        </Modal>
       </div>
     )
 

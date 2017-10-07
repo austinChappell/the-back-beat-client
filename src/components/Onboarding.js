@@ -11,7 +11,6 @@ class Onboarding extends Component {
     }
     return (
       <div className="Onboarding">
-        The Onboarding Component
         <OnboardingForm />
       </div>
     )
