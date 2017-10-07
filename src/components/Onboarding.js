@@ -5,10 +5,6 @@ import OnboardingForm from './OnboardingForm';
 
 class Onboarding extends Component {
 
-  componentDidUpdate() {
-
-  }
-
   render() {
     if (this.props.onboardingStage > this.props.onboardingMaxStage) {
       this.props.history.push('/');

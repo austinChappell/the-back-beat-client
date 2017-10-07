@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     currentUsername: state.currentUsername,
     currentUser: state.currentUser,
-    onboardingStage: state.loggedInUser.onboarding_stage,
+    onboardingStage: state.onboardingStage,
     onboardingMaxStage: state.onboardingMaxStage
   }
 }
