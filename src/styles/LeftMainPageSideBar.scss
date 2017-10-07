@@ -8,6 +8,12 @@
   flex-direction: column;
   padding: 20px 40px;
   overflow: scroll;
+  .BrowseBox {
+    height: 200px;
+    .browse-box-container {
+      height: 200px;
+    }
+  }
   h2 {
     color: $color-primary;
   }
@@ -31,5 +37,38 @@
   hr {
     border-color: $color-tertiary;
     border-top: 0;
+  }
+  .buttons {
+    margin-top: 20px;
+    h3 {
+      font-size: 14px;
+      color: $dark-font;
+    }
+    i {
+      margin: 4px;
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 4px;
+      transition: 250ms;
+      &.yes {
+        border: 2px solid green;
+        color: green;
+        &:hover, &.selected {
+          background-color: green;
+          color: white;
+        }
+      }
+      &.no {
+        border: 2px solid red;
+        color: red;
+        &:hover, &.selected {
+          background-color: red;
+          color: white;
+        }
+      }
+    }
   }
 }

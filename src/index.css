@@ -79,7 +79,10 @@ p {
     color: red; }
 
 .BandEventBox {
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  text-align: center; }
+  .BandEventBox .gig {
+    text-align: left; }
 
 .BandPage .hide {
   display: none; }
@@ -259,6 +262,10 @@ p {
   flex-direction: column;
   padding: 20px 40px;
   overflow: scroll; }
+  .LeftMainPageSideBar .BrowseBox {
+    height: 200px; }
+    .LeftMainPageSideBar .BrowseBox .browse-box-container {
+      height: 200px; }
   .LeftMainPageSideBar h2 {
     color: #070649; }
   .LeftMainPageSideBar .see-all-link {
@@ -277,6 +284,32 @@ p {
   .LeftMainPageSideBar hr {
     border-color: #9A6197;
     border-top: 0; }
+  .LeftMainPageSideBar .buttons {
+    margin-top: 20px; }
+    .LeftMainPageSideBar .buttons h3 {
+      font-size: 14px;
+      color: #030303; }
+    .LeftMainPageSideBar .buttons i {
+      margin: 4px;
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 4px;
+      transition: 250ms; }
+      .LeftMainPageSideBar .buttons i.yes {
+        border: 2px solid green;
+        color: green; }
+        .LeftMainPageSideBar .buttons i.yes:hover, .LeftMainPageSideBar .buttons i.yes.selected {
+          background-color: green;
+          color: white; }
+      .LeftMainPageSideBar .buttons i.no {
+        border: 2px solid red;
+        color: red; }
+        .LeftMainPageSideBar .buttons i.no:hover, .LeftMainPageSideBar .buttons i.no.selected {
+          background-color: red;
+          color: white; }
 
 .Main {
   background-color: white;
