@@ -10,6 +10,7 @@ class OnboardingForm extends Component {
 
     this.state = {
       displayModal: true,
+      errorMessage: null,
       genreOptions: [],
       pendingGenre: '',
       selectedGenres: [],
@@ -73,13 +74,16 @@ class OnboardingForm extends Component {
     })
   }
 
-  handleChange = (evt, category) => {
+  handleChange = (evt, category, selected, max, tempIndex) => {
     const updateState = {};
     updateState[category] = {
       id: evt.target.children[evt.target.selectedIndex].id,
-      value: evt.target.value
+      value: evt.target.value,
+      tempIndex
     };
-    this.setState(updateState);
+    this.setState(updateState, () => {
+      this.handleSubmit(selected, category, max, tempIndex);
+    });
   }
 
   handleInputChange = (evt, category) => {
@@ -102,16 +106,28 @@ class OnboardingForm extends Component {
     });
   }
 
-  handleSubmit = (evt, array, element, max) => {
-    evt.preventDefault();
+  handleSubmit = (array, element, max, index) => {
+    // evt.preventDefault();
     const updateState = {};
+    updateState.errorMessage = null;
     updateState[array] = this.state[array].slice();
     // PREVENT DUPLICATES IN THE ARRAY AND DO NOT ALLOW THE ARRAY TO EXCEED 5 ELEMENTS
-    if (updateState[array].indexOf(this.state[element]) === -1 && updateState[array].length < max) {
-      updateState[array].push(this.state[element]);
+    if (updateState[array].length < max) {
+      updateState[array][index] = (this.state[element]);
     }
     this.setState(updateState, () => {
       console.log(this.state);
+      for (let i = 0; i < this.state[array].length; i++) {
+        for (let j = 0; j < this.state[array].length; j++) {
+          if (this.state[array][i] !== undefined && this.state[array][j] !== undefined) {
+            if (this.state[array][i].id === this.state[array][j].id && i !== j) {
+              this.setState({
+                errorMessage: 'You may not select the same item more than once'
+              })
+            }
+          }
+        }
+      }
     });
   }
 
@@ -174,7 +190,8 @@ class OnboardingForm extends Component {
 
   }
 
-  continue = (onboardingCategory, max, min, query) => {
+  continue = (evt, onboardingCategory, max, min, query) => {
+    evt.preventDefault();
     if (this.state[onboardingCategory].length >= min && this.state[onboardingCategory].length <= max) {
       const url = this.props.apiURL;
 
@@ -217,6 +234,10 @@ class OnboardingForm extends Component {
         this.setState(updateState);
       })
 
+    } else {
+      this.setState({
+        errorMessage: `You must select ${min} to ${max} items.`
+      })
     }
   }
 
@@ -243,88 +264,94 @@ class OnboardingForm extends Component {
       })
     }
 
+    let errorMessage = this.state.errorMessage ?
+      <p className="error-message">
+        {this.state.errorMessage}
+      </p>
+      :
+      null;
 
     if (stage === 0) {
 
-
-      form = <div>
-        <h1>What genres do you listen to/play?</h1>
-        <span>*Choose between 3 and 5 genres</span>
-        <form>
-          <select onChange={(evt) => this.handleChange(evt, 'pendingGenre')}>
+      const selectArray = [];
+      for (let i = 0; i < this.state.selectedGenreMax; i++) {
+          let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingGenre', 'selectedGenres', this.state.selectedGenreMax, i)}>
             <option value=''>Select Genre</option>
             {genreOptions}
           </select>
-          <button onClick={(evt) => {this.handleSubmit(evt, 'selectedGenres', 'pendingGenre', this.state.selectedGenreMax)}}>Add Genre</button>
-        </form>
-        {this.state.selectedGenres.map((genre, index) => {
-          return <h3 key={index}>{genre.value}</h3>
-        })}
-        <button onClick={() => this.continue('selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add')}>Continue</button>
-      </div>
+          selectArray.push(selectItem);
+      }
 
+      form = <div>
+        <h1>What genres do you listen to/play?</h1>
+        <span>Choose 3-5 genres</span>
+        <form style={{marginTop: '20px'}}>
+          {selectArray.map((item) => {
+            return item;
+          })}
+        </form>
+
+        {errorMessage}
+
+        <button onClick={(evt) => this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add')}>Continue</button>
+      </div>
 
     } else if (stage === 1) {
 
+      const selectArray = [];
+      for (let i = 0; i < this.state.selectedInstrumentMax; i++) {
+          let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument', 'selectedInstruments', this.state.selectedInstrumentMax, i)}>
+            <option value=''>Select Instrument</option>
+            {instrumentOptions}
+          </select>
+          selectArray.push(selectItem);
+      }
 
       form = <div>
         <h1>Choose your instrument(s).</h1>
-        <span>*You must select at least 1 and no more than 3</span>
-        <form>
-          <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument')}>
-            {instrumentOptions}
-          </select>
-          <button onClick={(evt) => {this.handleSubmit(evt, 'selectedInstruments', 'pendingInstrument', this.state.selectedInstrumentMax)}}>Add Instrument</button>
+        <span>Choose 1-3 instruments</span>
+        <form style={{marginTop: '20px'}}>
+          {selectArray.map((item) => {
+            return item;
+          })}
         </form>
-        {this.state.selectedInstruments.map((instrument, index) => {
-          return <h3 key={index}>{instrument.value}</h3>
-        })}
-        <button onClick={() => this.continue('selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add')}>Continue</button>
-      </div>
 
+        {errorMessage}
+
+        <button onClick={(evt) => this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add')}>Continue</button>
+      </div>
 
     } else if (stage == 2) {
-
-
-      form = <div>
-        <h1>What type of musician(s) are you searching for?</h1>
-        <form>
-          <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument')}>
-            {instrumentOptions}
-          </select>
-          <button onClick={(evt) => {this.handleSubmit(evt, 'selectedInstruments', 'pendingInstrument', this.state.seekingInstrumentMax)}}>Add Instrument</button>
-        </form>
-        {this.state.selectedInstruments.map((instrument, index) => {
-          return <h3 key={index}>{instrument.value}</h3>
-        })}
-        <button onClick={() => this.continue('selectedInstruments', this.state.seekingInstrumentMax, this.state.seekingInstrumentMin, 'instruments_seeking/add')}>{this.state.selectedInstruments.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
-      </div>
-
-
-    } else if (stage == 3) {
-
 
         form = <div>
           <h1>Add some vids</h1>
           <h3>(This is strongly recommended)</h3>
           <p>Provide links to YouTube videos of yourself performing below.</p>
-          <form>
-            <input
-              onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
-              placeholder="YouTube Link"
-              value={this.state.pendingVideo}
-            />
-            <input
-              onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
-              placeholder="Video Title"
-              value={this.state.pendingVideoTitle}
-            />
-            <input
-              onChange={(evt) => this.handleInputChange(evt, 'pendingVideoDescription')}
-              placeholder="Video Description"
-              value={this.state.pendingVideoDescription}
-            />
-            <button onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}>Add Video</button>
+          <form className="flex-form">
+            <i
+              className="fa fa-plus add-video-button"
+              onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}
+              aria-hidden="true"></i>
+            <div className="vid-form">
+              <div className="flex-inputs">
+                <input
+                  onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
+                  placeholder="YouTube Link"
+                  value={this.state.pendingVideo}
+                />
+                <input
+                  onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
+                  placeholder="Video Title"
+                  value={this.state.pendingVideoTitle}
+                />
+              </div>
+              <input
+                className="half-width-input"
+                onChange={(evt) => this.handleInputChange(evt, 'pendingVideoDescription')}
+                placeholder="Video Description"
+                value={this.state.pendingVideoDescription}
+              />
+            </div>
           </form>
           {this.state.selectedVideos.map((video, index) => {
             return (
