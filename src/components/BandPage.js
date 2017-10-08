@@ -158,6 +158,7 @@ class BandPage extends Component {
     let deleteButton;
     let confirmDeleteForm;
     let searchMembersLink;
+    let createEventForm;
 
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
@@ -208,6 +209,13 @@ class BandPage extends Component {
       </div>
       :
       null;
+
+      createEventForm = this.props.loggedInUser.id === bandData.band_admin_id ?
+      <EventCreator
+        eventTypes={this.state.eventTypes}
+        submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
+      /> :
+      null;
     }
 
     let bandInfo = bandData === undefined ? null :
@@ -249,10 +257,7 @@ class BandPage extends Component {
     return (
       <div className="BandPage">
         {bandInfo}
-        <EventCreator
-          eventTypes={this.state.eventTypes}
-          submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
-        />
+        {createEventForm}
         <EventList
           data={this.state.bandEvents}
         />
