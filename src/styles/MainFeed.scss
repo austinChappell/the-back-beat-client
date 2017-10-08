@@ -1,5 +1,6 @@
 .MainFeed {
-  // display: flex;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   background-color: $gray-background-lightest;
   color: $dark-font;

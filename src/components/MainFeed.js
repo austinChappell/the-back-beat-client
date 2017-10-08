@@ -15,6 +15,7 @@ class MainFeed extends Component {
     musicianIndex: 0,
     musicianIndexRange: [0, 1],
     musicianOffset: 0,
+    placeholder: 'src/assets/images/placeholder.png'
   }
 
   componentDidMount() {
@@ -161,7 +162,8 @@ class MainFeed extends Component {
 
               const startingPosition = (index) * 100;
               const leftString = String(startingPosition + this.state.musicianOffset) + '%';
-              let video = null;
+              let video = <img src={require("../assets/images/placeholder.png")} alt="placeholder" />;
+              // let video = null;
               if (musician.primary_vid_id) {
                 video = <YouTube
                     videoId={musician.primary_vid_id}

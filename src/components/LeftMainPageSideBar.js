@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import BandEventBox from './BandEventBox';
-import BrowseBox from './BrowseBox';
 
 class LeftMainPageSideBar extends Component {
 

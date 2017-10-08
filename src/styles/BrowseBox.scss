@@ -9,6 +9,7 @@
     cursor: pointer;
     color: $color-tertiary;
     transition: 300ms;
+    margin-top: 40px;
     &:hover {
       color: $color-tertiary-hover;
     }
@@ -31,6 +32,10 @@
       width: 100%;
       box-sizing: border-box;
       transition: 500ms;
+      iframe {
+        margin-top: 20px;
+        border-radius: 3px;
+      }
     }
     h3 a {
       color: $color-tertiary;

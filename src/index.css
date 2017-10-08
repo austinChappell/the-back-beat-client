@@ -11,23 +11,28 @@ h1, h2, h3, h4, h5, h6 {
 p {
   font-family: "Amiko", sans-serif; }
 
-.BandBox h3 {
-  margin: 5px 10px 5px 0; }
-
-.BandBox h3 > a {
-  font-size: 12px;
-  display: inline-block;
-  background-color: #EEEEEE;
-  padding: 6px;
-  color: #894586;
-  text-decoration: none; }
-  .BandBox h3 > a:hover {
-    background-color: #E0E0E0; }
-
-.BandBox .band-results {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap; }
+.BandBox {
+  text-align: center;
+  margin-bottom: 60px; }
+  .BandBox h2 {
+    color: #070649; }
+  .BandBox h3 {
+    margin: 5px 10px 5px 0; }
+  .BandBox h3 > a {
+    font-size: 12px;
+    display: inline-block;
+    background-color: #EEEEEE;
+    padding: 6px;
+    color: #894586;
+    text-decoration: none;
+    transition: 300ms; }
+    .BandBox h3 > a:hover {
+      background-color: #E0E0E0; }
+  .BandBox .band-results {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; }
 
 .BandCreateForm form {
   width: 80%;
@@ -83,6 +88,11 @@ p {
   text-align: center; }
   .BandEventBox .gig {
     text-align: left; }
+    .BandEventBox .gig a {
+      color: #9A6197;
+      text-decoration: none; }
+      .BandEventBox .gig a:hover {
+        color: #894586; }
 
 .BandPage .hide {
   display: none; }
@@ -105,7 +115,8 @@ p {
     font-size: 40px;
     cursor: pointer;
     color: #9A6197;
-    transition: 300ms; }
+    transition: 300ms;
+    margin-top: 40px; }
     .BrowseBox .chevron:hover {
       color: #894586; }
   .BrowseBox .hidden {
@@ -124,6 +135,9 @@ p {
       width: 100%;
       box-sizing: border-box;
       transition: 500ms; }
+      .BrowseBox .browse-box-container .show-item iframe {
+        margin-top: 20px;
+        border-radius: 3px; }
     .BrowseBox .browse-box-container h3 a {
       color: #9A6197;
       text-decoration: none;
@@ -262,10 +276,6 @@ p {
   flex-direction: column;
   padding: 20px 40px;
   overflow: scroll; }
-  .LeftMainPageSideBar .BrowseBox {
-    height: 200px; }
-    .LeftMainPageSideBar .BrowseBox .browse-box-container {
-      height: 200px; }
   .LeftMainPageSideBar h2 {
     color: #070649; }
   .LeftMainPageSideBar .see-all-link {
@@ -316,6 +326,8 @@ p {
   display: flex; }
 
 .MainFeed {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   background-color: #FAFAFA;
   color: #030303;

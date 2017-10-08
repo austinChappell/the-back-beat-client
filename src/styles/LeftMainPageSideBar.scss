@@ -8,12 +8,6 @@
   flex-direction: column;
   padding: 20px 40px;
   overflow: scroll;
-  .BrowseBox {
-    height: 200px;
-    .browse-box-container {
-      height: 200px;
-    }
-  }
   h2 {
     color: $color-primary;
   }
