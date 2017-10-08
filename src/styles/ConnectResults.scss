@@ -1,0 +1,20 @@
+.ConnectResults {
+  text-align: left;
+  position: fixed;
+  height: 200px;
+  overflow: scroll;
+  .single-search-result {
+    background-color: white;
+    padding: 5px;
+    &:hover {
+      a {
+        color: $light-font;
+      }
+      background-color: $color-tertiary;
+    }
+    a {
+      text-decoration: none;
+      color: $color-primary;
+    }
+  }
+}

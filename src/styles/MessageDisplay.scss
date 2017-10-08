@@ -43,6 +43,26 @@
       flex-grow: 1;
       resize: none;
       font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      outline: none;
+    }
+    .send-message-button {
+      border: none;
+      border-radius: 5px;
+      flex-basis: 100px;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background-color: $color-tertiary;
+      color: $light-font;
+      cursor: pointer;
+      margin-left: 10px;
+      outline: none;
+      &:hover {
+        background-color: $color-tertiary-hover;
+      }
     }
   }
 }

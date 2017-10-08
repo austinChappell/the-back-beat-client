@@ -79,7 +79,7 @@ class MessageDisplay extends Component {
         </div>
         <div className="message-editor">
           <textarea rows="1" value={this.props.currentMessage} onChange={(evt) => this.props.handleChange(evt)}></textarea>
-          <button onClick={this.sendMessage}>Send</button>
+          <button className="send-message-button" onClick={this.sendMessage}>Send</button>
         </div>
       </div>
     } else {

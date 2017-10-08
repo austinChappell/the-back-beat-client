@@ -130,9 +130,11 @@ class MessagePage extends Component {
   render() {
     return (
       <div className="MessagePage">
-        <MessageSearchBar />
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
-        <MessageHistorySideBar />
+        <div>          
+          <MessageSearchBar />
+          <MessageHistorySideBar />
+        </div>
       </div>
     )
   }

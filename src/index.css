@@ -326,6 +326,22 @@ p {
   box-sizing: border-box;
   padding: 20px 40px; }
 
+.ConnectResults {
+  text-align: left;
+  position: fixed;
+  height: 200px;
+  overflow: scroll; }
+  .ConnectResults .single-search-result {
+    background-color: white;
+    padding: 5px; }
+    .ConnectResults .single-search-result:hover {
+      background-color: #9A6197; }
+      .ConnectResults .single-search-result:hover a {
+        color: #FFFFFF; }
+    .ConnectResults .single-search-result a {
+      text-decoration: none;
+      color: #070649; }
+
 .Contact {
   padding: 50px;
   background-color: #F5F5F5;
@@ -746,7 +762,25 @@ p {
     .MessageDisplay .message-editor textarea {
       flex-grow: 1;
       resize: none;
-      font-size: 16px; }
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      outline: none; }
+    .MessageDisplay .message-editor .send-message-button {
+      border: none;
+      border-radius: 5px;
+      flex-basis: 100px;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background-color: #9A6197;
+      color: #FFFFFF;
+      cursor: pointer;
+      margin-left: 10px;
+      outline: none; }
+      .MessageDisplay .message-editor .send-message-button:hover {
+        background-color: #894586; }
 
 .MessageHistorySideBar {
   flex-basis: 20%;
@@ -768,11 +802,34 @@ p {
 .MessagePage {
   padding-top: 40px;
   display: flex;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  justify-content: center; }
 
 .MessageSearchBar {
   flex-basis: 20%;
   box-sizing: border-box; }
+  .MessageSearchBar input {
+    border-radius: 20px;
+    border: 2px solid #070649;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 5px 20px;
+    outline: none;
+    margin-bottom: 10px; }
+  .MessageSearchBar .display-search-results {
+    position: fixed;
+    height: 200px;
+    overflow: scroll;
+    z-index: 100;
+    background-color: #EEEEEE;
+    font-size: 14px; }
+    .MessageSearchBar .display-search-results .search-result {
+      padding: 5px;
+      cursor: pointer; }
+      .MessageSearchBar .display-search-results .search-result:hover {
+        background-color: #9A6197;
+        color: #FFFFFF; }
 
 .Modal {
   position: fixed;

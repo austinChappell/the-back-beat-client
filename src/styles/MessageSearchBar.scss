@@ -1,4 +1,30 @@
 .MessageSearchBar {
   flex-basis: 20%;
   box-sizing: border-box;
+  input {
+    border-radius: 20px;
+    border: 2px solid $color-primary;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 5px 20px;
+    outline: none;
+    margin-bottom: 10px;
+  }
+  .display-search-results {
+    position: fixed;
+    height: 200px;
+    overflow: scroll;
+    z-index: 100;
+    background-color: $gray-background-light;
+    font-size: 14px;
+    .search-result {
+      padding: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: $color-tertiary;
+        color: $light-font;
+      }
+    }
+  }
 }

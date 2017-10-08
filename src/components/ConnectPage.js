@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import ConnectResults from './ConnectResults';
+import Modal from './Modal';
 
 class ConnectPage extends Component {
 
@@ -47,16 +48,22 @@ class ConnectPage extends Component {
     }
   }
 
+  goBack = () => {
+    this.props.history.goBack();
+  }
+
   render() {
     console.log('DATA IS', this.state.data);
     return (
       <div className="ConeectPage">
-        <input type="text" value={this.state.searchValue} onChange={(evt) => this.handleInputChange(evt)} />
-        <select onChange={this.handleSelectChange}>
-          <option value="searchusernames">People</option>
-          <option value="searchbands">Bands</option>
-        </select>
-        <ConnectResults data={this.state.data} category={this.state.searchCategory} />
+        <Modal displayModal={true} showExitButton={true} exitClick={this.goBack}>
+          <input style={{width: '45%', marginRight: '10%'}} type="text" value={this.state.searchValue} onChange={(evt) => this.handleInputChange(evt)} />
+          <select style={{width: '45%'}} onChange={this.handleSelectChange}>
+            <option value="searchusernames">People</option>
+            <option value="searchbands">Bands</option>
+          </select>
+          <ConnectResults data={this.state.data} category={this.state.searchCategory} />
+        </Modal>
       </div>
     )
   }
