@@ -2,6 +2,32 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class EventList extends Component {
+
+  handleAttendance = (evt, eventId, attending) => {
+    const url = this.props.apiURL;
+    evt.target.classList.add('selected');
+    if (attending) {
+      evt.target.nextElementSibling.style.display = 'none';
+    } else {
+      evt.target.previousElementSibling.style.display = 'none';
+    }
+    fetch(`${url}/api/event/attendance`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        eventId,
+        attending
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log(results);
+    })
+  }
+
   render() {
 
     this.props.data.sort((a, b) => {
@@ -33,6 +59,22 @@ class EventList extends Component {
 
           let formattedTime = `${String(hour)}${minute} ${period}`;
 
+          let buttons = null;
+
+          if (this.props.eventType === 'local') {
+            buttons = <div className="buttons">
+              <h3>Going?</h3>
+              <i
+                className="fa fa-check yes"
+                onClick={(evt) => this.handleAttendance(evt, event.event_id, true)}
+                aria-hidden="true"></i>
+              <i
+                className="fa fa-times no"
+                onClick={(evt) => this.handleAttendance(evt, event.event_id, false)}
+                aria-hidden="true"></i>
+            </div>
+          }
+
           return (
             <div key={index} className="event">
               <div>
@@ -42,6 +84,7 @@ class EventList extends Component {
               <div>
                 {event.event_title}
               </div>
+              {buttons}
             </div>
           )
         })}
@@ -52,7 +95,7 @@ class EventList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    apiURL: state.apiURL
   }
 }
 

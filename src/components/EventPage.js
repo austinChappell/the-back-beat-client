@@ -12,9 +12,12 @@ class EventPage extends Component {
   }
 
   getBandEventData = () => {
+    const eventType = this.props.match.params.eventtype;
     const url = this.props.apiURL;
     const eventId = this.props.match.params.eventId;
-    fetch(`${url}/api/band_event/${eventId}`, {
+    console.log('EVENT TYPE', eventType);
+    console.log('EVENT ID', eventId);
+    fetch(`${url}/api/${eventType}/${eventId}/details`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -28,9 +31,57 @@ class EventPage extends Component {
     })
   }
 
+  handleAttendance = (evt, eventId, attending) => {
+    const url = this.props.apiURL;
+    evt.target.classList.add('selected');
+    if (attending) {
+      evt.target.nextElementSibling.style.display = 'none';
+    } else {
+      evt.target.previousElementSibling.style.display = 'none';
+    }
+    fetch(`${url}/api/event/attendance`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        eventId,
+        attending
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log(results);
+    })
+  }
+
   render() {
+    console.log('PROPS', this.props.match.params);
 
     const eventData = this.state.eventData;
+    const eventType = this.props.match.params.eventtype;
+
+    let buttons = null;
+
+    if (eventType === 'event') {
+      buttons = <div className="buttons">
+        <h3>Going?</h3>
+        <i
+          className="fa fa-check yes"
+          onClick={(evt) => this.handleAttendance(evt, eventData.event_id, true)}
+          aria-hidden="true"></i>
+          <i
+            className="fa fa-times no"
+            onClick={(evt) => this.handleAttendance(evt, eventData.event_id, false)}
+            aria-hidden="true"></i>
+          </div>
+        }
+
+    let mainTitle = eventType === 'band_event' ?
+    <p><strong>Band:</strong> {eventData.band_name}</p>
+    :
+    <h2>{eventData.event_title}</h2>;
 
     let date = eventData.event_date_time;
     let formattedDate = String(new Date(date));
@@ -56,10 +107,12 @@ class EventPage extends Component {
       // TODO: FINISH FILLING IN INFO. WILL NEED TO FORMAT DATE AND TIME
 
       <div className="EventPage">
-        <h1>{eventData.event_type} Info</h1> <p><strong>Band:</strong> {eventData.band_name}</p>
+        <h1>{eventData.event_type} Info</h1>
+        {mainTitle}
         <p><strong>Date:</strong> {shortDate}</p>
         <p><strong>Time:</strong> {formattedTime}</p>
         <p><strong>Where:</strong> {eventData.event_location}</p>
+        {buttons}
       </div>
     )
   }

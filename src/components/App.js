@@ -12,6 +12,7 @@ import CalendarPage from './CalendarPage';
 import ConnectPage from './ConnectPage';
 import GigPage from './GigPage';
 import Home from './Home';
+import LocalEventsPage from './LocalEventsPage';
 import LoggedIn from './LoggedIn';
 import Logout from './Logout';
 import Main from './Main';
@@ -47,6 +48,8 @@ class App extends Component {
                 <PrivateRoute path="/messages" component={MessagePage} />
                 <PrivateRoute path="/onboarding" component={Onboarding} />
                 <PrivateRoute path="/rehearsals" component={RehearsalPage} />
+                <PrivateRoute path="/event/:eventtype/:eventId" component={EventPage} />
+                <PrivateRoute path="/events" component={LocalEventsPage} />
               </Switch>
             </BaseLayout>
           </Router>

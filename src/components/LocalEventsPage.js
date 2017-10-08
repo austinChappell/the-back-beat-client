@@ -1,0 +1,31 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import EventList from './EventList';
+
+class LocalEventsPage extends Component {
+  render() {
+    return (
+      <div className="LocalEventsPage">
+        <EventList
+          data={this.props.allEventsInCity}
+          eventType="local"
+        />
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    allEventsInCity: state.allEventsInCity
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LocalEventsPage);

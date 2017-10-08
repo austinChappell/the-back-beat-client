@@ -8,6 +8,7 @@ import EventList from './EventList';
 import Form from './Form';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
+import TextArea from './TextArea';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'rc-time-picker/assets/index.css';
@@ -22,6 +23,7 @@ class CalendarPage extends Component {
   state = {
     eventCity: '',
     eventDate: '',
+    eventDetails: '',
     eventList: [],
     eventTime: '12:00 am',
     eventTitle: '',
@@ -117,6 +119,7 @@ class CalendarPage extends Component {
         eventType: this.state.eventType,
         eventVenue: this.state.eventVenue,
         eventDateTime: this.state.eventDate,
+        eventDetails: this.state.eventDetails,
         eventCity: this.state.eventCity,
         userCity: this.props.loggedInUser.city,
       })
@@ -125,6 +128,7 @@ class CalendarPage extends Component {
     }).then((results) => {
       this.setState({
         eventDate: '',
+        eventDetails: '',
         eventTime: '12:00am',
         eventTitle: '',
         eventType: this.state.eventTypes[0].value,
@@ -155,6 +159,14 @@ class CalendarPage extends Component {
             onChange={this.handleInputChange}
             type="text"
             value={this.state.eventTitle}
+          />
+
+          <TextArea
+            name="eventDetails"
+            placeholder="Description"
+            charLimit={150}
+            onChange={this.handleInputChange}
+            value={this.state.eventDetails}
           />
 
           <DatePicker
