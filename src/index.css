@@ -36,10 +36,16 @@ p {
 
 .BandCreateForm form {
   width: 80%;
-  margin: 20px auto;
+  max-width: 600px;
+  margin: 40px auto;
   border: 1px solid #070649;
   padding: 20px;
-  font-size: 20px; }
+  font-size: 20px;
+  box-shadow: 2px 2px 10px gray;
+  background-color: #B8B7D5;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box; }
   .BandCreateForm form .form-group {
     margin: 10px; }
     .BandCreateForm form .form-group label {
@@ -49,12 +55,6 @@ p {
       padding: 0; }
       .BandCreateForm form .form-group ul h3 {
         font-size: 14px; }
-    .BandCreateForm form .form-group button {
-      background-color: green;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      margin-left: 5px; }
   .BandCreateForm form .search-results-display {
     display: inline-grid;
     max-height: 60px;
@@ -82,6 +82,61 @@ p {
     margin: 0; }
   .BandCreateForm form .lowCount {
     color: red; }
+  .BandCreateForm form input, .BandCreateForm form select, .BandCreateForm form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.0em;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    outline: none; }
+  .BandCreateForm form select {
+    height: 42px;
+    overflow: hidden;
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    background-size: contain;
+    background-color: #FFFFFF;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* remove default arrow */ }
+  .BandCreateForm form textarea {
+    resize: none; }
+  .BandCreateForm form button {
+    border: 3px solid #070649;
+    background-color: transparent;
+    color: #070649;
+    font-size: 1.3em;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 10px; }
+    .BandCreateForm form button:hover {
+      background-color: #070649;
+      color: #FFFFFF; }
+  .BandCreateForm form .no-errors {
+    color: #C91208; }
+  .BandCreateForm form .error-message {
+    color: #C91208;
+    border: 2px solid #C91208;
+    border-radius: 5px;
+    background-color: pink;
+    padding: 10px;
+    font-weight: 600;
+    transition: 400ms; }
+  .BandCreateForm form .form-footer {
+    display: flex;
+    flex-direction: column-reverse; }
+    .BandCreateForm form .form-footer button {
+      align-self: center; }
+    .BandCreateForm form .form-footer p {
+      text-align: center; }
+      .BandCreateForm form .form-footer p span {
+        display: block; }
+      .BandCreateForm form .form-footer p .span-link {
+        color: #070649;
+        text-decoration: underline;
+        cursor: pointer; }
 
 .BandEventBox {
   margin-bottom: 30px;
@@ -94,8 +149,112 @@ p {
       .BandEventBox .gig a:hover {
         color: #894586; }
 
-.BandPage .hide {
-  display: none; }
+.BandPage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap; }
+  .BandPage .band-info {
+    text-align: left;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center; }
+    .BandPage .band-info > div {
+      flex-basis: 50%;
+      margin: 10px; }
+    .BandPage .band-info .band-info-section {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between; }
+      .BandPage .band-info .band-info-section .Form {
+        max-width: 500px; }
+    .BandPage .band-info > div:first-of-type i {
+      color: #C91208; }
+    .BandPage .band-info > div:first-of-type .edit-band i, .BandPage .band-info > div:first-of-type .delete-band i {
+      cursor: pointer;
+      font-size: 20px;
+      color: #070649;
+      margin-left: 15px; }
+    .BandPage .band-info > div:first-of-type .search-members-link a {
+      font-size: 14px;
+      text-decoration: none;
+      margin-left: 20px;
+      color: #9A6197;
+      cursor: pointer; }
+      .BandPage .band-info > div:first-of-type .search-members-link a:hover {
+        color: #894586; }
+    .BandPage .band-info .members {
+      margin-top: 20px; }
+      .BandPage .band-info .members .add-members-div {
+        position: relative; }
+      .BandPage .band-info .members .search-results-display {
+        border: 1px solid #070649;
+        position: fixed;
+        height: 100px;
+        overflow: scroll; }
+        .BandPage .band-info .members .search-results-display .single-search-result {
+          padding: 5px;
+          cursor: pointer; }
+          .BandPage .band-info .members .search-results-display .single-search-result:hover {
+            background-color: #9A6197;
+            color: #FFFFFF; }
+    .BandPage .band-info .delete-band-form {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 200; }
+      .BandPage .band-info .delete-band-form .form {
+        width: 60%;
+        max-width: 300px;
+        padding: 30px;
+        margin: 20vh auto;
+        background-color: #B8B7D5;
+        text-align: center; }
+        .BandPage .band-info .delete-band-form .form button {
+          margin-top: 20px; }
+        .BandPage .band-info .delete-band-form .form .confirm {
+          border: 3px solid #C91208;
+          text-decoration: none;
+          background-color: transparent;
+          color: #C91208;
+          font-size: 1.2em;
+          cursor: pointer;
+          border-radius: 2px;
+          padding: 8px;
+          margin-right: 20px; }
+          .BandPage .band-info .delete-band-form .form .confirm:hover {
+            background-color: #C91208;
+            color: #FFFFFF; }
+        .BandPage .band-info .delete-band-form .form .goback {
+          border: 3px solid #137F15;
+          text-decoration: none;
+          background-color: transparent;
+          color: #137F15;
+          font-size: 1.2em;
+          cursor: pointer;
+          border-radius: 2px;
+          padding: 8px; }
+          .BandPage .band-info .delete-band-form .form .goback:hover {
+            background-color: #137F15;
+            color: #FFFFFF; }
+    .BandPage .band-info .Form {
+      margin-top: 20px;
+      margin-left: 0;
+      width: 100%; }
+  .BandPage .band-events {
+    flex-basis: 50%; }
+    .BandPage .band-events h2 {
+      text-align: center; }
+    .BandPage .band-events .EventList {
+      width: 100%; }
+  .BandPage .hide {
+    display: none; }
 
 .BaseLayout {
   display: flex;
@@ -146,6 +305,16 @@ p {
         color: #894586; }
     .BrowseBox .browse-box-container strong {
       color: #070649; }
+
+.CalendarPage {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 50px; }
+  .CalendarPage > div {
+    margin-top: 0; }
 
 .CenterComponent {
   background-color: #FAFAFA;
@@ -221,7 +390,9 @@ p {
     box-shadow: 2px 2px 12px gray;
     min-height: 100px;
     cursor: pointer;
-    transition: 300ms; }
+    transition: 300ms;
+    text-decoration: none;
+    color: inherit; }
     .EventList .event:hover {
       transform: scale(1.05); }
     .EventList .event .dateInfo {
@@ -278,6 +449,38 @@ p {
               background-color: red;
               color: white; }
 
+.EventPage {
+  border: 1px solid #070649;
+  max-width: 600px;
+  margin: 40px auto; }
+  .EventPage h1 {
+    text-align: center;
+    background-color: #070649;
+    color: #FFFFFF; }
+  .EventPage .details {
+    padding: 20px; }
+    .EventPage .details i {
+      margin: 4px;
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      padding: 4px;
+      transition: 250ms; }
+      .EventPage .details i.yes {
+        border: 2px solid green;
+        color: green; }
+        .EventPage .details i.yes:hover, .EventPage .details i.yes.selected {
+          background-color: green;
+          color: white; }
+      .EventPage .details i.no {
+        border: 2px solid red;
+        color: red; }
+        .EventPage .details i.no:hover, .EventPage .details i.no.selected {
+          background-color: red;
+          color: white; }
+
 .Features {
   padding: 50px 0;
   color: #070649;
@@ -309,6 +512,76 @@ p {
   padding: 10px;
   flex-basis: 100%;
   z-index: 10; }
+
+.Form {
+  max-width: 450px;
+  margin: 150px auto 0;
+  background-color: #B8B7D5;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box; }
+  .Form input, .Form select, .Form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.0em;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    outline: none; }
+  .Form select {
+    height: 38px;
+    overflow: hidden;
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    background-size: contain;
+    background-color: #FFFFFF;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* remove default arrow */ }
+  .Form textarea {
+    resize: none;
+    margin-bottom: 5px; }
+  .Form .flex-calendar {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; }
+    .Form .flex-calendar .rc-time-picker-input {
+      height: 38px; }
+  .Form button {
+    border: 3px solid #070649;
+    background-color: transparent;
+    color: #070649;
+    font-size: 1.3em;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 10px; }
+    .Form button:hover {
+      background-color: #070649;
+      color: #FFFFFF; }
+  .Form .no-errors {
+    color: #C91208; }
+  .Form .error-message {
+    color: #C91208;
+    border: 2px solid #C91208;
+    border-radius: 5px;
+    background-color: pink;
+    padding: 10px;
+    font-weight: 600;
+    transition: 400ms; }
+  .Form .form-footer {
+    display: flex;
+    flex-direction: column-reverse; }
+    .Form .form-footer button {
+      align-self: center; }
+    .Form .form-footer p {
+      text-align: center; }
+      .Form .form-footer p span {
+        display: block; }
+      .Form .form-footer p .span-link {
+        color: #070649;
+        text-decoration: underline;
+        cursor: pointer; }
 
 .Home {
   position: absolute;
@@ -698,6 +971,9 @@ p {
     cursor: pointer; }
     .Navbar a:hover {
       color: #E0E0E0; }
+    .Navbar a .fa-home {
+      font-size: 22px;
+      line-height: 16px; }
   .Navbar .brand-name {
     font-size: 1.4em;
     font-family: "Amiko", sans-serif; }
@@ -955,12 +1231,12 @@ p {
         background-color: #070649;
         color: #FFFFFF; }
     .UserAuthForm .form .no-errors {
-      color: red; }
+      color: #C91208; }
     .UserAuthForm .form .error-message {
-      color: red;
-      border: 2px solid red;
+      color: #C91208;
+      border: 2px solid #C91208;
       border-radius: 5px;
-      background-color: #F6B1C3;
+      background-color: pink;
       padding: 10px;
       font-weight: 600;
       transition: 400ms; }

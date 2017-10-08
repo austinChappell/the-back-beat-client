@@ -150,7 +150,7 @@ class CalendarPage extends Component {
 
         <Form
           onSubmit={(evt) => this.submitForm(evt)}
-          submitBtnText="Add To Calendar"
+          submitBtnText="Create New Event"
         >
 
           <FormInput
@@ -169,20 +169,24 @@ class CalendarPage extends Component {
             value={this.state.eventDetails}
           />
 
-          <DatePicker
-            name="selectedDate"
-            onChange={this.handleDateChange}
-            selected={this.state.startDate}
-          />
+          <div className="flex-calendar">
 
-          <TimePicker
-            showSecond={false}
-            defaultValue={now}
-            className="xxx"
-            onChange={this.onTimeChange}
-            format={format}
-            use12Hours
-          />
+            <DatePicker
+              name="selectedDate"
+              onChange={this.handleDateChange}
+              selected={this.state.startDate}
+            />
+
+            <TimePicker
+              showSecond={false}
+              defaultValue={now}
+              className="xxx"
+              onChange={this.onTimeChange}
+              format={format}
+              use12Hours
+            />
+
+          </div>
 
           <FormSelect
             name="eventType"
@@ -213,6 +217,7 @@ class CalendarPage extends Component {
 
         <EventList
           data={this.state.eventList}
+          url="event"
         />
 
       </div>

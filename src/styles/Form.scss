@@ -1,0 +1,83 @@
+.Form {
+  max-width: 450px;
+  margin: 150px auto 0;
+  background-color: $color-secondary;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  input, select, textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.0em;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+  }
+  select {
+    height: 38px;
+    overflow: hidden;
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    background-size: contain;
+    background-color: $light-font;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;       /* remove default arrow */
+  }
+  textarea {
+    resize: none;
+    margin-bottom: 5px;
+  }
+  .flex-calendar {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    .rc-time-picker-input {
+      height: 38px;
+    }
+  }
+  button {
+    border: 3px solid $color-primary;
+    background-color: transparent;
+    color: $color-primary;
+    font-size: 1.3em;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 10px;
+    &:hover {
+      background-color: $color-primary;
+      color: $light-font;
+    }
+  }
+  .no-errors {
+    color: $color-failure;
+  }
+  .error-message {
+    color: $color-failure;
+    border: 2px solid $color-failure;
+    border-radius: 5px;
+    background-color: pink;
+    padding: 10px;
+    font-weight: 600;
+    transition: 400ms;
+  }
+  .form-footer {
+    display: flex;
+    flex-direction: column-reverse;
+    button {
+      align-self: center;
+    }
+    p {
+      text-align: center;
+      span {
+        display: block;
+      }
+      .span-link {
+        color: $color-primary;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}

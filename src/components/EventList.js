@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class EventList extends Component {
 
@@ -76,7 +77,7 @@ class EventList extends Component {
           }
 
           return (
-            <div key={index} className="event">
+            <Link to={`/event/${this.props.url}/${event.event_id}`} key={index} className="event">
               <div className="dateInfo">
                 <div className="date">{dateNum}</div>
                 <div className="month">{month}</div>
@@ -90,7 +91,7 @@ class EventList extends Component {
                 </p>
                 {buttons}
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>

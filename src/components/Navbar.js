@@ -70,18 +70,13 @@ class Navbar extends Component {
         <i className="fa fa-user" aria-hidden="true"></i> {this.props.username}
       </NavLink>
       <NavLink to="/" exact>
-        <i className="fa fa-newspaper-o" aria-hidden="true"></i>
+        <i className="fa fa-home" aria-hidden="true"></i>
       </NavLink>
-      <NavLink className="relative-navlink" to="/band/create">
-        <i className="fa fa-music" aria-hidden="true"></i>
-        <i className="fa fa-plus" aria-hidden="true"></i>
-      </NavLink>
-      <NavLink className="relative-navlink" to="/calendar">
+      <NavLink to="/calendar">
         <i className="fa fa-calendar" aria-hidden="true"></i>
-        <i className="fa fa-plus" aria-hidden="true"></i>
       </NavLink>
       <NavLink to="/connect">
-        <i className="fa fa-users" aria-hidden="true"></i>
+        <i className="fa fa-search" aria-hidden="true"></i>
       </NavLink>
       <NavLink className="relative-navlink" to="/messages">
         <i className="fa fa-envelope" aria-hidden="true"></i>

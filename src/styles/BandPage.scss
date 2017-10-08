@@ -1,4 +1,115 @@
 .BandPage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  .band-info {
+    text-align: left;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    & > div {
+      flex-basis: 50%;
+      margin: 10px;
+    }
+    .band-info-section {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      .Form {
+        max-width: 500px;
+      }
+    }
+    & > div:first-of-type {
+      i {
+        color: $color-failure;
+      }
+      .edit-band, .delete-band {
+        i {
+          cursor: pointer;
+          font-size: 20px;
+          color: $color-primary;
+          margin-left: 15px;
+        }
+      }
+      .search-members-link {
+        a {
+          font-size: 14px;
+          text-decoration: none;
+          margin-left: 20px;
+          color: $color-tertiary;
+          cursor: pointer;
+          &:hover {
+            color: $color-tertiary-hover;
+          }
+        }
+      }
+    }
+    .members {
+      margin-top: 20px;
+      .add-members-div {
+        position: relative;
+      }
+      .search-results-display {
+        border: 1px solid $color-primary;
+        position: fixed;
+        height: 100px;
+        overflow: scroll;
+        .single-search-result {
+          padding: 5px;
+          cursor: pointer;
+          &:hover {
+            background-color: $color-tertiary;
+            color: $light-font;
+          }
+        }
+      }
+    }
+    .delete-band-form {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 200;
+      .form {
+        width: 60%;
+        max-width: 300px;
+        padding: 30px;
+        margin: 20vh auto;
+        background-color: $color-secondary;
+        text-align: center;
+        button {
+          margin-top: 20px;
+        }
+        .confirm {
+          @include button($color-failure, $light-font);
+          margin-right: 20px;
+        }
+        .goback {
+          @include button($color-success, $light-font);
+        }
+      }
+    }
+    .Form {
+      margin-top: 20px;
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+  .band-events {
+    h2 {
+      text-align: center;
+    }
+    flex-basis: 50%;
+    .EventList {
+      width: 100%;
+    }
+  }
   .hide {
     display: none;
   }

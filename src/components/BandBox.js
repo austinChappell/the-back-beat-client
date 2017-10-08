@@ -40,6 +40,7 @@ class BandBox extends Component {
     return (
       <div className="BandBox">
         <h2>Your Bands</h2>
+        <p className="create-band-link">Want to start one? <Link to="/band/create">Creat your own!</Link></p>
         <div className="band-results">
           {this.state.bands.map((band, index) => {
             return (

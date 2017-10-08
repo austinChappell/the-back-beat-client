@@ -164,7 +164,7 @@ class BandPage extends Component {
       bandData = this.state.bandInfoArr[0];
 
       addMembers = this.props.loggedInUser.id === bandData.band_admin_id ?
-      <div>
+      <div className="add-members-div">
         <input
           type="text"
           name="member"
@@ -180,33 +180,39 @@ class BandPage extends Component {
       null;
 
       editButton = this.props.loggedInUser.id === bandData.band_admin_id ?
-      <Link to={`/band/${bandData.band_id}/edit`}>Edit Band</Link>
+      <Link className="edit-band" to={`/band/${bandData.band_id}/edit`}>
+        <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+      </Link>
       :
       null;
 
       deleteButton = this.props.loggedInUser.id === bandData.band_admin_id
       ?
-      <button
-        className={this.state.showDeleteForm ? "hide" : ""}
-        onClick={this.toggleDeleteForm}>Delete Band</button>
+      <span className="delete-band">
+        <i
+          className={this.state.showDeleteForm ? "hide" : "fa fa-trash-o"}
+          onClick={this.toggleDeleteForm}></i>
+      </span>
       :
       null;
 
       confirmDeleteForm = this.props.loggedInUser.id === bandData.band_admin_id
       ?
-      <div className={this.state.showDeleteForm ? "" : "hide"}>
-        <h3>Are you sure you want to permanently delete "{bandData.band_name}"?</h3>
-        <button onClick={this.deleteBand}>Yes, delete</button>
-        <button onClick={this.toggleDeleteForm}>Nevermind</button>
+      <div className={this.state.showDeleteForm ? "delete-band-form" : "hide"}>
+        <div className="form">
+          <h3>Are you sure you want to permanently delete "{bandData.band_name}"?</h3>
+          <button className="confirm" onClick={this.deleteBand}>Yes, delete</button>
+          <button className="goback" onClick={this.toggleDeleteForm}>Nevermind</button>
+        </div>
       </div>
       :
       null;
 
       searchMembersLink = this.props.loggedInUser.id === bandData.band_admin_id
       ?
-      <div className="search-members-link">
-        <Link to={`/band/${bandData.band_id}/search_musicians/admin/${bandData.band_admin_id}`}>Browse Members</Link>
-      </div>
+      <span className="search-members-link">
+        <Link to={`/band/${bandData.band_id}/search_musicians/admin/${bandData.band_admin_id}`}>Browse Local Musicians</Link>
+      </span>
       :
       null;
 
@@ -219,48 +225,57 @@ class BandPage extends Component {
     }
 
     let bandInfo = bandData === undefined ? null :
-    <div>
-      <h1>{bandData.band_name} - <span>{bandData.band_city}</span></h1>
-      <h2>Genre: {bandData.band_genre}</h2>
-      <h3>Type: {bandData.band_skill_level}</h3>
-      <p>{bandData.band_description}</p>
-      <div className="members">
-        <h3>Members:</h3>
-        {this.state.members.map((member, index) => {
-          let removeButton;
+    <div className="band-info-section">
+      <div className="band-details">
+        <h1>{bandData.band_name}<sup>{ editButton }{ deleteButton }{ searchMembersLink }</sup></h1>
+        <h2>City: {bandData.band_city}</h2>
+        <h2>Genre: {bandData.band_genre}</h2>
+        <h3>Type: {bandData.band_skill_level}</h3>
+        <p>{bandData.band_description}</p>
 
-          removeButton = this.props.loggedInUser.id === bandData.band_admin_id
-          ?
-          <i className="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeMember(member.id, index)}></i>
-          :
-          null;
 
-          let adminLabel = bandData.band_admin_id === member.id
-          ?
-          <span>(admin)</span>
-          :
-          <span>{ removeButton }</span>;
 
-          return (
-            <h4 key={index}>{member.first_name} {member.last_name} - {member.city} {adminLabel}</h4>
-          )
-        })}
-        { addMembers }
+        <div className="members">
+          <h3>Members:</h3>
+          {this.state.members.map((member, index) => {
+            let removeButton;
+
+            removeButton = this.props.loggedInUser.id === bandData.band_admin_id
+            ?
+            <i className="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeMember(member.id, index)}></i>
+            :
+            null;
+
+            let adminLabel = bandData.band_admin_id === member.id
+            ?
+            <span>(admin)</span>
+            :
+            <span>{ removeButton }</span>;
+
+            return (
+              <h4 key={index}>{member.first_name} {member.last_name} - {member.city} {adminLabel}</h4>
+            )
+          })}
+          { addMembers }
+        </div>
+        { confirmDeleteForm }
       </div>
-      { editButton }
-      { deleteButton }
-      { confirmDeleteForm }
-      { searchMembersLink }
 
     </div>
 
     return (
       <div className="BandPage">
-        {bandInfo}
-        {createEventForm}
-        <EventList
-          data={this.state.bandEvents}
-        />
+        <div className="band-info">
+          {bandInfo}
+          {createEventForm}
+        </div>
+        <div className="band-events">
+          <h2>Gigs and Rehearsals</h2>
+          <EventList
+            data={this.state.bandEvents}
+            url="band_event"
+          />
+        </div>
       </div>
     )
   }

@@ -8,7 +8,10 @@ class RehearsalPage extends Component {
   render() {
     return (
       <div className="RehearsalPage">
-        <EventList data={this.props.rehearsals} />
+        <EventList
+          data={this.props.rehearsals}
+          url="band_event"
+        />
       </div>
     )
   }

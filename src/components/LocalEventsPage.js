@@ -10,6 +10,7 @@ class LocalEventsPage extends Component {
         <EventList
           data={this.props.allEventsInCity}
           eventType="local"
+          url="event"
         />
       </div>
     )

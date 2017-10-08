@@ -13,6 +13,7 @@ class BandCreateForm extends Component {
     searchMember: '',
     searchMemberResuts: [],
     members: [],
+    genreOptions: [],
     descriptionCount: 500,
     isEditing: false,
     genreOptionsArr: [
@@ -43,6 +44,30 @@ class BandCreateForm extends Component {
     let user = Object.assign({}, this.props.loggedInUser, { admin: true })
     members.push(user);
     this.setState({ members });
+    this.getGenres();
+  }
+
+  getGenres = () => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/genres`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log(results.rows);
+      this.setState({
+        genreOptions: results.rows,
+        pendingGenre: {
+          value: results.rows[0].style_name,
+          id: results.rows[0].style_id
+        },
+      })
+    });
+
   }
 
   loadBandData = (bandId) => {
@@ -165,6 +190,18 @@ class BandCreateForm extends Component {
 
   render() {
 
+    console.log('STATE', this.state);
+
+    let genreOptions;
+
+    if (this.state.genreOptions.length > 0) {
+      genreOptions = this.state.genreOptions.map((option) => {
+        return (
+          <option key={option.style_id} id={option.style_id} value={option.style_name}>{option.style_name}</option>
+        )
+      })
+    }
+
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
       return (
         <div className="single-search-result" onClick={(evt) => this.addMember(evt, user)}>
@@ -195,11 +232,12 @@ class BandCreateForm extends Component {
           <div className="form-group">
             <label>Genre:</label>
             <select name="genre" value={this.state.bandGenre} onChange={(evt) => this.handleInputChange(evt, 'bandGenre')}>
-              {this.state.genreOptionsArr.map((genre) => {
+              <option value="">---</option>
+              {this.state.genreOptions.map((genre) => {
                 if (genre.value === this.state.bandGenre) {
-                  return <option value={genre.value} selected>{genre.text}</option>;
+                  return <option value={genre.style_name} selected>{genre.style_name}</option>;
                 } else {
-                  return <option value={genre.value}>{genre.text}</option>
+                  return <option value={genre.style_name}>{genre.style_name}</option>
                 }
               })}
             </select>

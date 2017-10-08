@@ -8,7 +8,10 @@ class GigPage extends Component {
   render() {
     return (
       <div className="GigPage">
-        <EventList data={this.props.gigs} />
+        <EventList
+          data={this.props.gigs}
+          url="band_event"
+        />
       </div>
     )
   }

@@ -107,12 +107,14 @@ class EventPage extends Component {
       // TODO: FINISH FILLING IN INFO. WILL NEED TO FORMAT DATE AND TIME
 
       <div className="EventPage">
-        <h1>{eventData.event_type} Info</h1>
-        {mainTitle}
-        <p><strong>Date:</strong> {shortDate}</p>
-        <p><strong>Time:</strong> {formattedTime}</p>
-        <p><strong>Where:</strong> {eventData.event_location}</p>
-        {buttons}
+        <h1>{mainTitle}</h1>
+        <div className="details">          
+          <p><strong>Type of Event:</strong> {eventData.event_type}</p>
+          <p><strong>Date:</strong> {shortDate}</p>
+          <p><strong>Time:</strong> {formattedTime}</p>
+          <p><strong>Where:</strong> {eventData.event_location}</p>
+          {buttons}
+        </div>
       </div>
     )
   }

@@ -23,6 +23,10 @@
     &:hover {
       color: $gray-background-dark;
     }
+    .fa-home {
+      font-size: 22px;
+      line-height: 16px;
+    }
   }
   display: flex;
   justify-content: space-between;

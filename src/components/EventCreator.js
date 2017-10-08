@@ -118,20 +118,24 @@ class EventCreator extends Component {
             value={this.state.eventTitle}
           />
 
-          <DatePicker
-            name="selectedDate"
-            onChange={this.handleDateChange}
-            selected={this.state.startDate}
-          />
+          <div className="flex-calendar">
 
-          <TimePicker
-            showSecond={false}
-            defaultValue={now}
-            className="xxx"
-            onChange={this.onTimeChange}
-            format={format}
-            use12Hours
-          />
+            <DatePicker
+              name="selectedDate"
+              onChange={this.handleDateChange}
+              selected={this.state.startDate}
+            />
+
+            <TimePicker
+              showSecond={false}
+              defaultValue={now}
+              className="xxx"
+              onChange={this.onTimeChange}
+              format={format}
+              use12Hours
+            />
+
+          </div>
 
           <TextArea
             name="eventDetails"

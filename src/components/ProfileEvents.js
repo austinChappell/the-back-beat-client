@@ -54,7 +54,10 @@ class ProfileEvents extends Component {
 
     return (
       <div className="ProfileEvents">
-        <EventList data={this.state.eventList} />
+        <EventList
+          data={this.state.eventList}
+          url="event"
+        />
       </div>
     )
   }

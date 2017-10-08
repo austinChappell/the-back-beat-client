@@ -14,6 +14,21 @@ $gray-background-dark: #E0E0E0;
 $color-success: #137F15;
 $color-failure: #C91208;
 
+@mixin button($main-color, $hover-font) {
+  border: 3px solid $main-color;
+  text-decoration: none;
+  background-color: transparent;
+  color: $main-color;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 8px;
+  &:hover {
+    background-color: $main-color;
+    color: $hover-font;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -36,12 +51,15 @@ p {
 @import './BandPage';
 @import './BaseLayout';
 @import './BrowseBox';
+@import './CalendarPage';
 @import './CenterComponent';
 @import './Contact';
 @import './CTAButton';
 @import './EventList';
+@import './EventPage';
 @import './Features';
 @import './Footer';
+@import './Form';
 @import './Home';
 @import './LeftMainPageSideBar';
 @import './Main';
