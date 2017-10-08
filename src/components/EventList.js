@@ -37,12 +37,12 @@ class EventList extends Component {
 
     return (
       <div className="EventList">
-        Event List Component
         {this.props.data.map((event, index) => {
 
           let date = event.event_date_time;
           let formattedDate = String(new Date(date));
-          let shortDate = `${formattedDate.slice(0, 10)}, ${formattedDate.slice(11, 15)}`;
+          let month = `${formattedDate.slice(4, 7)}`;
+          let dateNum = `${formattedDate.slice(8, 10)}`;
           let hour = Number(formattedDate.slice(16, 18));
           let minute = formattedDate.slice(18, 21);
           let period = 'PM';
@@ -77,14 +77,19 @@ class EventList extends Component {
 
           return (
             <div key={index} className="event">
-              <div>
-                <div>{shortDate}</div>
-                <div>{formattedTime}</div>
+              <div className="dateInfo">
+                <div className="date">{dateNum}</div>
+                <div className="month">{month}</div>
               </div>
-              <div>
-                {event.event_title}
+              <div className="info">
+                <h4 className="title">
+                  {event.event_title}
+                </h4>
+                <p className="details">
+                  {event.event_details}
+                </p>
+                {buttons}
               </div>
-              {buttons}
             </div>
           )
         })}
