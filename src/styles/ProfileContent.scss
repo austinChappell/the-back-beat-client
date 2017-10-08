@@ -3,4 +3,27 @@
   padding: 20px;
   border: 1px solid $color-primary;
   border-top: none;
+  .ProfileBands {
+    .band {
+      h3 {
+        margin-left: -10px;
+      }
+      padding: 20px 20px;
+      border-bottom: 1px solid $color-primary;
+      p {
+        margin: 10px 0;
+        font-size: 14px;
+      }
+      a {
+        color: $color-tertiary;
+        text-decoration: none;
+        &:hover {
+          color: $color-tertiary-hover;
+        }
+      }
+      &:last-of-type {
+        border-bottom: none;
+      }
+    }
+  }
 }

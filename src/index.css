@@ -765,6 +765,21 @@ p {
   padding: 20px;
   border: 1px solid #070649;
   border-top: none; }
+  .ProfileContent .ProfileBands .band {
+    padding: 20px 20px;
+    border-bottom: 1px solid #070649; }
+    .ProfileContent .ProfileBands .band h3 {
+      margin-left: -10px; }
+    .ProfileContent .ProfileBands .band p {
+      margin: 10px 0;
+      font-size: 14px; }
+    .ProfileContent .ProfileBands .band a {
+      color: #9A6197;
+      text-decoration: none; }
+      .ProfileContent .ProfileBands .band a:hover {
+        color: #894586; }
+    .ProfileContent .ProfileBands .band:last-of-type {
+      border-bottom: none; }
 
 .ProfileInfo {
   width: 90%;
