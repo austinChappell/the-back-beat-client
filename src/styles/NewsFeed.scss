@@ -2,13 +2,73 @@
   border-left: 1px solid $gray-background-light;
   border-right: 1px solid $gray-background-light;
   height: calc(100vh - 80px);
-  // min-height: calc(100vh);
   position: fixed;
   overflow: scroll;
   left: 75%;
   width: 25%;
   box-sizing: border-box;
   padding: 20px 40px;
+  // position: absolute;
+  .FormInput {
+    width: 100%;
+    & input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 2px solid $color-primary;
+      border-radius: 25px;
+      font-size: 16px;
+      padding: 5px 10px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  & > div {
+    // position: relative;
+  }
+  .itunes-results {
+    background-color: $color-secondary;
+    padding: 0 10px;
+    // margin: 0 40px;
+    border: 1px solid $color-primary;
+    border-radius: 5px;
+    position: fixed;
+    overflow: scroll;
+    height: calc(100vh - 140px);
+    width: calc(25% - 100px);
+    .result {
+      border-bottom: 1px solid $color-primary;
+      cursor: pointer;
+      transition: 200ms;
+      &:hover {
+        color: $color-primary;
+        font-weight: 700;
+      }
+    }
+  }
+  .NewsFeedEvent {
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    i {
+      margin-right: 10px;
+      font-size: 25px;
+      color: $color-primary;
+    }
+    p {
+      font-size: 14px;
+      margin: 20px 0;
+      a {
+        color: $color-tertiary;
+        text-decoration: none;
+        &:hover {
+          color: $color-tertiary-hover;
+        }
+      }
+    }
+  }
   .event {
     border: 1px solid black;
     padding: 20px 40px;

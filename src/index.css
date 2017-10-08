@@ -656,6 +656,49 @@ p {
   width: 25%;
   box-sizing: border-box;
   padding: 20px 40px; }
+  .NewsFeed .FormInput {
+    width: 100%; }
+    .NewsFeed .FormInput input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 2px solid #070649;
+      border-radius: 25px;
+      font-size: 16px;
+      padding: 5px 10px; }
+      .NewsFeed .FormInput input:focus {
+        outline: none; }
+  .NewsFeed .itunes-results {
+    background-color: #B8B7D5;
+    padding: 0 10px;
+    border: 1px solid #070649;
+    border-radius: 5px;
+    position: fixed;
+    overflow: scroll;
+    height: calc(100vh - 140px);
+    width: calc(25% - 100px); }
+    .NewsFeed .itunes-results .result {
+      border-bottom: 1px solid #070649;
+      cursor: pointer;
+      transition: 200ms; }
+      .NewsFeed .itunes-results .result:hover {
+        color: #070649;
+        font-weight: 700; }
+  .NewsFeed .NewsFeedEvent > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; }
+  .NewsFeed .NewsFeedEvent i {
+    margin-right: 10px;
+    font-size: 25px;
+    color: #070649; }
+  .NewsFeed .NewsFeedEvent p {
+    font-size: 14px;
+    margin: 20px 0; }
+    .NewsFeed .NewsFeedEvent p a {
+      color: #9A6197;
+      text-decoration: none; }
+      .NewsFeed .NewsFeedEvent p a:hover {
+        color: #894586; }
   .NewsFeed .event {
     border: 1px solid black;
     padding: 20px 40px;

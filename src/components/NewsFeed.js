@@ -95,7 +95,7 @@ class NewsFeed extends Component {
             type="text"
             value={this.state.artistSearch}
           />
-          <div>
+          <div className="itunes-results" style={{display: this.state.musicResults.length > 0 ? 'block' : 'none'}}>
             {this.state.musicResults.map((result, index) => {
               return (
                 <div key={index} className="result" onClick={() => this.addSong(result)}>
