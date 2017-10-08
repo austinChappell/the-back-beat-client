@@ -10,7 +10,7 @@ class ProfileInfoNavBar extends Component {
       navBarItems: [
         { value: 'main', text: 'Info', active: true },
         { value: 'events', text: 'Events', active: false },
-        { value: 'connections', text: 'Connections', active: false },
+        // { value: 'connections', text: 'Connections', active: false },
         { value: 'bands', text: 'Bands', active: false },
         { value: 'uploads', text: 'Uploads', active: false },
       ]
@@ -18,13 +18,16 @@ class ProfileInfoNavBar extends Component {
 
   }
 
+  componentDidMount() {
+    this.props.changeProfileContent(this.state.navBarItems[0].value);
+  }
 
   highlightNavItem = (itemValue, index) => {
     let newList = this.state.navBarItems.slice();
     let selectedItem = newList.find((item) => item.active);
     selectedItem.active = false;
     newList[index].active = true;
-    this.setState({ navBarItems: newList});
+    this.setState({ navBarItems: newList });
     console.log('new state', this.state);
     this.props.changeProfileContent(itemValue);
   }

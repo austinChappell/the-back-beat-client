@@ -7,6 +7,26 @@ import MyUserProfile from './MyUserProfile';
 
 class MyProfile extends Component {
 
+  componentDidMount() {
+    this.props.updateUser(this.props.loggedInUser);
+    this.updateUserVids(this.props.loggedInUser.id);
+  }
+
+  updateUserVids = (userid) => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/vids/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setCurrentUserVids(results.rows);
+    });
+  }
+
   render() {
     return (
       <div className="Profile">
@@ -29,10 +49,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    setCurrentUserVids: (videos) => {
+      const action = { type: 'SET_CURRENT_USER_VIDS', videos };
+      dispatch(action);
+    },
+
     updateUser: (results) => {
       const action = { type: 'UPDATE_USER', user: results };
       dispatch(action);
     },
+
     clearUser: () => {
       const action = { type: 'UPDATE_USER', user: {} };
       dispatch(action);
