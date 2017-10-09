@@ -33,7 +33,7 @@ class MessageSearchBar extends Component {
           }).then((results) => {
             this.props.handleInputChange(val, results.rows);
           })
-        } else {
+        } else if (val.length === 0) {
           this.props.handleInputChange(val, [])
         }
       }, 300);
