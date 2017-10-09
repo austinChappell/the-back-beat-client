@@ -163,8 +163,17 @@ p {
     display: flex;
     justify-content: center; }
     .BandPage .band-info > div {
-      flex-basis: 50%;
-      margin: 10px; }
+      flex-basis: 50%; }
+    .BandPage .band-info .add-button {
+      background-color: #9A6197;
+      cursor: pointer;
+      border-radius: 50%;
+      color: #FFFFFF;
+      padding: 5px 7px;
+      font-size: 14px;
+      text-align: center; }
+      .BandPage .band-info .add-button:hover {
+        background-color: #894586; }
     .BandPage .band-info .band-info-section {
       padding: 10px;
       display: flex;
@@ -389,6 +398,30 @@ p {
   cursor: pointer; }
   .CTAButton button:hover {
     background-color: #894586; }
+
+.EventCreator {
+  background-color: rgba(0, 0, 0, 0.8);
+  margin: 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 100; }
+  .EventCreator #exit-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    cursor: pointer;
+    color: #FFFFFF; }
+    .EventCreator #exit-button:hover {
+      color: lightgray; }
+  .EventCreator .event-form {
+    margin: 60px auto;
+    max-width: 450px;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 15px; }
 
 .EventList {
   text-align: center;

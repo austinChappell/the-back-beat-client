@@ -13,7 +13,18 @@
     justify-content: center;
     & > div {
       flex-basis: 50%;
-      margin: 10px;
+    }
+    .add-button {
+      background-color: $color-tertiary;
+      cursor: pointer;
+      border-radius: 50%;
+      color: $light-font;
+      padding: 5px 7px;
+      font-size: 14px;
+      text-align: center;
+      &:hover {
+        background-color: $color-tertiary-hover;
+      }
     }
     .band-info-section {
       padding: 10px;

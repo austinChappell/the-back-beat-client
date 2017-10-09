@@ -96,6 +96,7 @@ class EventCreator extends Component {
         startDate: moment()
       }, () => {
         this.convertDate(this.state.startDate);
+        this.props.closeModal();
       })
     }).catch((err) => {
       throw err;
@@ -104,71 +105,84 @@ class EventCreator extends Component {
 
   render() {
     return (
-      <div className="EventCreator">
-        <Form
-          onSubmit={(evt) => this.submitForm(evt)}
-          submitBtnText={`Add ${this.state.eventType}`}
-        >
+      <div className="EventCreator" style={{display: this.props.displayModal ? 'block' : 'none'}}>
 
-          <FormInput
-            name="eventTitle"
-            placeholder="Title"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventTitle}
-          />
+        <div className="exit-button-div">
+          <i
+            id="exit-button"
+            className="fa fa-times"
+            onClick={this.props.exitClick}
+            aria-hidden="true"></i>
+        </div>
 
-          <div className="flex-calendar">
+        <div className="event-form">
 
-            <DatePicker
-              name="selectedDate"
-              onChange={this.handleDateChange}
-              selected={this.state.startDate}
-            />
+          <Form
+            onSubmit={(evt) => this.submitForm(evt)}
+            submitBtnText={`Add ${this.state.eventType}`}
+            >
 
-            <TimePicker
-              showSecond={false}
-              defaultValue={now}
-              className="xxx"
-              onChange={this.onTimeChange}
-              format={format}
-              use12Hours
-            />
+              <FormInput
+                name="eventTitle"
+                placeholder="Title"
+                onChange={this.handleInputChange}
+                type="text"
+                value={this.state.eventTitle}
+              />
 
-          </div>
+              <div className="flex-calendar">
 
-          <TextArea
-            name="eventDetails"
-            placeholder="Description"
-            charLimit={150}
-            onChange={this.handleInputChange}
-            value={this.state.eventDetails}
-          />
+                <DatePicker
+                  name="selectedDate"
+                  onChange={this.handleDateChange}
+                  selected={this.state.startDate}
+                />
 
-          <FormSelect
-            name="eventType"
-            onChange={this.handleInputChange}
-            options={this.props.eventTypes}
-            value={this.state.eventTypeSelected}
-          />
+                <TimePicker
+                  showSecond={false}
+                  defaultValue={now}
+                  className="xxx"
+                  onChange={this.onTimeChange}
+                  format={format}
+                  use12Hours
+                />
 
-          <FormInput
-            name="eventVenue"
-            placeholder="Venue"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventVenue}
-          />
+              </div>
 
-          <FormInput
-            name="eventCity"
-            placeholder="City"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventCity}
-          />
+              <TextArea
+                name="eventDetails"
+                placeholder="Description"
+                charLimit={150}
+                onChange={this.handleInputChange}
+                value={this.state.eventDetails}
+              />
 
-        </Form>
+              <FormSelect
+                name="eventType"
+                onChange={this.handleInputChange}
+                options={this.props.eventTypes}
+                value={this.state.eventTypeSelected}
+              />
+
+              <FormInput
+                name="eventVenue"
+                placeholder="Venue"
+                onChange={this.handleInputChange}
+                type="text"
+                value={this.state.eventVenue}
+              />
+
+              <FormInput
+                name="eventCity"
+                placeholder="City"
+                onChange={this.handleInputChange}
+                type="text"
+                value={this.state.eventCity}
+              />
+
+            </Form>
+
+        </div>
       </div>
     )
   }

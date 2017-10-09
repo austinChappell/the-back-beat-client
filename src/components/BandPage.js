@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 
 import EventCreator from './EventCreator';
 import EventList from './EventList';
+import Modal from './Modal';
 
 class BandPage extends Component {
 
   state = {
     bandEvents: [],
     bandInfoArr: [],
+    displayModal: false,
     eventTypes: [
       { value: 'Gig', text: 'Gig' },
       { value: 'Rehearsal', text: 'Rehearsal' }
@@ -134,6 +136,11 @@ class BandPage extends Component {
     })
   }
 
+  toggleModal = () => {
+    this.setState({ displayModal: !this.state.displayModal });
+    this.getEvents();
+  }
+
   render() {
 
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
@@ -155,6 +162,7 @@ class BandPage extends Component {
     let bandData;
     let addMembers;
     let editButton;
+    let addButton;
     let deleteButton;
     let confirmDeleteForm;
     let searchMembersLink;
@@ -196,6 +204,11 @@ class BandPage extends Component {
       :
       null;
 
+      addButton = this.props.loggedInUser.id === bandData.band_admin_id ?
+      <i className="fa fa-plus add-button" aria-hidden="true" onClick={this.toggleModal}></i>
+      :
+      null;
+
       confirmDeleteForm = this.props.loggedInUser.id === bandData.band_admin_id
       ?
       <div className={this.state.showDeleteForm ? "delete-band-form" : "hide"}>
@@ -218,9 +231,13 @@ class BandPage extends Component {
 
       createEventForm = this.props.loggedInUser.id === bandData.band_admin_id ?
       <EventCreator
+        closeModal={this.toggleModal}
+        displayModal={this.state.displayModal}
+        exitClick={this.toggleModal}
         eventTypes={this.state.eventTypes}
         submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
-      /> :
+      />
+      :
       null;
     }
 
@@ -268,13 +285,13 @@ class BandPage extends Component {
         <div className="band-info">
           {bandInfo}
           {createEventForm}
-        </div>
-        <div className="band-events">
-          <h2>Gigs and Rehearsals</h2>
-          <EventList
-            data={this.state.bandEvents}
-            url="band_event"
-          />
+          <div className="band-events">
+            <h2>Gigs and Rehearsals {addButton}</h2>
+            <EventList
+              data={this.state.bandEvents}
+              url="band_event"
+            />
+          </div>
         </div>
       </div>
     )

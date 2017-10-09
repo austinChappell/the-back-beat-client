@@ -1,0 +1,27 @@
+.EventCreator {
+  background-color: rgba(0,0,0,0.8);
+  margin: 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  #exit-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 36px;
+    cursor: pointer;
+    color: $light-font;
+    &:hover {
+      color: lightgray;
+    }
+  }
+  .event-form {
+    margin: 60px auto;
+    max-width: 450px;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 15px;
+  }
+}
