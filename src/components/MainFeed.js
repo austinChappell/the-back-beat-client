@@ -67,11 +67,6 @@ class MainFeed extends Component {
     })
   }
 
-  changeUser = (user) => {
-    this.props.updateUser(user);
-    this.updateUserInstruments(user.id);
-  }
-
   swipe = (itemsArray, itemIndexName, itemOffset, direction) => {
 
     console.log('button clicked', itemsArray, itemIndexName, itemOffset, direction);
@@ -86,44 +81,6 @@ class MainFeed extends Component {
       updateObj[itemIndexName] = this.state[itemIndexName] + direction;
     }
     this.setState(updateObj);
-  }
-
-  updateUser = (user) => {
-    console.log('UPDATING USER');
-    this.props.updateUser(user);
-    this.updateUserInstruments(user.id);
-    this.updateUserVids(user.id);
-  }
-
-  updateUserInstruments = (userid) => {
-
-    const url = this.props.apiURL;
-    fetch(`${url}/api/instrumentuser/${userid}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.props.updateUserInstruments(results.rows);
-    })
-
-  }
-
-  updateUserVids = (userid) => {
-
-    const url = this.props.apiURL;
-    fetch(`${url}/api/user/vids/${userid}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.props.setCurrentUserVids(results.rows);
-    });
   }
 
   render() {
@@ -177,7 +134,7 @@ class MainFeed extends Component {
                 <div key={index} className="show-item" style={{left: leftString}}>
 
                   <h3>
-                    <Link onClick={() => this.updateUser(musician)} to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
+                    <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
                   </h3>
                   <span><strong>City:</strong> {musician.city}</span> <br />
                   <span><strong>Skill Level:</strong> {musician.skill_level}</span> <br />
@@ -217,22 +174,8 @@ const mapDispatchToProps = (dispatch) => {
     loadEvents: (events) => {
       const action = {type: 'LOAD_EVENTS', events};
       dispatch(action);
-    },
-
-    setCurrentUserVids: (videos) => {
-      const action = { type: 'SET_CURRENT_USER_VIDS', videos };
-      dispatch(action);
-    },
-
-    updateUser: (user) => {
-      const action = { type: 'UPDATE_USER', user };
-      dispatch(action);
-    },
-
-    updateUserInstruments: (instruments) => {
-      const action = { type: 'UPDATE_INSTRUMENTS', instruments };
-      dispatch(action);
     }
+
   }
 }
 

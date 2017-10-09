@@ -8,7 +8,6 @@ import UserProfile from './UserProfile';
 class Profile extends Component {
 
   componentDidMount() {
-    // const url = 'http://localhost:6001/api/profile';
     const url = this.props.apiURL;
     const username = this.props.match.params.username;
     fetch(`${url}/api/profile/${username}`, {
@@ -20,12 +19,50 @@ class Profile extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.props.updateUser(results);
+      this.updateUser(results);
     })
   }
 
   componentWillUnmount() {
     this.props.clearUser();
+  }
+
+  updateUser = (user) => {
+    console.log('UPDATING USER');
+    this.props.updateUser(user);
+    this.updateUserInstruments(user.id);
+    this.updateUserVids(user.id);
+  }
+
+  updateUserInstruments = (userid) => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/instrumentuser/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.updateUserInstruments(results.rows);
+    })
+
+  }
+
+  updateUserVids = (userid) => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/vids/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setCurrentUserVids(results.rows);
+    });
   }
 
   render() {
@@ -55,6 +92,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearUser: () => {
       const action = { type: 'UPDATE_USER', user: {} };
+      dispatch(action);
+    },
+    setCurrentUserVids: (videos) => {
+      const action = { type: 'SET_CURRENT_USER_VIDS', videos };
+      dispatch(action);
+    },
+    updateUserInstruments: (instruments) => {
+      const action = { type: 'UPDATE_INSTRUMENTS', instruments };
       dispatch(action);
     }
   }
