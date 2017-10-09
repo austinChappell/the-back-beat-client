@@ -25,6 +25,9 @@ import RehearsalPage from './RehearsalPage';
 
 class App extends Component {
   render() {
+
+    console.log('ENVIRONMENT', process.env);
+
     return (
       <div className="App">
         <Provider store={store}>
