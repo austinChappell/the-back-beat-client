@@ -7,7 +7,8 @@ class Logout extends Component {
   }
 
   render() {
-    fetch('http://localhost:6001/logout', {
+    const url = this.props.apiURL;
+    fetch(`${url}/logout`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -24,6 +25,7 @@ class Logout extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    apiURL: state.apiURL,
     authorized: state.authorized
   }
 }
