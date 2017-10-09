@@ -199,8 +199,86 @@ class OnboardingForm extends Component {
 
   }
 
+  getMusicians = (user, styleids) => {
+
+    const skillLevels = this.props.skillLevels;
+
+    const apiURL = this.props.apiURL;
+    const userSkillIndex = skillLevels.indexOf(user.skill_level);
+    let skill_level_one = skillLevels[userSkillIndex - 1];
+    let skill_level_two = skillLevels[userSkillIndex];
+    let skill_level_three = skillLevels[userSkillIndex + 1];
+    let styleidone = styleids[0];
+    let styleidtwo = styleids[1];
+    let styleidthree = styleids[2];
+
+    if (userSkillIndex === 0) {
+
+      skill_level_one = 'no_skill';
+    }
+
+    if (userSkillIndex === skillLevels.length - 1) {
+      skill_level_three = 'no_skill';
+    }
+
+    // const urlone = `${apiURL}/api/users/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
+
+    const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
+
+    fetch(url, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+
+      function randomize (arr) {
+        const newArray = [];
+
+        while (arr.length > 0) {
+          let randomNum = Math.random() * arr.length;
+          let item = arr.splice(randomNum, 1);
+          newArray.push(item[0]);
+        }
+
+        return newArray;
+      }
+
+      let randomResults = randomize(results.rows);
+      let limitedResults = randomResults.splice(0, 25);
+
+      this.props.getMusicians(limitedResults);
+    });
+
+  }
+
+  getUserStyles = (loggedInUser) => {
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/user/styles`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      const styles = [];
+      results.rows.forEach((style) => {
+        styles.push(style.style_id);
+      });
+      console.log('STYLES', styles);
+      this.getMusicians(loggedInUser, styles);
+    })
+  }
+
   continue = (evt, onboardingCategory, max, min, query) => {
     evt.preventDefault();
+    if (this.props.onboardingStage > 1) {
+      this.getUserStyles(this.props.loggedInUser);
+    }
     if (this.state[onboardingCategory].length >= min && this.state[onboardingCategory].length <= max) {
       const url = this.props.apiURL;
 
@@ -312,7 +390,7 @@ class OnboardingForm extends Component {
       const selectArray = [];
       for (let i = 0; i < this.state.selectedInstrumentMax; i++) {
           let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument', 'selectedInstruments', this.state.selectedInstrumentMax, i)}>
-            <option value=''>Select Instrument</option>
+            <option value='' selected>Select Instrument</option>
             {instrumentOptions}
           </select>
           selectArray.push(selectItem);
@@ -418,6 +496,7 @@ const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
     loggedInUser: state.loggedInUser,
+    skillLevels: state.skillLevels,
     onboardingMaxStage: state.onboardingMaxStage,
     onboardingReqMaxStage: state.onboardingReqMaxStage,
     onboardingStage: state.onboardingStage
@@ -426,10 +505,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    getMusicians: (data) => {
+      const action = { type: 'GET_COMPATIBLE_MUSICIANS', data };
+      dispatch(action);
+    },
+
     updateOnboardingStage: (stage) => {
       const action = {type: 'UPDATE_ONBOARDING_STAGE', stage};
       dispatch(action);
     }
+
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingForm);

@@ -32,6 +32,8 @@ class Main extends Component {
 
   render() {
 
+    console.log('LOGGED IN USER', this.props.loggedInUser);
+
     return (
       <div className="Main">
         <LeftMainPageSideBar />
@@ -47,6 +49,7 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     currentUsername: state.currentUsername,
     currentUser: state.currentUser,
+    loggedInUser: state.loggedInUser,
     onboardingStage: state.onboardingStage,
     onboardingMaxStage: state.onboardingMaxStage
   }
