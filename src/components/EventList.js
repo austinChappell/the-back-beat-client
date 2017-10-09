@@ -89,6 +89,9 @@ class EventList extends Component {
                 <p className="details">
                   {event.event_details}
                 </p>
+                <p className="type">
+                  {event.event_type}
+                </p>
                 {buttons}
               </div>
             </Link>

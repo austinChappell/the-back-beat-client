@@ -10,10 +10,7 @@
     text-align: left;
     flex-basis: 100%;
     display: flex;
-    justify-content: center;
-    & > div {
-      flex-basis: 50%;
-    }
+    justify-content: space-around;
     .add-button {
       background-color: $color-tertiary;
       cursor: pointer;
@@ -61,13 +58,28 @@
     }
     .members {
       margin-top: 20px;
+      h4 {
+        padding: 5px;
+      }
       .add-members-div {
         position: relative;
+        input {
+          border-radius: 20px;
+          border: 1px solid $color-primary;
+          box-sizing: border-box;
+          font-size: 14px;
+          padding: 5px 20px;
+          outline: none;
+          margin: 10px 0;
+          &:focus {
+            border: 2px solid $color-primary;
+          }
+        }
       }
       .search-results-display {
         border: 1px solid $color-primary;
         position: fixed;
-        height: 100px;
+        height: 150px;
         overflow: scroll;
         .single-search-result {
           padding: 5px;
@@ -115,6 +127,7 @@
   .band-events {
     h2 {
       text-align: center;
+      flex-basis: 60%;
     }
     flex-basis: 50%;
     .EventList {

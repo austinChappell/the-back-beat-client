@@ -61,7 +61,7 @@ class MessageDisplay extends Component {
     let messageDisplay;
     let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
 
-    if (recipient !== null) {
+    // if (recipient !== null) {
       messageDisplay = <div className="message-box">
         <div className="currentRecipient">
           {recipient}
@@ -77,16 +77,16 @@ class MessageDisplay extends Component {
             );
           })}
         </div>
-        <div className="message-editor">
+        <div className="message-editor" style={{ display: recipient !== null ? 'flex' : 'none' }}>
           <textarea rows="1" value={this.props.currentMessage} onChange={(evt) => this.props.handleChange(evt)}></textarea>
           <button className="send-message-button" onClick={this.sendMessage}>Send</button>
         </div>
       </div>
-    } else {
-      messageDisplay = <div>
-        <h1>Looking to hire someone for a gig? Want to find out where your friends are playing next? Write them a message!</h1>
-      </div>
-    }
+    // } else {
+    //   messageDisplay = <div>
+    //     <h1>Looking to hire someone for a gig? Want to find out where your friends are playing next? Write them a message!</h1>
+    //   </div>
+    // }
 
     return (
       <div className="MessageDisplay">
