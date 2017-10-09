@@ -90,7 +90,7 @@ class NewsFeed extends Component {
         <div>
           <FormInput
             name="artistSearch"
-            placeholder="Who are you listening to?"
+            placeholder="What are you listening to?"
             onChange={this.handleInputChange}
             type="text"
             value={this.state.artistSearch}
