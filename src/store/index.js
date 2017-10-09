@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 const initialState = {
 
   // GENERAL ITEMS
-  apiURL: apiURL,
+  apiURL: 'https://back-beat-server.herokuapp.com/',
   attemptedLogin: false,
   authorized: false,
   showUserAuthForm: false,
