@@ -89,6 +89,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentMessage: '' });
     case 'CLEAR_CURRENT_RECIPIENT':
       return Object.assign({}, state, { currentRecipient: null });
+    case 'CLEAR_MESSAGE_HISTORY':
+      return Object.assign({}, state, { messageHistory: [] });
     case 'GET_COMPATIBLE_MUSICIANS':
       return Object.assign({}, state, { compatibleMusicians: action.data });
     case 'HANDLE_FORM_INPUT_CHANGE':

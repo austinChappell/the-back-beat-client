@@ -14,8 +14,10 @@ class MessageHistorySideBar extends Component {
   }
 
   componentWillUnmount() {
+    clearInterval(this.stopFetch);
     console.log('COMPONENT UNMOUNTING');
     // this.setState({ fetchHistory: false }, () => console.log('STATE AFTER COMPONENT UNMOUNTING', this.state));
+    // this.props.clearMessages();
   }
 
   setRecipient = (id) => {
@@ -36,7 +38,7 @@ class MessageHistorySideBar extends Component {
 
   getMessageHistory = () => {
 
-    let stopFetch = setInterval(() => {
+    this.stopFetch = setInterval(() => {
       console.log('MESSAGE HISTORY SIDEBAR');
 
       // if (this.props.fetchHistory === true) {
@@ -120,6 +122,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    clearMessages: () => {
+      const action = { type: 'CLEAR_MESSAGE_HISTORY' };
+      dispatch(action);
+    },
+
     setCurrentRecipient: (user) => {
       const action = { type: 'SET_CURRENT_RECIPIENT', user };
       dispatch(action);
