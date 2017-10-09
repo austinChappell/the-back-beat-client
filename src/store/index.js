@@ -11,7 +11,7 @@ import { createStore } from 'redux';
 const initialState = {
 
   // GENERAL ITEMS
-  apiURL: 'https://back-beat-server.herokuapp.com/',
+  apiURL: 'https://back-beat-server.herokuapp.com',
   attemptedLogin: false,
   authorized: false,
   showUserAuthForm: false,

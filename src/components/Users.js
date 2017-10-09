@@ -7,7 +7,7 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    const url = 'http://localhost:6001/api/users';
+    // const url = 'http://localhost:6001/api/users';
     fetch(url, {
       credentials: 'include',
       headers: {
