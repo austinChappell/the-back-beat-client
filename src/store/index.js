@@ -45,7 +45,7 @@ const initialState = {
     skillLevel: '',
   },
   userStyleIds: [],
-  onboardingStage: 0,
+  onboardingStage: this.onboardingMaxStage + 1,
 
   // EVENT INFO
   allEventsInCity: [],

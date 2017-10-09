@@ -141,6 +141,7 @@ class UserAuthForm extends Component {
   }
 
   setUser = () => {
+    console.log('SET USER FIRING');
     const url = this.props.apiURL;
     fetch(`${url}/myprofile`, {
       credentials: 'include',
@@ -148,10 +149,12 @@ class UserAuthForm extends Component {
         'Content-Type': 'application/json'
       },
     }).then((response) => {
+      console.log('SET USER RESPONSE', response);
       return response.json();
     }).then((results) => {
       // console.log('PROFILE RESULTS', results.rows[0]);
       const loggedInUser = results.rows[0];
+      console.log('SET USER LOGGED IN USER', loggedInUser);
       // console.log('LOGGED IN USER', loggedInUser);
       this.getUserStyles(loggedInUser);
       this.props.addLoggedInUser(loggedInUser);
@@ -163,8 +166,10 @@ class UserAuthForm extends Component {
 
   submitForm = (evt, userInfo) => {
     evt.preventDefault();
+    console.log(`FORM SUBMITTED LINE 169 ${userInfo.username}`);
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
-    fetch(`${this.props.apiURL}/${submitType}`, {
+    console.log('API URL', this.props.apiURL, submitType);
+    fetch(`${this.props.apiURL}/${submitType}/`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -172,9 +177,11 @@ class UserAuthForm extends Component {
       method: 'POST',
       body: JSON.stringify(userInfo)
     }).then((response) => {
+      console.log('FORM SUBMITTED LINE 179', response);
       return response.json();
     }).then((results) => {
       const data = results;
+      console.log('USER FORM SUBMITTED');
       this.props.clearUserInfo(userInfo.username);
       this.setUser();
 
@@ -199,6 +206,7 @@ class UserAuthForm extends Component {
 
 
     }).catch((err) => {
+      console.log('FETCH FAILED');
       if (submitType === 'login') {
         this.setState({ errorMessage: 'The username and/or password is invalid.' });
       } else if (submitType === 'signup') {
@@ -306,6 +314,7 @@ class UserAuthForm extends Component {
           </div>
           <div className="form-footer">
             <button onClick={(evt) => {
+              console.log('button clicked');
               this.submitForm(evt, this.props.userInfo);
             }
             }>{this.props.userAuthType}</button>
@@ -347,6 +356,7 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     clearUserInfo: (username) => {
+      console.log('CLEAR USER INFO FIRING');
       const action = { type: 'USER_AUTH_FORM_SUBMIT', username };
       dispatch(action);
     },
