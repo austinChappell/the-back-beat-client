@@ -1,17 +1,17 @@
 import { createStore } from 'redux';
 
-// let apiURL;
-//
-// if (process.env.NODE_ENV === 'development') {
-//   apiURL = 'http://localhost:6001';
-// } else {
-//   apiURL = 'https://back-beat-server.herokuapp.com/';
-// }
+let apiURL;
+
+if (process.env.NODE_ENV === 'development') {
+  apiURL = 'http://localhost:6001';
+} else {
+  apiURL = 'https://back-beat-server.herokuapp.com';
+}
 
 const initialState = {
 
   // GENERAL ITEMS
-  apiURL: 'https://back-beat-server.herokuapp.com',
+  apiURL: apiURL,
   attemptedLogin: false,
   authorized: false,
   showUserAuthForm: false,
