@@ -44,8 +44,8 @@ class MessagePage extends Component {
 
   componentWillUnmount() {
     clearInterval(this.stopFetch);
-    this.props.clearCurrentRecipient();
-    this.props.clearSelectedMessages();
+    // this.props.clearCurrentRecipient();
+    // this.props.clearSelectedMessages();
   }
 
   getMessageHistory = () => {
@@ -133,7 +133,7 @@ class MessagePage extends Component {
     return (
       <div className="MessagePage">
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
-        <div>
+        <div style={{width: '250px'}}>
           <MessageSearchBar />
           <MessageHistorySideBar />
         </div>

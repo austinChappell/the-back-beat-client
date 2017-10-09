@@ -86,8 +86,10 @@ class MessageDisplay extends Component {
           })}
         </div>
         <form className="message-editor" onSubmit={(evt) => this.sendMessage(evt)}>
-          <input value={this.props.currentMessage} onChange={(evt) => this.handleChange(evt)}></input>
-          <button className="send-message-button">Send</button>
+          <input className={recipient ? '' : 'disabled'} value={this.props.currentMessage} onChange={(evt) => this.handleChange(evt)} disabled={recipient === null}></input>
+          <button
+            className={recipient === null ? "send-message-button disabled" : "send-message-button"}
+            disabled={recipient === null}>Send</button>
         </form>
       </div>
     // } else {

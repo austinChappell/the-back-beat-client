@@ -65,5 +65,9 @@
         background-color: $color-tertiary-hover;
       }
     }
+    .disabled {
+      background-color: #EEEEEE;
+      border: 1px solid #DDDDDD;
+    }
   }
 }

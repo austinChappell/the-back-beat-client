@@ -831,6 +831,9 @@ p {
       outline: none; }
       .MessageDisplay .message-editor .send-message-button:hover {
         background-color: #894586; }
+    .MessageDisplay .message-editor .disabled {
+      background-color: #EEEEEE;
+      border: 1px solid #DDDDDD; }
 
 .MessageHistorySideBar {
   flex-basis: 20%;
