@@ -8,6 +8,7 @@ import UserAuthForm from './UserAuthForm';
 
 class Home extends Component {
   render() {
+    console.log('ENVIRONMENT', process.env);
     return (
       <div className="Home">
         <div className="landing-page-background">
