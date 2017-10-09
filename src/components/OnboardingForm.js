@@ -330,6 +330,18 @@ class OnboardingForm extends Component {
 
   render() {
 
+    if (this.state.selectedVideos.length === 1 && this.state.primaryVidIndex !== 0) {
+      this.setState({ primaryVidIndex: 0 });
+    }
+
+    if (this.state.selectedVideos.length === 1 && this.state.selectedVideos[0].set_as_primary !== true) {
+      let primaryVid = this.state.selectedVideos[0];
+      primaryVid.set_as_primary = true;
+      this.setState({ selectedInstruments: [primaryVid] });
+    }
+
+    console.log('PRIMARY VIDEO INDEX', this.state);
+
     console.log('SESSION STAGE', this.state.sessionOnboardingStage, this.props.onboardingStage);
 
     let stage = this.props.onboardingStage;
