@@ -68,6 +68,12 @@
     .disabled {
       background-color: #EEEEEE;
       border: 1px solid #DDDDDD;
+      color: #DDDDDD;
+      &:hover {
+        background-color: #EEEEEE;
+        color: #DDDDDD;
+        cursor: not-allowed;
+      }
     }
   }
 }

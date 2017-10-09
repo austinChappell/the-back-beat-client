@@ -833,7 +833,12 @@ p {
         background-color: #894586; }
     .MessageDisplay .message-editor .disabled {
       background-color: #EEEEEE;
-      border: 1px solid #DDDDDD; }
+      border: 1px solid #DDDDDD;
+      color: #DDDDDD; }
+      .MessageDisplay .message-editor .disabled:hover {
+        background-color: #EEEEEE;
+        color: #DDDDDD;
+        cursor: not-allowed; }
 
 .MessageHistorySideBar {
   flex-basis: 20%;
