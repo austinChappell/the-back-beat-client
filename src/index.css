@@ -808,11 +808,12 @@ p {
     width: 100%;
     margin: 10px auto;
     display: flex; }
-    .MessageDisplay .message-editor textarea {
+    .MessageDisplay .message-editor input {
       flex-grow: 1;
       resize: none;
       font-size: 16px;
       padding: 10px 20px;
+      border: 1px solid #070649;
       border-radius: 20px;
       outline: none; }
     .MessageDisplay .message-editor .send-message-button {

@@ -39,11 +39,12 @@
     width: 100%;
     margin: 10px auto;
     display: flex;
-    textarea {
+    input {
       flex-grow: 1;
       resize: none;
       font-size: 16px;
       padding: 10px 20px;
+      border: 1px solid $color-primary;
       border-radius: 20px;
       outline: none;
     }

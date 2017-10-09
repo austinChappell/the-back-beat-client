@@ -19,7 +19,10 @@ class MessageDisplay extends Component {
     }
   }
 
-  sendMessage = () => {
+  sendMessage = (evt) => {
+    // if (evt) {
+      evt.preventDefault();
+    // }
     const api = this.props.apiURL;
     fetch(`${api}/message/send`, {
       credentials: 'include',
@@ -41,6 +44,11 @@ class MessageDisplay extends Component {
       this.props.clearCurrentMessageText();
     })
   };
+
+  handleChange = (evt) => {
+    console.log(evt.target.value);
+    this.props.handleChange(evt);
+  }
 
   // filterMessages = (user) => {
   //   const filteredMessages = [];
@@ -77,10 +85,10 @@ class MessageDisplay extends Component {
             );
           })}
         </div>
-        <div className="message-editor" style={{ display: recipient !== null ? 'flex' : 'none' }}>
-          <textarea rows="1" value={this.props.currentMessage} onChange={(evt) => this.props.handleChange(evt)}></textarea>
-          <button className="send-message-button" onClick={this.sendMessage}>Send</button>
-        </div>
+        <form className="message-editor" onSubmit={(evt) => this.sendMessage(evt)}>
+          <input value={this.props.currentMessage} onChange={(evt) => this.handleChange(evt)}></input>
+          <button className="send-message-button">Send</button>
+        </form>
       </div>
     // } else {
     //   messageDisplay = <div>

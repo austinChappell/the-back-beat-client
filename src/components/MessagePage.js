@@ -17,7 +17,7 @@ class MessagePage extends Component {
   }
 
   componentDidMount() {
-    this.props.clearCurrentRecipient();
+    // this.props.clearCurrentRecipient();
     const url = this.props.apiURL;
     const fetchAllMessages = () => {
       fetch(`${url}/messages/all`, {
@@ -44,6 +44,8 @@ class MessagePage extends Component {
 
   componentWillUnmount() {
     clearInterval(this.stopFetch);
+    this.props.clearCurrentRecipient();
+    this.props.clearSelectedMessages();
   }
 
   getMessageHistory = () => {
@@ -131,7 +133,7 @@ class MessagePage extends Component {
     return (
       <div className="MessagePage">
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
-        <div>          
+        <div>
           <MessageSearchBar />
           <MessageHistorySideBar />
         </div>
@@ -155,6 +157,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearCurrentRecipient: () => {
       const action = { type: 'CLEAR_CURRENT_RECIPIENT' };
+      dispatch(action);
+    },
+
+    clearSelectedMessages: () => {
+      const action = { type: 'CLEAR_SELECTED_MESSAGES' };
       dispatch(action);
     },
 
