@@ -342,8 +342,6 @@ class OnboardingForm extends Component {
 
     console.log('PRIMARY VIDEO INDEX', this.state);
 
-    console.log('SESSION STAGE', this.state.sessionOnboardingStage, this.props.onboardingStage);
-
     let stage = this.props.onboardingStage;
     let form;
     let genreOptions;
