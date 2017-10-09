@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 class MessageSearchBar extends Component {
 
+  state = {
+    searchBarValue: ''
+  }
+
   // state = {
   //   searchBarActive: false
   // }
@@ -15,21 +19,31 @@ class MessageSearchBar extends Component {
   handleChangeAndFetch = (evt) => {
     const url = this.props.apiURL;
     const val = evt.target.value;
-    if (val.length > 0) {
-      fetch(`${url}/api/searchusernames/${val}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
+    this.setState({ searchBarValue: evt.target.value }, () => {
+      setTimeout(() => {
+        if (val === this.state.searchBarValue && val.length > 0) {
+          fetch(`${url}/api/searchusernames/${val}`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then((response) => {
+            console.log('THIS IS THE RESPONSE SECTION');
+            return response.json();
+          }).then((results) => {
+            this.props.handleInputChange(val, results.rows);
+          })
+        } else {
+          this.props.handleInputChange(val, [])
         }
-      }).then((response) => {
-        console.log('THIS IS THE RESPONSE SECTION');
-        return response.json();
-      }).then((results) => {
-        this.props.handleInputChange(val, results.rows);
-      })
-    } else {
-      this.props.handleInputChange(val, [])
-    }
+      }, 300);
+    })
+  }
+
+  setRecipient = (user) => {
+    this.setState({ searchBarValue: '' }, () => {
+      this.props.setCurrentRecipient(user);
+    });
   }
 
   // filterMessages = (user) => {
@@ -77,11 +91,11 @@ class MessageSearchBar extends Component {
   render() {
     return (
       <div className="MessageSearchBar">
-        <input placeholder="Search Name" value={this.props.messageSearchBarVal} onChange={(evt) => this.handleChangeAndFetch(evt)} />
+        <input placeholder="Search Name" value={this.state.searchBarValue} onChange={(evt) => this.handleChangeAndFetch(evt)} />
         <div className="display-search-results">
           {this.props.users.map((user, index) => {
             return (
-              <div key={index} className="search-result" onClick={() => this.props.setCurrentRecipient(user)}>
+              <div key={index} className="search-result" onClick={() => this.setRecipient(user)}>
                 <h2>{user.first_name} {user.last_name}</h2>
               </div>
             )
