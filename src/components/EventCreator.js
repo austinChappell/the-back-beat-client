@@ -68,7 +68,6 @@ class EventCreator extends Component {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
     const url = `${apiURL}/${this.props.submitQuery}`
-    console.log('EVENT DATE TIME', eventDateTime);
     console.log('URL', url);
     fetch(url, {
       credentials: 'include',
