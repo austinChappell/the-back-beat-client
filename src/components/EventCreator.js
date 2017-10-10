@@ -44,6 +44,7 @@ class EventCreator extends Component {
   }
 
   convertDate = (date, time) => {
+    console.log('TIME', time);
     const shortDate = date._d.toString().slice(0, 15);
     this.setState({ eventDate: shortDate + ' ' + time });
   }
@@ -66,7 +67,10 @@ class EventCreator extends Component {
   submitForm = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
+    const eventDateTime = String(this.state.eventDate);
     const url = `${apiURL}/${this.props.submitQuery}`
+    console.log('EVENT DATE TIME', eventDateTime);
+    console.log('URL', url);
     fetch(url, {
       credentials: 'include',
       headers: {
@@ -75,7 +79,7 @@ class EventCreator extends Component {
       method: 'POST',
       body: JSON.stringify({
         eventCity: this.state.eventCity,
-        eventDateTime: this.state.eventDate,
+        eventDateTime: eventDateTime,
         eventDetails: this.state.eventDetails,
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
@@ -83,6 +87,7 @@ class EventCreator extends Component {
         userCity: this.props.loggedInUser.city,
       })
     }).then((response) => {
+      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
       this.setState({
@@ -104,6 +109,9 @@ class EventCreator extends Component {
   }
 
   render() {
+
+    console.log('EVENT CREATOR STATE', this.state);
+
     return (
       <div className="EventCreator" style={{display: this.props.displayModal ? 'block' : 'none'}}>
 

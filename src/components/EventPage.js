@@ -79,7 +79,7 @@ class EventPage extends Component {
         }
 
     let mainTitle = eventType === 'band_event' ?
-    <p><strong>Band:</strong> {eventData.band_name}</p>
+    <h2><strong>Band:</strong> {eventData.band_name}</h2>
     :
     <h2>{eventData.event_title}</h2>;
 
