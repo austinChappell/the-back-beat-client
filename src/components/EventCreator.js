@@ -67,7 +67,7 @@ class EventCreator extends Component {
   submitForm = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
-    const eventDateTime = String(this.state.eventDate) + '+05';
+    const eventDateTime = String(this.state.eventDate);
     const url = `${apiURL}/${this.props.submitQuery}`
     console.log('EVENT DATE TIME', eventDateTime);
     console.log('URL', url);
