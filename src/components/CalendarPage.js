@@ -56,8 +56,10 @@ class CalendarPage extends Component {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
+      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
+      console.log('RESULTS', results);
       this.setState({ myEvents: results.rows }, () => {
         this.state.myEvents.map((event) => {
           this.fetchEventDetails(event.event_id);
