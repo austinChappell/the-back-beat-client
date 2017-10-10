@@ -749,6 +749,12 @@ p {
   box-sizing: border-box;
   margin-left: 25%;
   padding: 20px 40px; }
+  .MainFeed .create-band-link a {
+    color: #9A6197;
+    text-decoration: none;
+    cursor: pointer; }
+    .MainFeed .create-band-link a:hover {
+      color: #894586; }
   .MainFeed .buttons {
     margin-top: 20px; }
     .MainFeed .buttons h3 {

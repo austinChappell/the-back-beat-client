@@ -10,6 +10,16 @@
   box-sizing: border-box;
   margin-left: 25%;
   padding: 20px 40px;
+  .create-band-link {
+    a {
+      color: $color-tertiary;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        color: $color-tertiary-hover;
+      }
+    }
+  }
   .buttons {
     margin-top: 20px;
     h3 {
