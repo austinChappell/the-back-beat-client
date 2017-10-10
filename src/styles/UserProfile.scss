@@ -1,4 +1,22 @@
 .UserProfile {
+  .profile-header {
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    .message-link {
+      .message-icon {
+        background-color: $color-tertiary;
+        color: $light-font;
+        font-size: 20px;
+        padding: 10px 8px 10px 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+          background-color: $color-tertiary-hover;
+        }
+      }
+    }
+  }
   .profile-info {
     margin-top: 20px;
     & > span {

@@ -45,6 +45,10 @@ p {
   font-family: $font-family-tertiary;
 }
 
+button, input, textarea {
+  outline: none;
+}
+
 @import './BandBox';
 @import './BandCreateForm';
 @import './BandEventBox';
