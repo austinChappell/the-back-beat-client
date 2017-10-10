@@ -47,9 +47,9 @@ class CalendarPage extends Component {
   }
 
   fetchUserEvents = () => {
-    console.log('FETCING USER EVENTS');
     const url = this.props.apiURL;
     const userid = this.props.loggedInUser.id
+    console.log('FETCING USER EVENTS', url, userid);
     fetch(`${url}/api/events/attending/${userid}`, {
       credentials: 'include',
       headers: {
