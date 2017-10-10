@@ -216,6 +216,7 @@ class CalendarPage extends Component {
         </Form>
 
         <EventList
+          attendanceButtons={true}
           data={this.state.eventList}
           title="Events You Are Attending"
           url="event"

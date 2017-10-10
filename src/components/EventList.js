@@ -62,7 +62,7 @@ class EventList extends Component {
 
           let buttons = null;
 
-          if (this.props.eventType === 'local') {
+          if (this.props.eventType === 'local' && this.props.attendanceButtons) {
             buttons = <div className="buttons">
               <h3>Going?</h3>
               <i
