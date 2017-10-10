@@ -350,9 +350,11 @@ p {
   text-align: left;
   position: fixed;
   height: 200px;
-  overflow: scroll; }
+  overflow: scroll;
+  border-radius: 2px; }
   .ConnectResults .single-search-result {
-    background-color: white;
+    background-color: #E0E0E0;
+    font-size: 10px;
     padding: 5px; }
     .ConnectResults .single-search-result:hover {
       background-color: #9A6197; }
@@ -1089,16 +1091,26 @@ p {
     .Navbar a .fa-home {
       font-size: 22px;
       line-height: 16px; }
-  .Navbar .brand-name {
-    font-size: 1.4em;
-    font-family: "Amiko", sans-serif; }
-    .Navbar .brand-name img {
-      width: 10vw;
-      min-width: 120px;
-      max-width: 160px; }
-    .Navbar .brand-name span {
-      font-family: "Archivo Black", sans-serif;
-      font-weight: 100; }
+  .Navbar .left {
+    display: flex;
+    align-items: center; }
+    .Navbar .left .brand-name {
+      font-size: 1.4em;
+      margin-bottom: 2px;
+      font-family: "Amiko", sans-serif; }
+      .Navbar .left .brand-name img {
+        width: 10vw;
+        min-width: 120px;
+        max-width: 160px; }
+      .Navbar .left .brand-name span {
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 100; }
+    .Navbar .left input {
+      outline: none;
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      width: 150px; }
   .Navbar .relative-navlink {
     position: relative; }
     .Navbar .relative-navlink .fa-plus {

@@ -3,8 +3,10 @@
   position: fixed;
   height: 200px;
   overflow: scroll;
+  border-radius: 2px;
   .single-search-result {
-    background-color: white;
+    background-color: $gray-background-dark;
+    font-size: 10px;
     padding: 5px;
     &:hover {
       a {

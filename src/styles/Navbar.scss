@@ -30,17 +30,29 @@
   }
   display: flex;
   justify-content: space-between;
-  .brand-name {
-    font-size: 1.4em;
-    font-family: $font-family-tertiary;
-    img {
-      width: 10vw;
-      min-width: 120px;
-      max-width: 160px;
+  .left {
+    display: flex;
+    align-items: center;
+    .brand-name {
+      font-size: 1.4em;
+      margin-bottom: 2px;
+      font-family: $font-family-tertiary;
+      img {
+        width: 10vw;
+        min-width: 120px;
+        max-width: 160px;
+      }
+      span {
+        font-family: $font-family-secondary;
+        font-weight: 100;
+      }
     }
-    span {
-      font-family: $font-family-secondary;
-      font-weight: 100;
+    input {
+      outline: none;
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      width: 150px;
     }
   }
   .relative-navlink {

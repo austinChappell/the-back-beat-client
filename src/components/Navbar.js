@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { connect } from 'react-redux';
 
+import SiteSearch from './SiteSearch';
+
 class Navbar extends Component {
 
   state = {
@@ -64,6 +66,16 @@ class Navbar extends Component {
 
   render() {
 
+    let leftNavBarItems = this.props.authorized ?
+    <div className="left">
+      <NavLink className="brand-name" to="/" exact><img src={require("../assets/images/logo.png")} alt="logo" /></NavLink>
+      <SiteSearch />
+    </div>
+    :
+    <div className="left">
+      <NavLink className="brand-name" to="/" exact><img src={require("../assets/images/logo.png")} alt="logo" /></NavLink>
+    </div>
+
     let rightNavBarItems = this.props.authorized ?
     <div className="right">
       <NavLink to={`/myprofile`}>
@@ -74,9 +86,6 @@ class Navbar extends Component {
       </NavLink>
       <NavLink to="/calendar">
         <i className="fa fa-calendar" aria-hidden="true"></i>
-      </NavLink>
-      <NavLink to="/connect">
-        <i className="fa fa-search" aria-hidden="true"></i>
       </NavLink>
       <NavLink className="relative-navlink" to="/messages">
         <i className="fa fa-envelope" aria-hidden="true"></i>
@@ -93,9 +102,7 @@ class Navbar extends Component {
 
     return (
       <div className={this.props.authorized ? "Navbar logged-in" : "Navbar logged-out"}>
-        <div className="left">
-          <NavLink className="brand-name" to="/" exact><img src={require("../assets/images/logo.png")} alt="logo" /></NavLink>
-        </div>
+        {leftNavBarItems}
         {rightNavBarItems}
       </div>
     )
