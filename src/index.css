@@ -1118,6 +1118,8 @@ p {
       position: absolute;
       right: -8px;
       top: -4px; }
+  .Navbar .fa {
+    vertical-align: text-top; }
   .Navbar .button-link {
     border: 2px solid #FFFFFF;
     margin: 10px;
