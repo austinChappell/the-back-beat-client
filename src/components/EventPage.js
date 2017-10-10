@@ -110,7 +110,9 @@ class EventPage extends Component {
           <p><strong>Type of Event:</strong> {eventData.event_type}</p>
           <p><strong>Date:</strong> {shortDate}</p>
           <p><strong>Time:</strong> {formattedTime}</p>
-          <p><strong>Where:</strong> {eventData.event_location}</p>
+          <p><strong>Details:</strong> {eventData.event_details}</p>
+          <p><strong>Venue:</strong> {eventData.event_location}</p>
+          <p><strong>City:</strong> {eventData.event_city}</p>
           {buttons}
         </div>
       </div>
