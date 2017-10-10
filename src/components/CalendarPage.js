@@ -108,7 +108,7 @@ class CalendarPage extends Component {
   submitForm = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
-    const eventDateTime = String(this.state.eventDate);
+    const eventDateTime = String(this.state.eventDate) + '+05';
     console.log('EVENT DATE TIME', eventDateTime);
     fetch(`${apiURL}/api/calendar/add`, {
       credentials: 'include',
