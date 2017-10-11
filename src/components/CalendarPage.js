@@ -123,7 +123,7 @@ class CalendarPage extends Component {
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
         eventVenue: this.state.eventVenue,
-        eventDateTime: this.state.eventDate + '-05',
+        eventDateTime: this.state.eventDate,
         eventDetails: this.state.eventDetails,
         eventCity: this.state.eventCity,
         userCity: this.props.loggedInUser.city,

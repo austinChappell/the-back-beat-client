@@ -11,9 +11,19 @@ class BandBox extends Component {
   componentDidMount() {
 
     setTimeout(() => {
-      this.getBands();
+      this.getBandLoop();
     }, 100);
 
+  }
+
+  getBandLoop = () => {
+    if (this.props.loggedInUser.id) {
+      this.getBands();
+    } else {
+      setTimeout(() => {
+        this.getBandLoop();
+      }, 100);
+    }
   }
 
   getBands = () => {
