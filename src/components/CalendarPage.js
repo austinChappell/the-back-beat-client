@@ -111,6 +111,8 @@ class CalendarPage extends Component {
   submitForm = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
+    console.log('STATE', this.state);
+    console.log('CITY', this.props.loggedInUser.city);
     fetch(`${apiURL}/api/calendar/add`, {
       credentials: 'include',
       headers: {
