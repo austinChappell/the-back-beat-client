@@ -166,9 +166,7 @@ class UserAuthForm extends Component {
 
   submitForm = (evt, userInfo) => {
     evt.preventDefault();
-    console.log(`FORM SUBMITTED LINE 169 ${userInfo.username}`);
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
-    console.log('API URL', this.props.apiURL, submitType);
     fetch(`${this.props.apiURL}/${submitType}/`, {
       credentials: 'include',
       headers: {
@@ -177,11 +175,9 @@ class UserAuthForm extends Component {
       method: 'POST',
       body: JSON.stringify(userInfo)
     }).then((response) => {
-      console.log('FORM SUBMITTED LINE 179', response);
       return response.json();
     }).then((results) => {
       const data = results;
-      console.log('USER FORM SUBMITTED');
       this.props.clearUserInfo(userInfo.username);
       this.setUser();
 

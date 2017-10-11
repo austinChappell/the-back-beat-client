@@ -72,6 +72,25 @@ class OnboardingForm extends Component {
         }
       })
     })
+
+    console.log('USER', this.props.loggedInUser);
+
+    setTimeout(() => {
+      this.getOnboardingStage();
+    }, 250);
+  }
+
+  getOnboardingStage = () => {
+    console.log('GET ONBOARDING STAGE');
+    if (this.props.loggedInUser.onboarding_stage !== null) {
+      console.log('SUCCESS');
+      this.props.updateOnboardingStage(this.props.loggedInUser.onboarding_stage);
+    } else {
+      console.log('FAILURE');
+      setTimeout(() => {
+        this.getOnboardingStage();
+      }, 100);
+    }
   }
 
   handleChange = (evt, category, selected, max, tempIndex) => {
@@ -343,6 +362,9 @@ class OnboardingForm extends Component {
     console.log('PRIMARY VIDEO INDEX', this.state);
 
     let stage = this.props.onboardingStage;
+    if (stage === null && this.props.loggedInUser) {
+      this.updateOnboardingStage(this.props.loggedInUser);
+    }
     let form;
     let genreOptions;
     let instrumentOptions;
