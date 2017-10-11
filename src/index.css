@@ -279,6 +279,9 @@ button, input, textarea {
   .BandPage .hide {
     display: none; }
 
+.BandPageBrowseMusicians {
+  padding: 50px; }
+
 .BaseLayout {
   display: flex;
   flex-direction: column;
