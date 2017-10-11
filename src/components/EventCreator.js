@@ -77,7 +77,7 @@ class EventCreator extends Component {
       method: 'POST',
       body: JSON.stringify({
         eventCity: this.state.eventCity,
-        eventDateTime: this.state.eventDate,
+        eventDateTime: this.state.eventDate + '+05',
         eventDetails: this.state.eventDetails,
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
