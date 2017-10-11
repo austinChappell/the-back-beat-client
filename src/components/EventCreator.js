@@ -68,6 +68,7 @@ class EventCreator extends Component {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
     const url = `${apiURL}/${this.props.submitQuery}`
+    const eventDate = String(this.state.eventDate) + '+05';
     console.log('URL', url);
     fetch(url, {
       credentials: 'include',
@@ -77,7 +78,7 @@ class EventCreator extends Component {
       method: 'POST',
       body: JSON.stringify({
         eventCity: this.state.eventCity,
-        eventDateTime: this.state.eventDate + '+05',
+        eventDateTime: eventDate,
         eventDetails: this.state.eventDetails,
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
