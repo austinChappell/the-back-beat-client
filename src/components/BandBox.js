@@ -30,7 +30,6 @@ class BandBox extends Component {
 
     const url = this.props.apiURL;
     const userId = this.props.loggedInUser.id;
-    console.log('LOGGED IN USER ID', userId);
     fetch(`${url}/api/bands/user/${userId}`, {
       credentials: 'include',
       headers: {
