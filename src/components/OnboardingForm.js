@@ -82,7 +82,7 @@ class OnboardingForm extends Component {
 
   getOnboardingStage = () => {
     console.log('GET ONBOARDING STAGE');
-    if (this.props.loggedInUser.onboarding_stage !== null) {
+    if (this.props.loggedInUser.onboarding_stage !== undefined) {
       console.log('SUCCESS', this.props.loggedInUser.onboarding_stage);
       this.props.updateOnboardingStage(this.props.loggedInUser.onboarding_stage);
     } else {
