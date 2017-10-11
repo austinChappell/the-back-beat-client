@@ -100,6 +100,7 @@ class EventCreator extends Component {
       }, () => {
         this.convertDate(this.state.startDate);
         this.props.closeModal();
+        this.props.history.push('/');
       })
     }).catch((err) => {
       throw err;
