@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 class ConnectResults extends Component {
+
+  updateUser = (user) => {
+    this.props.updateUser(user);
+  }
+
   render() {
 
     let searchResults;
@@ -12,7 +19,10 @@ class ConnectResults extends Component {
       searchResults = this.props.data.map((user) => {
         return (
           <div className="single-search-result">
-            <h2><Link to={`profile/${user.username}`}>{user.first_name} {user.last_name} - {user.city}</Link></h2>
+            <h2><Link
+              onClick={() => this.updateUser(user)}
+              to={`/profile/${user.username}`}>{user.first_name} {user.last_name} - {user.city}
+            </Link></h2>
           </div>
         )
       });
@@ -34,4 +44,19 @@ class ConnectResults extends Component {
   }
 }
 
-export default ConnectResults;
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => {
+      const action = { type: 'UPDATE_USER', user };
+      dispatch(action);
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectResults);
