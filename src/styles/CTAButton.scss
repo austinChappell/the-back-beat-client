@@ -8,6 +8,7 @@
     border: 1px solid $light-font;
     border-radius: 5px;
     cursor: pointer;
+    transition: 150ms;
     &:hover {
       background-color: $color-tertiary-hover;
     }
