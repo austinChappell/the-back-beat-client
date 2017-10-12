@@ -12,12 +12,22 @@ class Navbar extends Component {
   }
 
   componentDidMount() {
-    this.getUnreadMessages();
+    this.fetchMessagesAfterLogin();
     // TODO: Maybe move setUser out to UserAuth component
     // TODO: Store loggedInUser differently. The code immediately after this comment is not storing loggedInUser.
     // if (this.props.authorized) {
     //   this.setUser();
     // }
+  }
+
+  fetchMessagesAfterLogin = () => {
+    if (this.props.loggedInUser.id) {
+      this.getUnreadMessages();
+    } else {
+      setTimeout(() => {
+        this.fetchMessagesAfterLogin();
+      }, 1000);
+    }
   }
 
   getUnreadMessages = () => {
