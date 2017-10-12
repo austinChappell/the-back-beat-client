@@ -12,12 +12,7 @@
   padding: 20px 40px;
   .create-band-link {
     a {
-      color: $color-tertiary;
-      text-decoration: none;
-      cursor: pointer;
-      &:hover {
-        color: $color-tertiary-hover;
-      }
+      @@include link;
     }
   }
   .buttons {

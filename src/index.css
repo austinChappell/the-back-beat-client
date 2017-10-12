@@ -149,7 +149,8 @@ button, input, textarea {
     text-align: left; }
     .BandEventBox .gig a {
       color: #9A6197;
-      text-decoration: none; }
+      text-decoration: none;
+      cursor: pointer; }
       .BandEventBox .gig a:hover {
         color: #894586; }
 
@@ -1202,7 +1203,8 @@ button, input, textarea {
     margin: 20px 0; }
     .NewsFeed .NewsFeedEvent p a {
       color: #9A6197;
-      text-decoration: none; }
+      text-decoration: none;
+      cursor: pointer; }
       .NewsFeed .NewsFeedEvent p a:hover {
         color: #894586; }
   .NewsFeed .event {
@@ -1278,6 +1280,17 @@ button, input, textarea {
 .ProfileInfo {
   width: 90%;
   margin: 20px auto; }
+
+.ProfileInfoMain h4 {
+  color: #070649;
+  margin-bottom: 10px; }
+
+.ProfileInfoMain a {
+  color: #9A6197;
+  text-decoration: none;
+  cursor: pointer; }
+  .ProfileInfoMain a:hover {
+    color: #894586; }
 
 .ProfileInfoMain .user-instruments {
   padding-left: 20px; }

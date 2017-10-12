@@ -1,4 +1,11 @@
 .ProfileInfoMain {
+  h4 {
+    color: $color-primary;
+    margin-bottom: 10px;
+  }
+  a {
+    @include link;
+  }
   .user-instruments {
     padding-left: 20px;
     span {

@@ -29,6 +29,15 @@ $color-failure: #C91208;
   }
 }
 
+@mixin link {
+  color: $color-tertiary;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    color: $color-tertiary-hover;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;

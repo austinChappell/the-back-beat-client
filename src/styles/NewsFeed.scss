@@ -61,11 +61,7 @@
       font-size: 14px;
       margin: 20px 0;
       a {
-        color: $color-tertiary;
-        text-decoration: none;
-        &:hover {
-          color: $color-tertiary-hover;
-        }
+        @include link;
       }
     }
   }

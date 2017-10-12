@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class ProfileInfoMain extends Component {
 
@@ -9,13 +10,14 @@ class ProfileInfoMain extends Component {
     return (
       <div className="ProfileInfoMain">
         <div className="profile-info">
-          <h3>{user.first_name} {user.last_name}</h3>
-          <h4>City: {user.city}</h4>
-          <h4>Skill Level: {user.skill_level}</h4>
+          <h4>{user.city}</h4>
+          <h4>{user.skill_level}</h4>
           <h4>Instruments: </h4>
           <div className="user-instruments">
             {this.props.instruments.map((instrument, index) => {
-              return <span key={index} id={instrument.instrument_id}>{instrument.name}</span>
+              return <span key={index} id={instrument.instrument_id}>
+                <Link to={`/city/${user.city}/instrument/${instrument.id}`}>{instrument.name}</Link>
+              </span>
             })}
           </div>
         </div>

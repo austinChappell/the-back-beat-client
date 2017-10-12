@@ -34,7 +34,6 @@ class MainFeed extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('EVENTS', results.rows);
       if (results.rows) {
         this.props.loadEvents(results.rows);
         this.setState({ loading: false });

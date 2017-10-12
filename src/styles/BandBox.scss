@@ -8,17 +8,13 @@
     margin: 5px 10px 5px 0;
   }
   h3 > a {
+    @include link;
     font-size: 16px;
     display: inline-block;
     background-color: $gray-background-light;
     padding: 6px 8px;
     border-radius: 3px;
-    color: $color-tertiary-hover;
-    text-decoration: none;
     transition: 300ms;
-    &:hover {
-      background-color: $gray-background-dark;
-    }
   }
   .band-results {
     margin-top: 10px;

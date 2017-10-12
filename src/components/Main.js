@@ -30,15 +30,7 @@ class Main extends Component {
     }
   }
 
-  // onboardingRedirect = () => {
-  //   if (this.props.onboardingStage <= this.props.onboardingMaxStage) {
-  //     this.props.history.push('/onboarding');
-  //   }
-  // }
-
   render() {
-
-    console.log('LOGGED IN USER', this.props.loggedInUser);
 
     return (
       <div className="Main">

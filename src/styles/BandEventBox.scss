@@ -4,11 +4,7 @@
   .gig {
     text-align: left;
     a {
-      color: $color-tertiary;
-      text-decoration: none;
-      &:hover {
-        color: $color-tertiary-hover;
-      }
+      @include link;
     }
   }
 }
