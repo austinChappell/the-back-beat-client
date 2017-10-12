@@ -22,10 +22,11 @@ button, input, textarea {
   .BandBox h3 {
     margin: 5px 10px 5px 0; }
   .BandBox h3 > a {
-    font-size: 12px;
+    font-size: 16px;
     display: inline-block;
     background-color: #EEEEEE;
-    padding: 6px;
+    padding: 6px 8px;
+    border-radius: 3px;
     color: #894586;
     text-decoration: none;
     transition: 300ms; }
@@ -341,6 +342,8 @@ button, input, textarea {
   padding: 50px; }
   .CalendarPage > div {
     margin-top: 0; }
+  .CalendarPage .react-datepicker-wrapper {
+    margin-right: 10px; }
 
 .CenterComponent {
   background-color: #FAFAFA;
