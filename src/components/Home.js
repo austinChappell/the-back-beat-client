@@ -6,6 +6,8 @@ import Features from './Features';
 import Footer from './Footer';
 import UserAuthForm from './UserAuthForm';
 
+import RaisedButton from 'material-ui/RaisedButton';
+
 class Home extends Component {
   render() {
     console.log('ENVIRONMENT', process.env);
@@ -17,6 +19,7 @@ class Home extends Component {
             <h1>The Back Beat</h1>
             <h2>Connecting musicians<br />in a digital age.</h2>
             <CTAButton text="Sign Up" />
+            <RaisedButton label="Sign Up" secondary={true} />
           </div>
           <div className="arrow-wrapper">
             <i id="down-arrow" className="fa fa-angle-down" aria-hidden="true"></i>

@@ -8,6 +8,16 @@ import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
+
+import DateTimePicker from 'material-ui-datetimepicker';
+import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
+import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
 
 import EventList from './EventList';
 import Form from './Form';
@@ -40,6 +50,7 @@ class CalendarPage extends Component {
     eventType: '',
     eventTypeSelected: null,
     eventVenue: '',
+    open: false,
     initialTimeVal: now,
     myEvents: [],
     startDate: moment(),
@@ -178,17 +189,66 @@ class CalendarPage extends Component {
     this.setState({eventTypeSelected: value});
   }
 
+  setDate = (dateTime) => {
+    console.log('SET DATE RUNNING');
+    this.setState({ dateTime });
+  };
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = (submit) => {
+    this.setState({open: false});
+    if (submit) {
+      console.log('true');
+    } else {
+      console.log('false');
+    }
+  };
+
   render() {
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={() => this.handleClose(false)}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={() => this.handleClose(true)}
+      />,
+    ];
+
 
     console.log('STATE', this.state);
 
     return (
       <div className="CalendarPage">
 
-        <Form
+        <FloatingActionButton
+          secondary={true}
+          onClick={this.handleOpen}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
+
+
+        <Dialog
+          title="Dialog With Actions"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+
+
+        {/* <Form
           onSubmit={(evt) => this.submitForm(evt)}
           submitBtnText="Create New Event"
-        >
+        > */}
 
           {/* <FormInput
             name="eventTitle"
@@ -234,6 +294,14 @@ class CalendarPage extends Component {
               onChange={this.handleNewDateChange}
             />
 
+            {/* <DateTimePicker
+              onChange={this.setDate}
+              DatePicker={DatePickerDialog}
+              TimePicker={TimePickerDialog}
+              onTimeSelected={this.setDate}
+            /> */}
+
+
             {/* <TimePicker
               showSecond={false}
               defaultValue={now}
@@ -244,6 +312,7 @@ class CalendarPage extends Component {
             /> */}
 
             <TimePicker
+              format="ampm"
               hintText="12hr Format with auto ok"
               onChange={this.handleNewTimeChange}
             />
@@ -299,7 +368,8 @@ class CalendarPage extends Component {
 
           {/* // TODO: Make submit button and add functionality to post to database */}
 
-        </Form>
+        {/* </Form> */}
+        </Dialog>
 
         <EventList
           attendanceButtons={true}
