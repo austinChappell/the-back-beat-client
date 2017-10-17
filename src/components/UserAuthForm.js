@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+
 class UserAuthForm extends Component {
 
   constructor(props) {
@@ -11,6 +14,7 @@ class UserAuthForm extends Component {
       errorMessage: null,
       checkUsernameMessage: null,
       checkUsernameLength: null,
+      open: false,
     }
 
     this.stopTimeout = undefined;
@@ -211,6 +215,19 @@ class UserAuthForm extends Component {
     })
   }
 
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = (submit) => {
+    this.setState({open: false});
+    if (submit) {
+      console.log('true');
+    } else {
+      console.log('false');
+    }
+  };
+
   render() {
 
     // console.log('render user auth page');
@@ -297,7 +314,8 @@ class UserAuthForm extends Component {
 
       <div className={this.props.showUserAuthForm ? "UserAuthForm" : "hide"}>
         <span id="exit-button" onClick={this.exitForm}><i className="fa fa-times" aria-hidden="true"></i></span>
-        <form className="form">
+        <Dialog>
+        {/* <form className="form"> */}
           {form}
           <div className={this.state.checkUsernameLength ? "error-message" : "no-errors"}>
             {this.state.checkUsernameLength}
@@ -309,14 +327,24 @@ class UserAuthForm extends Component {
             {this.state.errorMessage}
           </div>
           <div className="form-footer">
-            <button onClick={(evt) => {
+            <RaisedButton
+              label={this.props.userAuthType}
+              secondary={true}
+              onClick={(evt) => {
+                console.log('button clicked');
+                this.submitForm(evt, this.props.userInfo);
+              }}
+            />
+
+            {/* <button onClick={(evt) => {
               console.log('button clicked');
               this.submitForm(evt, this.props.userInfo);
             }
-            }>{this.props.userAuthType}</button>
+            }>{this.props.userAuthType}</button> */}
             {otherOption}
           </div>
-        </form>
+        </Dialog>
+        {/* </form> */}
       </div>
 
     )

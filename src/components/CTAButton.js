@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class CTAButton extends Component {
   render() {
     return (
       <div className="CTAButton">
-        <button onClick={this.props.toggleUserAuthForm}>{this.props.text}</button>
+        <RaisedButton
+          label="Sign Up"
+          secondary={true}
+          // onClick={this.props.toggleUserAuthForm}
+        />
+
+        {/* <button onClick={this.props.toggleUserAuthForm}>{this.props.text}</button> */}
       </div>
     )
   }
