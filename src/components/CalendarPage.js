@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
+import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
-import TimePicker from 'rc-time-picker';
+// import TimePicker from 'rc-time-picker';
+import TimePicker from 'material-ui/TimePicker';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import EventList from './EventList';
 import Form from './Form';
@@ -33,6 +38,7 @@ class CalendarPage extends Component {
       { value: 'Rehearsal', text: 'Rehearsal' }
     ],
     eventType: '',
+    eventTypeSelected: null,
     eventVenue: '',
     initialTimeVal: now,
     myEvents: [],
@@ -89,7 +95,7 @@ class CalendarPage extends Component {
   }
 
   convertDate = (date, time) => {
-    const shortDate = date._d.toString().slice(0, 15);
+    const shortDate = date.toString().slice(0, 15);
     this.setState({ eventDate: shortDate + ' ' + time });
   }
 
@@ -149,7 +155,32 @@ class CalendarPage extends Component {
     })
   }
 
+  handleNewDateChange = (evt, date) => {
+    this.setState({
+      startDate: date
+    }, () => {
+      this.convertDate(this.state.startDate, this.state.eventTime)
+    });
+  }
+
+  handleNewTimeChange = (evt, time) => {
+    this.setState({eventTime: time});
+  }
+
+  handleChange = (evt, name) => {
+    const updateObj = {};
+    updateObj[name] = evt.target.value;
+    this.setState(updateObj);
+  }
+
+  handleSelecteChange = (evt, index, value) => {
+    console.log(value);
+    this.setState({eventTypeSelected: value});
+  }
+
   render() {
+
+    console.log('STATE', this.state);
 
     return (
       <div className="CalendarPage">
@@ -159,49 +190,87 @@ class CalendarPage extends Component {
           submitBtnText="Create New Event"
         >
 
-          <FormInput
+          {/* <FormInput
             name="eventTitle"
             placeholder="Title"
             onChange={this.handleInputChange}
             type="text"
             value={this.state.eventTitle}
+          /> */}
+
+          <TextField
+            floatingLabelText="Title"
+            onChange={(evt) => this.handleChange(evt, 'eventTitle')}
+            value={this.state.eventTitle}
           />
 
+{/*
           <TextArea
             name="eventDetails"
             placeholder="Description"
             charLimit={150}
             onChange={this.handleInputChange}
             value={this.state.eventDetails}
+          /> */}
+
+          <TextField
+            floatingLabelText="Details"
+            onChange={(evt) => this.handleChange(evt, 'eventDetails')}
+            multiLine={true}
+            rows={1}
+            rowsMax={4}
           />
+
 
           <div className="flex-calendar">
 
-            <DatePicker
+            {/* <DatePicker
               name="selectedDate"
               onChange={this.handleDateChange}
               selected={this.state.startDate}
+            /> */}
+
+            <DatePicker
+              onChange={this.handleNewDateChange}
             />
 
-            <TimePicker
+            {/* <TimePicker
               showSecond={false}
               defaultValue={now}
               className="xxx"
               onChange={this.onTimeChange}
               format={format}
               use12Hours
+            /> */}
+
+            <TimePicker
+              hintText="12hr Format with auto ok"
+              onChange={this.handleNewTimeChange}
             />
 
           </div>
 
-          <FormSelect
+          {/* <FormSelect
             name="eventType"
             onChange={this.handleInputChange}
             options={this.state.eventTypes}
             value={this.state.eventTypeSelected}
-          />
+          /> */}
 
-          <FormInput
+          <SelectField
+            floatingLabelText="Type"
+            value={this.state.eventTypeSelected}
+            onChange={this.handleSelecteChange}
+          >
+            {this.state.eventTypes.map((eventType) => {
+              return (
+                <MenuItem value={eventType.value} primaryText={eventType.text} />
+              )
+            })}
+          </SelectField>
+
+
+          {/* <FormInput
             name="eventVenue"
             placeholder="Venue"
             onChange={this.handleInputChange}
@@ -215,7 +284,18 @@ class CalendarPage extends Component {
             onChange={this.handleInputChange}
             type="text"
             value={this.state.eventCity}
+          /> */}
+
+          <TextField
+            floatingLabelText="Venue"
+            onChange={(evt) => this.handleChange(evt, 'eventVenue')}
           />
+
+          <TextField
+            floatingLabelText="City"
+            onChange={(evt) => this.handleChange(evt, 'eventCity')}
+          />
+
 
           {/* // TODO: Make submit button and add functionality to post to database */}
 
