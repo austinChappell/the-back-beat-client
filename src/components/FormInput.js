@@ -8,6 +8,9 @@ class FormInput extends Component {
         <input
           className="input"
           name={this.props.name}
+          step={this.props.step}
+          min={this.props.min}
+          max={this.props.max}
           placeholder={this.props.placeholder}
           onBlur={this.props.onBlur}
           onChange={(evt) => this.props.onChange(evt, this.props.name)}

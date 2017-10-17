@@ -17,6 +17,7 @@ import LoggedIn from './LoggedIn';
 import Logout from './Logout';
 import Main from './Main';
 import MessagePage from './MessagePage';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MyProfile from './MyProfile';
 import Onboarding from './Onboarding';
 import PrivateRoute from './PrivateRoute';
@@ -28,32 +29,37 @@ class App extends Component {
 
     return (
       <div className="App">
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
+
         <Provider store={store}>
-          <Router>
-            <BaseLayout>
-              <Switch>
-                <PrivateRoute path="/" exact component={Main} />
-                {/* <Route path="/login" component={Home} /> */}
-                <Route path="/login" component={Home} />
-                <PrivateRoute path="/logout" component={Logout} />
-                <PrivateRoute path="/myprofile" component={MyProfile} />
-                <PrivateRoute path="/profile/:username" component={Profile} />
-                <PrivateRoute path="/band/create" component={BandCreateForm} />
-                <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
-                <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
-                <PrivateRoute path="/band/:bandId" component={BandPage} />
-                <PrivateRoute path="/band_event/:eventId" component={EventPage} />
-                <PrivateRoute path="/calendar" component={CalendarPage} />
-                <PrivateRoute path="/connect" component={ConnectPage} />
-                <PrivateRoute path="/gigs" component={GigPage} />
-                <PrivateRoute path="/messages" component={MessagePage} />
-                <PrivateRoute path="/onboarding" component={Onboarding} />
-                <PrivateRoute path="/rehearsals" component={RehearsalPage} />
-                <PrivateRoute path="/event/:eventtype/:eventId" component={EventPage} />
-                <PrivateRoute path="/events" component={LocalEventsPage} />
-              </Switch>
-            </BaseLayout>
-          </Router>
+          <MuiThemeProvider>
+            <Router>
+              <BaseLayout>
+                <Switch>
+                  <PrivateRoute path="/" exact component={Main} />
+                  {/* <Route path="/login" component={Home} /> */}
+                  <Route path="/login" component={Home} />
+                  <PrivateRoute path="/logout" component={Logout} />
+                  <PrivateRoute path="/myprofile" component={MyProfile} />
+                  <PrivateRoute path="/profile/:username" component={Profile} />
+                  <PrivateRoute path="/band/create" component={BandCreateForm} />
+                  <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
+                  <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
+                  <PrivateRoute path="/band/:bandId" component={BandPage} />
+                  <PrivateRoute path="/band_event/:eventId" component={EventPage} />
+                  <PrivateRoute path="/calendar" component={CalendarPage} />
+                  <PrivateRoute path="/connect" component={ConnectPage} />
+                  <PrivateRoute path="/gigs" component={GigPage} />
+                  <PrivateRoute path="/messages" component={MessagePage} />
+                  <PrivateRoute path="/onboarding" component={Onboarding} />
+                  <PrivateRoute path="/rehearsals" component={RehearsalPage} />
+                  <PrivateRoute path="/event/:eventtype/:eventId" component={EventPage} />
+                  <PrivateRoute path="/events" component={LocalEventsPage} />
+                </Switch>
+              </BaseLayout>
+            </Router>
+          </MuiThemeProvider>
         </Provider>
       </div>
     );

@@ -21,6 +21,7 @@ class EventCreator extends Component {
     eventCity: '',
     eventDate: '',
     eventDetails: '',
+    eventDuration: null,
     eventList: [],
     eventTime: '12:00 am',
     eventTitle: '',
@@ -79,6 +80,7 @@ class EventCreator extends Component {
         eventCity: this.state.eventCity,
         eventDateTime: `${this.state.eventDate}-05`,
         eventDetails: this.state.eventDetails,
+        eventDuration: Number(this.state.eventDuration),
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
         eventVenue: this.state.eventVenue,
@@ -91,6 +93,7 @@ class EventCreator extends Component {
       this.setState({
         eventDate: '',
         eventDetails: '',
+        eventDuration: null,
         eventTime: '12:00am',
         eventTitle: '',
         eventType: this.props.eventTypes[0].value,
@@ -109,7 +112,7 @@ class EventCreator extends Component {
 
   render() {
 
-    console.log('EVENT CREATOR STATE', this.state);
+    console.log('STATE', this.state);
 
     return (
       <div className="EventCreator" style={{display: this.props.displayModal ? 'block' : 'none'}}>
@@ -155,6 +158,17 @@ class EventCreator extends Component {
                 />
 
               </div>
+
+              <FormInput
+                name="eventDuration"
+                placeholder="Event Duration (in hours)"
+                step={1}
+                min={1}
+                max={12}
+                onChange={this.handleInputChange}
+                type="number"
+                value={this.state.eventDuration}
+              />
 
               <TextArea
                 name="eventDetails"
