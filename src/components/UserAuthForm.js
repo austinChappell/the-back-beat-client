@@ -31,7 +31,7 @@ class UserAuthForm extends Component {
     const inputLength = evt.target.value.length;
     this.props.handleFormInputChange(evt.target.value, input);
     this.stopTimeout = setTimeout(function () {
-      if (checkInputAvailability) {
+      if (checkInputAvailability && value.length > 0) {
         fetch(`${component.props.apiURL}/api/${input}/${value}`).then((response) => {
           return response.json();
         }).then((results) => {
@@ -49,6 +49,8 @@ class UserAuthForm extends Component {
 
           }
         })
+      } else if (value.length === 0) {
+        component.setState({ checkUsernameMessage: null });
       }
     }, 1000);
   }
@@ -209,6 +211,18 @@ class UserAuthForm extends Component {
 
   render() {
 
+    const errorMessageStyle = {
+      color: '$color-failure',
+      border: '1px solid $color-failure',
+      borderRadius: '2px',
+      backgroundColor: 'pink',
+      padding: '10px',
+      textAlign: 'center',
+      marginTop: '20px',
+      fontWeight: '100',
+      transition: '400ms'
+    }
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -322,7 +336,7 @@ class UserAuthForm extends Component {
           <div className={this.state.checkUsernameMessage ? "error-message" : "no-errors"}>
             {this.state.checkUsernameMessage}
           </div>
-          <div className={this.state.errorMessage ? "error-message" : "no-errors"}>
+          <div style={this.state.errorMessage ? errorMessageStyle : {}}>
             {this.state.errorMessage}
           </div>
           <div className="form-footer">

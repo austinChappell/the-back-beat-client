@@ -1348,49 +1348,18 @@ button, input, textarea {
     .form-inputs {
       justify-content: center; } }
 
-input, select {
-  width: 100%;
-  margin-bottom: 10px;
-  font-size: 1.0em;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  box-sizing: border-box;
-  outline: none; }
-
-select {
-  height: 38px;
-  overflow: hidden;
-  background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
-  background-size: contain;
-  background-color: #FFFFFF;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  /* remove default arrow */ }
-
-button {
-  border: 3px solid #1565C0;
-  background-color: transparent;
-  color: #1565C0;
-  font-size: 1.3em;
-  cursor: pointer;
-  border-radius: 2px;
-  padding: 10px; }
-  button:hover {
-    background-color: #1565C0;
-    color: #FFFFFF; }
-
 .no-errors {
   color: #C91208; }
 
 .error-message {
   color: #C91208;
-  border: 2px solid #C91208;
-  border-radius: 5px;
+  border: 1px solid #C91208;
+  border-radius: 2px;
   background-color: pink;
   padding: 10px;
-  font-weight: 600;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 100;
   transition: 400ms; }
 
 .form-footer {
