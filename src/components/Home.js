@@ -58,12 +58,12 @@ class Home extends Component {
           <div className="feature-text">
             <h1>The Back Beat</h1>
             <h2>Connecting musicians<br />in a digital age.</h2>
-            {/* <CTAButton onClick={this.handleOpen} text="Sign Up" /> */}
-            <RaisedButton
+            <CTAButton text="Sign Up" />
+            {/* <RaisedButton
               label="Sign Up"
               secondary={true}
-              onClick={this.handleOpen}
-            />
+              // onClick={this.handleOpen}
+            /> */}
           </div>
           <div className="arrow-wrapper">
             <i id="down-arrow" className="fa fa-angle-down" aria-hidden="true"></i>

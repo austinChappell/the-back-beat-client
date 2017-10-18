@@ -10,7 +10,7 @@ class CTAButton extends Component {
         <RaisedButton
           label="Sign Up"
           secondary={true}
-          // onClick={this.props.toggleUserAuthForm}
+          onClick={this.props.toggleUserAuthForm}
         />
 
         {/* <button onClick={this.props.toggleUserAuthForm}>{this.props.text}</button> */}
