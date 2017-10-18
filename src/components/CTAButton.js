@@ -13,17 +13,13 @@ class CTAButton extends Component {
           onClick={this.props.toggleUserAuthForm}
         />
 
-        {/* <button onClick={this.props.toggleUserAuthForm}>{this.props.text}</button> */}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    showUserAuthForm: state.showUserAuthForm,
-    userAuthType: state.userAuthType
-  }
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {

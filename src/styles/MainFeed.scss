@@ -12,7 +12,7 @@
   padding: 20px 40px;
   .create-band-link {
     a {
-      @@include link;
+      @include link;
     }
   }
   .buttons {

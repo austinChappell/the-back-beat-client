@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -9,7 +8,6 @@ class Form extends Component {
       <div className="Form">
         <form>
           {this.props.children}
-          {/* <button onClick={(evt) => this.props.onSubmit(evt)}>{this.props.submitBtnText}</button> */}
           <RaisedButton
             label={this.props.submitBtnText}
             primary={true}
@@ -21,16 +19,4 @@ class Form extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default Form;

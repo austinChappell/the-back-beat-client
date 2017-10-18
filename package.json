@@ -21,11 +21,11 @@
     "redux": "^3.7.2"
   },
   "scripts": {
-    "start": "concurrently 'react-scripts start' 'node-sass src/styles/App.scss src/index.css --watch'",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "sass": "node-sass src/styles/App.scss src/index.css --watch"
+    "node-sass": "node-sass src/styles/App.scss src/index.css --watch"
   },
   "devDependencies": {
     "react-app-env": "^1.2.0"

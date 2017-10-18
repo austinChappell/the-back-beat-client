@@ -18,20 +18,21 @@ button, input, textarea {
   text-align: center;
   margin-bottom: 60px; }
   .BandBox h2 {
-    color: #070649; }
+    color: #1565C0; }
   .BandBox h3 {
     margin: 5px 10px 5px 0; }
   .BandBox h3 > a {
+    color: #BA68C8;
+    text-decoration: none;
+    cursor: pointer;
     font-size: 16px;
     display: inline-block;
     background-color: #EEEEEE;
     padding: 6px 8px;
     border-radius: 3px;
-    color: #894586;
-    text-decoration: none;
     transition: 300ms; }
     .BandBox h3 > a:hover {
-      background-color: #E0E0E0; }
+      color: #894586; }
   .BandBox .band-results {
     margin-top: 10px;
     display: flex;
@@ -42,7 +43,7 @@ button, input, textarea {
   width: 80%;
   max-width: 600px;
   margin: 40px auto;
-  border: 1px solid #070649;
+  border: 1px solid #1565C0;
   padding: 20px;
   font-size: 20px;
   box-shadow: 2px 2px 10px gray;
@@ -63,7 +64,7 @@ button, input, textarea {
     display: inline-grid;
     max-height: 60px;
     overflow: scroll;
-    border: 1px solid #070649; }
+    border: 1px solid #1565C0; }
     .BandCreateForm form .search-results-display .single-search-result {
       cursor: pointer;
       padding: 0 3px; }
@@ -108,15 +109,15 @@ button, input, textarea {
   .BandCreateForm form textarea {
     resize: none; }
   .BandCreateForm form button {
-    border: 3px solid #070649;
+    border: 3px solid #1565C0;
     background-color: transparent;
-    color: #070649;
+    color: #1565C0;
     font-size: 1.3em;
     cursor: pointer;
     border-radius: 2px;
     padding: 10px; }
     .BandCreateForm form button:hover {
-      background-color: #070649;
+      background-color: #1565C0;
       color: #FFFFFF; }
   .BandCreateForm form .no-errors {
     color: #C91208; }
@@ -138,7 +139,7 @@ button, input, textarea {
       .BandCreateForm form .form-footer p span {
         display: block; }
       .BandCreateForm form .form-footer p .span-link {
-        color: #070649;
+        color: #1565C0;
         text-decoration: underline;
         cursor: pointer; }
 
@@ -148,7 +149,7 @@ button, input, textarea {
   .BandEventBox .gig {
     text-align: left; }
     .BandEventBox .gig a {
-      color: #9A6197;
+      color: #BA68C8;
       text-decoration: none;
       cursor: pointer; }
       .BandEventBox .gig a:hover {
@@ -168,7 +169,7 @@ button, input, textarea {
     display: flex;
     justify-content: space-around; }
     .BandPage .band-info .add-button {
-      background-color: #9A6197;
+      background-color: #BA68C8;
       cursor: pointer;
       border-radius: 50%;
       color: #FFFFFF;
@@ -188,13 +189,13 @@ button, input, textarea {
     .BandPage .band-info > div:first-of-type .edit-band i, .BandPage .band-info > div:first-of-type .delete-band i {
       cursor: pointer;
       font-size: 20px;
-      color: #070649;
+      color: #1565C0;
       margin-left: 15px; }
     .BandPage .band-info > div:first-of-type .search-members-link a {
       font-size: 14px;
       text-decoration: none;
       margin-left: 20px;
-      color: #9A6197;
+      color: #BA68C8;
       cursor: pointer; }
       .BandPage .band-info > div:first-of-type .search-members-link a:hover {
         color: #894586; }
@@ -206,16 +207,16 @@ button, input, textarea {
         position: relative; }
         .BandPage .band-info .members .add-members-div input {
           border-radius: 20px;
-          border: 1px solid #070649;
+          border: 1px solid #1565C0;
           box-sizing: border-box;
           font-size: 14px;
           padding: 5px 20px;
           outline: none;
           margin: 10px 0; }
           .BandPage .band-info .members .add-members-div input:focus {
-            border: 2px solid #070649; }
+            border: 2px solid #1565C0; }
       .BandPage .band-info .members .search-results-display {
-        border: 1px solid #070649;
+        border: 1px solid #1565C0;
         position: fixed;
         height: 150px;
         overflow: scroll; }
@@ -223,7 +224,7 @@ button, input, textarea {
           padding: 5px;
           cursor: pointer; }
           .BandPage .band-info .members .search-results-display .single-search-result:hover {
-            background-color: #9A6197;
+            background-color: #BA68C8;
             color: #FFFFFF; }
     .BandPage .band-info .delete-band-form {
       position: absolute;
@@ -301,7 +302,7 @@ button, input, textarea {
   .BrowseBox .chevron {
     font-size: 40px;
     cursor: pointer;
-    color: #9A6197;
+    color: #BA68C8;
     transition: 300ms;
     margin-top: 40px; }
     .BrowseBox .chevron:hover {
@@ -309,7 +310,7 @@ button, input, textarea {
   .BrowseBox .hidden {
     opacity: 0; }
   .BrowseBox h2 {
-    color: #070649; }
+    color: #1565C0; }
   .BrowseBox .browse-box-container {
     width: 600px;
     height: 350px;
@@ -326,13 +327,13 @@ button, input, textarea {
         margin-top: 20px;
         border-radius: 3px; }
     .BrowseBox .browse-box-container h3 a {
-      color: #9A6197;
+      color: #BA68C8;
       text-decoration: none;
       transition: 300ms; }
       .BrowseBox .browse-box-container h3 a:hover {
         color: #894586; }
     .BrowseBox .browse-box-container strong {
-      color: #070649; }
+      color: #1565C0; }
 
 .CalendarPage {
   width: 80%;
@@ -367,12 +368,12 @@ button, input, textarea {
     font-size: 10px;
     padding: 5px; }
     .ConnectResults .single-search-result:hover {
-      background-color: #9A6197; }
+      background-color: #BA68C8; }
       .ConnectResults .single-search-result:hover a {
         color: #FFFFFF; }
     .ConnectResults .single-search-result a {
       text-decoration: none;
-      color: #070649; }
+      color: #1565C0; }
 
 .Contact {
   padding: 50px;
@@ -399,26 +400,27 @@ button, input, textarea {
     .Contact .form textarea {
       resize: none; }
     .Contact .form button {
-      border: 3px solid #070649;
+      border: 3px solid #1565C0;
       background-color: transparent;
-      color: #070649;
+      color: #1565C0;
       font-size: 1.0em;
       cursor: pointer;
       border-radius: 2px;
       padding: 10px; }
       .Contact .form button:hover {
-        background-color: #070649;
+        background-color: #1565C0;
         color: #FFFFFF; }
 
 .CTAButton button {
-  background-color: #9A6197;
+  background-color: #BA68C8;
   color: #FFFFFF;
   text-transform: uppercase;
   padding: 12px 16px;
   font-size: 18px;
   border: 1px solid #FFFFFF;
   border-radius: 5px;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: 150ms; }
   .CTAButton button:hover {
     background-color: #894586; }
 
@@ -470,7 +472,7 @@ button, input, textarea {
     .EventList .event .dateInfo {
       width: 70px;
       padding: 10px;
-      background-color: #070649;
+      background-color: #1565C0;
       color: #FFFFFF;
       display: flex;
       flex-direction: column;
@@ -527,12 +529,12 @@ button, input, textarea {
               color: white; }
 
 .EventPage {
-  border: 1px solid #070649;
+  border: 1px solid #1565C0;
   max-width: 600px;
   margin: 40px auto; }
   .EventPage h1 {
     text-align: center;
-    background-color: #070649;
+    background-color: #1565C0;
     color: #FFFFFF; }
   .EventPage .details {
     padding: 20px; }
@@ -560,7 +562,7 @@ button, input, textarea {
 
 .Features {
   padding: 50px 0;
-  color: #070649;
+  color: #1565C0;
   text-align: center; }
   .Features h1 {
     font-size: 3.0em; }
@@ -584,7 +586,7 @@ button, input, textarea {
 .Footer {
   font-size: 1.2em;
   text-align: center;
-  background-color: #070649;
+  background-color: #1565C0;
   color: #FFFFFF;
   padding: 10px;
   flex-basis: 100%;
@@ -626,15 +628,15 @@ button, input, textarea {
     .Form .flex-calendar .rc-time-picker-input {
       height: 38px; }
   .Form button {
-    border: 3px solid #070649;
+    border: 3px solid #1565C0;
     background-color: transparent;
-    color: #070649;
+    color: #1565C0;
     font-size: 1.3em;
     cursor: pointer;
     border-radius: 2px;
     padding: 10px; }
     .Form button:hover {
-      background-color: #070649;
+      background-color: #1565C0;
       color: #FFFFFF; }
   .Form .no-errors {
     color: #C91208; }
@@ -656,7 +658,7 @@ button, input, textarea {
       .Form .form-footer p span {
         display: block; }
       .Form .form-footer p .span-link {
-        color: #070649;
+        color: #1565C0;
         text-decoration: underline;
         cursor: pointer; }
 
@@ -700,12 +702,12 @@ button, input, textarea {
   padding: 20px 40px;
   overflow: scroll; }
   .LeftMainPageSideBar h2 {
-    color: #070649; }
+    color: #1565C0; }
   .LeftMainPageSideBar .see-all-link {
     font-size: 12px;
     margin-bottom: 10px;
     display: inline-block;
-    color: #9A6197; }
+    color: #BA68C8; }
   .LeftMainPageSideBar h3 {
     color: #894586;
     font-size: 16px; }
@@ -715,7 +717,7 @@ button, input, textarea {
     font-size: 12px;
     margin-top: 5px; }
   .LeftMainPageSideBar hr {
-    border-color: #9A6197;
+    border-color: #BA68C8;
     border-top: 0; }
   .LeftMainPageSideBar .buttons {
     margin-top: 20px; }
@@ -760,7 +762,7 @@ button, input, textarea {
   margin-left: 25%;
   padding: 20px 40px; }
   .MainFeed .create-band-link a {
-    color: #9A6197;
+    color: #BA68C8;
     text-decoration: none;
     cursor: pointer; }
     .MainFeed .create-band-link a:hover {
@@ -815,7 +817,7 @@ button, input, textarea {
       .MessageDisplay .messages .message .message-wrapper {
         max-width: 70%;
         display: inline-block;
-        border: 1px solid #070649;
+        border: 1px solid #1565C0;
         border-radius: 15px;
         padding: 0 10px; }
     .MessageDisplay .messages .sent {
@@ -831,7 +833,7 @@ button, input, textarea {
       resize: none;
       font-size: 16px;
       padding: 10px 20px;
-      border: 1px solid #070649;
+      border: 1px solid #1565C0;
       border-radius: 20px;
       outline: none; }
     .MessageDisplay .message-editor .send-message-button {
@@ -842,7 +844,7 @@ button, input, textarea {
       text-transform: uppercase;
       font-weight: bold;
       letter-spacing: 1px;
-      background-color: #9A6197;
+      background-color: #BA68C8;
       color: #FFFFFF;
       cursor: pointer;
       margin-left: 10px;
@@ -872,7 +874,7 @@ button, input, textarea {
     .MessageHistorySideBar .message-history-result p {
       margin: 0 0 0 15px; }
   .MessageHistorySideBar .unread {
-    background-color: #9A6197;
+    background-color: #BA68C8;
     color: #FFFFFF; }
 
 .MessagePage {
@@ -886,7 +888,7 @@ button, input, textarea {
   box-sizing: border-box; }
   .MessageSearchBar input {
     border-radius: 20px;
-    border: 2px solid #070649;
+    border: 2px solid #1565C0;
     width: 100%;
     box-sizing: border-box;
     font-size: 14px;
@@ -904,7 +906,7 @@ button, input, textarea {
       padding: 5px;
       cursor: pointer; }
       .MessageSearchBar .display-search-results .search-result:hover {
-        background-color: #9A6197;
+        background-color: #BA68C8;
         color: #FFFFFF; }
 
 .Modal {
@@ -1029,15 +1031,15 @@ button, input, textarea {
       outline: none; }
     .Modal .full-background button {
       margin-top: 20px;
-      border: 3px solid #070649;
+      border: 3px solid #1565C0;
       background-color: transparent;
-      color: #070649;
+      color: #1565C0;
       font-size: 1.3em;
       cursor: pointer;
       border-radius: 2px;
       padding: 10px; }
       .Modal .full-background button:hover {
-        background-color: #070649;
+        background-color: #1565C0;
         color: #FFFFFF; }
 
 .MusicianCarousel {
@@ -1058,7 +1060,7 @@ button, input, textarea {
     overflow: hidden;
     height: 450px;
     box-sizing: border-box;
-    border: 1px solid #070649; }
+    border: 1px solid #1565C0; }
   .MusicianCarousel .single-result {
     transition: 500ms;
     position: absolute;
@@ -1071,7 +1073,7 @@ button, input, textarea {
     bottom: 10px;
     right: 10px; }
     .MusicianCarousel .message-link .message-icon {
-      background-color: #9A6197;
+      background-color: #BA68C8;
       color: #FFFFFF;
       font-size: 38px;
       padding: 15px 12px 15px 18px;
@@ -1081,7 +1083,7 @@ button, input, textarea {
         background-color: #894586; }
 
 .logged-in {
-  background-color: #070649;
+  background-color: #1565C0;
   position: fixed;
   height: 80px; }
 
@@ -1145,7 +1147,7 @@ button, input, textarea {
     cursor: pointer; }
     .Navbar .button-link:hover {
       background-color: #FFFFFF;
-      color: #070649; }
+      color: #1565C0; }
   .Navbar .fa-circle {
     color: red;
     font-size: 10px;
@@ -1168,7 +1170,7 @@ button, input, textarea {
     .NewsFeed .FormInput input {
       width: 100%;
       box-sizing: border-box;
-      border: 2px solid #070649;
+      border: 2px solid #1565C0;
       border-radius: 25px;
       font-size: 16px;
       padding: 5px 10px; }
@@ -1177,18 +1179,18 @@ button, input, textarea {
   .NewsFeed .itunes-results {
     background-color: #B8B7D5;
     padding: 0 10px;
-    border: 1px solid #070649;
+    border: 1px solid #1565C0;
     border-radius: 5px;
     position: fixed;
     overflow: scroll;
     height: calc(100vh - 140px);
     width: calc(25% - 100px); }
     .NewsFeed .itunes-results .result {
-      border-bottom: 1px solid #070649;
+      border-bottom: 1px solid #1565C0;
       cursor: pointer;
       transition: 200ms; }
       .NewsFeed .itunes-results .result:hover {
-        color: #070649;
+        color: #1565C0;
         font-weight: 700; }
   .NewsFeed .NewsFeedEvent > div {
     display: flex;
@@ -1197,12 +1199,12 @@ button, input, textarea {
   .NewsFeed .NewsFeedEvent i {
     margin-right: 10px;
     font-size: 25px;
-    color: #070649; }
+    color: #1565C0; }
   .NewsFeed .NewsFeedEvent p {
     font-size: 14px;
     margin: 20px 0; }
     .NewsFeed .NewsFeedEvent p a {
-      color: #9A6197;
+      color: #BA68C8;
       text-decoration: none;
       cursor: pointer; }
       .NewsFeed .NewsFeedEvent p a:hover {
@@ -1254,23 +1256,23 @@ button, input, textarea {
   background-color: white;
   display: flex; }
   .Profile h2 {
-    color: #070649; }
+    color: #1565C0; }
 
 .ProfileContent {
   background-color: #FFFFFF;
   padding: 20px;
-  border: 1px solid #070649;
+  border: 1px solid #1565C0;
   border-top: none; }
   .ProfileContent .ProfileBands .band {
     padding: 20px 20px;
-    border-bottom: 1px solid #070649; }
+    border-bottom: 1px solid #1565C0; }
     .ProfileContent .ProfileBands .band h3 {
       margin-left: -10px; }
     .ProfileContent .ProfileBands .band p {
       margin: 10px 0;
       font-size: 14px; }
     .ProfileContent .ProfileBands .band a {
-      color: #9A6197;
+      color: #BA68C8;
       text-decoration: none; }
       .ProfileContent .ProfileBands .band a:hover {
         color: #894586; }
@@ -1282,11 +1284,11 @@ button, input, textarea {
   margin: 20px auto; }
 
 .ProfileInfoMain h4 {
-  color: #070649;
+  color: #1565C0;
   margin-bottom: 10px; }
 
 .ProfileInfoMain a {
-  color: #9A6197;
+  color: #BA68C8;
   text-decoration: none;
   cursor: pointer; }
   .ProfileInfoMain a:hover {
@@ -1301,7 +1303,7 @@ button, input, textarea {
   display: flex; }
   .ProfileInfoNavBar > div {
     flex-grow: 1;
-    border: 1px solid #070649;
+    border: 1px solid #1565C0;
     border-right: none;
     text-align: center;
     background-color: #FFFFFF;
@@ -1309,12 +1311,12 @@ button, input, textarea {
     cursor: pointer;
     transition: 300ms; }
     .ProfileInfoNavBar > div:hover {
-      background-color: #9A6197;
+      background-color: #BA68C8;
       color: #FFFFFF; }
   .ProfileInfoNavBar > div:last-of-type {
-    border-right: 1px solid #070649; }
+    border-right: 1px solid #1565C0; }
   .ProfileInfoNavBar .active {
-    background-color: #9A6197;
+    background-color: #BA68C8;
     color: #FFFFFF; }
 
 .ScrollBox {
@@ -1337,87 +1339,72 @@ button, input, textarea {
   display: none; }
 
 .UserAuthForm {
-  position: fixed;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  height: 100%;
-  z-index: 100; }
-  .UserAuthForm #exit-button {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 36px;
-    cursor: pointer; }
-    .UserAuthForm #exit-button:hover {
-      color: lightgray; }
-  .UserAuthForm .form {
-    width: 50%;
-    max-width: 600px;
-    margin: 150px auto 0;
-    background-color: #B8B7D5;
-    padding: 20px;
-    border-radius: 10px;
-    box-sizing: border-box; }
-    .UserAuthForm .form input, .UserAuthForm .form select {
-      width: 100%;
-      margin-bottom: 10px;
-      font-size: 1.0em;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      box-sizing: border-box;
-      outline: none; }
-    .UserAuthForm .form select {
-      height: 38px;
-      overflow: hidden;
-      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
-      background-size: contain;
-      background-color: #FFFFFF;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      /* remove default arrow */ }
-    .UserAuthForm .form button {
-      border: 3px solid #070649;
-      background-color: transparent;
-      color: #070649;
-      font-size: 1.3em;
-      cursor: pointer;
-      border-radius: 2px;
-      padding: 10px; }
-      .UserAuthForm .form button:hover {
-        background-color: #070649;
-        color: #FFFFFF; }
-    .UserAuthForm .form .no-errors {
-      color: #C91208; }
-    .UserAuthForm .form .error-message {
-      color: #C91208;
-      border: 2px solid #C91208;
-      border-radius: 5px;
-      background-color: pink;
-      padding: 10px;
-      font-weight: 600;
-      transition: 400ms; }
-    .UserAuthForm .form .form-footer {
-      display: flex;
-      flex-direction: column-reverse; }
-      .UserAuthForm .form .form-footer button {
-        align-self: center; }
-      .UserAuthForm .form .form-footer p {
-        text-align: center; }
-        .UserAuthForm .form .form-footer p span {
-          display: block; }
-        .UserAuthForm .form .form-footer p .span-link {
-          color: #070649;
-          text-decoration: underline;
-          cursor: pointer; }
+  color: blue;
+  background-color: #B8B7D5;
+  border-radius: 10px;
+  box-sizing: border-box; }
+  .UserAuthForm .form-inputs > div {
+    margin-right: 30px; }
+  .UserAuthForm input, .UserAuthForm select {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.0em;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    outline: none; }
+  .UserAuthForm select {
+    height: 38px;
+    overflow: hidden;
+    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+    background-size: contain;
+    background-color: #FFFFFF;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* remove default arrow */ }
+  .UserAuthForm button {
+    border: 3px solid #1565C0;
+    background-color: transparent;
+    color: #1565C0;
+    font-size: 1.3em;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 10px; }
+    .UserAuthForm button:hover {
+      background-color: #1565C0;
+      color: #FFFFFF; }
+  .UserAuthForm .no-errors {
+    color: #C91208; }
+  .UserAuthForm .error-message {
+    color: #C91208;
+    border: 2px solid #C91208;
+    border-radius: 5px;
+    background-color: pink;
+    padding: 10px;
+    font-weight: 600;
+    transition: 400ms; }
+  .UserAuthForm .form-footer {
+    display: flex;
+    flex-direction: column-reverse; }
+    .UserAuthForm .form-footer button {
+      align-self: center; }
+    .UserAuthForm .form-footer p {
+      text-align: center; }
+      .UserAuthForm .form-footer p span {
+        display: block; }
+      .UserAuthForm .form-footer p .span-link {
+        color: #1565C0;
+        text-decoration: underline;
+        cursor: pointer; }
 
 .UserProfile .profile-header {
   padding: 0 30px;
   display: flex;
   justify-content: space-between; }
   .UserProfile .profile-header .message-link .message-icon {
-    background-color: #9A6197;
+    background-color: #BA68C8;
     color: #FFFFFF;
     font-size: 20px;
     padding: 10px 8px 10px 12px;
