@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import store from '../store/';
 
-import {blue800, purple300} from 'material-ui/styles/colors';
+import {indigo900, purple400} from 'material-ui/styles/colors';
 import BandCreateForm from './BandCreateForm';
 import EventPage from './EventPage';
 import BandPage from './BandPage';
@@ -28,10 +28,10 @@ import RehearsalPage from './RehearsalPage';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: blue800,
+    primary1Color: indigo900,
     primary2Color: '#B8B7D5',
     primary3Color: '#9A6197',
-    accent1Color: purple300,
+    accent1Color: purple400,
     // accent2Color: grey100,
     // accent3Color: grey500,
     // textColor: darkBlack,
