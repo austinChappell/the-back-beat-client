@@ -281,6 +281,7 @@ class UserAuthForm extends Component {
         <SelectField
           floatingLabelText="City"
           onChange={this.handleCitySelect}
+          style={{textAlign: 'left'}}
           value={this.state.citySelect}
         >
           <MenuItem value="Austin, TX" primaryText="Austin, TX" />
@@ -289,6 +290,7 @@ class UserAuthForm extends Component {
         <SelectField
           floatingLabelText="Skill Level"
           onChange={this.handleSkillSelect}
+          style={{textAlign: 'left'}}
           value={this.state.skillSelect}
         >
           {this.props.skillLevels.map((skillLevel, index) => {

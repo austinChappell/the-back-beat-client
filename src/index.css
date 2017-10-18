@@ -1338,66 +1338,73 @@ button, input, textarea {
 .hide {
   display: none; }
 
-.UserAuthForm {
-  color: blue;
-  background-color: #B8B7D5;
-  border-radius: 10px;
-  box-sizing: border-box; }
-  .UserAuthForm .form-inputs > div {
-    margin-right: 30px; }
-  .UserAuthForm input, .UserAuthForm select {
-    width: 100%;
-    margin-bottom: 10px;
-    font-size: 1.0em;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    box-sizing: border-box;
-    outline: none; }
-  .UserAuthForm select {
-    height: 38px;
-    overflow: hidden;
-    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
-    background-size: contain;
-    background-color: #FFFFFF;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    /* remove default arrow */ }
-  .UserAuthForm button {
-    border: 3px solid #1565C0;
-    background-color: transparent;
-    color: #1565C0;
-    font-size: 1.3em;
-    cursor: pointer;
-    border-radius: 2px;
-    padding: 10px; }
-    .UserAuthForm button:hover {
-      background-color: #1565C0;
-      color: #FFFFFF; }
-  .UserAuthForm .no-errors {
-    color: #C91208; }
-  .UserAuthForm .error-message {
-    color: #C91208;
-    border: 2px solid #C91208;
-    border-radius: 5px;
-    background-color: pink;
-    padding: 10px;
-    font-weight: 600;
-    transition: 400ms; }
-  .UserAuthForm .form-footer {
-    display: flex;
-    flex-direction: column-reverse; }
-    .UserAuthForm .form-footer button {
-      align-self: center; }
-    .UserAuthForm .form-footer p {
-      text-align: center; }
-      .UserAuthForm .form-footer p span {
-        display: block; }
-      .UserAuthForm .form-footer p .span-link {
-        color: #1565C0;
-        text-decoration: underline;
-        cursor: pointer; }
+.form-inputs {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; }
+  .form-inputs > div {
+    margin: 0 10px; }
+  @media (max-width: 799px) {
+    .form-inputs {
+      justify-content: center; } }
+
+input, select {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 1.0em;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box;
+  outline: none; }
+
+select {
+  height: 38px;
+  overflow: hidden;
+  background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+  background-size: contain;
+  background-color: #FFFFFF;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* remove default arrow */ }
+
+button {
+  border: 3px solid #1565C0;
+  background-color: transparent;
+  color: #1565C0;
+  font-size: 1.3em;
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 10px; }
+  button:hover {
+    background-color: #1565C0;
+    color: #FFFFFF; }
+
+.no-errors {
+  color: #C91208; }
+
+.error-message {
+  color: #C91208;
+  border: 2px solid #C91208;
+  border-radius: 5px;
+  background-color: pink;
+  padding: 10px;
+  font-weight: 600;
+  transition: 400ms; }
+
+.form-footer {
+  display: flex;
+  flex-direction: column-reverse; }
+  .form-footer p {
+    text-align: center; }
+    .form-footer p span {
+      display: block; }
+    .form-footer p .span-link {
+      color: #1565C0;
+      text-decoration: underline;
+      margin-top: 10px;
+      cursor: pointer; }
 
 .UserProfile .profile-header {
   padding: 0 30px;
