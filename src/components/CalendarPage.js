@@ -129,6 +129,16 @@ class CalendarPage extends Component {
     const apiURL = this.props.apiURL;
     console.log('STATE', this.state);
     console.log('CITY', this.props.loggedInUser.city);
+
+
+    let stringDate = this.state.eventDate;
+    let stringTime = this.state.eventTime;
+
+    let shortDate = stringDate.slice(0, 15);
+    let shortTime = stringTime.slice(16, stringTime.length);
+    let stringDateTime = `${shortDate} ${shortTime}`;
+    let date = new Date(stringDateTime);
+
     fetch(`${apiURL}/api/calendar/add`, {
       credentials: 'include',
       headers: {
@@ -139,7 +149,7 @@ class CalendarPage extends Component {
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventType,
         eventVenue: this.state.eventVenue,
-        eventDateTime: this.state.eventDate,
+        eventDateTime: date,
         eventDetails: this.state.eventDetails,
         eventCity: this.state.eventCity,
         userCity: this.props.loggedInUser.city,
@@ -174,7 +184,10 @@ class CalendarPage extends Component {
   }
 
   handleNewTimeChange = (evt, time) => {
-    this.setState({eventTime: time});
+    let stringTime = String(time);
+    this.setState({eventTime: stringTime}, () => {
+
+    });
   }
 
   handleChange = (evt, name) => {
@@ -241,60 +254,62 @@ class CalendarPage extends Component {
           onRequestClose={this.handleClose}
         >
 
-          <TextField
-            floatingLabelText="Title"
-            onChange={(evt) => this.handleChange(evt, 'eventTitle')}
-            value={this.state.eventTitle}
-          />
+          <div className="form-inputs">
 
-          <TextField
-            floatingLabelText="Details"
-            onChange={(evt) => this.handleChange(evt, 'eventDetails')}
-            multiLine={true}
-            rows={1}
-            rowsMax={4}
-          />
 
-          <div className="flex-calendar">
+            <TextField
+              floatingLabelText="Title"
+              onChange={(evt) => this.handleChange(evt, 'eventTitle')}
+              value={this.state.eventTitle}
+            />
+
+            <TextField
+              floatingLabelText="Details"
+              onChange={(evt) => this.handleChange(evt, 'eventDetails')}
+              multiLine={true}
+              rows={1}
+              rowsMax={4}
+            />
 
             <DatePicker
               onChange={this.handleNewDateChange}
+              floatingLabelText="Event Date"
               DatePicker={DatePickerDialog}
               TimePicker={TimePickerDialog}
             />
 
             <TimePicker
               format="ampm"
-              hintText="12hr Format with auto ok"
+              floatingLabelText="Event Time"
               onChange={this.handleNewTimeChange}
             />
 
+            <SelectField
+              floatingLabelText="Type"
+              value={this.state.eventTypeSelected}
+              onChange={this.handleSelecteChange}
+            >
+              {this.state.eventTypes.map((eventType) => {
+                return (
+                  <MenuItem
+                    value={eventType.value}
+                    primaryText={eventType.text}
+                  />
+                )
+              })}
+            </SelectField>
+
+            <TextField
+              floatingLabelText="Venue"
+              onChange={(evt) => this.handleChange(evt, 'eventVenue')}
+            />
+
+            <TextField
+              floatingLabelText="City"
+              onChange={(evt) => this.handleChange(evt, 'eventCity')}
+            />
+
           </div>
-
-          <SelectField
-            floatingLabelText="Type"
-            value={this.state.eventTypeSelected}
-            onChange={this.handleSelecteChange}
-          >
-            {this.state.eventTypes.map((eventType) => {
-              return (
-                <MenuItem
-                  value={eventType.value}
-                  primaryText={eventType.text}
-                />
-              )
-            })}
-          </SelectField>
-
-          <TextField
-            floatingLabelText="Venue"
-            onChange={(evt) => this.handleChange(evt, 'eventVenue')}
-          />
-
-          <TextField
-            floatingLabelText="City"
-            onChange={(evt) => this.handleChange(evt, 'eventCity')}
-          />
 
 
           {/* // TODO: Make submit button and add functionality to post to database */}

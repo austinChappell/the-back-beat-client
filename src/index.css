@@ -343,7 +343,14 @@ button, input, textarea {
       transition: 500ms; }
       .BrowseBox .browse-box-container .show-item iframe {
         margin-top: 20px;
-        border-radius: 3px; }
+        border-radius: 3px;
+        box-shadow: 2px 2px 15px gray;
+        height: 250px; }
+      .BrowseBox .browse-box-container .show-item img {
+        margin-top: 20px;
+        border-radius: 3px;
+        box-shadow: 2px 2px 15px gray;
+        height: 250px; }
     .BrowseBox .browse-box-container h3 a {
       color: #9A6197;
       text-decoration: none;
