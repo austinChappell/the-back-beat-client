@@ -10,11 +10,6 @@
   box-sizing: border-box;
   margin-left: 25%;
   padding: 20px 40px;
-  .create-band-link {
-    a {
-      @include link;
-    }
-  }
   .buttons {
     margin-top: 20px;
     h3 {

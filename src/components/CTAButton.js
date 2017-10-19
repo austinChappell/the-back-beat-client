@@ -8,6 +8,7 @@ class CTAButton extends Component {
     return (
       <div className="CTAButton">
         <RaisedButton
+          style={{border: '1px solid white'}}
           label="Sign Up"
           secondary={true}
           onClick={this.props.toggleUserAuthForm}

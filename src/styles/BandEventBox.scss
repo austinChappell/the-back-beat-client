@@ -1,8 +1,17 @@
 .BandEventBox {
   margin-bottom: 30px;
   text-align: center;
+  h2 {
+    font-weight: 500;
+  }
   .gig {
     text-align: left;
+    h3 {
+      a {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+    }
     a {
       @include link;
     }

@@ -7,6 +7,9 @@ import EventCreator from './EventCreator';
 import EventList from './EventList';
 import Modal from './Modal';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
 class BandPage extends Component {
 
   state = {
@@ -205,7 +208,14 @@ class BandPage extends Component {
       null;
 
       addButton = this.props.loggedInUser.id === bandData.band_admin_id ?
-      <i className="fa fa-plus add-button" aria-hidden="true" onClick={this.toggleModal}></i>
+      // <i className="fa fa-plus add-button" aria-hidden="true" onClick={this.toggleModal}></i>
+      <FloatingActionButton
+        mini={true}
+        secondary={true}
+        onClick={this.toggleModal}
+      >
+        <ContentAdd />
+      </FloatingActionButton>
       :
       null;
 
@@ -245,9 +255,9 @@ class BandPage extends Component {
     <div className="band-info-section">
       <div className="band-details">
         <h1>{bandData.band_name}<sup>{ editButton }{ deleteButton }{ searchMembersLink }</sup></h1>
-        <h2>City: {bandData.band_city}</h2>
-        <h2>Genre: {bandData.band_genre}</h2>
-        <h3>Type: {bandData.band_skill_level}</h3>
+        <h2>{bandData.band_city}</h2>
+        <h2>{bandData.band_genre}</h2>
+        <h3>{bandData.band_skill_level}</h3>
         <p>{bandData.band_description}</p>
 
 

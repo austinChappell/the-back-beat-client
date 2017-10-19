@@ -83,14 +83,16 @@ class EventList extends Component {
                 <div className="month">{month}</div>
               </div>
               <div className="info">
-                <h4 className="title">
-                  {event.event_title}
-                </h4>
+                <div className="top">
+                  <h4 className="type">
+                    {event.event_type}
+                  </h4>
+                  <h4 className="title">
+                    {event.event_title}
+                  </h4>
+                </div>
                 <p className="details">
                   {event.event_details}
-                </p>
-                <p className="type">
-                  {event.event_type}
                 </p>
                 {buttons}
               </div>

@@ -1,7 +1,7 @@
-$color-primary: #1A237E;
+$color-primary: #070649;
 $color-secondary: #B8B7D5;
-$color-tertiary: #BA68C8;
-$color-tertiary-hover: #9C27B0;
+$color-tertiary: #9A6197;
+$color-tertiary-hover: #894586;
 $dark-font: #030303;
 $light-font: #FFFFFF;
 $tinted-overlay: rgba(7, 6, 73, 0.75);
@@ -30,7 +30,8 @@ $color-failure: #C91208;
 }
 
 @mixin link {
-  color: $color-tertiary;
+  color: $color-primary;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   &:hover {

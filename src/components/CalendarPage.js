@@ -14,7 +14,6 @@ import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
@@ -218,10 +217,9 @@ class CalendarPage extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={() => this.handleClose(true)}
+        onClick={(evt) => this.submitForm(evt)}
       />,
     ];
-
 
     console.log('STATE', this.state);
 
@@ -235,43 +233,19 @@ class CalendarPage extends Component {
           <ContentAdd />
         </FloatingActionButton>
 
-
         <Dialog
-          title="Dialog With Actions"
+          title="Create An Event"
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
 
-
-        {/* <Form
-          onSubmit={(evt) => this.submitForm(evt)}
-          submitBtnText="Create New Event"
-        > */}
-
-          {/* <FormInput
-            name="eventTitle"
-            placeholder="Title"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventTitle}
-          /> */}
-
           <TextField
             floatingLabelText="Title"
             onChange={(evt) => this.handleChange(evt, 'eventTitle')}
             value={this.state.eventTitle}
           />
-
-{/*
-          <TextArea
-            name="eventDetails"
-            placeholder="Description"
-            charLimit={150}
-            onChange={this.handleInputChange}
-            value={this.state.eventDetails}
-          /> */}
 
           <TextField
             floatingLabelText="Details"
@@ -281,35 +255,13 @@ class CalendarPage extends Component {
             rowsMax={4}
           />
 
-
           <div className="flex-calendar">
-
-            {/* <DatePicker
-              name="selectedDate"
-              onChange={this.handleDateChange}
-              selected={this.state.startDate}
-            /> */}
 
             <DatePicker
               onChange={this.handleNewDateChange}
-            />
-
-            {/* <DateTimePicker
-              onChange={this.setDate}
               DatePicker={DatePickerDialog}
               TimePicker={TimePickerDialog}
-              onTimeSelected={this.setDate}
-            /> */}
-
-
-            {/* <TimePicker
-              showSecond={false}
-              defaultValue={now}
-              className="xxx"
-              onChange={this.onTimeChange}
-              format={format}
-              use12Hours
-            /> */}
+            />
 
             <TimePicker
               format="ampm"
@@ -319,13 +271,6 @@ class CalendarPage extends Component {
 
           </div>
 
-          {/* <FormSelect
-            name="eventType"
-            onChange={this.handleInputChange}
-            options={this.state.eventTypes}
-            value={this.state.eventTypeSelected}
-          /> */}
-
           <SelectField
             floatingLabelText="Type"
             value={this.state.eventTypeSelected}
@@ -333,27 +278,13 @@ class CalendarPage extends Component {
           >
             {this.state.eventTypes.map((eventType) => {
               return (
-                <MenuItem value={eventType.value} primaryText={eventType.text} />
+                <MenuItem
+                  value={eventType.value}
+                  primaryText={eventType.text}
+                />
               )
             })}
           </SelectField>
-
-
-          {/* <FormInput
-            name="eventVenue"
-            placeholder="Venue"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventVenue}
-          />
-
-          <FormInput
-            name="eventCity"
-            placeholder="City"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventCity}
-          /> */}
 
           <TextField
             floatingLabelText="Venue"
@@ -367,8 +298,6 @@ class CalendarPage extends Component {
 
 
           {/* // TODO: Make submit button and add functionality to post to database */}
-
-        {/* </Form> */}
         </Dialog>
 
         <EventList

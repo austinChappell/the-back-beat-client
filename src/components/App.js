@@ -31,7 +31,7 @@ const muiTheme = getMuiTheme({
     primary1Color: indigo900,
     primary2Color: '#B8B7D5',
     primary3Color: '#9A6197',
-    accent1Color: purple400,
+    accent1Color: '#9A6197',
     // accent2Color: grey100,
     // accent3Color: grey500,
     // textColor: darkBlack,

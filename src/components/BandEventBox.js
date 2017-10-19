@@ -32,8 +32,7 @@ class BandEventBox extends Component {
         return (
           <div key={index} className="gig">
             <h3><Link to={`/event/${this.props.urlpath}/${event.event_id}`}>{event.event_title}</Link></h3>
-            <h4>{shortDate} - {formattedTime}</h4>
-            <p>{event.event_details}</p>
+            <p>{shortDate} - {formattedTime}</p>
             <hr />
           </div>
         )

@@ -58,7 +58,7 @@ class MusicianCarousel extends Component {
     return (
       <div className="MusicianCarousel">
         <i
-          className={this.props.sliderPosition === 0 ? "fa fa-chevron-left disabled-btn" : "fa fa-chevron-left"}
+          className={this.props.sliderPosition === 0 ? "fa fa-arrow-circle-left disabled-btn" : "fa fa-arrow-circle-left"}
           aria-hidden="true"
           style={this.props.searchResults.length > 0 ? {display: 'block'} : {display: 'none'}}
           onClick={() => this.props.slideCarousel(100)}></i>
@@ -66,9 +66,9 @@ class MusicianCarousel extends Component {
         <i
           className={this.props.sliderPosition === (this.props.searchResults.length - 1) * -100
             ?
-            "fa fa-chevron-right disabled-btn"
+            "fa fa-arrow-circle-right disabled-btn"
             :
-            "fa fa-chevron-right"}
+            "fa fa-arrow-circle-right"}
           aria-hidden="true"
           style={this.props.searchResults.length > 0 ? {display: 'block'} : {display: 'none'}}
           onClick={() => this.props.slideCarousel(-100)}></i>

@@ -1,6 +1,12 @@
 .BandBox {
   text-align: center;
   margin-bottom: 60px;
+  .create-band-link {
+    a {
+      @include link;
+      color: $color-tertiary;
+    }
+  }
   h2 {
     color: $color-primary;
   }
@@ -9,9 +15,12 @@
   }
   h3 > a {
     @include link;
+    font-weight: 400;
+    color: $color-tertiary;
     font-size: 16px;
     display: inline-block;
     background-color: $gray-background-light;
+    box-shadow: 1px 1px 5px gray;
     padding: 6px 8px;
     border-radius: 3px;
     transition: 300ms;

@@ -5,8 +5,10 @@
     border: 1px solid black;
     padding: 5px 20px;
     cursor: pointer;
+    transition: 250ms;
     &:hover {
       background-color: $gray-background-light;
+      color: $color-primary;
     }
     h4 {
       margin-bottom: 5px;
