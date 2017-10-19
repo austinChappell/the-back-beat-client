@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 
 import Modal from './Modal';
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+
 class OnboardingForm extends Component {
 
   constructor() {
@@ -349,6 +356,16 @@ class OnboardingForm extends Component {
 
   render() {
 
+    let actions = [
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={(evt) => {
+          this.submitForm(evt, this.props.userInfo);
+        }}
+      />,
+    ];
+
     if (this.state.selectedVideos.length === 1 && this.state.primaryVidIndex !== 0) {
       this.setState({ primaryVidIndex: 0 });
     }
@@ -403,6 +420,16 @@ class OnboardingForm extends Component {
           selectArray.push(selectItem);
       }
 
+      actions = [
+        <FlatButton
+          label="Continue"
+          primary={true}
+          onClick={(evt) => {
+            this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add', true)
+          }}
+        />,
+      ];
+
       form = <div>
         <h1>What genres do you listen to/play?</h1>
         <span>Choose 3-5 genres</span>
@@ -414,7 +441,6 @@ class OnboardingForm extends Component {
 
         {errorMessage}
 
-        <button onClick={(evt) => this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add', true)}>Continue</button>
       </div>
 
     } else if (stage === 1) {
@@ -428,6 +454,16 @@ class OnboardingForm extends Component {
           selectArray.push(selectItem);
       }
 
+      actions = [
+        <FlatButton
+          label="Continue"
+          primary={true}
+          onClick={(evt) => {
+            this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add', true)
+          }}
+        />,
+      ];
+
       form = <div>
         <h1>Choose your instrument(s).</h1>
         <span>Choose 1-3 instruments</span>
@@ -439,7 +475,6 @@ class OnboardingForm extends Component {
 
         {errorMessage}
 
-        <button onClick={(evt) => this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add', true)}>Continue</button>
       </div>
 
     } else if (stage == 2) {
@@ -459,6 +494,16 @@ class OnboardingForm extends Component {
           </div>
         </div>
       }
+
+      actions = [
+        <FlatButton
+          label={this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later'}
+          primary={true}
+          onClick={(evt) => {
+            this.continue(evt, 'selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids', this.state.selectedVideos.length > 0);
+          }}
+        />,
+      ];
 
       form = <div className="video-modal">
         <h1>Add Videos</h1>
@@ -508,16 +553,24 @@ class OnboardingForm extends Component {
           )
         })}
         {errorMessage}
-        <button onClick={(evt) => this.continue(evt, 'selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids', this.state.selectedVideos.length > 0)}>{this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later'}</button>
       </div>
 
     }
 
     return (
       <div className="OnboardingForm">
-        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}>
+
+        <Dialog
+          modal={false}
+          actions={actions}
+          open={true}
+          onRequestClose={this.exitForm}
+        >
+
           {form}
-        </Modal>
+
+        </Dialog>
+
       </div>
     )
 
