@@ -23,7 +23,7 @@ class BandPage extends Component {
     searchMember: '',
     searchMemberResuts: [],
     members: [],
-    showDeleteForm: false
+    showDeleteForm: false,
   }
 
   componentDidMount() {
@@ -144,6 +144,14 @@ class BandPage extends Component {
     this.getEvents();
   }
 
+  closeModal = () => {
+    this.setState({ displayModal: false })
+  }
+
+  showModal = () => {
+    this.setState({ displayModal: true });
+  }
+
   render() {
 
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
@@ -212,7 +220,7 @@ class BandPage extends Component {
       <FloatingActionButton
         mini={true}
         secondary={true}
-        onClick={this.toggleModal}
+        onClick={this.showModal}
       >
         <ContentAdd />
       </FloatingActionButton>
@@ -241,9 +249,8 @@ class BandPage extends Component {
 
       createEventForm = this.props.loggedInUser.id === bandData.band_admin_id ?
       <EventCreator
-        closeModal={this.toggleModal}
+        closeModal={this.closeModal}
         displayModal={this.state.displayModal}
-        exitClick={this.toggleModal}
         eventTypes={this.state.eventTypes}
         submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
       />

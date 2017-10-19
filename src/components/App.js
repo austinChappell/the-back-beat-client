@@ -28,9 +28,9 @@ import RehearsalPage from './RehearsalPage';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: indigo900,
-    primary2Color: '#B8B7D5',
-    primary3Color: '#9A6197',
+    primary1Color: '#070649',
+    primary2Color: '#9A6197',
+    primary3Color: '#B8B7D5',
     accent1Color: '#9A6197',
     // accent2Color: grey100,
     // accent3Color: grey500,
@@ -39,7 +39,7 @@ const muiTheme = getMuiTheme({
     // canvasColor: white,
     // borderColor: grey300,
     // disabledColor: fade(darkBlack, 0.3),
-    // pickerHeaderColor: cyan500,
+    pickerHeaderColor: '#070649',
     // clockCircleColor: fade(darkBlack, 0.07),
     // shadowColor: fullBlack,
   },

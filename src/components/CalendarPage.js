@@ -311,8 +311,6 @@ class CalendarPage extends Component {
 
           </div>
 
-
-          {/* // TODO: Make submit button and add functionality to post to database */}
         </Dialog>
 
         <EventList
