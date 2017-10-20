@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+
 class MessageHistorySideBar extends Component {
 
   state = {
@@ -81,6 +84,9 @@ class MessageHistorySideBar extends Component {
           let recipientId;
           let displayName;
           let msgPreview;
+          let className;
+          let unreadNotification = null;
+
           if (message.sender_id === this.props.loggedInUser.id) {
             displayName = message.recipient_name;
             recipientId = message.recipient_id;
@@ -93,20 +99,32 @@ class MessageHistorySideBar extends Component {
           } else {
             msgPreview = message.message_text;
           }
+
+          if (!message.read && message.recipient_id === this.props.loggedInUser.id) {
+            className = "message-history-result unread";
+            unreadNotification = <i
+              className="fa fa-circle"
+              style={{ color: 'red' }}
+              aria-hidden="true"></i>
+          } else {
+            className = "message-history-result";
+          }
+
           return (
-            <div className={!message.read && message.recipient_id === this.props.loggedInUser.id ? "message-history-result unread" : "message-history-result"} key={index} onClick={() => this.setRecipient(recipientId)}>
-              <h4>{displayName}</h4>
+            <ListItem className={className} key={index} onClick={() => this.setRecipient(recipientId)}>
+              <h4>{unreadNotification} {displayName}</h4>
               <p>{msgPreview}</p>
-            </div>
+            </ListItem>
           )
         })}
       </div>
     }
 
     return (
-      <div className="MessageHistorySideBar">
+      <List className="MessageHistorySideBar">
+        <Subheader>Recent Messages</Subheader>
         {messageHistoryDisplay}
-      </div>
+      </List>
     )
   }
 }

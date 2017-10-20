@@ -45,6 +45,8 @@ button, input, textarea {
     transition: 300ms; }
     .BandBox h3 > a:hover {
       color: #894586; }
+    .BandBox h3 > a:hover {
+      background-color: #E0E0E0; }
   .BandBox .band-results {
     margin-top: 10px;
     display: flex;
@@ -806,6 +808,12 @@ button, input, textarea {
 .MessageDisplay {
   flex-basis: 50%;
   box-sizing: border-box; }
+  .MessageDisplay .currentRecipient {
+    text-align: center;
+    z-index: 100;
+    background-color: #070649;
+    padding: 6px;
+    color: #FFFFFF; }
   .MessageDisplay .message-box {
     height: calc(100vh - 160px);
     width: 80%;
@@ -871,7 +879,11 @@ button, input, textarea {
 
 .MessageHistorySideBar {
   flex-basis: 20%;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  border: 1px solid gray;
+  padding: 0;
+  height: calc((100vh - 160px) * .8);
+  overflow: scroll; }
   .MessageHistorySideBar .message-history-result {
     border: 1px solid black;
     padding: 5px 20px;

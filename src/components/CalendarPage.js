@@ -162,6 +162,7 @@ class CalendarPage extends Component {
         eventTime: '12:00am',
         eventTitle: '',
         eventType: this.state.eventTypes[0].value,
+        eventTypeSelected: null,
         eventVenue: '',
         initialTimeVal: now,
         startDate: moment()

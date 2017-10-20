@@ -39,6 +39,7 @@ class EventCreator extends Component {
     eventTime: '12:00 am',
     eventTitle: '',
     eventType: '',
+    eventTypeSelected: null,
     eventVenue: '',
     initialTimeVal: now,
     myEvents: [],
@@ -59,8 +60,7 @@ class EventCreator extends Component {
   }
 
   convertDate = (date, time) => {
-    console.log('TIME', time);
-    const shortDate = date._d.toString().slice(0, 15);
+    const shortDate = date.toString().slice(0, 15);
     this.setState({ eventDate: shortDate + ' ' + time });
   }
 
@@ -69,6 +69,21 @@ class EventCreator extends Component {
       startDate: date
     }, () => {
       this.convertDate(this.state.startDate, this.state.eventTime)
+    });
+  }
+
+  handleNewDateChange = (evt, date) => {
+    this.setState({
+      startDate: date
+    }, () => {
+      this.convertDate(this.state.startDate, this.state.eventTime)
+    });
+  }
+
+  handleNewTimeChange = (evt, time) => {
+    let stringTime = String(time);
+    this.setState({eventTime: stringTime}, () => {
+
     });
   }
 
@@ -83,7 +98,16 @@ class EventCreator extends Component {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
     const url = `${apiURL}/${this.props.submitQuery}`
-    console.log('URL', url);
+
+    let stringDate = this.state.eventDate;
+    let stringTime = this.state.eventTime;
+
+    let shortDate = stringDate.slice(0, 15);
+    let shortTime = stringTime.slice(16, stringTime.length);
+    let stringDateTime = `${shortDate} ${shortTime}`;
+    let date = new Date(stringDateTime);
+
+
     fetch(url, {
       credentials: 'include',
       headers: {
@@ -92,11 +116,11 @@ class EventCreator extends Component {
       method: 'POST',
       body: JSON.stringify({
         eventCity: this.state.eventCity,
-        eventDateTime: `${this.state.eventDate}-05`,
+        eventDateTime: date,
         eventDetails: this.state.eventDetails,
         eventDuration: Number(this.state.eventDuration),
         eventTitle: this.state.eventTitle,
-        eventType: this.state.eventType,
+        eventType: this.state.eventTypeSelected,
         eventVenue: this.state.eventVenue,
         userCity: this.props.loggedInUser.city,
       })
@@ -111,13 +135,13 @@ class EventCreator extends Component {
         eventTime: '12:00am',
         eventTitle: '',
         eventType: this.props.eventTypes[0].value,
+        eventTypeSelected: null,
         eventVenue: '',
         initialTimeVal: now,
         startDate: moment()
       }, () => {
         this.convertDate(this.state.startDate);
         this.props.closeModal();
-        this.props.history.push('/');
       })
     }).catch((err) => {
       throw err;
@@ -143,6 +167,11 @@ class EventCreator extends Component {
     //   console.log('false');
     // }
   };
+
+  handleSelectChange = (evt, index, value) => {
+    console.log(value);
+    this.setState({ eventTypeSelected: value });
+  }
 
   render() {
 
@@ -263,7 +292,7 @@ class EventCreator extends Component {
                 <SelectField
                   floatingLabelText="Type"
                   value={this.state.eventTypeSelected}
-                  onChange={this.handleSelecteChange}
+                  onChange={this.handleSelectChange}
                 >
                   {this.props.eventTypes.map((eventType) => {
                     return (

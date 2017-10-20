@@ -24,6 +24,9 @@
     padding: 6px 8px;
     border-radius: 3px;
     transition: 300ms;
+    &:hover {
+      background-color: $gray-background-dark;
+    }
   }
   .band-results {
     margin-top: 10px;

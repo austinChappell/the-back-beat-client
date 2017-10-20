@@ -59,8 +59,10 @@ class EventPage extends Component {
   render() {
     console.log('PROPS', this.props.match.params);
 
+
     const eventData = this.state.eventData;
     const eventType = this.props.match.params.eventtype;
+    console.log('EVENT DATA', eventData);
 
     let buttons = null;
 
@@ -77,6 +79,8 @@ class EventPage extends Component {
             aria-hidden="true"></i>
           </div>
         }
+
+        // TODO: ALL YOU HAVE FOR EVENT DATA IS THE BAND ID. YOU NEED TO RUN A QUERY THAT WILL GET THE BAND BASED ON ITS ID
 
     let mainTitle = eventType === 'band_event' ?
     <h2><strong>Band:</strong> {eventData.band_name}</h2>

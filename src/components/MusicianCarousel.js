@@ -44,7 +44,7 @@ class MusicianCarousel extends Component {
         })}
         <div className="message-link">
           <i
-            className="fa fa-pencil-square-o message-icon"
+            className="fa fa-commenting-o message-icon"
             onClick={this.props.writeMessage}
             aria-hidden="true"></i>
         </div>
