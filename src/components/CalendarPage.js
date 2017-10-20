@@ -44,7 +44,6 @@ class CalendarPage extends Component {
     eventTypes: [
       { value: 'Concert', text: 'Concert' },
       { value: 'Jam Session', text: 'Jam Session' },
-      { value: 'Rehearsal', text: 'Rehearsal' }
     ],
     eventType: '',
     eventTypeSelected: null,
@@ -147,7 +146,7 @@ class CalendarPage extends Component {
       method: 'POST',
       body: JSON.stringify({
         eventTitle: this.state.eventTitle,
-        eventType: this.state.eventType,
+        eventType: this.state.eventTypeSelected,
         eventVenue: this.state.eventVenue,
         eventDateTime: date,
         eventDetails: this.state.eventDetails,
@@ -196,9 +195,9 @@ class CalendarPage extends Component {
     this.setState(updateObj);
   }
 
-  handleSelecteChange = (evt, index, value) => {
+  handleSelectChange = (evt, index, value) => {
     console.log(value);
-    this.setState({eventTypeSelected: value});
+    this.setState({ eventTypeSelected: value });
   }
 
   setDate = (dateTime) => {
@@ -287,7 +286,7 @@ class CalendarPage extends Component {
             <SelectField
               floatingLabelText="Type"
               value={this.state.eventTypeSelected}
-              onChange={this.handleSelecteChange}
+              onChange={this.handleSelectChange}
             >
               {this.state.eventTypes.map((eventType) => {
                 return (
