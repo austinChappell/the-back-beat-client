@@ -19,6 +19,7 @@ class OnboardingForm extends Component {
       displayModal: true,
       errorMessage: null,
       genreOptions: [],
+      genreSelect: [],
       pendingGenre: '',
       selectedGenres: [],
       selectedGenreMax: 5,
@@ -136,13 +137,17 @@ class OnboardingForm extends Component {
   }
 
   handleSubmit = (array, element, max, index) => {
+    console.log('HANDLE SUBMIT INDEX', index);
     // evt.preventDefault();
     const updateState = {};
     updateState.errorMessage = null;
     updateState[array] = this.state[array].slice();
     // PREVENT DUPLICATES IN THE ARRAY AND DO NOT ALLOW THE ARRAY TO EXCEED 5 ELEMENTS
-    if (updateState[array].length < max) {
+    console.log('ARRAY LENGTH', updateState[array].length);
+    console.log('MAX', max);
+    if (updateState[array].length <= max) {
       updateState[array][index] = (this.state[element]);
+      console.log('UPDATE STATE', updateState);
     }
     this.setState(updateState, () => {
       console.log(this.state);
@@ -354,54 +359,47 @@ class OnboardingForm extends Component {
     }
   }
 
+  // handleChange = (evt, category, selected, max, tempIndex) => {
+  //   const updateState = {};
+  //   updateState[category] = {
+  //     id: evt.target.children[evt.target.selectedIndex].id,
+  //     value: evt.target.value,
+  //     tempIndex
+  //   };
+  //   this.setState(updateState, () => {
+  //     this.handleSubmit(selected, category, max, tempIndex);
+  //   });
+  // }
+
+  handleGenreSelect = (evt, index, value) => {
+    let styleId = evt.target.parentElement.parentElement.parentElement.id;
+    let pendingGenre = {
+      id: styleId,
+      value
+    };
+    let genreSelect = this.state.genreSelect;
+    genreSelect[index] = value;
+    this.setState({ pendingGenre, genreSelect }, () => {
+      this.handleSubmit('selectedGenres', 'pendingGenre', this.state.selectedGenreMax, index);
+    });
+    // console.log(evt);
+    // console.log(index);
+    // console.log(value);
+    // console.log(evt.target.textContent);
+    // console.log(styleId);
+    // console.log(evt.target.targetInst.currentElement.props.children);
+  }
+
   render() {
 
-    let actions = [
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onClick={(evt) => {
-          this.submitForm(evt, this.props.userInfo);
-        }}
-      />,
-    ];
+    const selectArray = [];
 
-    if (this.state.selectedVideos.length === 1 && this.state.primaryVidIndex !== 0) {
-      this.setState({ primaryVidIndex: 0 });
-    }
-
-    if (this.state.selectedVideos.length === 1 && this.state.selectedVideos[0].set_as_primary !== true) {
-      let primaryVid = this.state.selectedVideos[0];
-      primaryVid.set_as_primary = true;
-      this.setState({ selectedInstruments: [primaryVid] });
-    }
-
-    console.log('PRIMARY VIDEO INDEX', this.state);
-
-    let stage = this.props.onboardingStage;
-    if (stage === null && this.props.loggedInUser) {
-      this.updateOnboardingStage(this.props.loggedInUser);
-    }
+    let actionClickFunc;
+    let actionLabel;
+    let actions;
     let form;
-    let genreOptions;
-    let instrumentOptions;
-
-    if (this.state.genreOptions.length > 0) {
-      genreOptions = this.state.genreOptions.map((option) => {
-        return (
-          <option key={option.style_id} id={option.style_id} value={option.style_name}>{option.style_name}</option>
-        )
-      })
-    }
-
-    if (this.state.instrumentOptions.length > 0) {
-      instrumentOptions = this.state.instrumentOptions.map((option) => {
-        return (
-          <option key={option.instrument_id} id={option.instrument_id} value={option.name}>{option.name}</option>
-        )
-      })
-    }
-
+    let oneVideo = this.state.selectedVideos.length === 1;
+    let stage = this.props.onboardingStage;
     let errorMessage = this.state.errorMessage ?
       <p className="error-message">
         {this.state.errorMessage}
@@ -409,26 +407,49 @@ class OnboardingForm extends Component {
       :
       null;
 
+    let genreOptions = this.state.genreOptions.map((option) => {
+      return (
+        // <option key={option.style_id} id={option.style_id} value={option.style_name}>{option.style_name}</option>
+        <MenuItem key={option.style_id} id={option.style_id} value={option.style_name} primaryText={option.style_name} />
+      )
+    })
+
+    let instrumentOptions = this.state.instrumentOptions.map((option) => {
+      return (
+        <option key={option.instrument_id} id={option.instrument_id} value={option.name}>{option.name}</option>
+      )
+    })
+
+    if (stage === null && this.props.loggedInUser) {
+      this.updateOnboardingStage(this.props.loggedInUser);
+    }
+
     if (stage === 0) {
 
-      const selectArray = [];
       for (let i = 0; i < this.state.selectedGenreMax; i++) {
-          let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingGenre', 'selectedGenres', this.state.selectedGenreMax, i)}>
-            <option value=''>Select Genre</option>
-            {genreOptions}
-          </select>
-          selectArray.push(selectItem);
+        // let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingGenre', 'selectedGenres', this.state.selectedGenreMax, i)}>
+        //   <option value=''>Select Genre</option>
+        //   {genreOptions}
+        // </select>
+
+        let selectItem = <SelectField
+          floatingLabelText="Select Genre"
+          // onChange={(evt) => this.handleChange(evt, 'pendingGenre', 'selectedGenres', this.state.selectedGenreMax, i)}
+          onChange={(evt) => this.handleGenreSelect(evt, i, evt.target.textContent)}
+          style={{textAlign: 'left'}}
+          value={this.state.genreSelect[i]}
+        >
+          {genreOptions}
+        </SelectField>
+
+
+        selectArray.push(selectItem);
       }
 
-      actions = [
-        <FlatButton
-          label="Continue"
-          primary={true}
-          onClick={(evt) => {
-            this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add', true)
-          }}
-        />,
-      ];
+      actionLabel = 'Continue';
+      actionClickFunc = (evt) => {
+        this.continue(evt, 'selectedGenres', this.state.selectedGenreMax, this.state.selectedGenreMin, 'genres/add', true)
+      };
 
       form = <div>
         <h1>What genres do you listen to/play?</h1>
@@ -445,24 +466,18 @@ class OnboardingForm extends Component {
 
     } else if (stage === 1) {
 
-      const selectArray = [];
       for (let i = 0; i < this.state.selectedInstrumentMax; i++) {
-          let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument', 'selectedInstruments', this.state.selectedInstrumentMax, i)}>
-            <option value='' selected>Select Instrument</option>
-            {instrumentOptions}
-          </select>
-          selectArray.push(selectItem);
+        let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument', 'selectedInstruments', this.state.selectedInstrumentMax, i)}>
+          <option value='' selected>Select Instrument</option>
+          {instrumentOptions}
+        </select>
+        selectArray.push(selectItem);
       }
 
-      actions = [
-        <FlatButton
-          label="Continue"
-          primary={true}
-          onClick={(evt) => {
-            this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add', true)
-          }}
-        />,
-      ];
+      actionLabel = 'Continue';
+      actionClickFunc = (evt) => {
+        this.continue(evt, 'selectedInstruments', this.state.selectedInstrumentMax, this.state.selectedInstrumentMin, 'instruments/add', true)
+      };
 
       form = <div>
         <h1>Choose your instrument(s).</h1>
@@ -481,6 +496,16 @@ class OnboardingForm extends Component {
 
       let videoListTitle = null;
 
+      if (oneVideo && this.state.primaryVidIndex !== 0) {
+        this.setState({ primaryVidIndex: 0 });
+      }
+
+      if (oneVideo && this.state.selectedVideos[0].set_as_primary !== true) {
+        let primaryVid = this.state.selectedVideos[0];
+        primaryVid.set_as_primary = true;
+        this.setState({ selectedInstruments: [primaryVid] });
+      }
+
       if (this.state.selectedVideos.length > 0) {
         videoListTitle = <div className="video-list-title">
           <div className="vid-primary-header">
@@ -495,15 +520,10 @@ class OnboardingForm extends Component {
         </div>
       }
 
-      actions = [
-        <FlatButton
-          label={this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later'}
-          primary={true}
-          onClick={(evt) => {
-            this.continue(evt, 'selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids', this.state.selectedVideos.length > 0);
-          }}
-        />,
-      ];
+      actionLabel = this.state.selectedVideos.length > 0 ? 'Continue' : 'I\'ll do this later';
+      actionClickFunc = (evt) => {
+        this.continue(evt, 'selectedVideos', this.state.videoMax, this.state.videoMin, 'user/vids', this.state.selectedVideos.length > 0);
+      };
 
       form = <div className="video-modal">
         <h1>Add Videos</h1>
@@ -557,6 +577,14 @@ class OnboardingForm extends Component {
 
     }
 
+    actions = [
+      <FlatButton
+        label={actionLabel}
+        primary={true}
+        onClick={actionClickFunc}
+      />,
+    ];
+
     return (
       <div className="OnboardingForm">
 
@@ -582,8 +610,6 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     loggedInUser: state.loggedInUser,
     skillLevels: state.skillLevels,
-    onboardingMaxStage: state.onboardingMaxStage,
-    onboardingReqMaxStage: state.onboardingReqMaxStage,
     onboardingStage: state.onboardingStage
   }
 }

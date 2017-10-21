@@ -18,9 +18,6 @@ class MessageHistorySideBar extends Component {
 
   componentWillUnmount() {
     clearInterval(this.stopFetch);
-    console.log('COMPONENT UNMOUNTING');
-    // this.setState({ fetchHistory: false }, () => console.log('STATE AFTER COMPONENT UNMOUNTING', this.state));
-    // this.props.clearMessages();
   }
 
   setRecipient = (id) => {
@@ -44,33 +41,21 @@ class MessageHistorySideBar extends Component {
     this.stopFetch = setInterval(() => {
       console.log('MESSAGE HISTORY SIDEBAR');
 
-      // if (this.props.fetchHistory === true) {
-
-        // console.log('THIS IS STILL RUNNING');
-
-        const output = [];
-        const messages = this.props.allMessages;
-        const loggedInUser = this.props.loggedInUser;
-        for (let i = messages.length - 1; i >= 0; i--) {
-          let found = false;
-          output.forEach((item) => {
-            if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
-              found = true;
-            }
-          })
-          if (!found) {
-            output.push(messages[i]);
+      const output = [];
+      const messages = this.props.allMessages;
+      const loggedInUser = this.props.loggedInUser;
+      for (let i = messages.length - 1; i >= 0; i--) {
+        let found = false;
+        output.forEach((item) => {
+          if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
+            found = true;
           }
+        })
+        if (!found) {
+          output.push(messages[i]);
         }
-        // console.log('ALL MESSAGES LENGTH', messages.length);
-        // console.log('MESSAGE HISTORY', output);
-        this.props.setMessageHistory(output);
-        // this.setState({ messageHistory: output })
-
-      // } else {
-      //   console.log('THIS RAN');
-      //   clearInterval(stopFetch);
-      // }
+      }
+      this.props.setMessageHistory(output);
     }, 1000)
   }
 
