@@ -34,7 +34,7 @@ class EventCreator extends Component {
     eventCity: '',
     eventDate: '',
     eventDetails: '',
-    eventDuration: null,
+    eventDuration: 2,
     eventList: [],
     eventTime: '12:00 am',
     eventTitle: '',
@@ -47,6 +47,8 @@ class EventCreator extends Component {
     startDate: moment(),
     unconvertedDate: ''
   }
+
+  // TODO: Add the ability to set event duration and integrate add to calendar feature
 
   componentDidMount() {
     this.convertDate(this.state.startDate, this.state.eventTime);
@@ -118,7 +120,7 @@ class EventCreator extends Component {
         eventCity: this.state.eventCity,
         eventDateTime: date,
         eventDetails: this.state.eventDetails,
-        eventDuration: Number(this.state.eventDuration),
+        eventDuration: this.state.eventDuration,
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventTypeSelected,
         eventVenue: this.state.eventVenue,
