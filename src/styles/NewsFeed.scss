@@ -1,6 +1,7 @@
 .NewsFeed {
-  border-left: 1px solid $gray-background-light;
-  border-right: 1px solid $gray-background-light;
+  // border-left: 1px solid $gray-background-light;
+  // border-right: 1px solid $gray-background-light;
+  box-shadow: 0 0 12px 1px #CCC;
   height: calc(100vh - 80px);
   position: fixed;
   overflow: scroll;

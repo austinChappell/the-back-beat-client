@@ -9,6 +9,7 @@
   overflow: scroll;
   height: calc(100vh - 220px);
   .event {
+    align-self: flex-start;
     display: flex;
     justify-content: space-between;
     flex-basis: 100%;

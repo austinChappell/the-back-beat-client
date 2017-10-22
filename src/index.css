@@ -329,11 +329,20 @@ button, input, textarea {
       color: rgba(154, 97, 151, 0.7); }
   .BrowseBox .hidden {
     opacity: 0; }
-  .BrowseBox h2 {
-    color: #070649; }
+  .BrowseBox .card-header {
+    padding-top: 25px; }
+    .BrowseBox .card-header h3 {
+      color: #070649;
+      font-size: 26px; }
+  .BrowseBox .card-bio {
+    padding: 10px 40px 20px; }
+    .BrowseBox .card-bio p {
+      margin: 0;
+      font-size: 14px;
+      text-align: left; }
   .BrowseBox .browse-box-container {
     width: 600px;
-    height: 350px;
+    height: 720px;
     margin: 0 auto;
     position: relative;
     overflow: hidden; }
@@ -344,15 +353,15 @@ button, input, textarea {
       box-sizing: border-box;
       transition: 500ms; }
       .BrowseBox .browse-box-container .show-item iframe {
-        margin-top: 20px;
         border-radius: 3px;
-        box-shadow: 2px 2px 15px gray;
-        height: 250px; }
+        margin-top: 10px;
+        padding: 10px;
+        width: 460px;
+        height: 300px; }
       .BrowseBox .browse-box-container .show-item img {
         margin-top: 20px;
         border-radius: 3px;
-        box-shadow: 2px 2px 15px gray;
-        height: 250px; }
+        height: 300px; }
     .BrowseBox .browse-box-container h3 a {
       color: #9A6197;
       text-decoration: none;
@@ -468,6 +477,7 @@ button, input, textarea {
   overflow: scroll;
   height: calc(100vh - 220px); }
   .EventList .event {
+    align-self: flex-start;
     display: flex;
     justify-content: space-between;
     flex-basis: 100%;
@@ -713,6 +723,7 @@ button, input, textarea {
 
 .LeftMainPageSideBar {
   color: #030303;
+  box-shadow: 0 0 12px 1px #CCC;
   height: calc(100vh - 80px);
   position: fixed;
   box-sizing: border-box;
@@ -1184,8 +1195,7 @@ button, input, textarea {
     right: -5px; }
 
 .NewsFeed {
-  border-left: 1px solid #EEEEEE;
-  border-right: 1px solid #EEEEEE;
+  box-shadow: 0 0 12px 1px #CCC;
   height: calc(100vh - 80px);
   position: fixed;
   overflow: scroll;

@@ -164,6 +164,7 @@ class UserAuthForm extends Component {
 
   submitForm = (evt, userInfo) => {
     evt.preventDefault();
+    console.log('USER INFO', userInfo);
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
     fetch(`${this.props.apiURL}/${submitType}/`, {
       credentials: 'include',
@@ -249,6 +250,12 @@ class UserAuthForm extends Component {
         <span className="span-link" onClick={this.changeForm}>Login</span>
       </p>
 
+    let bioCounterWarning;
+
+    if (this.props.userInfo.bio) {
+      bioCounterWarning = this.props.userInfo.bio.length > 500 ? { color: 'red' } : {};
+    }
+
     let form = this.props.userAuthType === 'Login' ?
       <div className="form-inputs">
         <TextField
@@ -270,28 +277,37 @@ class UserAuthForm extends Component {
           onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'firstName')}
           value={this.props.userInfo.firstName}
         />
-          <TextField
-            floatingLabelText="Last Name"
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'lastName')}
-            value={this.props.userInfo.lastName}
-          />
-          <TextField
-            floatingLabelText="Email"
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'email')}
-            value={this.props.userInfo.email}
-          />
-          <TextField
-            floatingLabelText="Username"
-            onChange={(evt) => this.handleChange(evt, 'username', true)}
-            onBlur={(evt) => this.checkUserNameLength(evt)}
-            value={this.props.userInfo.username}
-          />
-          <TextField
-            floatingLabelText="Password"
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'password')}
-            type="password"
-            value={this.props.userInfo.password}
-          />
+        <TextField
+          floatingLabelText="Last Name"
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'lastName')}
+          value={this.props.userInfo.lastName}
+        />
+        <TextField
+          floatingLabelText="Email"
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'email')}
+          value={this.props.userInfo.email}
+        />
+        <TextField
+          floatingLabelText="Username"
+          onChange={(evt) => this.handleChange(evt, 'username', true)}
+          onBlur={(evt) => this.checkUserNameLength(evt)}
+          value={this.props.userInfo.username}
+        />
+        <TextField
+          floatingLabelText="Password"
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'password')}
+          type="password"
+          value={this.props.userInfo.password}
+        />
+        <TextField
+          multiLine={true}
+          rows={1}
+          rowsMax={4}
+          floatingLabelStyle={bioCounterWarning}
+          floatingLabelText={`Bio ( ${this.props.userInfo.bio ? 500 - this.props.userInfo.bio.length : 500} Characters Remaining )`}
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'bio')}
+          value={this.props.userInfo.bio}
+        />
         <SelectField
           floatingLabelText="City"
           onChange={this.handleCitySelect}

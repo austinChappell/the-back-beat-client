@@ -111,7 +111,7 @@ class MainFeed extends Component {
           minIndex={0}
           maxIndex={this.props.compatibleMusicians.length - 1}
           index={this.state.musicianIndex}
-          title="Musicians You Might Like"
+          // title="Musicians You Might Like"
         >
           <div className="browse-box-container">
 
@@ -123,9 +123,8 @@ class MainFeed extends Component {
               // let video = null;
               if (musician.primary_vid_id) {
                 video = <YouTube
-                  style={{boxShadow: '2px 2px 10px gray'}}
                   videoId={musician.primary_vid_id}
-                  opts={{width: '400', height: '260'}}
+                  // opts={{width: '400', height: '260'}}
                   ref={'video' + index}
                 />
 
@@ -134,14 +133,29 @@ class MainFeed extends Component {
               return (
                 <div key={index} className="show-item" style={{left: leftString}}>
 
-                  <Card style={{ width: '400px', margin: '0 auto' }}>
+                  <Card style={{ width: '500px', height: '650px', margin: '20px auto', boxShadow: '2px 2px 30px gray', borderRadius: '5px' }}>
 
-                    <h3>
-                      <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
-                    </h3>
-                    <span>{musician.city}</span> <br />
-                    <span>{musician.skill_level}</span> <br />
-                    {video}
+                    <div className="card-header">
+
+                      <h3>
+                        <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
+                      </h3>
+                      <span>{musician.city}</span> <br />
+                      <span>{musician.skill_level}</span> <br />
+
+                    </div>
+
+                    <div className="card-hero-image">
+
+                      {video}
+
+                    </div>
+
+                    <div className="card-bio">
+
+                      <p>{musician.bio}</p>
+
+                    </div>
 
                   </Card>
 
@@ -153,7 +167,7 @@ class MainFeed extends Component {
 
         </BrowseBox>
 
-        <BandBox />
+        {/* <BandBox /> */}
 
       </div>
     )

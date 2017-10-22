@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import BandBox from './BandBox';
 import BandEventBox from './BandEventBox';
 
 class LeftMainPageSideBar extends Component {
@@ -84,6 +85,8 @@ class LeftMainPageSideBar extends Component {
           urlpath="band_event"
           type="rehearsal"
         />
+
+        <BandBox />
 
       </div>
     )

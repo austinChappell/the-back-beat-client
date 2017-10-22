@@ -17,12 +17,24 @@
   .hidden {
     opacity: 0;
   }
-  h2 {
-    color: $color-primary;
+  .card-header {
+    padding-top: 25px;
+    h3 {
+      color: $color-primary;
+      font-size: 26px;
+    }
+  }
+  .card-bio {
+    padding: 10px 40px 20px;
+    p {
+      margin: 0;
+      font-size: 14px;
+      text-align: left;
+    }
   }
   .browse-box-container {
     width: 600px;
-    height: 350px;
+    height: 720px;
     margin: 0 auto;
     position: relative;
     overflow: hidden;
@@ -33,16 +45,16 @@
       box-sizing: border-box;
       transition: 500ms;
       iframe {
-        margin-top: 20px;
         border-radius: 3px;
-        box-shadow: 2px 2px 15px gray;
-        height: 250px;
+        margin-top: 10px;
+        padding: 10px;
+        width: 460px;
+        height: 300px;
       }
       img {
         margin-top: 20px;
         border-radius: 3px;
-        box-shadow: 2px 2px 15px gray;
-        height: 250px;
+        height: 300px;
       }
     }
     h3 a {

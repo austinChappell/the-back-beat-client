@@ -36,6 +36,7 @@ const initialState = {
   currentUserVids: [],
   loggedInUser: {},
   userInfo: {
+    bio: '',
     city: '',
     email: '',
     firstName: '',
