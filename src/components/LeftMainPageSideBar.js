@@ -14,9 +14,9 @@ class LeftMainPageSideBar extends Component {
   componentDidMount() {
     this.getMyEvents('Gig');
     this.getMyEvents('Rehearsal');
-    setTimeout(() => {
+    // setTimeout(() => {
       this.loadEvents();
-    }, 1000);
+    // }, 1000);
   }
 
   getMyEvents = (type) => {
@@ -42,7 +42,7 @@ class LeftMainPageSideBar extends Component {
     const url = this.props.apiURL;
     console.log('LOAD EVENTS RUNNING URL', url);
     console.log('CITY', this.props.loggedInUser.city);
-    fetch(`${url}/api/events/city/${this.props.loggedInUser.city}`, {
+    fetch(`${url}/api/events/city`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'

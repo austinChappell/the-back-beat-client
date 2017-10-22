@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import BandBox from './BandBox';
 import BrowseBox from './BrowseBox';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import YouTube from 'react-youtube';
 
 class MainFeed extends Component {
@@ -18,28 +19,28 @@ class MainFeed extends Component {
     placeholder: 'src/assets/images/placeholder.png'
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.loadEvents();
-    }, 1000);
-  }
+  // componentWillMount() {
+    // setTimeout(() => {
+      // this.loadEvents();
+    // }, 0);
+  // }
 
-  loadEvents = () => {
-    const url = this.props.apiURL;
-    fetch(`${url}/api/events/city/${this.props.loggedInUser.city}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      if (results.rows) {
-        this.props.loadEvents(results.rows);
-        this.setState({ loading: false });
-      }
-    })
-  }
+  // loadEvents = () => {
+  //   const url = this.props.apiURL;
+  //   fetch(`${url}/api/events/city`, {
+  //     credentials: 'include',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then((response) => {
+  //     return response.json();
+  //   }).then((results) => {
+  //     if (results.rows) {
+  //       this.props.loadEvents(results.rows);
+  //       this.setState({ loading: false });
+  //     }
+  //   })
+  // }
 
   handleAttendance = (evt, eventId, attending) => {
     const url = this.props.apiURL;
@@ -133,12 +134,16 @@ class MainFeed extends Component {
               return (
                 <div key={index} className="show-item" style={{left: leftString}}>
 
-                  <h3>
-                    <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
-                  </h3>
-                  <span>{musician.city}</span> <br />
-                  <span>{musician.skill_level}</span> <br />
-                  {video}
+                  <Card style={{ width: '400px', margin: '0 auto' }}>
+
+                    <h3>
+                      <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
+                    </h3>
+                    <span>{musician.city}</span> <br />
+                    <span>{musician.skill_level}</span> <br />
+                    {video}
+
+                  </Card>
 
                 </div>
               )
