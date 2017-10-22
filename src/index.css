@@ -460,10 +460,13 @@ button, input, textarea {
 .EventList {
   text-align: center;
   width: 70%;
-  margin: 30px auto;
+  margin: 30px auto -60px;
+  padding-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; }
+  justify-content: center;
+  overflow: scroll;
+  height: calc(100vh - 220px); }
   .EventList .event {
     display: flex;
     justify-content: space-between;
@@ -810,7 +813,6 @@ button, input, textarea {
   box-sizing: border-box; }
   .MessageDisplay .currentRecipient {
     text-align: center;
-    z-index: 100;
     background-color: #070649;
     padding: 6px;
     color: #FFFFFF; }
@@ -1366,6 +1368,21 @@ button, input, textarea {
 
 .hide {
   display: none; }
+
+.video-list-title, .added-videos {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; }
+  .video-list-title .vid-primary-header, .video-list-title input, .added-videos .vid-primary-header, .added-videos input {
+    flex-basis: 60px; }
+  .video-list-title h3, .added-videos h3 {
+    flex-grow: 1;
+    margin: 0 50px;
+    text-align: left;
+    font-weight: 500; }
+  .video-list-title .remove-button, .added-videos .remove-button {
+    color: #C91208; }
 
 .form-inputs {
   display: flex;

@@ -70,7 +70,7 @@ class MessageDisplay extends Component {
     let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
 
     messageDisplay = <div className="message-box">
-      <div className="currentRecipient">
+      <div className={this.props.currentRecipient ? 'currentRecipient' : ''}>
         {recipient}
       </div>
       <div className="messages" ref="messageBox">

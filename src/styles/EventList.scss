@@ -1,10 +1,13 @@
 .EventList {
   text-align: center;
   width: 70%;
-  margin: 30px auto;
+  margin: 30px auto -60px;
+  padding-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow: scroll;
+  height: calc(100vh - 220px);
   .event {
     display: flex;
     justify-content: space-between;

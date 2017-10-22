@@ -9,7 +9,6 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -239,13 +238,19 @@ class CalendarPage extends Component {
     return (
       <div className="CalendarPage">
 
-        <FloatingActionButton
-          secondary={true}
-          onClick={this.handleOpen}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
+        <div style={{ textAlign: 'center' }}>
 
+          <h2 style={{ marginBottom: '20px' }}>Create Your<br />Own Event</h2>
+
+          <FloatingActionButton
+            secondary={true}
+            mini={true}
+            onClick={this.handleOpen}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+
+        </div>
         <Dialog
           title="Create An Event"
           actions={actions}

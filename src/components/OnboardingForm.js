@@ -9,6 +9,8 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 class OnboardingForm extends Component {
 
@@ -25,6 +27,7 @@ class OnboardingForm extends Component {
       selectedGenreMax: 5,
       selectedGenreMin: 3,
       instrumentOptions: [],
+      instrumentSelect: [],
       pendingInstrument: '',
       selectedInstruments: [],
       selectedInstrumentMax: 3,
@@ -38,7 +41,7 @@ class OnboardingForm extends Component {
       selectedVideos: [],
       primaryVidIndex: 0,
       videoMin: 0,
-      videoMax: 10
+      videoMax: 3
     }
   }
 
@@ -53,7 +56,6 @@ class OnboardingForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log(results.rows);
       this.setState({
         genreOptions: results.rows,
         pendingGenre: {
@@ -71,7 +73,6 @@ class OnboardingForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('INSTRUMENT RESULTS', results);
       this.setState({
         instrumentOptions: results.rows,
         pendingInstrument: {
@@ -81,20 +82,15 @@ class OnboardingForm extends Component {
       })
     })
 
-    console.log('USER', this.props.loggedInUser);
-
     setTimeout(() => {
       this.getOnboardingStage();
     }, 250);
   }
 
   getOnboardingStage = () => {
-    console.log('GET ONBOARDING STAGE');
     if (this.props.loggedInUser.onboarding_stage !== undefined) {
-      console.log('SUCCESS', this.props.loggedInUser.onboarding_stage);
       this.props.updateOnboardingStage(this.props.loggedInUser.onboarding_stage);
     } else {
-      console.log('FAILURE');
       setTimeout(() => {
         this.getOnboardingStage();
       }, 100);
@@ -132,25 +128,18 @@ class OnboardingForm extends Component {
       }
     }
     this.setState({ primaryVidIndex: index, selectedVideos: newVidArray }, () => {
-      console.log('STATE', this.state);
     });
   }
 
   handleSubmit = (array, element, max, index) => {
-    console.log('HANDLE SUBMIT INDEX', index);
-    // evt.preventDefault();
     const updateState = {};
     updateState.errorMessage = null;
     updateState[array] = this.state[array].slice();
     // PREVENT DUPLICATES IN THE ARRAY AND DO NOT ALLOW THE ARRAY TO EXCEED 5 ELEMENTS
-    console.log('ARRAY LENGTH', updateState[array].length);
-    console.log('MAX', max);
     if (updateState[array].length <= max) {
       updateState[array][index] = (this.state[element]);
-      console.log('UPDATE STATE', updateState);
     }
     this.setState(updateState, () => {
-      console.log(this.state);
       for (let i = 0; i < this.state[array].length; i++) {
         for (let j = 0; j < this.state[array].length; j++) {
           if (this.state[array][i] !== undefined && this.state[array][j] !== undefined) {
@@ -167,38 +156,41 @@ class OnboardingForm extends Component {
 
   handleVidLinkSubmit = (evt, array, url, title, description) => {
     evt.preventDefault();
+    let errorMessage;
     if (this.state.pendingVideo != false && this.state.pendingVideoTitle != false && this.state.pendingVideoDescription != false) {
-      const updateState = {};
-      const updateArray = this.state[array].slice();
+      if (this.state.selectedVideos.length >= this.state.videoMax) {
+        errorMessage = 'You may only submit three videos';
+      } else {
+        errorMessage = null;
+        const updateState = {};
+        const updateArray = this.state[array].slice();
 
-      function getYouTubeId (videoURL) {
+        function getYouTubeId (videoURL) {
 
-        let queryIndex = videoURL.indexOf('?v=');
-        let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
-        return vidID;
+          let queryIndex = videoURL.indexOf('?v=');
+          let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
+          return vidID;
 
+        }
+
+        let vidID = getYouTubeId(this.state[url]);
+
+        updateArray.push({
+          set_as_primary: false,
+          video_description: this.state[description],
+          video_title: this.state[title],
+          youtube_id: vidID
+        });
+        updateState[array] = updateArray;
+        updateState[url] = '';
+        updateState[title] = '';
+        updateState[description] = '';
+        this.setState(updateState);
       }
-
-      let vidID = getYouTubeId(this.state[url]);
-
-      updateArray.push({
-        set_as_primary: false,
-        video_description: this.state[description],
-        video_title: this.state[title],
-        youtube_id: vidID
-      });
-      updateState[array] = updateArray;
-      updateState[url] = '';
-      updateState[title] = '';
-      updateState[description] = '';
-      this.setState(updateState, () => {
-        console.log('STATE', this.state);
-      });
     } else {
-      this.setState({
-        errorMessage: 'You must complete all fields before adding a video'
-      })
+      errorMessage = 'You must complete all fields before adding a video';
     }
+    this.setState({ errorMessage });
   }
 
   removeItem = (arrayName, index) => {
@@ -211,7 +203,6 @@ class OnboardingForm extends Component {
 
   addPrimaryToUser = (videoId) => {
     const url = this.props.apiURL;
-    console.log('ADD PRIMARY TO USER FUNCTION', videoId);
 
     fetch(`${url}/api/user/vidprimary/${videoId}`, {
       credentials: 'include',
@@ -222,11 +213,9 @@ class OnboardingForm extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('PRIMARY VID RESULTS', results.rows);
     })
 
     // TODO: Add API to add primary vid ID to user
-
 
   }
 
@@ -251,8 +240,6 @@ class OnboardingForm extends Component {
     if (userSkillIndex === skillLevels.length - 1) {
       skill_level_three = 'no_skill';
     }
-
-    // const urlone = `${apiURL}/api/users/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
     const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
@@ -300,7 +287,6 @@ class OnboardingForm extends Component {
       results.rows.forEach((style) => {
         styles.push(style.style_id);
       });
-      console.log('STYLES', styles);
       this.getMusicians(loggedInUser, styles);
     })
   }
@@ -327,8 +313,6 @@ class OnboardingForm extends Component {
         }).then((response) => {
           return response.json();
         }).then((results) => {
-          console.log('RESULTS', results);
-          // If statement for checking if result is set as primary goes here. If it is, add it to the user in backbeatuser.
           if (results.rows[0].set_as_primary) {
             this.addPrimaryToUser(results.rows[0].youtube_id);
           }
@@ -345,7 +329,6 @@ class OnboardingForm extends Component {
       }).then((response) => {
         return response.json();
       }).then((results) => {
-        console.log(results);
         this.props.updateOnboardingStage(results.rows[0].onboarding_stage);
         const updateState = {};
         updateState[onboardingCategory] = [];
@@ -359,18 +342,6 @@ class OnboardingForm extends Component {
     }
   }
 
-  // handleChange = (evt, category, selected, max, tempIndex) => {
-  //   const updateState = {};
-  //   updateState[category] = {
-  //     id: evt.target.children[evt.target.selectedIndex].id,
-  //     value: evt.target.value,
-  //     tempIndex
-  //   };
-  //   this.setState(updateState, () => {
-  //     this.handleSubmit(selected, category, max, tempIndex);
-  //   });
-  // }
-
   handleGenreSelect = (evt, index, value) => {
     let styleId = evt.target.parentElement.parentElement.parentElement.id;
     let pendingGenre = {
@@ -382,12 +353,19 @@ class OnboardingForm extends Component {
     this.setState({ pendingGenre, genreSelect }, () => {
       this.handleSubmit('selectedGenres', 'pendingGenre', this.state.selectedGenreMax, index);
     });
-    // console.log(evt);
-    // console.log(index);
-    // console.log(value);
-    // console.log(evt.target.textContent);
-    // console.log(styleId);
-    // console.log(evt.target.targetInst.currentElement.props.children);
+  }
+
+  handleInstrumentSelect = (evt, index, value) => {
+    let instrumentId = evt.target.parentElement.parentElement.parentElement.id;
+    let pendingInstrument = {
+      id: instrumentId,
+      value
+    };
+    let instrumentSelect = this.state.instrumentSelect;
+    instrumentSelect[index] = value;
+    this.setState({ pendingInstrument, instrumentSelect }, () => {
+      this.handleSubmit('selectedInstruments', 'pendingInstrument', this.state.selectedInstrumentMax, index);
+    });
   }
 
   render() {
@@ -409,14 +387,23 @@ class OnboardingForm extends Component {
 
     let genreOptions = this.state.genreOptions.map((option) => {
       return (
-        // <option key={option.style_id} id={option.style_id} value={option.style_name}>{option.style_name}</option>
-        <MenuItem key={option.style_id} id={option.style_id} value={option.style_name} primaryText={option.style_name} />
+        <MenuItem
+          key={option.style_id}
+          id={option.style_id}
+          value={option.style_name}
+          primaryText={option.style_name}
+        />
       )
     })
 
     let instrumentOptions = this.state.instrumentOptions.map((option) => {
       return (
-        <option key={option.instrument_id} id={option.instrument_id} value={option.name}>{option.name}</option>
+        <MenuItem
+          key={option.instrument_id}
+          id={option.instrument_id}
+          value={option.name}
+          primaryText={option.name}
+        />
       )
     })
 
@@ -427,14 +414,9 @@ class OnboardingForm extends Component {
     if (stage === 0) {
 
       for (let i = 0; i < this.state.selectedGenreMax; i++) {
-        // let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingGenre', 'selectedGenres', this.state.selectedGenreMax, i)}>
-        //   <option value=''>Select Genre</option>
-        //   {genreOptions}
-        // </select>
 
         let selectItem = <SelectField
           floatingLabelText="Select Genre"
-          // onChange={(evt) => this.handleChange(evt, 'pendingGenre', 'selectedGenres', this.state.selectedGenreMax, i)}
           onChange={(evt) => this.handleGenreSelect(evt, i, evt.target.textContent)}
           style={{textAlign: 'left'}}
           value={this.state.genreSelect[i]}
@@ -467,11 +449,17 @@ class OnboardingForm extends Component {
     } else if (stage === 1) {
 
       for (let i = 0; i < this.state.selectedInstrumentMax; i++) {
-        let selectItem = <select onChange={(evt) => this.handleChange(evt, 'pendingInstrument', 'selectedInstruments', this.state.selectedInstrumentMax, i)}>
-          <option value='' selected>Select Instrument</option>
+
+        let selectItem = <SelectField
+          floatingLabelText="Select Instrument"
+          onChange={(evt) => this.handleInstrumentSelect(evt, i, evt.target.textContent)}
+          style={{textAlign: 'left'}}
+          value={this.state.instrumentSelect[i]}
+        >
           {instrumentOptions}
-        </select>
+        </SelectField>
         selectArray.push(selectItem);
+
       }
 
       actionLabel = 'Continue';
@@ -526,33 +514,36 @@ class OnboardingForm extends Component {
       };
 
       form = <div className="video-modal">
-        <h1>Add Videos</h1>
+        <h1>Add YouTube Videos</h1>
         <h3>Upload videos of yourself playing. Choose one as the primary, and make a great first impression!</h3>
         <form className="flex-form">
-          <i
-            className="fa fa-plus add-video-button"
-            onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}
-            aria-hidden="true"></i>
-          <div className="vid-form">
-            <div className="flex-inputs">
-              <input
-                onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
-                placeholder="YouTube Link"
-                value={this.state.pendingVideo}
-              />
-              <input
-                onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
-                placeholder="Video Title"
-                value={this.state.pendingVideoTitle}
-              />
-            </div>
-            <input
-              className="half-width-input"
+
+          <div className="form-inputs">
+
+            <TextField
+              floatingLabelText="YouTube Link"
+              onChange={(evt) => this.handleInputChange(evt, 'pendingVideo')}
+              value={this.state.pendingVideo}
+            />
+            <TextField
+              floatingLabelText="Video Title"
+              onChange={(evt) => this.handleInputChange(evt, 'pendingVideoTitle')}
+              value={this.state.pendingVideoTitle}
+            />
+            <TextField
+              floatingLabelText="Video Description"
               onChange={(evt) => this.handleInputChange(evt, 'pendingVideoDescription')}
-              placeholder="Video Description"
               value={this.state.pendingVideoDescription}
             />
           </div>
+          <FloatingActionButton
+            mini={true}
+            secondary={true}
+            onClick={(evt) => {this.handleVidLinkSubmit(evt, 'selectedVideos', 'pendingVideo', 'pendingVideoTitle', 'pendingVideoDescription')}}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+
         </form>
         {videoListTitle}
         {this.state.selectedVideos.map((video, index) => {

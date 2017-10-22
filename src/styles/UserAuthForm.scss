@@ -2,6 +2,25 @@
   display: none;
 }
 
+.video-list-title, .added-videos {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  .vid-primary-header, input {
+    flex-basis: 60px;
+  }
+  h3 {
+    flex-grow: 1;
+    margin: 0 50px;
+    text-align: left;
+    font-weight: 500;
+  }
+  .remove-button {
+    color: $color-failure;
+  }
+}
+
 .form-inputs {
   display: flex;
   justify-content: space-between;
