@@ -34,7 +34,8 @@ class MessageDisplay extends Component {
         message: this.props.currentMessage,
         recipientId: this.props.currentRecipient.id,
         recipientFirstName: this.props.currentRecipient.first_name,
-        recipientLastName: this.props.currentRecipient.last_name
+        recipientLastName: this.props.currentRecipient.last_name,
+        recipientEmail: this.props.currentRecipient.email
       })
     }).then((response) => {
       return response.json();

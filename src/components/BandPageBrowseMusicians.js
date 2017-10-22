@@ -180,7 +180,8 @@ class BandPageBrowseMusicians extends Component {
         message,
         recipientId: musician.id,
         recipientFirstName: musician.first_name,
-        recipientLastName: musician.last_name
+        recipientLastName: musician.last_name,
+        recipientEmail: musician.email
       })
     }).then(() => {
       this.setState({ message: '', modalStage: 1, showExitButton: false }, () => {
