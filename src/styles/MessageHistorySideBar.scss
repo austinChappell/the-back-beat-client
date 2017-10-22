@@ -1,12 +1,18 @@
 .MessageHistorySideBar {
   flex-basis: 20%;
   box-sizing: border-box;
+  border: 1px solid gray;
+  padding: 0;
+  height: calc((100vh - 160px) * .8);
+  overflow: scroll;
   .message-history-result {
     border: 1px solid black;
     padding: 5px 20px;
     cursor: pointer;
+    transition: 250ms;
     &:hover {
       background-color: $gray-background-light;
+      color: $color-primary;
     }
     h4 {
       margin-bottom: 5px;

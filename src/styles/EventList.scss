@@ -1,24 +1,26 @@
 .EventList {
   text-align: center;
   width: 70%;
-  margin: 30px auto;
+  margin: 30px auto -60px;
+  padding-bottom: 60px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow: scroll;
+  height: calc(100vh - 220px);
   .event {
     display: flex;
     justify-content: space-between;
-    flex-basis: 280px;
+    flex-basis: 100%;
     box-sizing: border-box;
     margin: 10px;
     box-shadow: 2px 2px 12px gray;
-    min-height: 150px;
     cursor: pointer;
     transition: 300ms;
     text-decoration: none;
     color: inherit;
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.005);
     }
     .dateInfo {
       width: 70px;
@@ -27,35 +29,43 @@
       color: $light-font;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       .date {
         font-size: 40px;
         border-bottom: 1px solid $light-font;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
       }
       .month {
-        font-size: 14px;
+        font-size: 18px;
         letter-spacing: 1px;
         text-transform: uppercase;
+        padding-top: 5px;
       }
     }
     .info {
-      padding: 10px;
-      width: 150px;
-      .title {
-        text-align: right;
-        font-weight: 700;
-        font-size: 18px;
+      padding: 20px;
+      flex-grow: 1;
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title {
+          text-align: right;
+          font-weight: 700;
+          font-size: 18px;
+          display: inline;
+        }
+        .type {
+          margin: 0;
+          text-align: right;
+          font-weight: 700;
+          color: $color-tertiary-hover;
+        }
       }
       .details {
         font-size: 14px;
         text-align: right;
         line-height: 15px;
-      }
-      .type {
-        text-align: right;
-        font-weight: 700;
-        color: $color-tertiary-hover;
       }
       .buttons {
         margin-top: 20px;

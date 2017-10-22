@@ -54,7 +54,9 @@ class BandBox extends Component {
           {this.state.bands.map((band, index) => {
             return (
               <div key={index} className="band">
-                <h3><Link to={`/band/${band.band_id}`}>{band.band_name}</Link></h3>
+                <h3><Link
+                  style={{fontWeight: '400'}}
+                  to={`/band/${band.band_id}`}>{band.band_name}</Link></h3>
               </div>
             )
           })}

@@ -7,11 +7,11 @@
   .chevron {
     font-size: 40px;
     cursor: pointer;
-    color: $color-tertiary;
+    color: rgba(154, 97, 151, 0.2);
     transition: 300ms;
     margin-top: 40px;
     &:hover {
-      color: $color-tertiary-hover;
+      color: rgba(154, 97, 151, 0.7);
     }
   }
   .hidden {
@@ -35,6 +35,14 @@
       iframe {
         margin-top: 20px;
         border-radius: 3px;
+        box-shadow: 2px 2px 15px gray;
+        height: 250px;
+      }
+      img {
+        margin-top: 20px;
+        border-radius: 3px;
+        box-shadow: 2px 2px 15px gray;
+        height: 250px;
       }
     }
     h3 a {

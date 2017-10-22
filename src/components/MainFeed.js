@@ -122,10 +122,11 @@ class MainFeed extends Component {
               // let video = null;
               if (musician.primary_vid_id) {
                 video = <YouTube
-                    videoId={musician.primary_vid_id}
-                    opts={{width: '400', height: '260'}}
-                    ref={'video' + index}
-                  />
+                  style={{boxShadow: '2px 2px 10px gray'}}
+                  videoId={musician.primary_vid_id}
+                  opts={{width: '400', height: '260'}}
+                  ref={'video' + index}
+                />
 
               }
 
@@ -135,8 +136,8 @@ class MainFeed extends Component {
                   <h3>
                     <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
                   </h3>
-                  <span><strong>City:</strong> {musician.city}</span> <br />
-                  <span><strong>Skill Level:</strong> {musician.skill_level}</span> <br />
+                  <span>{musician.city}</span> <br />
+                  <span>{musician.skill_level}</span> <br />
                   {video}
 
                 </div>

@@ -100,7 +100,7 @@ class UserProfile extends Component {
           <h2>{user.first_name} {user.last_name}</h2>
           <div className="message-link">
             <i
-              className="fa fa-pencil-square-o message-icon"
+              className="fa fa-commenting-o message-icon"
               onClick={this.writeMessage}
               aria-hidden="true"></i>
           </div>

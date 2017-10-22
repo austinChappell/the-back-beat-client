@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
+import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
-import TimePicker from 'rc-time-picker';
+// import TimePicker from 'rc-time-picker';
+import TimePicker from 'material-ui/TimePicker';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
+import DateTimePicker from 'material-ui-datetimepicker';
+import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
+import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
 
 import EventList from './EventList';
 import Form from './Form';
@@ -30,10 +43,11 @@ class CalendarPage extends Component {
     eventTypes: [
       { value: 'Concert', text: 'Concert' },
       { value: 'Jam Session', text: 'Jam Session' },
-      { value: 'Rehearsal', text: 'Rehearsal' }
     ],
     eventType: '',
+    eventTypeSelected: null,
     eventVenue: '',
+    open: false,
     initialTimeVal: now,
     myEvents: [],
     startDate: moment(),
@@ -89,7 +103,7 @@ class CalendarPage extends Component {
   }
 
   convertDate = (date, time) => {
-    const shortDate = date._d.toString().slice(0, 15);
+    const shortDate = date.toString().slice(0, 15);
     this.setState({ eventDate: shortDate + ' ' + time });
   }
 
@@ -113,6 +127,16 @@ class CalendarPage extends Component {
     const apiURL = this.props.apiURL;
     console.log('STATE', this.state);
     console.log('CITY', this.props.loggedInUser.city);
+
+
+    let stringDate = this.state.eventDate;
+    let stringTime = this.state.eventTime;
+
+    let shortDate = stringDate.slice(0, 15);
+    let shortTime = stringTime.slice(16, stringTime.length);
+    let stringDateTime = `${shortDate} ${shortTime}`;
+    let date = new Date(stringDateTime);
+
     fetch(`${apiURL}/api/calendar/add`, {
       credentials: 'include',
       headers: {
@@ -121,9 +145,9 @@ class CalendarPage extends Component {
       method: 'POST',
       body: JSON.stringify({
         eventTitle: this.state.eventTitle,
-        eventType: this.state.eventType,
+        eventType: this.state.eventTypeSelected,
         eventVenue: this.state.eventVenue,
-        eventDateTime: this.state.eventDate,
+        eventDateTime: date,
         eventDetails: this.state.eventDetails,
         eventCity: this.state.eventCity,
         userCity: this.props.loggedInUser.city,
@@ -137,6 +161,7 @@ class CalendarPage extends Component {
         eventTime: '12:00am',
         eventTitle: '',
         eventType: this.state.eventTypes[0].value,
+        eventTypeSelected: null,
         eventVenue: '',
         initialTimeVal: now,
         startDate: moment()
@@ -149,77 +174,149 @@ class CalendarPage extends Component {
     })
   }
 
+  handleNewDateChange = (evt, date) => {
+    this.setState({
+      startDate: date
+    }, () => {
+      this.convertDate(this.state.startDate, this.state.eventTime)
+    });
+  }
+
+  handleNewTimeChange = (evt, time) => {
+    let stringTime = String(time);
+    this.setState({eventTime: stringTime}, () => {
+
+    });
+  }
+
+  handleChange = (evt, name) => {
+    const updateObj = {};
+    updateObj[name] = evt.target.value;
+    this.setState(updateObj);
+  }
+
+  handleSelectChange = (evt, index, value) => {
+    console.log(value);
+    this.setState({ eventTypeSelected: value });
+  }
+
+  setDate = (dateTime) => {
+    console.log('SET DATE RUNNING');
+    this.setState({ dateTime });
+  };
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = (submit) => {
+    this.setState({open: false});
+    if (submit) {
+      console.log('true');
+    } else {
+      console.log('false');
+    }
+  };
+
   render() {
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={() => this.handleClose(false)}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={(evt) => this.submitForm(evt)}
+      />,
+    ];
+
+    console.log('STATE', this.state);
 
     return (
       <div className="CalendarPage">
 
-        <Form
-          onSubmit={(evt) => this.submitForm(evt)}
-          submitBtnText="Create New Event"
+        <div style={{ textAlign: 'center' }}>
+
+          <h2 style={{ marginBottom: '20px' }}>Create Your<br />Own Event</h2>
+
+          <FloatingActionButton
+            secondary={true}
+            mini={true}
+            onClick={this.handleOpen}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+
+        </div>
+        <Dialog
+          title="Create An Event"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
         >
 
-          <FormInput
-            name="eventTitle"
-            placeholder="Title"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventTitle}
-          />
+          <div className="form-inputs">
 
-          <TextArea
-            name="eventDetails"
-            placeholder="Description"
-            charLimit={150}
-            onChange={this.handleInputChange}
-            value={this.state.eventDetails}
-          />
 
-          <div className="flex-calendar">
+            <TextField
+              floatingLabelText="Title"
+              onChange={(evt) => this.handleChange(evt, 'eventTitle')}
+              value={this.state.eventTitle}
+            />
+
+            <TextField
+              floatingLabelText="Details"
+              onChange={(evt) => this.handleChange(evt, 'eventDetails')}
+              multiLine={true}
+              rows={1}
+              rowsMax={4}
+            />
 
             <DatePicker
-              name="selectedDate"
-              onChange={this.handleDateChange}
-              selected={this.state.startDate}
+              onChange={this.handleNewDateChange}
+              floatingLabelText="Event Date"
+              DatePicker={DatePickerDialog}
+              TimePicker={TimePickerDialog}
             />
 
             <TimePicker
-              showSecond={false}
-              defaultValue={now}
-              className="xxx"
-              onChange={this.onTimeChange}
-              format={format}
-              use12Hours
+              format="ampm"
+              floatingLabelText="Event Time"
+              onChange={this.handleNewTimeChange}
+            />
+
+            <SelectField
+              floatingLabelText="Type"
+              value={this.state.eventTypeSelected}
+              onChange={this.handleSelectChange}
+            >
+              {this.state.eventTypes.map((eventType) => {
+                return (
+                  <MenuItem
+                    value={eventType.value}
+                    primaryText={eventType.text}
+                  />
+                )
+              })}
+            </SelectField>
+
+            <TextField
+              floatingLabelText="Venue"
+              onChange={(evt) => this.handleChange(evt, 'eventVenue')}
+            />
+
+            <TextField
+              floatingLabelText="City"
+              onChange={(evt) => this.handleChange(evt, 'eventCity')}
             />
 
           </div>
 
-          <FormSelect
-            name="eventType"
-            onChange={this.handleInputChange}
-            options={this.state.eventTypes}
-            value={this.state.eventTypeSelected}
-          />
-
-          <FormInput
-            name="eventVenue"
-            placeholder="Venue"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventVenue}
-          />
-
-          <FormInput
-            name="eventCity"
-            placeholder="City"
-            onChange={this.handleInputChange}
-            type="text"
-            value={this.state.eventCity}
-          />
-
-          {/* // TODO: Make submit button and add functionality to post to database */}
-
-        </Form>
+        </Dialog>
 
         <EventList
           attendanceButtons={true}

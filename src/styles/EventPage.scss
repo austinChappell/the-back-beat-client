@@ -1,11 +1,13 @@
 .EventPage {
-  border: 1px solid $color-primary;
+  box-shadow: 2px 2px 20px gray;
   max-width: 600px;
   margin: 40px auto;
   h1 {
     text-align: center;
     background-color: $color-primary;
     color: $light-font;
+    font-size: 30px;
+    padding: 10px;
   }
   .details {
     padding: 20px;

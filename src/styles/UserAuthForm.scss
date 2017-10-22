@@ -2,92 +2,64 @@
   display: none;
 }
 
-.UserAuthForm {
-  position: fixed;
-  width: 100%;
-  background: rgba(0,0,0,0.7);
-  height: 100%;
-  z-index: 100;
-  #exit-button {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 36px;
-    cursor: pointer;
-    &:hover {
-      color: lightgray;
-    }
+.video-list-title, .added-videos {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  .vid-primary-header, input {
+    flex-basis: 60px;
   }
-  .form {
-    width: 50%;
-    max-width: 600px;
-    margin: 150px auto 0;
-    background-color: $color-secondary;
-    padding: 20px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    input, select {
-      width: 100%;
-      margin-bottom: 10px;
-      font-size: 1.0em;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      box-sizing: border-box;
-      outline: none;
+  h3 {
+    flex-grow: 1;
+    margin: 0 50px;
+    text-align: left;
+    font-weight: 500;
+  }
+  .remove-button {
+    color: $color-failure;
+  }
+}
+
+.form-inputs {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  & > div {
+    margin: 0 10px;
+  }
+  @media (max-width: 799px) {
+    justify-content: center;
+  }
+}
+
+.no-errors {
+  color: $color-failure;
+}
+.error-message {
+  color: $color-failure;
+  border: 1px solid $color-failure;
+  border-radius: 2px;
+  background-color: pink;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 100;
+  transition: 400ms;
+}
+.form-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  p {
+    text-align: center;
+    span {
+      display: block;
     }
-    select {
-      height: 38px;
-      overflow: hidden;
-      background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
-      background-size: contain;
-      background-color: $light-font;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;       /* remove default arrow */
-    }
-    button {
-      border: 3px solid $color-primary;
-      background-color: transparent;
+    .span-link {
       color: $color-primary;
-      font-size: 1.3em;
+      text-decoration: underline;
+      margin-top: 10px;
       cursor: pointer;
-      border-radius: 2px;
-      padding: 10px;
-      &:hover {
-        background-color: $color-primary;
-        color: $light-font;
-      }
-    }
-    .no-errors {
-      color: $color-failure;
-    }
-    .error-message {
-      color: $color-failure;
-      border: 2px solid $color-failure;
-      border-radius: 5px;
-      background-color: pink;
-      padding: 10px;
-      font-weight: 600;
-      transition: 400ms;
-    }
-    .form-footer {
-      display: flex;
-      flex-direction: column-reverse;
-      button {
-        align-self: center;
-      }
-      p {
-        text-align: center;
-        span {
-          display: block;
-        }
-        .span-link {
-          color: $color-primary;
-          text-decoration: underline;
-          cursor: pointer;
-        }
-      }
     }
   }
 }

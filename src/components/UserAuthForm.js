@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+
 class UserAuthForm extends Component {
 
   constructor(props) {
@@ -11,9 +18,9 @@ class UserAuthForm extends Component {
       errorMessage: null,
       checkUsernameMessage: null,
       checkUsernameLength: null,
+      citySelect: null,
+      open: false,
     }
-
-    this.stopTimeout = undefined;
 
   }
 
@@ -22,9 +29,9 @@ class UserAuthForm extends Component {
     let value = evt.target.value;
     clearTimeout(this.stopTimeout);
     const inputLength = evt.target.value.length;
-    this.props.handleFormInputChange(evt, input);
+    this.props.handleFormInputChange(evt.target.value, input);
     this.stopTimeout = setTimeout(function () {
-      if (checkInputAvailability) {
+      if (checkInputAvailability && value.length > 0) {
         fetch(`${component.props.apiURL}/api/${input}/${value}`).then((response) => {
           return response.json();
         }).then((results) => {
@@ -42,6 +49,8 @@ class UserAuthForm extends Component {
 
           }
         })
+      } else if (value.length === 0) {
+        component.setState({ checkUsernameMessage: null });
       }
     }, 1000);
   }
@@ -68,7 +77,6 @@ class UserAuthForm extends Component {
   getMusicians = (user, styleids) => {
 
     const skillLevels = this.props.skillLevels;
-
     const apiURL = this.props.apiURL;
     const userSkillIndex = skillLevels.indexOf(user.skill_level);
     let skill_level_one = skillLevels[userSkillIndex - 1];
@@ -86,8 +94,6 @@ class UserAuthForm extends Component {
     if (userSkillIndex === skillLevels.length - 1) {
       skill_level_three = 'no_skill';
     }
-
-    // const urlone = `${apiURL}/api/users/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
     const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
@@ -135,13 +141,11 @@ class UserAuthForm extends Component {
       results.rows.forEach((style) => {
         styles.push(style.style_id);
       });
-      console.log('STYLES', styles);
       this.getMusicians(loggedInUser, styles);
     })
   }
 
   setUser = () => {
-    console.log('SET USER FIRING');
     const url = this.props.apiURL;
     fetch(`${url}/myprofile`, {
       credentials: 'include',
@@ -149,18 +153,12 @@ class UserAuthForm extends Component {
         'Content-Type': 'application/json'
       },
     }).then((response) => {
-      console.log('SET USER RESPONSE', response);
       return response.json();
     }).then((results) => {
-      // console.log('PROFILE RESULTS', results.rows[0]);
       const loggedInUser = results.rows[0];
-      console.log('SET USER LOGGED IN USER', loggedInUser);
-      // console.log('LOGGED IN USER', loggedInUser);
       this.getUserStyles(loggedInUser);
       this.props.addLoggedInUser(loggedInUser);
       return loggedInUser;
-    // }).then((loggedInUser) => {
-    //   this.getMusicians(loggedInUser);
     })
   }
 
@@ -181,16 +179,6 @@ class UserAuthForm extends Component {
       this.props.clearUserInfo(userInfo.username);
       this.setUser();
 
-      //
-      // if (this.props.onboardingStage === 0) {
-      //   this.props.newProps.history.push('/onboarding');
-      // } else if (this.props.onboardingStage === 1) {
-      //   this.props.newProps.history.push('/');
-      // } else {
-      //   this.props.newProps.history.goBack();
-      // }
-
-
       if (submitType === 'login') {
         this.props.newProps.history.push('/');
       } else if (submitType === 'signup') {
@@ -200,9 +188,7 @@ class UserAuthForm extends Component {
         this.props.newProps.history.goBack();
       }
 
-
     }).catch((err) => {
-      console.log('FETCH FAILED');
       if (submitType === 'login') {
         this.setState({ errorMessage: 'The username and/or password is invalid.' });
       } else if (submitType === 'signup') {
@@ -211,9 +197,46 @@ class UserAuthForm extends Component {
     })
   }
 
+  handleCitySelect = (evt, index, value) => {
+    this.setState({citySelect: value}, () => {
+      this.props.handleFormInputChange(value, 'city')
+    })
+  }
+
+  handleSkillSelect = (evt, index, value) => {
+    this.setState({skillSelect: value}, () => {
+      this.props.handleFormInputChange(value, 'skillLevel')
+    })
+  }
+
   render() {
 
-    // console.log('render user auth page');
+    const errorMessageStyle = {
+      color: '$color-failure',
+      border: '1px solid $color-failure',
+      borderRadius: '2px',
+      backgroundColor: 'pink',
+      padding: '10px',
+      textAlign: 'center',
+      marginTop: '20px',
+      fontWeight: '100',
+      transition: '400ms'
+    }
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.exitForm}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={(evt) => {
+          this.submitForm(evt, this.props.userInfo);
+        }}
+      />,
+    ];
 
     let otherOption = this.props.userAuthType === 'Login' ?
       <p>
@@ -228,76 +251,84 @@ class UserAuthForm extends Component {
 
     let form = this.props.userAuthType === 'Login' ?
       <div className="form-inputs">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'username')}
-          value={this.props.userInfo.username} />
-        <input
+        <TextField
+          floatingLabelText="Username"
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'username')}
+          value={this.props.userInfo.username}
+        />
+        <TextField
+          floatingLabelText="Password"
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'password')}
           type="password"
-          name="password"
-          placeholder="Password"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'password')}
-          value={this.props.userInfo.password} />
+          value={this.props.userInfo.password}
+        />
       </div>
       :
       <div className="form-inputs">
-        <input
-          type="text"
-          name="first_name"
-          placeholder="First Name"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'firstName')}
-          value={this.props.userInfo.firstName} />
-        <input
-          type="text"
-          name="last_name"
-          placeholder="Last Name"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'lastName')}
-          value={this.props.userInfo.lastName} />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'email')}
-          value={this.props.userInfo.email} />
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={(evt) => this.handleChange(evt, 'username', true)}
-          onBlur={(evt) => this.checkUserNameLength(evt)}
-          value={this.props.userInfo.username} />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'password')}
-          value={this.props.userInfo.password} />
-        <select
-          name="city"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'city')}
-          value={this.props.userInfo.city}>
-          <option value="">City...</option>
-          <option value="Austin, TX">Austin, TX</option>
-          <option value="Dallas, TX">Dallas, TX</option>
-        </select>
-        <select
-          name="skillLevel"
-          onChange={(evt) => this.props.handleFormInputChange(evt, 'skillLevel')}>
-          <option value="">Skill Level...</option>
+        <TextField
+          floatingLabelText="First Name"
+          onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'firstName')}
+          value={this.props.userInfo.firstName}
+        />
+          <TextField
+            floatingLabelText="Last Name"
+            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'lastName')}
+            value={this.props.userInfo.lastName}
+          />
+          <TextField
+            floatingLabelText="Email"
+            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'email')}
+            value={this.props.userInfo.email}
+          />
+          <TextField
+            floatingLabelText="Username"
+            onChange={(evt) => this.handleChange(evt, 'username', true)}
+            onBlur={(evt) => this.checkUserNameLength(evt)}
+            value={this.props.userInfo.username}
+          />
+          <TextField
+            floatingLabelText="Password"
+            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'password')}
+            type="password"
+            value={this.props.userInfo.password}
+          />
+        <SelectField
+          floatingLabelText="City"
+          onChange={this.handleCitySelect}
+          style={{textAlign: 'left'}}
+          value={this.state.citySelect}
+        >
+          <MenuItem value="Austin, TX" primaryText="Austin, TX" />
+          <MenuItem value="Dallas, TX" primaryText="Dallas, TX" />
+        </SelectField>
+        <SelectField
+          floatingLabelText="Skill Level"
+          onChange={this.handleSkillSelect}
+          style={{textAlign: 'left'}}
+          value={this.state.skillSelect}
+        >
           {this.props.skillLevels.map((skillLevel, index) => {
-            return <option key={index} value={skillLevel}>{skillLevel}</option>
+            return (
+              <MenuItem
+                key={index}
+                value={skillLevel}
+                primaryText={skillLevel}
+              />
+            )
           })}
-        </select>
+        </SelectField>
       </div>
 
 
     return (
 
       <div className={this.props.showUserAuthForm ? "UserAuthForm" : "hide"}>
-        <span id="exit-button" onClick={this.exitForm}><i className="fa fa-times" aria-hidden="true"></i></span>
-        <form className="form">
+        <Dialog
+          modal={false}
+          actions={actions}
+          open={this.props.showUserAuthForm}
+          onRequestClose={this.exitForm}
+        >
           {form}
           <div className={this.state.checkUsernameLength ? "error-message" : "no-errors"}>
             {this.state.checkUsernameLength}
@@ -305,18 +336,13 @@ class UserAuthForm extends Component {
           <div className={this.state.checkUsernameMessage ? "error-message" : "no-errors"}>
             {this.state.checkUsernameMessage}
           </div>
-          <div className={this.state.errorMessage ? "error-message" : "no-errors"}>
+          <div style={this.state.errorMessage ? errorMessageStyle : {}}>
             {this.state.errorMessage}
           </div>
           <div className="form-footer">
-            <button onClick={(evt) => {
-              console.log('button clicked');
-              this.submitForm(evt, this.props.userInfo);
-            }
-            }>{this.props.userAuthType}</button>
             {otherOption}
           </div>
-        </form>
+        </Dialog>
       </div>
 
     )
@@ -341,18 +367,16 @@ const mapDispatchToProps = (dispatch) => {
   return {
 
     addLoggedInUser: (user) => {
-      console.log('ADD LOGGED IN USER FUNCTION RUNNING', user);
       const action = { type: 'ADD_LOGGED_IN_USER', user };
       dispatch(action);
     },
 
-    handleFormInputChange: (evt, input) => {
-      const action = { type: 'HANDLE_FORM_INPUT_CHANGE', input, value: evt.target.value }
+    handleFormInputChange: (value, input) => {
+      const action = { type: 'HANDLE_FORM_INPUT_CHANGE', input, value }
       dispatch(action);
     },
 
     clearUserInfo: (username) => {
-      console.log('CLEAR USER INFO FIRING');
       const action = { type: 'USER_AUTH_FORM_SUBMIT', username };
       dispatch(action);
     },

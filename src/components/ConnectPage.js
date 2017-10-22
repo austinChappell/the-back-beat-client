@@ -53,6 +53,7 @@ class ConnectPage extends Component {
   }
 
   render() {
+
     console.log('DATA IS', this.state.data);
     return (
       <div className="ConeectPage">

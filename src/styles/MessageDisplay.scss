@@ -1,6 +1,12 @@
 .MessageDisplay {
   flex-basis: 50%;
   box-sizing: border-box;
+  .currentRecipient {
+    text-align: center;
+    background-color: $color-primary;
+    padding: 6px;
+    color: $light-font;
+  }
   .message-box {
     height: calc(100vh - 160px);
     width: 80%;

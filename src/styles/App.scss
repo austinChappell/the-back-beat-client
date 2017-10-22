@@ -30,7 +30,8 @@ $color-failure: #C91208;
 }
 
 @mixin link {
-  color: $color-tertiary;
+  color: $color-primary;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   &:hover {

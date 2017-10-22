@@ -69,34 +69,28 @@ class MessageDisplay extends Component {
     let messageDisplay;
     let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
 
-    // if (recipient !== null) {
-      messageDisplay = <div className="message-box">
-        <div className="currentRecipient">
-          {recipient}
-        </div>
-        <div className="messages" ref="messageBox">
-          {selectedMessages.map((message, index) => {
-            return (
-              <div key={index} className={message.sender_id === loggedInUserId ? "message sent" : "message received"}>
-                <div className={message.sender_id === loggedInUserId ? "message-wrapper sent" : "message-wrapper received"}>
-                  <p>{message.message_text}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <form className="message-editor" onSubmit={(evt) => this.sendMessage(evt)}>
-          <input className={recipient ? '' : 'disabled'} value={this.props.currentMessage} onChange={(evt) => this.handleChange(evt)} disabled={recipient === null}></input>
-          <button
-            className={recipient === null ? "send-message-button disabled" : "send-message-button"}
-            disabled={recipient === null}>Send</button>
-        </form>
+    messageDisplay = <div className="message-box">
+      <div className={this.props.currentRecipient ? 'currentRecipient' : ''}>
+        {recipient}
       </div>
-    // } else {
-    //   messageDisplay = <div>
-    //     <h1>Looking to hire someone for a gig? Want to find out where your friends are playing next? Write them a message!</h1>
-    //   </div>
-    // }
+      <div className="messages" ref="messageBox">
+        {selectedMessages.map((message, index) => {
+          return (
+            <div key={index} className={message.sender_id === loggedInUserId ? "message sent" : "message received"}>
+              <div className={message.sender_id === loggedInUserId ? "message-wrapper sent" : "message-wrapper received"}>
+                <p>{message.message_text}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <form className="message-editor" onSubmit={(evt) => this.sendMessage(evt)}>
+        <input className={recipient ? '' : 'disabled'} value={this.props.currentMessage} onChange={(evt) => this.handleChange(evt)} disabled={recipient === null}></input>
+        <button
+          className={recipient === null ? "send-message-button disabled" : "send-message-button"}
+          disabled={recipient === null}>Send</button>
+      </form>
+    </div>
 
     return (
       <div className="MessageDisplay">
