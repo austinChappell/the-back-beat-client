@@ -15,7 +15,7 @@
     "react-datepicker": "^0.55.0",
     "react-dom": "^15.6.1",
     "react-fine-uploader": "^1.0.7",
-    "react-image-cropper": "^1.1.1",
+    "react-image-crop": "^3.0.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-hash-link": "^1.1.0",

@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 import MyProfileInfo from './MyProfileInfo';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {Cropper} from 'react-image-cropper'
 import Upload from 'material-ui-upload/Upload';
 import UploadPreview from 'material-ui-upload/UploadPreview';
+import ReactCrop from 'react-image-crop';
+
+import 'react-image-crop/lib/ReactCrop.scss';
 
 class MyUserProfile extends Component {
 
   state = {
-    pictures: {}
+    pictures: { 'initialKey': null }
   }
 
   handleSubmit = () => {
@@ -33,6 +35,10 @@ class MyUserProfile extends Component {
   onFileLoad = (e, file) => console.log(e.target.result, file.name);
 
   render() {
+
+    let imageData = Object.values(this.state.pictures)[0];
+
+    const cropper = this.state.pictures ? <ReactCrop src={imageData} /> : null;
 
     console.log('STATE', this.state);
 
@@ -72,7 +78,7 @@ class MyUserProfile extends Component {
           label="Save"
           onClick={this.handleSubmit}
         />
-        {/* <Cropper src={this.state.pictures} ref="cropper"/> */}
+        {cropper}
         <MyProfileInfo />
       </div>
     )
