@@ -1439,6 +1439,33 @@ button, input, textarea {
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   padding-top: 150px; }
+  .AvatarCropper-base .AvatarCropper-canvas {
+    background-color: silver;
+    padding: 25px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 10px #111111;
+    width: 450px;
+    box-sizing: border-box;
+    margin: 0 auto; }
+    .AvatarCropper-base .AvatarCropper-canvas .row {
+      background-color: white;
+      width: 400px;
+      box-sizing: border-box; }
+      .AvatarCropper-base .AvatarCropper-canvas .row:first-of-type {
+        height: 400px; }
+      .AvatarCropper-base .AvatarCropper-canvas .row input {
+        box-sizing: border-box;
+        margin: 0; }
+    .AvatarCropper-base .AvatarCropper-canvas .modal-footer button {
+      background: transparent;
+      border: 2px solid #070649;
+      color: #070649;
+      margin: 10px 10px 0;
+      cursor: pointer;
+      font-size: 20px; }
+      .AvatarCropper-base .AvatarCropper-canvas .modal-footer button:hover {
+        background-color: #070649;
+        color: #FFFFFF; }
 
 .UserProfile .avatar-photo {
   background-color: lightgrey;
