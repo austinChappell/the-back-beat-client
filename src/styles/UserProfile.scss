@@ -1,4 +1,52 @@
+.AvatarCropper-base {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-top: 150px;
+}
+
 .UserProfile {
+  .avatar-photo {
+    background-color: lightgrey;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    cursor: pointer;
+    .avatar-edit {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      top: 0;
+      left: 0;
+      color: rgba(255, 255, 255, 0);
+      transition: 500ms;
+      text-align: center;
+      span {
+        margin-top: 60px;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-block;
+      }
+      & > i {
+        color: rgba(255, 255, 255, 1);
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        transition: 500ms;
+      }
+      &:hover {
+        background-color: rgba(50,50,50,0.5);
+        color: rgba(255, 255, 255, 1);
+        & > i {
+          color: rgba(255, 255, 255, 0);
+        }
+      }
+    }
+  }
   .profile-header {
     padding: 0 30px;
     display: flex;

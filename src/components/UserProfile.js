@@ -85,6 +85,11 @@ class UserProfile extends Component {
     }
 
     const user = this.props.user;
+    const profileImgSrc = user.has_profile_photo ?
+    `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg`
+    :
+    `${this.props.apiURL}/files/profile_images/profile_image_placeholder.png`;
+
     return (
       // <div className="CenterComponent UserProfile">
       //   <h2>Your Profile</h2>
@@ -99,6 +104,14 @@ class UserProfile extends Component {
       <div className="CenterComponent UserProfile">
         <div className="profile-header">
           <h2>{user.first_name} {user.last_name}</h2>
+          <div
+            className="avatar-photo"
+            style={{
+              backgroundImage: `url(${profileImgSrc})`,
+              backgroundSize: 'cover'
+            }}
+          >
+          </div>
           <div className="message-link">
             <i
               className="fa fa-commenting-o message-icon"

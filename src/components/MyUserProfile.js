@@ -2,18 +2,53 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import MyProfileInfo from './MyProfileInfo';
-import RaisedButton from 'material-ui/RaisedButton';
-
-import Upload from 'material-ui-upload/Upload';
-import UploadPreview from 'material-ui-upload/UploadPreview';
-import ReactCrop from 'react-image-crop';
-
-import 'react-image-crop/lib/ReactCrop.scss';
+import AvatarCropper from "react-avatar-cropper";
 
 class MyUserProfile extends Component {
 
   state = {
-    pictures: { 'initialKey': null }
+    cropperOpen: false,
+    img: null,
+  }
+
+  openFilePicker = () => {
+    this.refs.in.click();
+  }
+
+  handleFile = (e) => {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    reader.onload = (img) => {
+      this.handleFileChange(img.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  handleFileChange = (dataURI) => {
+    this.setState({
+      img: dataURI,
+      croppedImg: this.state.croppedImg,
+      cropperOpen: true
+    });
+  }
+
+  handleCrop = (dataURI) => {
+    this.setState({
+      cropperOpen: false,
+      img: null,
+      croppedImg: dataURI
+    }, () => {
+      this.handleSubmit();
+    });
+  }
+
+  handleRequestHide = () => {
+    this.setState({
+      cropperOpen: false
+    });
   }
 
   handleSubmit = () => {
@@ -25,60 +60,52 @@ class MyUserProfile extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
-        pictures: this.state.pictures
+        image: this.state.croppedImg
       })
     })
   }
 
-  onChange = (pictures) => this.setState({pictures});
-
-  onFileLoad = (e, file) => console.log(e.target.result, file.name);
-
   render() {
 
-    let imageData = Object.values(this.state.pictures)[0];
-
-    const cropper = this.state.pictures ? <ReactCrop src={imageData} /> : null;
-
-    console.log('STATE', this.state);
-
-    const options = {
-      baseUrl: 'http://127.0.0.1',
-      query: {
-        warrior: 'fight'
-      }
-    }
-
     const user = this.props.user;
+    const profileImgSrc = this.state.croppedImg ? this.state.croppedImg :  `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=1`;
+
     return (
-      // <div className="CenterComponent UserProfile">
-      //   <h2>Your Profile</h2>
-      //   <div className="profile-info">
-      //     <span>Logged in as <span className="username">{user.username}</span></span>
-      //     <h3>{user.first_name} {user.last_name}</h3>
-      //     <h4>Email: {user.email}</h4>
-      //     <h4>City: {user.city}</h4>
-      //     <h4>Skill Level: {user.skill_level}</h4>
-      //   </div>
-      // </div>
       <div className="CenterComponent UserProfile">
         <h2>{user.first_name} {user.last_name}</h2>
-        {/* <form onSubmit={this.handleSubmit}>
-          <input type="file" name="file" />
-          <input type="submit" value="Submit" />
-        </form> */}
-        {/* <Upload label="Add" onFileLoad={this.onFileLoad}/> */}
-        <UploadPreview
-          title="Picture"
-          label="Add"
-          initialItems={this.state.pictures}
-          onChange={this.onChange}
+        <div
+          className="avatar-photo"
+          onClick={this.openFilePicker}
+          style={{
+            backgroundImage: `url(${profileImgSrc})`,
+            backgroundSize: 'cover'
+          }}
+        >
+          <div className="avatar-edit">
+            <span>Edit<br />Photo<br />
+              <i className="fa fa-camera"></i>
+            </span>
+            <i className="fa fa-camera"></i>
+          </div>
+        </div>
+
+        {this.state.cropperOpen &&
+          <AvatarCropper
+            onRequestHide={this.handleRequestHide}
+            cropperOpen={this.state.cropperOpen}
+            onCrop={this.handleCrop}
+            image={this.state.img}
+            width={400}
+            height={400}
+          />
+        }
+        <input
+          ref="in"
+          type="file"
+          accept="image/*"
+          style={{display: 'none'}}
+          onChange={this.handleFile}
         />
-        <RaisedButton
-          label="Save"
-          onClick={this.handleSubmit}
-        />
-        {cropper}
         <MyProfileInfo />
       </div>
     )
