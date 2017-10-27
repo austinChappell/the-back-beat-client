@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Avatar from 'material-ui/Avatar';
+import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
@@ -63,6 +65,7 @@ class MessageHistorySideBar extends Component {
 
     let messageHistoryDisplay = null;
 
+
     if (this.props.messageHistory.length > 0) {
       messageHistoryDisplay = <div>
         {this.props.messageHistory.map((message, index) => {
@@ -95,11 +98,18 @@ class MessageHistorySideBar extends Component {
             className = "message-history-result";
           }
 
+          let imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${recipientId}.jpg?v=1}`
+
           return (
-            <ListItem className={className} key={index} onClick={() => this.setRecipient(recipientId)}>
-              <h4>{unreadNotification} {displayName}</h4>
-              <p>{msgPreview}</p>
-            </ListItem>
+            <ListItem
+              className={className}
+              key={index}
+              onClick={() => this.setRecipient(recipientId)}
+              leftIcon={unreadNotification}
+              primaryText={displayName}
+              leftAvatar={<Avatar src={imageSrc} />}
+              rightIcon={<CommunicationChatBubble />}
+            />
           )
         })}
       </div>

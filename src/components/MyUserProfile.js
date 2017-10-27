@@ -60,6 +60,7 @@ class MyUserProfile extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
+        id: this.props.loggedInUser.id,
         image: this.state.croppedImg
       })
     })
@@ -114,7 +115,8 @@ class MyUserProfile extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    apiURL: state.apiURL
+    apiURL: state.apiURL,
+    loggedInUser: state.loggedInUser
   }
 }
 
