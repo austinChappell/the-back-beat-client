@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import MyProfileInfo from './MyProfileInfo';
-import AvatarCropper from "react-avatar-cropper";
+import AvatarCropper from 'react-avatar-cropper';
+import EditProfile from './EditProfile'
 
 class MyUserProfile extends Component {
 
   state = {
     cropperOpen: false,
+    editProfile: false,
     img: null,
     profilePicture: this.props.loggedInUser.has_profile_photo
   }
@@ -87,7 +89,50 @@ class MyUserProfile extends Component {
     })
   }
 
+  setUser = () => {
+    console.log('SET USER FUNCTION RUNNING');
+    const url = this.props.apiURL;
+    fetch(`${url}/myprofile`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then((response) => {
+      console.log('FETCH HAPPENED');
+      return response.json();
+    }).then((results) => {
+      const loggedInUser = results.rows[0];
+      this.props.addLoggedInUser(loggedInUser);
+    })
+  }
+
+  toggleDialog = () => {
+    console.log('edit profile function');
+    this.setState({ editProfile: !this.state.editProfile });
+  }
+
+  updateProfile = (evt, userInfo) => {
+    console.log('USER INFO INSIDE UPDATE PROFILE FUNCTION', userInfo);
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/myprofile/update`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT',
+      body: JSON.stringify({userInfo})
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setUser();
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   render() {
+
+    const editProfileComponent = this.state.editProfile ? <EditProfile showDialog={this.state.editProfile} /> : null;
 
     const randomCache = Math.floor(Math.random() * 1000000);
 
@@ -96,7 +141,20 @@ class MyUserProfile extends Component {
 
     return (
       <div className="CenterComponent UserProfile">
-        <h2>{user.first_name} {user.last_name}</h2>
+        <EditProfile
+          showDialog={this.state.editProfile}
+          toggleDialog={this.toggleDialog}
+          updateProfile={this.updateProfile}
+        />
+        <h2>{user.first_name} {user.last_name}
+          <i
+            className="fa fa-pencil-square-o"
+            aria-hidden="true"
+            onClick={this.toggleDialog}
+            style={{marginLeft: '10px'}}
+          >
+          </i>
+        </h2>
         <div
           className="avatar-photo"
           onClick={this.openFilePicker}
@@ -147,4 +205,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(MyUserProfile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addLoggedInUser: (user) => {
+      const action = { type: 'ADD_LOGGED_IN_USER', user };
+      dispatch(action);
+    },
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyUserProfile);

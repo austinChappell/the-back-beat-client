@@ -141,8 +141,12 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { onboardingStage: action.stage });
     case 'UPDATE_USER':
       return Object.assign({}, state, { currentUser: action.user });
+    case 'UPDATE_USER_INFO':
+      return Object.assign({}, state, { userInfo: action.userInfo });
     case 'USER_AUTH_FORM_SUBMIT':
       return Object.assign({}, state, { authorized: true, currentUsername: action.username, showUserAuthForm: false, userAuthType: '' });
+    case 'USER_HYDRATE':
+      return Object.assign({}, state, { loggedInUser: action.user });
     default:
       return state;
   }
