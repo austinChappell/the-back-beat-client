@@ -26,7 +26,8 @@ button, input, textarea {
     .BandBox .create-band-link a:hover {
       color: #894586; }
   .BandBox h2 {
-    color: #070649; }
+    color: #070649;
+    font-weight: 500; }
   .BandBox h3 {
     margin: 5px 10px 5px 0; }
   .BandBox h3 > a {
@@ -401,13 +402,9 @@ button, input, textarea {
   border-radius: 2px; }
   .ConnectResults .single-search-result {
     background-color: #E0E0E0;
-    font-size: 10px;
-    padding: 5px; }
-    .ConnectResults .single-search-result:hover {
-      background-color: #9A6197; }
-      .ConnectResults .single-search-result:hover a {
-        color: #FFFFFF; }
+    font-size: 10px; }
     .ConnectResults .single-search-result a {
+      margin: 0;
       text-decoration: none;
       color: #070649; }
 

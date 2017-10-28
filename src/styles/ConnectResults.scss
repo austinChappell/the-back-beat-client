@@ -7,14 +7,15 @@
   .single-search-result {
     background-color: $gray-background-dark;
     font-size: 10px;
-    padding: 5px;
+    // padding: 5px;
     &:hover {
       a {
-        color: $light-font;
+        // color: $light-font;
       }
-      background-color: $color-tertiary;
+      // background-color: $color-tertiary;
     }
     a {
+      margin: 0;
       text-decoration: none;
       color: $color-primary;
     }

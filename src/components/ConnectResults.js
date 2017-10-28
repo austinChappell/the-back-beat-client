@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 
 class ConnectResults extends Component {
 
@@ -17,13 +19,22 @@ class ConnectResults extends Component {
       searchResults = null;
     } else if (this.props.category === 'searchusernames') {
       searchResults = this.props.data.map((user) => {
+
+        const randomCache = Math.floor(Math.random() * 1000000);
+        const imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+
         return (
           <div className="single-search-result">
+            <Link
+              onClick={() => this.updateUser(user)}
+              to={`/profile/${user.username}`}>
+              <ListItem
+                primaryText={`${user.first_name} ${user.last_name}`}
+                rightAvatar={<Avatar src={imageSrc} />}
+              />
+            </Link>
+
             <h2>
-              <Link
-                onClick={() => this.updateUser(user)}
-                to={`/profile/${user.username}`}>{user.first_name} {user.last_name} - {user.city}
-              </Link>
             </h2>
           </div>
         )
@@ -44,7 +55,9 @@ class ConnectResults extends Component {
 
     return (
       <div className="ConnectResults">
-        {searchResults}
+        <List>
+          {searchResults}
+        </List>
       </div>
     )
   }
@@ -52,7 +65,7 @@ class ConnectResults extends Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    apiURL: state.apiURL
   }
 }
 
