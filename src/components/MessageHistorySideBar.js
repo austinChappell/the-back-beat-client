@@ -63,8 +63,8 @@ class MessageHistorySideBar extends Component {
 
   render() {
 
+    const randomCache = Math.floor(Math.random() * 1000000);
     let messageHistoryDisplay = null;
-
 
     if (this.props.messageHistory.length > 0) {
       messageHistoryDisplay = <div>
@@ -88,26 +88,25 @@ class MessageHistorySideBar extends Component {
             msgPreview = message.message_text;
           }
 
-          if (!message.read && message.recipient_id === this.props.loggedInUser.id) {
-            className = "message-history-result unread";
-            unreadNotification = <i
-              className="fa fa-circle"
-              style={{ color: 'red' }}
-              aria-hidden="true"></i>
-          } else {
-            className = "message-history-result";
-          }
+          unreadNotification = !message.read && message.recipient_id === this.props.loggedInUser.id ? true : false;
 
-          let imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${recipientId}.jpg?v=1}`
+          let imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${recipientId}.jpg?v=${randomCache}`;
 
           return (
             <ListItem
-              className={className}
+              className="message-history-result"
               key={index}
               onClick={() => this.setRecipient(recipientId)}
-              leftIcon={unreadNotification}
               primaryText={displayName}
-              leftAvatar={<Avatar src={imageSrc} />}
+              leftAvatar={
+                <Avatar
+                  src={imageSrc}
+                  style={
+                    unreadNotification ?
+                      { border: '3px solid red', boxSizing: 'border-box' } :
+                      { border: 'none' }
+                    }
+                />}
               rightIcon={<CommunicationChatBubble />}
             />
           )

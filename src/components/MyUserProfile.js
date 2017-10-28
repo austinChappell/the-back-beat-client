@@ -9,6 +9,7 @@ class MyUserProfile extends Component {
   state = {
     cropperOpen: false,
     img: null,
+    profilePicture: this.props.loggedInUser.has_profile_photo
   }
 
   openFilePicker = () => {
@@ -63,13 +64,35 @@ class MyUserProfile extends Component {
         id: this.props.loggedInUser.id,
         image: this.state.croppedImg
       })
+    }).then(() => {
+      this.setState({ profilePicture: true });
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  deletePhoto = () => {
+    console.log('DELETE PHOTO FUNCTION RUNNING');
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/uploaddefault`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST'
+    }).then(() => {
+      this.setState({ profilePicture: false, croppedImg: null });
+    }).catch((err) => {
+      console.log(err);
     })
   }
 
   render() {
 
+    const randomCache = Math.floor(Math.random() * 1000000);
+
     const user = this.props.user;
-    const profileImgSrc = this.state.croppedImg ? this.state.croppedImg :  `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=1`;
+    const profileImgSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
 
     return (
       <div className="CenterComponent UserProfile">
@@ -89,6 +112,7 @@ class MyUserProfile extends Component {
             <i className="fa fa-camera"></i>
           </div>
         </div>
+        <button onClick={this.deletePhoto}>Delete Photo</button>
 
         {this.state.cropperOpen &&
           <AvatarCropper
