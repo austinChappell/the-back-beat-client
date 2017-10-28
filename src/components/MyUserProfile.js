@@ -103,6 +103,8 @@ class MyUserProfile extends Component {
     }).then((results) => {
       const loggedInUser = results.rows[0];
       this.props.addLoggedInUser(loggedInUser);
+    }).then(() => {
+      this.toggleDialog();
     })
   }
 

@@ -33,7 +33,7 @@ class EditProfile extends Component {
         onClick={this.props.toggleDialog}
       />,
       <FlatButton
-        label="Submit"
+        label="Update Profile"
         primary={true}
         onClick={(evt) => {
           this.props.updateProfile(evt, this.props.userInfo);
