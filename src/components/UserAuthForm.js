@@ -127,6 +127,22 @@ class UserAuthForm extends Component {
 
   }
 
+  setDefaultPhoto = () => {
+    console.log('DELETE PHOTO FUNCTION RUNNING');
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/uploaddefault`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST'
+    }).then(() => {
+      this.setState({ profilePicture: false, croppedImg: null });
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   getUserStyles = (loggedInUser) => {
     const apiURL = this.props.apiURL;
     fetch(`${apiURL}/api/user/styles`, {
@@ -183,6 +199,7 @@ class UserAuthForm extends Component {
       if (submitType === 'login') {
         this.props.newProps.history.push('/');
       } else if (submitType === 'signup') {
+        this.setDefaultPhoto();
         this.props.newProps.history.push('/onboarding');
         // this.props.newProps.history.push(`/profile/${userInfo.username}`);
       } else {
