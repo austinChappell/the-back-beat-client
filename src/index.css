@@ -1467,6 +1467,18 @@ button, input, textarea {
         background-color: #070649;
         color: #FFFFFF; }
 
+.crop-circle {
+  position: absolute;
+  z-index: 1000;
+  width: 400px;
+  height: 400px;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: 175px;
+  left: calc(50vw - 200px);
+  border: 2px dashed #DDDDDD;
+  border-radius: 50%; }
+
 .UserProfile .avatar-photo {
   background-color: lightgrey;
   width: 200px;

@@ -115,14 +115,17 @@ class MyUserProfile extends Component {
         <button onClick={this.deletePhoto}>Delete Photo</button>
 
         {this.state.cropperOpen &&
-          <AvatarCropper
-            onRequestHide={this.handleRequestHide}
-            cropperOpen={this.state.cropperOpen}
-            onCrop={this.handleCrop}
-            image={this.state.img}
-            width={400}
-            height={400}
-          />
+          <div>
+            <AvatarCropper
+              onRequestHide={this.handleRequestHide}
+              cropperOpen={this.state.cropperOpen}
+              onCrop={this.handleCrop}
+              image={this.state.img}
+              width={400}
+              height={400}
+            />
+            <div className="crop-circle"></div>
+          </div>
         }
         <input
           ref="in"
