@@ -148,8 +148,7 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     currentRecipient: state.currentRecipient,
     loggedInUser: state.loggedInUser,
-    messageSearchBarVal: state.messageSearchBarVal,
-
+    messageSearchBarVal: state.messageSearchBarVal
   }
 }
 

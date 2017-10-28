@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 
 class MessageSearchBar extends Component {
 
@@ -93,13 +95,21 @@ class MessageSearchBar extends Component {
       <div className="MessageSearchBar">
         <input placeholder="Search Name" value={this.state.searchBarValue} onChange={(evt) => this.handleChangeAndFetch(evt)} />
         <div className="display-search-results">
-          {this.props.users.map((user, index) => {
-            return (
-              <div key={index} className="search-result" onClick={() => this.setRecipient(user)}>
-                <h2>{user.first_name} {user.last_name}</h2>
-              </div>
-            )
-          })}
+          <List>
+            {this.props.users.map((user, index) => {
+
+              const randomCache = Math.floor(Math.random() * 1000000);
+              const imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+
+              return (
+                <ListItem
+                  key={index}
+                  onClick={() => this.setRecipient(user)}                  primaryText={`${user.first_name} ${user.last_name}`}
+                  rightAvatar={<Avatar src={imageSrc} />}
+                />
+              )
+            })}
+          </List>
         </div>
       </div>
     )

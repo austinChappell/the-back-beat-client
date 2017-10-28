@@ -85,7 +85,7 @@ class EventList extends Component {
               <div className="info">
                 <div className="top">
                   <h4 className="type">
-                    {event.event_type}
+                    {event.event_type} - {formattedTime}
                   </h4>
                   <h4 className="title">
                     {event.event_title}
