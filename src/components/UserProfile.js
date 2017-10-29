@@ -77,6 +77,7 @@ class UserProfile extends Component {
         onClick={this.exitClick}
       />,
       <FlatButton
+        disabled={this.state.message === ''}
         label="Submit"
         primary={true}
         onClick={(evt) => this.sendMessage(evt)}
@@ -138,7 +139,7 @@ class UserProfile extends Component {
 
         <Dialog
           modal={false}
-          actions={this.state.message != '' ? actions : null}
+          actions={actions}
           open={this.state.displayModal}
           onRequestClose={this.exitClick}
           style={{textAlign: 'center'}}

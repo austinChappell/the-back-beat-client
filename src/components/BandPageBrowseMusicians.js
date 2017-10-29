@@ -235,6 +235,7 @@ class BandPageBrowseMusicians extends Component {
         onClick={this.exitClick}
       />,
       <FlatButton
+        disabled={this.state.messages === ''}
         label="Submit"
         primary={true}
         onClick={(evt) => this.sendMessage(evt)}
@@ -293,21 +294,17 @@ class BandPageBrowseMusicians extends Component {
           writeMessage={this.writeMessage}
         />
 
-        {/* <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}> */}
-
           <Dialog
             modal={false}
-            actions={this.state.message != '' ? actions : null}
+            actions={actions}
             open={this.state.displayModal}
             onRequestClose={this.exitClick}
             style={{textAlign: 'center'}}
           >
 
-          {modalContent}
+            {modalContent}
 
-        </Dialog>
-
-        {/* </Modal> */}
+          </Dialog>
 
       </div>
 
