@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import MessageIcon from 'material-ui-icons/Message';
 import YouTube from 'react-youtube';
 
 class MusicianCarousel extends Component {
@@ -44,12 +46,17 @@ class MusicianCarousel extends Component {
             </div>
           )
         })}
-        <div className="message-link">
-          <i
-            className="fa fa-commenting-o message-icon"
-            onClick={this.props.writeMessage}
-            aria-hidden="true"></i>
-        </div>
+        <FloatingActionButton
+          onClick={this.props.writeMessage}
+          style={{
+            alignSelf: 'flex-start',
+            bottom: '15px',
+            right: '15px',
+            position: 'absolute'
+          }}
+        >
+          <MessageIcon />
+        </FloatingActionButton>
       </div>
     } else {
       resultsDisplay = <div className="no-results">

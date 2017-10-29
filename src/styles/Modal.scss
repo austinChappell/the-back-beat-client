@@ -1,3 +1,17 @@
+.message-confirm-modal {
+  .message-sent-check {
+    background-color: $color-success;
+    color: $light-font;
+    font-size: 60px;
+    padding: 10px;
+    border-radius: 50%;
+    border: 4px solid $light-font;
+    margin-top: 70px;
+  }
+}
+.message-input {
+  text-align: left;
+}
 .Modal {
   position: fixed;
   width: 100vw;

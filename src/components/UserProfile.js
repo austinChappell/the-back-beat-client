@@ -3,6 +3,12 @@ import ProfileInfo from './ProfileInfo';
 
 import { connect } from 'react-redux';
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import TextField from 'material-ui/TextField';
+import MessageIcon from 'material-ui-icons/Message';
+
 import Modal from './Modal';
 import TextArea from './TextArea';
 
@@ -57,21 +63,39 @@ class UserProfile extends Component {
     this.setState(updateObj);
   }
 
+  handleMessageChange = (message) => {
+    this.setState({ message });
+  }
+
   render() {
 
     let modalContent;
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.exitClick}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={(evt) => this.sendMessage(evt)}
+      />,
+    ];
 
     switch(this.state.modalStage) {
       case 0:
         modalContent = <div>
-          <TextArea
-            name="message"
-            placeholder="Send a message..."
-            onChange={this.handleTextAreaChange}
-            rows="10"
+          <TextField
+            className="message-input"
+            multiLine={true}
+            rows={1}
+            rowsMax={4}
+            floatingLabelText="Your Message"
+            floatingLabelStyle={{textAlign: 'left'}}
+            onChange={(evt) => this.handleMessageChange(evt.target.value)}
             value={this.state.message}
           />
-          <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button>
         </div>
         break;
       case 1:
@@ -85,22 +109,9 @@ class UserProfile extends Component {
     }
 
     const user = this.props.user;
-    const profileImgSrc = user.has_profile_photo ?
-    `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg`
-    :
-    `${this.props.apiURL}/files/profile_images/profile_image_placeholder.png`;
+    const profileImgSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg`;
 
     return (
-      // <div className="CenterComponent UserProfile">
-      //   <h2>Your Profile</h2>
-      //   <div className="profile-info">
-      //     <span>Logged in as <span className="username">{user.username}</span></span>
-      //     <h3>{user.first_name} {user.last_name}</h3>
-      //     <h4>Email: {user.email}</h4>
-      //     <h4>City: {user.city}</h4>
-      //     <h4>Skill Level: {user.skill_level}</h4>
-      //   </div>
-      // </div>
       <div className="CenterComponent UserProfile">
         <div className="profile-header">
           <h2>{user.first_name} {user.last_name}</h2>
@@ -112,21 +123,30 @@ class UserProfile extends Component {
             }}
           >
           </div>
-          <div className="message-link">
-            <i
-              className="fa fa-commenting-o message-icon"
+          <FloatingActionButton
+            onClick={this.writeMessage}
+            style={{ alignSelf: 'flex-start' }}
+          >
+            <MessageIcon />
+              {/* <i
+              className="fa fa-commenting-o"
               onClick={this.writeMessage}
-              aria-hidden="true"></i>
-          </div>
+              aria-hidden="true"></i> */}
+          </FloatingActionButton>
         </div>
         <ProfileInfo />
 
-        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}>
+        <Dialog
+          modal={false}
+          actions={this.state.message != '' ? actions : null}
+          open={this.state.displayModal}
+          onRequestClose={this.exitClick}
+          style={{textAlign: 'center'}}
+        >
 
           {modalContent}
 
-        </Modal>
-
+        </Dialog>
 
       </div>
     )

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import Modal from './Modal';
 import MusicianCarousel from './MusicianCarousel';
 import TextArea from './TextArea';
+import TextField from 'material-ui/TextField';
 
 class BandPageBrowseMusicians extends Component {
 
@@ -164,6 +167,10 @@ class BandPageBrowseMusicians extends Component {
     }
   }
 
+  handleMessageChange = (message) => {
+    this.setState({ message });
+  }
+
   sendMessage = (evt) => {
     evt.preventDefault();
     let message = this.state.message;
@@ -221,18 +228,40 @@ class BandPageBrowseMusicians extends Component {
     }
 
     let modalContent;
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.exitClick}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onClick={(evt) => this.sendMessage(evt)}
+      />,
+    ];
 
     switch(this.state.modalStage) {
       case 0:
         modalContent = <div>
-          <TextArea
+          {/* <TextArea
             name="message"
             placeholder="Send a message..."
             onChange={this.handleTextAreaChange}
             rows="10"
             value={this.state.message}
           />
-          <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button>
+          <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button> */}
+          <TextField
+            className="message-input"
+            multiLine={true}
+            rows={1}
+            rowsMax={4}
+            floatingLabelText="Your Message"
+            floatingLabelStyle={{textAlign: 'left'}}
+            onChange={(evt) => this.handleMessageChange(evt.target.value)}
+            value={this.state.message}
+          />
         </div>
         break;
       case 1:
@@ -264,11 +293,21 @@ class BandPageBrowseMusicians extends Component {
           writeMessage={this.writeMessage}
         />
 
-        <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}>
+        {/* <Modal displayModal={this.state.displayModal} exitClick={this.exitClick} showExitButton={this.state.showExitButton}> */}
+
+          <Dialog
+            modal={false}
+            actions={this.state.message != '' ? actions : null}
+            open={this.state.displayModal}
+            onRequestClose={this.exitClick}
+            style={{textAlign: 'center'}}
+          >
 
           {modalContent}
 
-        </Modal>
+        </Dialog>
+
+        {/* </Modal> */}
 
       </div>
 
