@@ -28,15 +28,18 @@
     // position: relative;
   }
   .itunes-results {
-    background-color: $color-secondary;
     padding: 0 10px;
+    background-color: $light-font;
     // margin: 0 40px;
     border: 1px solid $color-primary;
     border-radius: 5px;
     position: fixed;
     overflow: scroll;
-    height: calc(100vh - 140px);
-    width: calc(25% - 100px);
+    height: calc(100vh - 200px);
+    width: calc(25% - 85px);
+    span {
+      font-weight: 600;
+    }
     .result {
       border-bottom: 1px solid $color-primary;
       cursor: pointer;

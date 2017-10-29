@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FormInput from './FormInput';
 import NewsFeedEvent from './NewsFeedEvent';
 import ReactAudioPlayer from 'react-audio-player';
+import {List, ListItem} from 'material-ui/List';
 
 class NewsFeed extends Component {
 
@@ -95,15 +96,15 @@ class NewsFeed extends Component {
             type="text"
             value={this.state.artistSearch}
           />
-          <div className="itunes-results" style={{display: this.state.musicResults.length > 0 ? 'block' : 'none'}}>
+          <List className="itunes-results" style={{display: this.state.musicResults.length > 0 ? 'block' : 'none'}}>
             {this.state.musicResults.map((result, index) => {
               return (
-                <div key={index} className="result" onClick={() => this.addSong(result)}>
-                  <p><span>{result.trackName}</span> by {result.artistName}<br /><span>{result.collectionCensoredName}</span></p>
-                </div>
+                <ListItem key={index} onClick={() => this.addSong(result)}>
+                  <span>{result.trackName}</span> - {result.artistName}
+                </ListItem>
               )
             })}
-          </div>
+          </List>
         </div>
         <ReactAudioPlayer
           src={this.state.mp3}
