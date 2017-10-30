@@ -180,8 +180,12 @@ class UserAuthForm extends Component {
 
   submitForm = (evt, userInfo) => {
     evt.preventDefault();
+    const activation_key = Math.floor(Math.random() * 1000000);
     console.log('USER INFO', userInfo);
     const submitType = this.props.userAuthType === 'Login' ? 'login' : 'signup';
+    if (submitType === 'signup') {
+      userInfo.activation_key = activation_key;
+    }
     fetch(`${this.props.apiURL}/${submitType}/`, {
       credentials: 'include',
       headers: {
