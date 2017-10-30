@@ -7,6 +7,10 @@ function PrivateRoute({ component: Component, ...rest }, props) {
   return (
     <Route {...rest} render={(props) => {
       let newProps = store.getState();
+      console.log('private route ran', props.match.path);
+      if (props.match.path === `activate/${props.match.params.username}/${props.match.params.activationKey}`) {
+        console.log('activation route hit');
+      }
       return (
         newProps.authorized ? (
           <Component {...props}/>
