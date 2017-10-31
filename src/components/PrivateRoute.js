@@ -7,21 +7,20 @@ function PrivateRoute({ component: Component, ...rest }, props) {
   return (
     <Route {...rest} render={(props) => {
       let newProps = store.getState();
-      console.log('private route ran', props.match.path);
-      if (props.match.path === `activate/${props.match.params.username}/${props.match.params.activationKey}`) {
-        console.log('activation route hit');
-      }
-      return (
-        newProps.authorized ? (
-          <Component {...props}/>
-        )
-      : (
-        <Redirect to={{
+      console.log('NEW PROPS', newProps);
+      let component;
+
+      if (newProps.authorized) {
+        component = <Component {...props}/>
+      } else {
+        component = <Redirect to={{
           pathname: '/login',
           state: { from: props.location }
         }}/>
-      )
-    )}
+      }
+      return (
+        component
+      )}
     }/>
   )
 }

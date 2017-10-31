@@ -161,7 +161,7 @@ class UserAuthForm extends Component {
     })
   }
 
-  setUser = () => {
+  setUser = (submitType) => {
     const url = this.props.apiURL;
     fetch(`${url}/myprofile`, {
       credentials: 'include',
@@ -172,9 +172,23 @@ class UserAuthForm extends Component {
       return response.json();
     }).then((results) => {
       const loggedInUser = results.rows[0];
+      console.log('LOGGED IN USER', loggedInUser);
       this.getUserStyles(loggedInUser);
       this.props.addLoggedInUser(loggedInUser);
-      return loggedInUser;
+      const active = loggedInUser.is_active;
+
+      if (active !== true) {
+        this.props.newProps.history.push('/activate_instructions');
+      } else if (submitType === 'login') {
+        this.props.newProps.history.push('/');
+      } else if (submitType === 'signup') {
+        this.setDefaultPhoto();
+        this.props.newProps.history.push('/onboarding');
+        // this.props.newProps.history.push(`/profile/${userInfo.username}`);
+      } else {
+        this.props.newProps.history.goBack();
+      }
+
     })
   }
 
@@ -198,17 +212,17 @@ class UserAuthForm extends Component {
     }).then((results) => {
       const data = results;
       this.props.clearUserInfo(userInfo.username);
-      this.setUser();
+      this.setUser(submitType);
 
-      if (submitType === 'login') {
-        this.props.newProps.history.push('/');
-      } else if (submitType === 'signup') {
-        this.setDefaultPhoto();
-        this.props.newProps.history.push('/onboarding');
-        // this.props.newProps.history.push(`/profile/${userInfo.username}`);
-      } else {
-        this.props.newProps.history.goBack();
-      }
+      // if (submitType === 'login') {
+      //   this.props.newProps.history.push('/');
+      // } else if (submitType === 'signup') {
+      //   this.setDefaultPhoto();
+      //   this.props.newProps.history.push('/onboarding');
+      //   // this.props.newProps.history.push(`/profile/${userInfo.username}`);
+      // } else {
+      //   this.props.newProps.history.goBack();
+      // }
 
     }).catch((err) => {
       if (submitType === 'login') {

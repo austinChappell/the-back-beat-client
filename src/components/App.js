@@ -5,6 +5,7 @@ import store from '../store/';
 
 import {indigo900, purple400} from 'material-ui/styles/colors';
 import Activate from './Activate';
+import ActivateInstructions from './ActivateInstructions';
 import BandCreateForm from './BandCreateForm';
 import EventPage from './EventPage';
 import BandPage from './BandPage';
@@ -59,6 +60,7 @@ class App extends Component {
             <Router>
               <BaseLayout>
                 <Switch>
+                  <Route path="/activate_instructions" component={ActivateInstructions} />
                   <Route path="/activate/:username/:activationKey" component={Activate} />
                   <PrivateRoute path="/" exact component={Main} />
                   {/* <Route path="/login" component={Home} /> */}
