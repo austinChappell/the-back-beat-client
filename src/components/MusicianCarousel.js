@@ -30,7 +30,7 @@ class MusicianCarousel extends Component {
               opts={{width: '400', height: '260'}}
               ref={'video' + index}
             />
-          } else if (musician.has_profile_photo) {
+          } else {
             primaryVid = <img src={`${this.props.apiURL}/files/profile_images/profile_image_${musician.id}.jpg?v=1`} />
           }
 

@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
 import Modal from './Modal';
 import MusicianCarousel from './MusicianCarousel';
+import SelectField from 'material-ui/SelectField';
 import TextArea from './TextArea';
 import TextField from 'material-ui/TextField';
 
@@ -146,11 +148,9 @@ class BandPageBrowseMusicians extends Component {
     this.setState({ displayModal: false, message: '' });
   }
 
-  filterSearch = (evt) => {
-    if (evt.target.value !== '') {
-      const instrumentId = evt.target.children[evt.target.selectedIndex].id;
-      this.fetchUsersByInstrumentId(instrumentId);
-    }
+  filterSearch = (evt, index, value) => {
+    const instrumentId = evt.target.parentElement.parentElement.parentElement.id;
+    this.fetchUsersByInstrumentId(instrumentId);
   }
 
   handleTextAreaChange = (evt, message) => {
@@ -222,7 +222,7 @@ class BandPageBrowseMusicians extends Component {
     if (this.state.instrumentOptions.length > 0) {
       instrumentOptions = this.state.instrumentOptions.map((option) => {
         return (
-          <option key={option.instrument_id} id={option.instrument_id} value={option.name}>{option.name}</option>
+          <MenuItem key={option.instrument_id} id={option.instrument_id} value={option.name} primaryText={option.name} />
         )
       })
     }
@@ -245,14 +245,6 @@ class BandPageBrowseMusicians extends Component {
     switch(this.state.modalStage) {
       case 0:
         modalContent = <div>
-          {/* <TextArea
-            name="message"
-            placeholder="Send a message..."
-            onChange={this.handleTextAreaChange}
-            rows="10"
-            value={this.state.message}
-          />
-          <button onClick={(evt) => this.sendMessage(evt)}>Send Message</button> */}
           <TextField
             className="message-input"
             multiLine={true}
@@ -280,11 +272,14 @@ class BandPageBrowseMusicians extends Component {
       <div className="BandPageBrowseMusicians">
         <h1>Search for musicians in {bandInfo.band_city} to join {bandInfo.band_name}.</h1>
 
-        <label>Filter by instrument:</label>
-        <select onChange={(evt) => this.filterSearch(evt)}>
-          <option value="">---</option>
+        <SelectField
+          floatingLabelText="Search Musicians"
+          onChange={this.filterSearch}
+          style={{textAlign: 'left'}}
+          value={this.state.citySelect}
+        >
           {instrumentOptions}
-        </select>
+        </SelectField>
 
         <MusicianCarousel
           noResultsMsg={this.state.noResultsMsg}
