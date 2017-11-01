@@ -43,8 +43,8 @@ class EditProfile extends Component {
 
     let bioCounterWarning;
 
-    if (this.props.loggedInUser.bio) {
-      bioCounterWarning = this.props.loggedInUser.bio.length > 500 ? { color: 'red' } : {};
+    if (this.props.userInfo.bio) {
+      bioCounterWarning = this.props.userInfo.bio.length > 500 ? { color: 'red' } : {};
     }
 
     return (
