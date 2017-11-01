@@ -79,7 +79,7 @@
       .search-results-display {
         border: 1px solid $color-primary;
         position: fixed;
-        height: 150px;
+        max-height: 250px;
         overflow: scroll;
         .single-search-result {
           padding: 5px;

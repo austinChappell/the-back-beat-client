@@ -239,7 +239,7 @@ button, input, textarea {
       .BandPage .band-info .members .search-results-display {
         border: 1px solid #070649;
         position: fixed;
-        height: 150px;
+        max-height: 250px;
         overflow: scroll; }
         .BandPage .band-info .members .search-results-display .single-search-result {
           padding: 5px;

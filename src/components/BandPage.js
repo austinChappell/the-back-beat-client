@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
+import Avatar from 'material-ui/Avatar';
 import EventCreator from './EventCreator';
 import EventList from './EventList';
+import {List, ListItem} from 'material-ui/List';
 import Modal from './Modal';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -154,11 +156,17 @@ class BandPage extends Component {
 
   render() {
 
+    const randomCache = Math.floor(Math.random() * 1000000);
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
+      const imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+
       return (
-        <div className="single-search-result" onClick={(evt) => this.addMember(evt, user)}>
-          <h4>{user.first_name} {user.last_name} <span>{user.city}</span></h4>
-        </div>
+        <ListItem
+          rightAvatar={<Avatar src={imageSrc} />}
+          onClick={(evt) => this.addMember(evt, user)}
+        >
+          <h4>{user.first_name} {user.last_name} - <span>{user.city}</span></h4>
+        </ListItem>
       )
     });
 
@@ -191,9 +199,9 @@ class BandPage extends Component {
           placeholder="Add Member"
           onChange={(evt) => this.filterMembers(evt)} />
         <br />
-        <div className={this.state.searchMember.length > 0 ? "search-results-display" : "hidden"}>
+        <List className={this.state.searchMember.length > 0 ? "search-results-display" : "hidden"}>
           {searchResultsDisplay}
-        </div>
+        </List>
       </div>
       :
       null;
