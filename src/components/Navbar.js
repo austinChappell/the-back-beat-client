@@ -50,7 +50,7 @@ class Navbar extends Component {
 
     fetchData();
 
-    setInterval(() => {
+    this.stopMsgFetch = setInterval(() => {
       fetchData();
     }, 5000);
 
@@ -71,6 +71,11 @@ class Navbar extends Component {
       // console.log('LOGGED IN USER', loggedInUser);
       this.props.addLoggedInUser(loggedInUser);
     })
+  }
+
+  logout = () => {
+    clearInterval(this.stopMsgFetch)
+    this.props.logout();
   }
 
   render() {
@@ -100,7 +105,7 @@ class Navbar extends Component {
         <i className="fa fa-envelope" aria-hidden="true"></i>
         <i className={this.state.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>
-      <span onClick={this.props.logout}><NavLink to="/login">Logout</NavLink></span>
+      <span onClick={this.logout}><NavLink to="/login">Logout</NavLink></span>
     </div>
     :
     <div className="right">
