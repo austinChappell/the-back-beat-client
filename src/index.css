@@ -1494,6 +1494,11 @@ button, input, textarea {
   border: 2px dashed #DDDDDD;
   border-radius: 50%; }
 
+.UserProfile .fa-pencil-square-o {
+  cursor: pointer; }
+  .UserProfile .fa-pencil-square-o:hover {
+    font-weight: 700; }
+
 .UserProfile .avatar-photo {
   background-color: lightgrey;
   width: 200px;

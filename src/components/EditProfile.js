@@ -55,46 +55,50 @@ class EditProfile extends Component {
           open={this.props.showDialog}
           onRequestClose={this.exitForm}
         >
-          <TextField
-            floatingLabelText="First Name"
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'firstName')}
-            value={this.props.userInfo.firstName}
-          />
-          <TextField
-            floatingLabelText="Last Name"
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'lastName')}
-            value={this.props.userInfo.lastName}
-          />
-          <TextField
-            floatingLabelText="Email"
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'email')}
-            value={this.props.userInfo.email}
-          />
-          <TextField
-            multiLine={true}
-            rows={1}
-            rowsMax={4}
-            floatingLabelStyle={bioCounterWarning}
-            floatingLabelText={`Bio ( ${this.props.userInfo.bio ? 500 - this.props.userInfo.bio.length : 500} Characters Remaining )`}
-            onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'bio')}
-            value={this.props.userInfo.bio}
-          />
-          <SelectField
-            floatingLabelText="Skill Level"
-            onChange={this.handleSkillSelect}
-            style={{textAlign: 'left'}}
-            value={this.props.userInfo.skillLevel}
-          >
-            {this.props.skillLevels.map((skillLevel, index) => {
-              return (
-                <MenuItem
-                  key={index}
-                  value={skillLevel}
-                  primaryText={skillLevel}
-                />
-              )
-            })}
-          </SelectField>
+          <div className="form-inputs">
+
+            <TextField
+              floatingLabelText="First Name"
+              onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'firstName')}
+              value={this.props.userInfo.firstName}
+            />
+            <TextField
+              floatingLabelText="Last Name"
+              onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'lastName')}
+              value={this.props.userInfo.lastName}
+            />
+            <TextField
+              floatingLabelText="Email"
+              onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'email')}
+              value={this.props.userInfo.email}
+            />
+            <TextField
+              multiLine={true}
+              rows={1}
+              rowsMax={4}
+              floatingLabelStyle={bioCounterWarning}
+              floatingLabelText={`Bio ( ${this.props.userInfo.bio ? 500 - this.props.userInfo.bio.length : 500} Characters Remaining )`}
+              onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'bio')}
+              value={this.props.userInfo.bio}
+            />
+            <SelectField
+              floatingLabelText="Skill Level"
+              onChange={this.handleSkillSelect}
+              style={{textAlign: 'left'}}
+              value={this.props.userInfo.skillLevel}
+              >
+                {this.props.skillLevels.map((skillLevel, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={skillLevel}
+                      primaryText={skillLevel}
+                    />
+                  )
+                })}
+              </SelectField>
+
+          </div>
         </Dialog>
       </div>
     )

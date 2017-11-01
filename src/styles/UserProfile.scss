@@ -55,6 +55,12 @@
   border-radius: 50%;
 }
 .UserProfile {
+  .fa-pencil-square-o {
+    cursor: pointer;
+    &:hover {
+      font-weight: 700;
+    }
+  }
   .avatar-photo {
     background-color: lightgrey;
     width: 200px;
