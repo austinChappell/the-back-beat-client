@@ -13,6 +13,7 @@ $gray-background-light: #EEEEEE;
 $gray-background-dark: #E0E0E0;
 $color-success: #137F15;
 $color-failure: #C91208;
+$color-failure-hover: #890C05;
 
 @mixin button($main-color, $hover-font) {
   border: 3px solid $main-color;

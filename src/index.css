@@ -1523,6 +1523,15 @@ button, input, textarea {
       .UserProfile .avatar-photo .avatar-edit:hover > i {
         color: rgba(255, 255, 255, 0); }
 
+.UserProfile .delete-photo-button {
+  background-color: #C91208;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 5px; }
+  .UserProfile .delete-photo-button:hover {
+    background-color: #890C05; }
+
 .UserProfile .profile-header {
   padding: 0 30px;
   display: flex;

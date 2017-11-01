@@ -172,7 +172,7 @@ class MyUserProfile extends Component {
             <i className="fa fa-camera"></i>
           </div>
         </div>
-        <button onClick={this.deletePhoto}>Delete Photo</button>
+        <button className="delete-photo-button" onClick={this.deletePhoto}>Delete Photo</button>
 
         {this.state.cropperOpen &&
           <div>

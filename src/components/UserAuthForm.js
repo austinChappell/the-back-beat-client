@@ -214,6 +214,18 @@ class UserAuthForm extends Component {
       this.props.clearUserInfo(userInfo.username);
       this.setUser(submitType);
 
+      if (submitType === 'signup') {
+        fetch(`${this.props.apiURL}/uploaddefault`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }).catch((err) => {
+          console.log(err);
+        })
+      }
+
       // if (submitType === 'login') {
       //   this.props.newProps.history.push('/');
       // } else if (submitType === 'signup') {

@@ -93,6 +93,16 @@
       }
     }
   }
+  .delete-photo-button {
+    background-color: $color-failure;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    &:hover {
+      background-color: $color-failure-hover;
+    }
+  }
   .profile-header {
     padding: 0 30px;
     display: flex;
