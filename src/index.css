@@ -304,7 +304,11 @@ button, input, textarea {
     display: none; }
 
 .BandPageBrowseMusicians {
-  padding: 50px; }
+  padding: 50px;
+  text-align: center;
+  color: #070649; }
+  .BandPageBrowseMusicians h1 {
+    margin-bottom: 30px; }
 
 .BaseLayout {
   display: flex;
