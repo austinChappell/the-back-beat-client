@@ -21,7 +21,7 @@ class Navbar extends Component {
   }
 
   fetchMessagesAfterLogin = () => {
-    if (this.props.loggedInUser.id) {
+    if (this.props.loggedInUser.id && this.props.loggedInUser.is_active) {
       this.getUnreadMessages();
     } else {
       setTimeout(() => {

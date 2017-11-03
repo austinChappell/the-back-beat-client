@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Dialog from 'material-ui/Dialog';
 
 class ActivateInstructions extends Component {
+
+  componentDidMount() {
+    this.logout();
+  }
+
+  logout = () => {
+    setTimeout(() => {
+      this.props.logout();
+    }, 5000);
+  }
+
   render() {
     return (
       <div className="ActivateInstructions">
@@ -17,4 +29,21 @@ class ActivateInstructions extends Component {
   }
 }
 
-export default ActivateInstructions;
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+    logout: () => {
+      const action = { type: 'LOGOUT' };
+      dispatch(action);
+    }
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivateInstructions);
