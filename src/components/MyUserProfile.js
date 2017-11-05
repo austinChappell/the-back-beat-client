@@ -11,7 +11,7 @@ class MyUserProfile extends Component {
     cropperOpen: false,
     editProfile: false,
     img: null,
-    profilePicture: this.props.loggedInUser.has_profile_photo
+    profilePicture: this.props.loggedInUser.profile_image_url
   }
 
   openFilePicker = () => {
@@ -66,8 +66,9 @@ class MyUserProfile extends Component {
         id: this.props.loggedInUser.id,
         image: this.state.croppedImg
       })
-    }).then(() => {
-      this.setState({ profilePicture: true });
+    }).then((results) => {
+      this.setState({ profilePicture: results.secure_url });
+      this.setUser();
     }).catch((err) => {
       console.log(err);
     })
@@ -82,8 +83,10 @@ class MyUserProfile extends Component {
         'Content-Type': 'application/json',
       },
       method: 'POST'
-    }).then(() => {
-      this.setState({ profilePicture: false, croppedImg: null });
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setUser();
     }).catch((err) => {
       console.log(err);
     })
@@ -104,7 +107,9 @@ class MyUserProfile extends Component {
       const loggedInUser = results.rows[0];
       this.props.addLoggedInUser(loggedInUser);
     }).then(() => {
-      this.toggleDialog();
+      if (this.state.editProfile) {
+        this.toggleDialog();
+      }
     })
   }
 
@@ -139,7 +144,7 @@ class MyUserProfile extends Component {
     const randomCache = Math.floor(Math.random() * 1000000);
 
     const user = this.props.user;
-    const profileImgSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+    const profileImgSrc = user.profile_image_url;
 
     return (
       <div className="CenterComponent UserProfile">

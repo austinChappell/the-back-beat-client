@@ -73,6 +73,7 @@ class MessageHistorySideBar extends Component {
           let displayName;
           let msgPreview;
           let className;
+          let imageSrc;
           let unreadNotification = null;
 
           if (message.sender_id === this.props.loggedInUser.id) {
@@ -90,7 +91,7 @@ class MessageHistorySideBar extends Component {
 
           unreadNotification = !message.read && message.recipient_id === this.props.loggedInUser.id ? true : false;
 
-          let imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${recipientId}.jpg?v=${randomCache}`;
+          let unreadSymbol = unreadNotification ? <i className="fa fa-circle" aria-hidden="true" style={{ color: 'red' }}></i> : null;
 
           return (
             <ListItem
@@ -98,15 +99,7 @@ class MessageHistorySideBar extends Component {
               key={index}
               onClick={() => this.setRecipient(recipientId)}
               primaryText={displayName}
-              leftAvatar={
-                <Avatar
-                  src={imageSrc}
-                  style={
-                    unreadNotification ?
-                      { border: '3px solid red', boxSizing: 'border-box' } :
-                      { border: 'none' }
-                    }
-                />}
+              leftAvatar={unreadSymbol}
               rightIcon={<CommunicationChatBubble />}
             />
           )

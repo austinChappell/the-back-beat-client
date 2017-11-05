@@ -129,7 +129,7 @@ class MainFeed extends Component {
                 />
 
               } else if (musician.has_profile_photo) {
-                video = <img src={`${this.props.apiURL}/files/profile_images/profile_image_${musician.id}.jpg?v=1}`} />
+                video = <img src={musician.profile_image_url} />
               }
 
               return (

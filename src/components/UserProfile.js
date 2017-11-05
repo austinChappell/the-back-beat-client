@@ -110,7 +110,7 @@ class UserProfile extends Component {
     }
 
     const user = this.props.user;
-    const profileImgSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg`;
+    const profileImgSrc = user.profile_image_url;
 
     return (
       <div className="CenterComponent UserProfile">

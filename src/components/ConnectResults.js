@@ -21,7 +21,7 @@ class ConnectResults extends Component {
       searchResults = this.props.data.map((user) => {
 
         const randomCache = Math.floor(Math.random() * 1000000);
-        const imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+        const imageSrc = user.profile_image_url;
 
         return (
           <div className="single-search-result">

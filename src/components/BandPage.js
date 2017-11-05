@@ -158,7 +158,7 @@ class BandPage extends Component {
 
     const randomCache = Math.floor(Math.random() * 1000000);
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
-      const imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+      const imageSrc = user.profile_image_url;
 
       return (
         <ListItem

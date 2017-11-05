@@ -99,7 +99,7 @@ class MessageSearchBar extends Component {
             {this.props.users.map((user, index) => {
 
               const randomCache = Math.floor(Math.random() * 1000000);
-              const imageSrc = `${this.props.apiURL}/files/profile_images/profile_image_${user.id}.jpg?v=${randomCache}`;
+              const imageSrc = user.profile_image_url;
 
               return (
                 <ListItem

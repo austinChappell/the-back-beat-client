@@ -31,7 +31,7 @@ class MusicianCarousel extends Component {
               ref={'video' + index}
             />
           } else {
-            primaryVid = <img src={`${this.props.apiURL}/files/profile_images/profile_image_${musician.id}.jpg?v=1`} />
+            primaryVid = <img src={musician.profile_image_url} />
           }
 
           let left = (index * 100) + this.props.sliderPosition;
