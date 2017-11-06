@@ -41,7 +41,14 @@ class OnboardingForm extends Component {
       selectedVideos: [],
       primaryVidIndex: 0,
       videoMin: 0,
-      videoMax: 3
+      videoMax: 3,
+      pendingTrack: '',
+      pendingTrackTitle: '',
+      pendingTrackDescription: '',
+      selectedTracks: [],
+      primaryTrackIndex: 0,
+      trackMin: 0,
+      trackMax: 3
     }
   }
 
@@ -131,6 +138,19 @@ class OnboardingForm extends Component {
     });
   }
 
+  handleRadioChangeAudio = (evt, index) => {
+    let newTrackArray = this.state.selectedTracks.slice();
+    for (let i = 0; i < newTrackArray.length; i++) {
+      if (index === i) {
+        newTrackArray[i].set_as_primary = true;
+      } else {
+        newTrackArray[i].set_as_primary = false;
+      }
+    }
+    this.setState({ primaryTrackIndex: index, selectedTracks: newTrackArray }, () => {
+    });
+  }
+
   handleSubmit = (array, element, max, index) => {
     const updateState = {};
     updateState.errorMessage = null;
@@ -193,6 +213,31 @@ class OnboardingForm extends Component {
     this.setState({ errorMessage });
   }
 
+  handleTrackLinkSubmit = (evt, array, url) => {
+    evt.preventDefault();
+    let errorMessage;
+    if (this.state.pendingTrack != false) {
+      if (this.state.selectedTracks.length >= this.state.trackMax) {
+        errorMessage = `You may only submit ${this.state.trackMax} videos`;
+      } else {
+        errorMessage = null;
+        const updateState = {};
+        const updateArray = this.state[array].slice();
+
+        updateArray.push({
+          set_as_primary: false,
+          track_url: this.state[url]
+        });
+        updateState[array] = updateArray;
+        updateState[url] = '';
+        this.setState(updateState);
+      }
+    } else {
+      errorMessage = 'You must complete all fields before adding a track';
+    }
+    this.setState({ errorMessage });
+  }
+
   removeItem = (arrayName, index) => {
     const updateObject = {};
     let newArray = this.state[arrayName].slice();
@@ -210,6 +255,27 @@ class OnboardingForm extends Component {
         'Content-Type': 'application/json'
       },
       method: 'POST'
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+    })
+
+    // TODO: Add API to add primary vid ID to user
+
+  }
+
+  addPrimaryTrackToUser = (track_url) => {
+    const url = this.props.apiURL;
+
+    fetch(`${url}/api/user/trackprimary`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT',
+      body: JSON.stringify({
+        track_url
+      })
     }).then((response) => {
       return response.json();
     }).then((results) => {
@@ -313,8 +379,10 @@ class OnboardingForm extends Component {
         }).then((response) => {
           return response.json();
         }).then((results) => {
-          if (results.rows[0].set_as_primary) {
+          if (results.rows[0].set_as_primary && results.rows[0].youtube_id) {
             this.addPrimaryToUser(results.rows[0].youtube_id);
+          } else if (results.rows[0].set_as_primary && results.rows[0].track_url) {
+            this.addPrimaryTrackToUser(results.rows[0].track_url);
           }
         })
 
@@ -377,6 +445,7 @@ class OnboardingForm extends Component {
     let actions;
     let form;
     let oneVideo = this.state.selectedVideos.length === 1;
+    let oneTrack = this.state.selectedTracks.length === 1;
     let stage = this.props.onboardingStage;
     let errorMessage = this.state.errorMessage ?
       <p className="error-message">
@@ -480,7 +549,7 @@ class OnboardingForm extends Component {
 
       </div>
 
-    } else if (stage == 2) {
+    } else if (stage === 2) {
 
       let videoListTitle = null;
 
@@ -565,6 +634,89 @@ class OnboardingForm extends Component {
         })}
         {errorMessage}
       </div>
+
+    } else if (stage === 3) {
+
+      let trackListTitle = null;
+
+      if (oneTrack && this.state.primaryTrackIndex !== 0) {
+        this.setState({ primaryTrackIndex: 0 });
+      }
+
+      if (oneTrack && this.state.selectedTracks[0].set_as_primary !== true) {
+        let primaryTrack = this.state.selectedTracks[0];
+        primaryTrack.set_as_primary = true;
+        this.setState({ selectedTracks: [primaryTrack] });
+      }
+
+      if (this.state.selectedTracks.length > 0) {
+        trackListTitle = <div className="track-list-title">
+          <div className="track-primary-header">
+            Primary
+          </div>
+          <div className="track-title-header">
+            URL
+          </div>
+          <div className="track-remove-header">
+            Remove
+          </div>
+        </div>
+      }
+
+      actionLabel = this.state.selectedTracks.length > 0 ? 'Continue' : 'I\'ll do this later';
+      actionClickFunc = (evt) => {
+        this.continue(evt, 'selectedTracks', this.state.trackMax, this.state.trackMin, 'user/tracks', this.state.selectedTracks.length > 0);
+      };
+
+      form = <div className="video-modal">
+        <h1>Add SoundCloud Tracks</h1>
+        <h3>Upload soundcloud tracks of yourself playing. Choose one as the primary, and make a great first impression!</h3>
+        <form className="flex-form">
+
+          <div className="form-inputs">
+
+            <TextField
+              floatingLabelText="SoundCloud Track URL"
+              onChange={(evt) => this.handleInputChange(evt, 'pendingTrack')}
+              value={this.state.pendingTrack}
+            />
+          </div>
+          <FloatingActionButton
+            mini={true}
+            secondary={true}
+            onClick={(evt) => {this.handleTrackLinkSubmit(evt, 'selectedTracks', 'pendingTrack')}}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+
+        </form>
+        {trackListTitle}
+        {this.state.selectedTracks.map((track, index) => {
+          return (
+            <div key={index} className="added-tracks">
+              <input
+                type="radio"
+                checked={index === this.state.primaryTrackIndex || this.state.selectedTracks.length === 1}
+                onClick={(evt) => this.handleRadioChangeAudio(evt, index)}
+              />
+              <h3 style={{ display: 'inline-block' }}>{track.track_url}</h3>
+              <i
+                className="fa fa-times-circle remove-button"
+                aria-hidden="true"
+                onClick={() => this.removeItem('selectedTracks', index)}
+              ></i>
+            </div>
+          )
+        })}
+        {errorMessage}
+      </div>
+
+
+
+
+
+
+
 
     }
 

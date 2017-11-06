@@ -120,16 +120,21 @@ class MainFeed extends Component {
               const startingPosition = (index) * 100;
               const leftString = String(startingPosition + this.state.musicianOffset) + '%';
               let video = <img src={require("../assets/images/placeholder.png")} alt="placeholder" />;
+              let audio = null;
               // let video = null;
               if (musician.primary_vid_id) {
                 video = <YouTube
                   videoId={musician.primary_vid_id}
-                  // opts={{width: '400', height: '260'}}
+                  opts={{width: '400', height: '250'}}
                   ref={'video' + index}
                 />
 
               } else if (musician.has_profile_photo) {
                 video = <img src={musician.profile_image_url} />
+              }
+
+              if (musician.primary_track_url) {
+                audio = <iframe width="80%" height="20" scrolling="no" frameborder="no" style={{ border: 'none' }} src={`https://w.soundcloud.com/player/?url=${musician.primary_track_url}&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true`}></iframe>
               }
 
               return (
@@ -146,6 +151,8 @@ class MainFeed extends Component {
                       <span>{musician.skill_level}</span> <br />
 
                     </div>
+
+                    {audio}
 
                     <div className="card-hero-image">
 

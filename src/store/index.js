@@ -17,7 +17,7 @@ const initialState = {
   showUserAuthForm: false,
   userAuthType: '',
   skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice'],
-  onboardingMaxStage: 2,
+  onboardingMaxStage: 3,
   onboardingReqMaxStage: 1,
 
   // USER INFO

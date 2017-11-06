@@ -360,13 +360,11 @@ button, input, textarea {
       .BrowseBox .browse-box-container .show-item iframe {
         border-radius: 3px;
         margin-top: 10px;
-        padding: 10px;
-        width: 460px;
-        height: 300px; }
+        padding: 10px; }
       .BrowseBox .browse-box-container .show-item img {
         margin-top: 20px;
         border-radius: 3px;
-        height: 300px; }
+        height: 250px; }
     .BrowseBox .browse-box-container h3 a {
       color: #9A6197;
       text-decoration: none;
