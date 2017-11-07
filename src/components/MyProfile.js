@@ -10,6 +10,23 @@ class MyProfile extends Component {
   componentDidMount() {
     this.props.updateUser(this.props.loggedInUser);
     this.updateUserVids(this.props.loggedInUser.id);
+    this.updateUserTracks(this.props.loggedInUser.id);
+  }
+
+  updateUserTracks = (userid) => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/tracks/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setCurrentUserTracks(results.rows);
+    });
+
   }
 
   updateUserVids = (userid) => {
@@ -49,6 +66,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
+    setCurrentUserTracks: (tracks) => {
+      const action = { type: 'SET_CURRENT_USER_TRACKS', tracks };
+      dispatch(action);
+    },
 
     setCurrentUserVids: (videos) => {
       const action = { type: 'SET_CURRENT_USER_VIDS', videos };
