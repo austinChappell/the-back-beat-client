@@ -8,6 +8,14 @@ class ProfileUploads extends Component {
 
     return (
       <div className="ProfileUploads">
+        {this.props.currentUserTracks.map((track, index) => {
+          return (
+            <div className="track-result" key={index}>
+              <iframe width="80%" height="20" scrolling="no" frameborder="no" style={{ border: 'none' }} src={`https://w.soundcloud.com/player/?url=${track.track_url}&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true`}></iframe>
+            </div>
+          )
+        })}
+
         {this.props.currentUserVids.map((video, index) => {
           return (
             <div className="video-result" key={index}>
@@ -31,6 +39,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
     currentUsername: state.currentUsername,
+    currentUserTracks: state.currentUserTracks,
     currentUserVids: state.currentUserVids
   }
 }

@@ -31,6 +31,7 @@ class Profile extends Component {
     console.log('UPDATING USER');
     this.props.updateUser(user);
     this.updateUserInstruments(user.id);
+    this.updateUserTracks(user.id);
     this.updateUserVids(user.id);
   }
 
@@ -47,6 +48,22 @@ class Profile extends Component {
     }).then((results) => {
       this.props.updateUserInstruments(results.rows);
     })
+
+  }
+
+  updateUserTracks = (userid) => {
+
+    const url = this.props.apiURL;
+    fetch(`${url}/api/user/tracks/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setCurrentUserTracks(results.rows);
+    });
 
   }
 
@@ -92,6 +109,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearUser: () => {
       const action = { type: 'UPDATE_USER', user: {} };
+      dispatch(action);
+    },
+    setCurrentUserTracks: (tracks) => {
+      const action = { type: 'SET_CURRENT_USER_TRACKS', tracks };
       dispatch(action);
     },
     setCurrentUserVids: (videos) => {

@@ -34,6 +34,7 @@ const initialState = {
   },
   currentUserInstruments: [],
   currentUserVids: [],
+  currentUserTracks: [],
   loggedInUser: {},
   userInfo: {
     bio: '',
@@ -112,6 +113,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentMessage: '' });
     case 'SET_ALL_MESSAGES':
       return Object.assign({}, state, { allMessages: action.allMessages });
+    case 'SET_CURRENT_USER_TRACKS':
+      return Object.assign({}, state, { currentUserTracks: action.tracks });
     case 'SET_CURRENT_USER_VIDS':
       return Object.assign({}, state, { currentUserVids: action.videos });
     case 'SET_CURRENT_RECIPIENT':
