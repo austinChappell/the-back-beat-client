@@ -34,7 +34,7 @@ class ProfileUploads extends Component {
         onClick={this.closeDialog}
       />,
       <FlatButton
-        label="Submit"
+        label="Update"
         primary={true}
         onClick={(evt) => this.updateTracks(evt)}
       />,
@@ -66,7 +66,7 @@ class ProfileUploads extends Component {
       currentMedia = <div>
         {this.props.currentUserTracks.map((track, index) => {
           return (
-            <div>
+            <div key={index}>
               <h2>{track.track_url}</h2>
             </div>
           )
@@ -76,7 +76,7 @@ class ProfileUploads extends Component {
       currentMedia = <div>
         {this.props.currentUserVids.map((video, index) => {
           return (
-            <div>
+            <div key={index}>
               <h2>{video.video_title}</h2>
             </div>
           )
@@ -91,7 +91,7 @@ class ProfileUploads extends Component {
           {this.props.currentUserTracks.map((track, index) => {
             return (
               <div className="track-result" key={index}>
-                <iframe width="80%" height="20" scrolling="no" frameborder="no" style={{ border: 'none' }} src={`https://w.soundcloud.com/player/?url=${track.track_url}&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true`}></iframe>
+                <iframe width="80%" height="20" scrolling="no" style={{ border: 'none' }} src={`https://w.soundcloud.com/player/?url=${track.track_url}&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true`}></iframe>
               </div>
             )
           })}
