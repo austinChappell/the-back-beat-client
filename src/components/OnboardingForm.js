@@ -218,7 +218,7 @@ class OnboardingForm extends Component {
     let errorMessage;
     if (this.state.pendingTrack != false) {
       if (this.state.selectedTracks.length >= this.state.trackMax) {
-        errorMessage = `You may only submit ${this.state.trackMax} videos`;
+        errorMessage = `You may only submit ${this.state.trackMax} audio tracks`;
       } else {
         errorMessage = null;
         const updateState = {};
