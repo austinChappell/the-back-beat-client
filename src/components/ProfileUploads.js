@@ -24,9 +24,11 @@ class ProfileUploads extends Component {
     const newItem = {};
     if (this.state.mediaType === 'tracks') {
       newItem.track_url = this.state.mediaTitle;
-      newItem.user_id = this.props.loggedInUser.id;
-      newItem.set_as_primary = currentMediaItems.length === 0;
+    } else {
+      newItem.youtube_id = this.getYouTubeId(this.state.mediaTitle);
     }
+    newItem.user_id = this.props.loggedInUser.id;
+    newItem.set_as_primary = currentMediaItems.length === 0;
     currentMediaItems.push(newItem);
     this.setState({ currentMediaItems, mediaTitle: '' });
   }
@@ -80,6 +82,14 @@ class ProfileUploads extends Component {
     this.setState({ errorMessage });
   }
 
+  getYouTubeId = (videoURL) => {
+
+    let queryIndex = videoURL.indexOf('?v=');
+    let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
+    return vidID;
+
+  }
+
   handleVidLinkSubmit = (evt, array, url, title, description) => {
     evt.preventDefault();
     let errorMessage;
@@ -91,26 +101,12 @@ class ProfileUploads extends Component {
         const updateState = {};
         const updateArray = this.state[array].slice();
 
-        function getYouTubeId (videoURL) {
-
-          let queryIndex = videoURL.indexOf('?v=');
-          let vidID = videoURL.slice(queryIndex + 3, videoURL.length);
-          return vidID;
-
-        }
-
-        let vidID = getYouTubeId(this.state[url]);
-
         updateArray.push({
-          set_as_primary: false,
-          video_description: this.state[description],
-          video_title: this.state[title],
-          youtube_id: vidID
+          // set_as_primary: false,
+          // youtube_id: vidID
         });
         updateState[array] = updateArray;
         updateState[url] = '';
-        updateState[title] = '';
-        updateState[description] = '';
         this.setState(updateState);
       }
     } else {
@@ -168,6 +164,37 @@ class ProfileUploads extends Component {
     evt.preventDefault();
     // TODO: IMPLELEMENT A LOADING SPINNER
     this.deleteMediaItems();
+    this.state.currentMediaItems.forEach((item) => {
+      console.log('looping through media items');
+      if (item.set_as_primary === true) {
+        if (this.state.mediaType === 'tracks') {
+          this.updatePrimaryUrl(item.track_url);
+        } else if (this.state.mediaType === 'vids') {
+          this.updatePrimaryUrl(item.youtube_id);
+        }
+      }
+    })
+  };
+
+  // TODO: this is bad. needs to be refactored. will take about 1-2 hours, as many steps are involved
+  updatePrimaryUrl = (id) => {
+    console.log('running update');
+    const apiURL = this.props.apiURL;
+    let query = this.state.mediaType === 'tracks' ? `trackprimary` : `vidprimary/${id}`;
+    let method = this.state.mediaType === 'tracks' ? 'PUT' : 'POST'
+
+    fetch(`${apiURL}/api/user/${query}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: method,
+      body: JSON.stringify({
+        track_url: id
+      })
+    }).catch((err) => {
+      console.log('error', err);
+    })
   }
 
   updateMediaItems = () => {
@@ -268,40 +295,25 @@ class ProfileUploads extends Component {
       </i>
     }
 
-    if (this.state.mediaType === 'tracks') {
-      currentMedia = <div>
-        {this.state.currentMediaItems.map((track, index) => {
-          return (
-            <div key={index}>
-              <input
-                type="radio"
-                checked={track.set_as_primary}
-                onClick={(evt) => this.handleRadioChange(evt, index)}
-              />
-              <h4 style={{ display: 'inline-block' }}>{track.track_url}</h4>
-              <i
-                className="fa fa-times-circle remove-button"
-                aria-hidden="true"
-                onClick={() => this.removeItem(index)}
-                ></i>
-            </div>
-
-
-
-          )
-        })}
-      </div>
-    } else {
-      currentMedia = <div>
-        {this.state.currentMediaItems.map((video, index) => {
-          return (
-            <div key={index}>
-              <h4>{video.video_title}</h4>
-            </div>
-          )
-        })}
-      </div>
-    }
+    currentMedia = <div>
+      {this.state.currentMediaItems.map((item, index) => {
+        return (
+          <div key={index}>
+            <input
+              type="radio"
+              checked={item.set_as_primary}
+              onClick={(evt) => this.handleRadioChange(evt, index)}
+            />
+            <h4 style={{ display: 'inline-block' }}>{item.track_url || item.youtube_id}</h4>
+            <i
+              className="fa fa-times-circle remove-button"
+              aria-hidden="true"
+              onClick={() => this.removeItem(index)}
+              ></i>
+          </div>
+        )
+      })}
+    </div>
 
     return (
       <div className="ProfileUploads">
@@ -322,12 +334,10 @@ class ProfileUploads extends Component {
             return (
               <div className="video-result" key={index}>
 
-                <h3>{video.video_title}</h3>
                 <YouTube
                   videoId={video.youtube_id}
                   opts={{width: '400', height: '300'}}
                 />
-                <p>{video.video_description}</p>
 
               </div>
             )

@@ -197,8 +197,8 @@ class OnboardingForm extends Component {
 
         updateArray.push({
           set_as_primary: false,
-          video_description: this.state[description],
-          video_title: this.state[title],
+          // video_description: this.state[description],
+          // video_title: this.state[title],
           youtube_id: vidID
         });
         updateState[array] = updateArray;
