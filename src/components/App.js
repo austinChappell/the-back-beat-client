@@ -24,6 +24,7 @@ import MessagePage from './MessagePage';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MyProfile from './MyProfile';
 import Onboarding from './Onboarding';
+import PerformedWithPage from './PerformedWithPage';
 import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
 import RehearsalPage from './RehearsalPage';
@@ -81,6 +82,7 @@ class App extends Component {
                   <PrivateRoute path="/rehearsals" component={RehearsalPage} />
                   <PrivateRoute path="/event/:eventtype/:eventId" component={EventPage} />
                   <PrivateRoute path="/events" component={LocalEventsPage} />
+                  <PrivateRoute path="/performed_with" component={PerformedWithPage} />
                 </Switch>
               </BaseLayout>
             </Router>

@@ -1305,6 +1305,17 @@ button, input, textarea {
               background-color: red;
               color: white; }
 
+.PerformedWithPage {
+  display: flex;
+  width: 80%;
+  margin: 0 auto; }
+  .PerformedWithPage > div {
+    flex-basis: 50%;
+    box-sizing: border-box;
+    padding: 60px; }
+    .PerformedWithPage > div h1 {
+      margin-bottom: 20px; }
+
 .Profile {
   background-color: white;
   display: flex; }
@@ -1543,6 +1554,11 @@ button, input, textarea {
   padding: 0 30px;
   display: flex;
   justify-content: space-between; }
+  .UserProfile .profile-header .action-buttons {
+    display: flex;
+    justify-content: space-between; }
+    .UserProfile .profile-header .action-buttons > div {
+      margin-left: 10px; }
   .UserProfile .profile-header .message-link .message-icon {
     background-color: #9A6197;
     color: #FFFFFF;

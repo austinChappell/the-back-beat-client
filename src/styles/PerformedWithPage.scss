@@ -1,0 +1,13 @@
+.PerformedWithPage {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  & > div {
+    flex-basis: 50%;
+    box-sizing: border-box;
+    padding: 60px;
+    h1 {
+      margin-bottom: 20px;
+    }
+  }
+}

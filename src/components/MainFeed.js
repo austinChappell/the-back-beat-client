@@ -134,7 +134,7 @@ class MainFeed extends Component {
               }
 
               if (musician.primary_track_url) {
-                audio = <iframe width="80%" height="20" scrolling="no" frameborder="no" style={{ border: 'none' }} src={`https://w.soundcloud.com/player/?url=${musician.primary_track_url}&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true`}></iframe>
+                audio = <iframe width="80%" height="20" scrolling="no" frameBorder="no" style={{ border: 'none' }} src={`https://w.soundcloud.com/player/?url=${musician.primary_track_url}&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true`}></iframe>
               }
 
               return (

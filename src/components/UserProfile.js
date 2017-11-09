@@ -3,9 +3,11 @@ import ProfileInfo from './ProfileInfo';
 
 import { connect } from 'react-redux';
 
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ReactTooltip from 'react-tooltip';
 import TextField from 'material-ui/TextField';
 import MessageIcon from 'material-ui-icons/Message';
 
@@ -19,6 +21,19 @@ class UserProfile extends Component {
     message: '',
     modalStage: 0,
     showExitButton: true,
+  }
+
+  addPerformer = () => {
+    const apiURL = this.props.apiURL;
+
+    fetch(`${apiURL}/api/perform/add`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({recipientid: this.props.user.id})
+    })
   }
 
   sendMessage = (evt) => {
@@ -124,16 +139,24 @@ class UserProfile extends Component {
             }}
           >
           </div>
-          <FloatingActionButton
-            onClick={this.writeMessage}
-            style={{ alignSelf: 'flex-start' }}
-          >
-            <MessageIcon />
-              {/* <i
-              className="fa fa-commenting-o"
+          <div className="action-buttons">
+            <FloatingActionButton
               onClick={this.writeMessage}
-              aria-hidden="true"></i> */}
-          </FloatingActionButton>
+              style={{ alignSelf: 'flex-start' }}
+              data-tip={`Send ${user.first_name}<br />a message`}
+            >
+              <MessageIcon />
+            </FloatingActionButton>
+            <FloatingActionButton
+              onClick={this.addPerformer}
+              style={{ alignSelf: 'flex-start' }}
+              secondary={true}
+              data-tip={`Have you performed<br />with ${user.first_name}?`}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+            <ReactTooltip multiline={true} delayShow={100}/>
+          </div>
         </div>
         <ProfileInfo />
 

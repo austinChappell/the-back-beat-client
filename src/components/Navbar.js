@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { connect } from 'react-redux';
 
+import ReactTooltip from 'react-tooltip';
 import SiteSearch from './SiteSearch';
 
 class Navbar extends Component {
@@ -78,6 +79,10 @@ class Navbar extends Component {
     this.props.logout();
   }
 
+  showNotifications = () => {
+    alert('notification');
+  }
+
   render() {
 
     let leftNavBarItems = this.props.authorized ?
@@ -92,20 +97,26 @@ class Navbar extends Component {
 
     let rightNavBarItems = this.props.authorized ?
     <div className="right">
-      <NavLink to={`/myprofile`}>
+      <NavLink to={`/myprofile`} data-tip="Profile">
         <i className="fa fa-user" aria-hidden="true"></i> {this.props.username}
       </NavLink>
-      <NavLink to="/" exact>
+      <NavLink to="/" exact data-tip="Home">
         <i className="fa fa-home" aria-hidden="true"></i>
       </NavLink>
-      <NavLink to="/calendar">
+      <NavLink to="/calendar" data-tip="Calendar">
         <i className="fa fa-calendar" aria-hidden="true"></i>
       </NavLink>
-      <NavLink className="relative-navlink" to="/messages">
+      <NavLink className="relative-navlink" to="/messages" data-tip="Messages">
         <i className="fa fa-envelope" aria-hidden="true"></i>
         <i className={this.state.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>
-      <span onClick={this.logout}><NavLink to="/login">Logout</NavLink></span>
+      <NavLink to="/performed_with" data-tip="Performers">
+        <i className="fa fa-music" aria-hidden="true"></i>
+      </NavLink>
+      <span onClick={this.logout}>
+        <NavLink to="/login">Logout</NavLink>
+      </span>
+      <ReactTooltip delayShow={100} />
     </div>
     :
     <div className="right">
