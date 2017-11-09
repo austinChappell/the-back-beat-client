@@ -10,4 +10,21 @@
       margin-bottom: 20px;
     }
   }
+  .performer {
+    display: flex;
+    align-items: center;
+    h2 {
+      margin-right: 10px;
+    }
+    i {
+      font-size: 1.5rem;
+      margin-left: 5px;
+      &.accept {
+        color: $color-success;
+      }
+      &.reject {
+        color: $color-failure;
+      }
+    }
+  }
 }

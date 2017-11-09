@@ -10,16 +10,42 @@ class PerformedWithPage extends Component {
   }
 
   componentDidMount() {
-    this.getPerformers('approved');
-    this.getPerformers('pending');
+    this.fillPerformerList();
   }
 
   approve = (performerid, approved) => {
+    const apiURL = this.props.apiURL;
+    let url;
+    let method;
     if (approved) {
-      console.log('approved', performerid);
+      url = `${apiURL}/api/performers/approve`;
+      method = 'PUT';
     } else {
-      console.log('rejected', performerid);
+      url = `${apiURL}/api/performers/reject`;
+      method = 'DELETE';
     }
+
+    fetch(url, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method,
+      body: JSON.stringify({
+        performerid
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.fillPerformerList();
+    }).catch((err) => {
+      console.log('error', err);
+    })
+  }
+
+  fillPerformerList = () => {
+    this.getPerformers('approved');
+    this.getPerformers('pending');
   }
 
   getPerformers = (status) => {

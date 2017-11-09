@@ -9,7 +9,8 @@ import SiteSearch from './SiteSearch';
 class Navbar extends Component {
 
   state = {
-    numOfUnreadMessages: 0
+    numOfUnreadMessages: 0,
+    performerRequests: false
   }
 
   componentDidMount() {
@@ -21,9 +22,41 @@ class Navbar extends Component {
     // }
   }
 
+  fetchPerformerRequests = () => {
+
+    const apiURL = this.props.apiURL;
+
+    const fetchData = () => {
+
+      fetch(`${apiURL}/api/performers/requests`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((response) => {
+        return response.json();
+      }).then((results) => {
+        if (results.rows.length > 0 && this.state.performerRequests === false) {
+          this.setState({ performerRequests: true });
+        } else if (results.rows.length === 0 && this.state.performerRequests === true) {
+          this.setState({ performerRequests: false });
+        }
+      })
+
+    }
+
+    fetchData();
+
+    this.stopPerfReqFetch = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+  }
+
   fetchMessagesAfterLogin = () => {
     if (this.props.loggedInUser.id && this.props.loggedInUser.is_active) {
       this.getUnreadMessages();
+      this.fetchPerformerRequests();
     } else {
       setTimeout(() => {
         this.fetchMessagesAfterLogin();
@@ -75,7 +108,8 @@ class Navbar extends Component {
   }
 
   logout = () => {
-    clearInterval(this.stopMsgFetch)
+    clearInterval(this.stopMsgFetch);
+    clearInterval(this.stopPerfReqFetch);
     this.props.logout();
   }
 
@@ -110,8 +144,9 @@ class Navbar extends Component {
         <i className="fa fa-envelope" aria-hidden="true"></i>
         <i className={this.state.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>
-      <NavLink to="/performed_with" data-tip="Performers">
+      <NavLink className="relative-navlink" to="/performed_with" data-tip="Performers">
         <i className="fa fa-music" aria-hidden="true"></i>
+        <i className={this.state.performerRequests ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>
       <span onClick={this.logout}>
         <NavLink to="/login">Logout</NavLink>

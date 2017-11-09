@@ -1315,6 +1315,18 @@ button, input, textarea {
     padding: 60px; }
     .PerformedWithPage > div h1 {
       margin-bottom: 20px; }
+  .PerformedWithPage .performer {
+    display: flex;
+    align-items: center; }
+    .PerformedWithPage .performer h2 {
+      margin-right: 10px; }
+    .PerformedWithPage .performer i {
+      font-size: 1.5rem;
+      margin-left: 5px; }
+      .PerformedWithPage .performer i.accept {
+        color: #137F15; }
+      .PerformedWithPage .performer i.reject {
+        color: #C91208; }
 
 .Profile {
   background-color: white;
