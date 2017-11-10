@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
+import Avatar from 'material-ui/Avatar';
+import { List, ListItem } from 'material-ui/List';
+
 class PerformedWithPage extends Component {
 
   state = {
@@ -69,13 +72,18 @@ class PerformedWithPage extends Component {
       <div className="PerformedWithPage">
         <div className="approved">
           <h1>Musicians You've Shared the Stage With...</h1>
+          <List>
           {this.state.approved.map((performer, index) => {
             return (
-              <div key={index} className="performer">
-                <h2>{performer.first_name} {performer.last_name}</h2>
-              </div>
+              <ListItem 
+                key={index} 
+                className="performer" 
+                primaryText={`${performer.first_name} ${performer.last_name}`}
+                rightAvatar={<Avatar src={performer.profile_image_url} />}
+              />
             )
           })}
+          </List>
         </div>
         <div className="pending">
           <h1>Requests</h1>
@@ -99,8 +107,13 @@ class PerformedWithPage extends Component {
 
             return (
               <div key={index} className="performer">
-                <h2>{performer.first_name} {performer.last_name}</h2>
                 {buttons}
+                <ListItem
+                  key={index}
+                  className="performer"
+                  primaryText={`${performer.first_name} ${performer.last_name}`}
+                  rightAvatar={<Avatar src={performer.profile_image_url} />}
+                />
               </div>
             )
           })}

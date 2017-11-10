@@ -18,9 +18,14 @@ class UserProfile extends Component {
 
   state = {
     displayModal: false,
+    hasPerformedWith: true,
     message: '',
     modalStage: 0,
     showExitButton: true,
+  }
+
+  componentDidMount() {
+    this.hasPerformedWith(this.props.user.id);
   }
 
   addPerformer = () => {
@@ -33,6 +38,24 @@ class UserProfile extends Component {
       },
       method: 'POST',
       body: JSON.stringify({recipientid: this.props.user.id})
+    })
+  }
+
+  hasPerformedWith = (performerid) => {
+    console.log('has performed with function starting');
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/performers/findmatch/${performerid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('has performed with results');
+      this.setState({ hasPerformedWith: results.rows.length > 0 });
+    }).catch((err) => {
+      console.log('error', err);
     })
   }
 
@@ -152,6 +175,7 @@ class UserProfile extends Component {
               style={{ alignSelf: 'flex-start' }}
               secondary={true}
               data-tip={`Have you performed<br />with ${user.first_name}?`}
+              disabled={this.state.hasPerformedWith}
             >
               <ContentAdd />
             </FloatingActionButton>

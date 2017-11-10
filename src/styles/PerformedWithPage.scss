@@ -19,11 +19,18 @@
     i {
       font-size: 1.5rem;
       margin-left: 5px;
+      cursor: pointer;
       &.accept {
         color: $color-success;
+        &:hover {
+          color: $color-success-hover;
+        }
       }
       &.reject {
         color: $color-failure;
+        &:hover {
+          color: $color-failure-hover;
+        }
       }
     }
   }

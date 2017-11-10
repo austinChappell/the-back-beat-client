@@ -1322,11 +1322,16 @@ button, input, textarea {
       margin-right: 10px; }
     .PerformedWithPage .performer i {
       font-size: 1.5rem;
-      margin-left: 5px; }
+      margin-left: 5px;
+      cursor: pointer; }
       .PerformedWithPage .performer i.accept {
         color: #137F15; }
+        .PerformedWithPage .performer i.accept:hover {
+          color: #306815; }
       .PerformedWithPage .performer i.reject {
         color: #C91208; }
+        .PerformedWithPage .performer i.reject:hover {
+          color: #890C05; }
 
 .Profile {
   background-color: white;
