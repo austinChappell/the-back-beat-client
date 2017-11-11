@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import Avatar from 'material-ui/Avatar';
+import { List, ListItem } from 'material-ui/List';
 
 class ProfileConnections extends Component {
 
@@ -11,18 +15,14 @@ class ProfileConnections extends Component {
     const userPerformers = this.props.userPerformers;
     const sharedPerformers = this.props.sharedPerformers;
     const loggedInUserId = this.props.loggedInUser.id;
-    console.log('logged in user id', loggedInUserId);
     if (userPerformers.indexOf(loggedInUserId) == -1) {
-      console.log('passing in shared performers');
       this.getPerformerInfo(sharedPerformers);
     } else {
-      console.log('passing in user performers');
       this.getPerformerInfo(userPerformers);
     }
   }
 
   getPerformerInfo = (performers) => {
-    console.log('getting performers', performers);
     const output = [];
     performers.forEach((performer) => {
       if (performer !== this.props.loggedInUser.id) {
@@ -32,6 +32,8 @@ class ProfileConnections extends Component {
           headers: {
             'Content-Type': 'application/json'
           }
+        }).then((response) => {
+          return response.json();
         }).then((user) => {
           output.push(user);
           this.setState({ performers: output });
@@ -42,13 +44,31 @@ class ProfileConnections extends Component {
     })
   }
 
+  updateUser = (user) => {
+    this.props.updateUser(user);
+  }
+
   render() {
-    console.log('STATE', this.state);
-    console.log(this.props.sharedPerformers);
-    console.log(this.props.userPerformers);
     return (
       <div className="ProfileConnections">
-        Profile Connections Component
+        <List>
+          {this.state.performers.map((performer, index) => {
+            return (
+              <Link
+                onClick={() => this.updateUser(performer)}
+                to={`/profile/${performer.username}`}
+              >
+                <ListItem
+                  className="performer"
+                  key={index}
+                  insetChildren={true}
+                  primaryText={`${performer.first_name} ${performer.last_name}`}
+                  leftAvatar={performer.profile_image_url}
+                />
+              </Link>
+            )
+          })}
+        </List>
       </div>
     )
   }
@@ -63,7 +83,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateUser: (user) => {
+      const action = { type: 'UPDATE_USER', user };
+      dispatch(action);
+    }
   }
 }
 
