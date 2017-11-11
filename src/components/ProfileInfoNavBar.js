@@ -10,7 +10,7 @@ class ProfileInfoNavBar extends Component {
       navBarItems: [
         { value: 'main', text: 'Info', active: true },
         { value: 'events', text: 'Events', active: false },
-        // { value: 'connections', text: 'Connections', active: false },
+        { value: 'connections', text: 'Connections', active: false },
         { value: 'bands', text: 'Bands', active: false },
         { value: 'uploads', text: 'Uploads', active: false },
       ]

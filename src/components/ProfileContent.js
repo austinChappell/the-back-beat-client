@@ -10,12 +10,60 @@ import ProfileUploads from './ProfileUploads';
 class ProfileContent extends Component {
 
   state = {
-    userInstruments: []
+    loggedinPerformers: [],
+    sharedPerformers: [],
+    userInstruments: [],
+    userPerformers: []
   }
 
   componentDidMount() {
     this.updateUserInstruments(this.props.user.id);
+    this.getPerformers(this.props.loggedInUser.id, 'loggedinPerformers');
+    this.getPerformers(this.props.user.id, 'userPerformers');
   }
+
+  filterPerformerIds = (arr) => {
+    const output = [];
+    arr.forEach((item) => {
+      const id = Object.values(item)[0];
+      output.push(id);
+    })
+    return output;
+  }
+
+  getPerformers = (userid, performerArray) => {
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/performers/mutual/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      // console.log(results.results.rows);
+      // console.log(results.newResults.rows);
+      const totalPerformers = results.results.rows.concat(results.newResults.rows);
+      const filteredPerformers = this.filterPerformerIds(totalPerformers);
+      const updateState = {};
+      updateState[performerArray] = filteredPerformers;
+      this.setState(updateState, () => {
+        this.getSharedPerformers(this.state.loggedinPerformers, this.state.userPerformers);
+      });
+    })
+  }
+
+  getSharedPerformers = (arr1, arr2) => {
+    const output = [];
+    arr1.forEach((item) => {
+      if (arr2.indexOf(item) !== -1) {
+        output.push(item);
+      }
+    });
+    console.log(arr1, arr2, output);
+    this.setState({ sharedPerformers: output })
+  }
+
 
   updateUserInstruments = (userid) => {
 
@@ -35,6 +83,7 @@ class ProfileContent extends Component {
 
   render() {
 
+    console.log('STATE', this.state);
     const contentType = this.props.profileContent;
     let content;
 
@@ -43,7 +92,7 @@ class ProfileContent extends Component {
     } else if (contentType === 'events') {
       content = <ProfileEvents user={this.props.user} />;
     } else if (contentType === 'connections') {
-      content = <ProfileConnections user={this.props.user} />;
+      content = <ProfileConnections user={this.props.user} userPerformers={this.state.userPerformers} sharedPerformers={this.state.sharedPerformers} />;
     } else if (contentType === 'bands') {
       content = <ProfileBands user={this.props.user} />;
     } else {
@@ -64,6 +113,7 @@ const mapStateToProps = (state) => {
   return {
     apiURL: state.apiURL,
     currentUserInstruments: state.currentUserInstruments,
+    loggedInUser: state.loggedInUser,
     profileContent: state.profileContent
   }
 }
