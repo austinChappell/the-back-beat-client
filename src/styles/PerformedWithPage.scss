@@ -2,6 +2,9 @@
   display: flex;
   width: 80%;
   margin: 0 auto;
+  a {
+    text-decoration: none;
+  }
   & > div {
     flex-basis: 50%;
     box-sizing: border-box;

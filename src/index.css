@@ -1309,6 +1309,8 @@ button, input, textarea {
   display: flex;
   width: 80%;
   margin: 0 auto; }
+  .PerformedWithPage a {
+    text-decoration: none; }
   .PerformedWithPage > div {
     flex-basis: 50%;
     box-sizing: border-box;
@@ -1338,6 +1340,15 @@ button, input, textarea {
   display: flex; }
   .Profile h2 {
     color: #070649; }
+
+.ProfileConnections a {
+  text-decoration: none; }
+
+.ProfileConnections svg {
+  fill: #9A6197; }
+
+.ProfileConnections svg path {
+  color: #9A6197; }
 
 .ProfileContent {
   background-color: #FFFFFF;

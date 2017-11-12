@@ -83,6 +83,10 @@ class MainFeed extends Component {
     this.setState(updateObj);
   }
 
+  updateUser = (user) => {
+    this.props.updateUser(user);
+  }
+
   render() {
 
     let musicianIndex = this.state.musicianIndex;
@@ -139,13 +143,14 @@ class MainFeed extends Component {
 
               return (
                 <div key={index} className="show-item" style={{left: leftString}}>
+                  <Link to={`/profile/${musician.username}`} onClick={() => this.updateUser(musician)}>
 
                   <Card style={{ width: '500px', height: '650px', margin: '20px auto', boxShadow: '2px 2px 30px gray', borderRadius: '5px' }}>
 
                     <div className="card-header">
 
                       <h3>
-                        <Link to={`/profile/${musician.username}`}>{musician.first_name} {musician.last_name}</Link>
+                        {musician.first_name} {musician.last_name}
                       </h3>
                       <span>{musician.city}</span> <br />
                       <span>{musician.skill_level}</span> <br />
@@ -167,7 +172,7 @@ class MainFeed extends Component {
                     </div>
 
                   </Card>
-
+                  </Link>
                 </div>
               )
             })}
@@ -201,6 +206,11 @@ const mapDispatchToProps = (dispatch) => {
 
     loadEvents: (events) => {
       const action = {type: 'LOAD_EVENTS', events};
+      dispatch(action);
+    },
+
+    updateUser: (user) => {
+      const action = { type: 'UPDATE_USER', user };
       dispatch(action);
     }
 

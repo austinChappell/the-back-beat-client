@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Avatar from 'material-ui/Avatar';
 import { List, ListItem } from 'material-ui/List';
@@ -67,6 +68,10 @@ class PerformedWithPage extends Component {
     })
   }
 
+  updateUser = (user) => {
+    this.props.updateUser(user);
+  }
+
   render() {
     return (
       <div className="PerformedWithPage">
@@ -75,12 +80,17 @@ class PerformedWithPage extends Component {
           <List>
           {this.state.approved.map((performer, index) => {
             return (
-              <ListItem 
-                key={index} 
-                className="performer" 
-                primaryText={`${performer.first_name} ${performer.last_name}`}
-                rightAvatar={<Avatar src={performer.profile_image_url} />}
-              />
+              <Link
+                onClick={() => this.updateUser(performer)}
+                to={`/profile/${performer.username}`}
+              >
+                <ListItem 
+                  key={index} 
+                  className="performer" 
+                  primaryText={`${performer.first_name} ${performer.last_name}`}
+                  rightAvatar={<Avatar src={performer.profile_image_url} />}
+                />
+              </Link>
             )
           })}
           </List>
@@ -132,7 +142,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateUser: (user) => {
+      const action = { type: 'UPDATE_USER', user };
+      dispatch(action);
+    }
   }
 }
 
