@@ -68,6 +68,27 @@ class PerformedWithPage extends Component {
     })
   }
 
+  removePerformer = (performerid) => {
+    console.log('removing performer', performerid)
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/performers/remove`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'DELETE',
+      body: JSON.stringify({
+        performerid
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log(results);
+    }).catch((err) => {
+      console.log('error', err);
+    })
+  }
+
   updateUser = (user) => {
     this.props.updateUser(user);
   }
@@ -84,6 +105,11 @@ class PerformedWithPage extends Component {
                 onClick={() => this.updateUser(performer)}
                 to={`/profile/${performer.username}`}
               >
+                <i
+                  className="reject fa fa-times-circle"
+                  onClick={() => this.removePerformer(performer.id)}
+                >
+                </i>
                 <ListItem 
                   key={index} 
                   className="performer" 
