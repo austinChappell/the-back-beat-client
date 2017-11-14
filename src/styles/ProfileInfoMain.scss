@@ -12,4 +12,10 @@
       display: block;
     }
   }
+  .fa-thumbs-o-up, .fa-thumbs-up {
+    color: $color-tertiary;
+  }
+  .disabled {
+    color: #CCCCCC;
+  }
 }

@@ -1392,6 +1392,12 @@ button, input, textarea {
   .ProfileInfoMain .user-instruments span {
     display: block; }
 
+.ProfileInfoMain .fa-thumbs-o-up, .ProfileInfoMain .fa-thumbs-up {
+  color: #9A6197; }
+
+.ProfileInfoMain .disabled {
+  color: #CCCCCC; }
+
 .ProfileInfoNavBar {
   display: flex; }
   .ProfileInfoNavBar > div {

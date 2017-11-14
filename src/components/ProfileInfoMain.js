@@ -13,6 +13,7 @@ class ProfileInfoMain extends Component {
 
   state = {
     availableSkills: [],
+    endorsements: [],
     inputValue: '',
     pendingSkills: [],
     showDialog: false,
@@ -28,6 +29,7 @@ class ProfileInfoMain extends Component {
 
   componentDidMount() {
     this.setUserSkills(this.props.user);
+    this.getEndorsementCount(this.props.user.id);
     // this.getSkills();
   }
 
@@ -46,15 +48,67 @@ class ProfileInfoMain extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('results', results.rows);
       this.updateSkills();
     }).catch((err) => {
       console.log('error', err);
     })
   }
 
+  endorse = (skill, isEndorsedByVisitor) => {
+    const apiURL = this.props.apiURL;
+    const method = isEndorsedByVisitor ? 'DELETE' : 'POST'
+    fetch(`${apiURL}/api/skills/endorse`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method,
+      body: JSON.stringify(skill)
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('results', results);
+      this.getEndorsementCount(this.props.user.id);
+    }).catch((err) => {
+      console.log('error', err);
+    })
+  }
+
+  findEndorsementByEndorserId = (arr, endorserid, skillid) => {
+    let found = false;
+    arr.forEach((item) => {
+      if (item.endorser_id === endorserid && item.skill_id === skillid) {
+        found = true;
+        return;
+      }
+    })
+    return found;
+  }
+
+  getCountPerSkill = (arr, skillid) => {
+    const output = arr.filter((item) => {
+      return item.skill_id === skillid;
+    })
+    return output;
+  }
+
+  getEndorsementCount = (userid) => {
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/api/skills/endorsements/${userid}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.setState({ endorsements: results.rows });
+    }).catch((err) => {
+      console.log('error', err);
+    })
+  }
+
   getSkills = () => {
-    console.log('getting skills right now================================')
     const apiURL = this.props.apiURL;
     fetch(`${apiURL}/api/skills`, {
       credentials: 'include',
@@ -151,6 +205,7 @@ class ProfileInfoMain extends Component {
 
   updateSkills = () => {
     const apiURL = this.props.apiURL;
+    this.setState({ showDialog: false, userSkills: this.state.pendingSkills });
     this.state.pendingSkills.forEach((skill) => {
       fetch(`${apiURL}/api/skills`, {
         credentials: 'include',
@@ -198,6 +253,8 @@ class ProfileInfoMain extends Component {
       </i>
     }
 
+    const endorsements = this.state.endorsements;
+
     return (
       <div className="ProfileInfoMain">
         <div className="profile-info">
@@ -214,9 +271,33 @@ class ProfileInfoMain extends Component {
           <h4 style={{ display: 'inline' }}>Skills: </h4>{editSkills}
           <div className="user-skills">
             {this.state.userSkills.map((skill, index) => {
+
+              const endArr = this.getCountPerSkill(this.state.endorsements, skill.skill_id);
+              
+              let endorsementButton;
+              let myProfile = user.id === this.props.loggedInUser.id;
+              let isEndorsedByVisitor = this.findEndorsementByEndorserId(this.state.endorsements, this.props.loggedInUser.id, skill.skill_id);
+
+              if (!myProfile) {
+                endorsementButton = <i 
+                  className={isEndorsedByVisitor ? "fa fa-thumbs-up" : "fa fa-thumbs-o-up"} 
+                  onClick={() => this.endorse(skill, isEndorsedByVisitor)}
+                  aria-hidden="true"
+                ></i>
+              }
+
+              if (myProfile) {
+                endorsementButton = <i
+                  className="fa fa-thumbs-o-up disabled"
+                  aria-hidden="true"
+                ></i>
+              }
+
+              console.log('endorsement arr', endArr);
+
               return (
                 <div key={index}>
-                  {skill.skill}
+                  {skill.skill} {endorsementButton} {endArr.length}
                 </div>
               )
             })}
