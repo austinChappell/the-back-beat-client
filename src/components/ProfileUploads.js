@@ -22,19 +22,42 @@ class ProfileUploads extends Component {
   addURL = () => {
     const currentMediaItems = this.state.currentMediaItems;
     const newItem = {};
-    if (this.state.mediaType === 'tracks') {
-      newItem.track_url = this.state.mediaTitle;
-    } else {
-      newItem.youtube_id = this.getYouTubeId(this.state.mediaTitle);
-    }
     newItem.user_id = this.props.loggedInUser.id;
     newItem.set_as_primary = currentMediaItems.length === 0;
-    currentMediaItems.push(newItem);
-    this.setState({ currentMediaItems, mediaTitle: '' });
+    if (this.state.mediaType === 'tracks') {
+      newItem.track_url = this.state.mediaTitle;
+      currentMediaItems.push(newItem);
+      this.setState({ currentMediaItems, mediaTitle: '' });
+    } else {
+      newItem.youtube_id = this.getYouTubeId(this.state.mediaTitle);
+      this.getYoutTubeTitle(newItem);
+      console.log('youtube id', newItem.youtube_id);
+      fetch(`https://www.googleapis.com/youtube/v3/videos?id=${newItem.youtube_id}&key=${this.props.YOUTUBE_API_KEY}=items(snippet(channelId,title,categoryId))&part=snippet`).then((response) => {
+        return response.json();
+      }).then((results) => {
+        newItem.title = results.items[0].snippet.title;
+        console.log('NEW ITEM', newItem);
+        currentMediaItems.push(newItem);
+        this.setState({ currentMediaItems, mediaTitle: '' });
+      }).catch((err) => {
+        console.log('error', err);
+      })
+    }
   }
 
   closeDialog = () => {
     this.setState({ mediaTitle: '', showDialog: false });
+  }
+
+  getYoutTubeTitle = (newItem) => {
+    fetch(`https://www.googleapis.com/youtube/v3/videos?id=DHoVXJe-MXY&key=AIzaSyCEr0896OYYnqIYoaA7rrRy49cOpsF3ypM&fields=items(snippet(channelId,title,categoryId))&part=snippet`).then((response) => {
+      return response.json();
+    }).then((results) => {
+      newItem.title = results.items[0].snippet.title;
+      console.log('NEW ITEM', newItem);
+    }).catch((err) => {
+      console.log('error', err);
+    })
   }
 
   handleChange = (evt, key) => {
@@ -259,6 +282,7 @@ class ProfileUploads extends Component {
   render() {
 
     console.log('STATE', this.state);
+    console.log('API KEY', this.props.YOUTUBE_API_KEY);
 
     const actions = [
       <FlatButton
@@ -304,7 +328,7 @@ class ProfileUploads extends Component {
               checked={item.set_as_primary}
               onClick={(evt) => this.handleRadioChange(evt, index)}
             />
-            <h4 style={{ display: 'inline-block' }}>{item.track_url || item.youtube_id}</h4>
+            <h4 style={{ display: 'inline-block' }}>{item.track_url || item.title}</h4>
             <i
               className="fa fa-times-circle remove-button"
               aria-hidden="true"
@@ -380,7 +404,8 @@ const mapStateToProps = (state) => {
     currentUsername: state.currentUsername,
     currentUserTracks: state.currentUserTracks,
     currentUserVids: state.currentUserVids,
-    loggedInUser: state.loggedInUser
+    loggedInUser: state.loggedInUser,
+    YOUTUBE_API_KEY: state.YOUTUBE_API_KEY
   }
 }
 

@@ -63,7 +63,10 @@ const initialState = {
   messageHistory: [],
   selectedMessages: [],
   currentRecipient: null,
-  users: []
+  users: [],
+
+  // GLOBAL VARIABLES
+  YOUTUBE_API_KEY: 'AIzaSyCEr0896OYYnqIYoaA7rrRy49cOpsF3ypM'
 }
 
 const reducer = (state = initialState, action) => {
