@@ -30,9 +30,8 @@ class ProfileUploads extends Component {
       this.setState({ currentMediaItems, mediaTitle: '' });
     } else {
       newItem.youtube_id = this.getYouTubeId(this.state.mediaTitle);
-      this.getYoutTubeTitle(newItem);
       console.log('youtube id', newItem.youtube_id);
-      fetch(`https://www.googleapis.com/youtube/v3/videos?id=${newItem.youtube_id}&key=${this.props.YOUTUBE_API_KEY}=items(snippet(channelId,title,categoryId))&part=snippet`).then((response) => {
+      fetch(`https://www.googleapis.com/youtube/v3/videos?id=${newItem.youtube_id}&key=${this.props.YOUTUBE_API_KEY}&fields=items(snippet(channelId,title,categoryId))&part=snippet`).then((response) => {
         return response.json();
       }).then((results) => {
         newItem.title = results.items[0].snippet.title;
@@ -47,17 +46,6 @@ class ProfileUploads extends Component {
 
   closeDialog = () => {
     this.setState({ mediaTitle: '', showDialog: false });
-  }
-
-  getYoutTubeTitle = (newItem) => {
-    fetch(`https://www.googleapis.com/youtube/v3/videos?id=DHoVXJe-MXY&key=AIzaSyCEr0896OYYnqIYoaA7rrRy49cOpsF3ypM&fields=items(snippet(channelId,title,categoryId))&part=snippet`).then((response) => {
-      return response.json();
-    }).then((results) => {
-      newItem.title = results.items[0].snippet.title;
-      console.log('NEW ITEM', newItem);
-    }).catch((err) => {
-      console.log('error', err);
-    })
   }
 
   handleChange = (evt, key) => {
@@ -160,10 +148,20 @@ class ProfileUploads extends Component {
     const currentMediaItems = [];
     if (mediaType === 'tracks') {
       this.convertArrayOfObjects(this.props.currentUserTracks, currentMediaItems);
+      this.setState({ currentMediaItems });
     } else {
       this.convertArrayOfObjects(this.props.currentUserVids, currentMediaItems);
+      currentMediaItems.forEach((item) => {
+        fetch(`https://www.googleapis.com/youtube/v3/videos?id=${item.youtube_id}&key=${this.props.YOUTUBE_API_KEY}&fields=items(snippet(channelId,title,categoryId))&part=snippet`).then((response) => {
+          return response.json();
+        }).then((results) => {
+          item.title = results.items[0].snippet.title;
+          this.setState({ currentMediaItems });
+        }).catch((err) => {
+          console.log('error', err);
+        })
+      })
     }
-    this.setState({ currentMediaItems });
   }
 
   deleteMediaItems = () => {
