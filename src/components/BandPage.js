@@ -40,7 +40,8 @@ class BandPage extends Component {
     fetch(`${url}/api/band/${bandId}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -62,12 +63,13 @@ class BandPage extends Component {
       credentials: 'include',
       encoding: null,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
-      body: JSON.stringify({ 
-        title: this.state.chartTitle, 
-        pdf: this.state.currentPdf 
+      body: JSON.stringify({
+        title: this.state.chartTitle,
+        pdf: this.state.currentPdf
       })
     }).then((response) => {
       return response.json();
@@ -91,6 +93,7 @@ class BandPage extends Component {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
           },
         }).then((response) => {
           return response.json();
@@ -108,7 +111,8 @@ class BandPage extends Component {
     fetch(`${url}/api/gig/band/${bandId}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -137,6 +141,7 @@ class BandPage extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({ bandId: this.props.match.params.bandId, memberId: user.id })
@@ -155,6 +160,7 @@ class BandPage extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'DELETE',
       body: JSON.stringify({ bandId: this.props.match.params.bandId, memberId: userId })
@@ -177,7 +183,8 @@ class BandPage extends Component {
     fetch(`${url}/band/delete/${bandId}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'DELETE',
       body: JSON.stringify({ bandId })
@@ -329,8 +336,8 @@ class BandPage extends Component {
       />
       :
       null;
-      
-      addCharts = this.props.loggedInUser.id === bandData.band_admin_id ? 
+
+      addCharts = this.props.loggedInUser.id === bandData.band_admin_id ?
       <div>
         <FloatingActionButton
           mini={true}
@@ -339,7 +346,7 @@ class BandPage extends Component {
         >
           <ContentAdd />
         </FloatingActionButton>
-      </div> 
+      </div>
       : null;
     }
 

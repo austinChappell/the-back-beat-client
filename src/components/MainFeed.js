@@ -53,7 +53,8 @@ class MainFeed extends Component {
     fetch(`${url}/api/event/attendance`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({

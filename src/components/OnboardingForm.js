@@ -58,7 +58,8 @@ class OnboardingForm extends Component {
     fetch(`${url}/api/genres`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -75,7 +76,8 @@ class OnboardingForm extends Component {
     fetch(`${url}/api/instruments`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -252,7 +254,8 @@ class OnboardingForm extends Component {
     fetch(`${url}/api/user/vidprimary/${videoId}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST'
     }).then((response) => {
@@ -270,7 +273,8 @@ class OnboardingForm extends Component {
     fetch(`${url}/api/user/trackprimary`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'PUT',
       body: JSON.stringify({
@@ -313,7 +317,8 @@ class OnboardingForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -344,7 +349,8 @@ class OnboardingForm extends Component {
     fetch(`${apiURL}/api/user/styles`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -370,7 +376,8 @@ class OnboardingForm extends Component {
         fetch(`${url}/api/${query}`, {
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
           },
           body: JSON.stringify({
             item: item
@@ -391,7 +398,8 @@ class OnboardingForm extends Component {
       fetch(`${url}/user/onboarding/plus`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         },
         method: 'PUT'
       }).then((response) => {

@@ -59,7 +59,8 @@ class MyUserProfile extends Component {
     fetch(url, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({
@@ -81,6 +82,7 @@ class MyUserProfile extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST'
     }).then((response) => {
@@ -95,10 +97,11 @@ class MyUserProfile extends Component {
   setUser = () => {
     console.log('SET USER FUNCTION RUNNING');
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile`, {
+    fetch(`${url}/myprofile/${localStorage.getItem('userid')}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
     }).then((response) => {
       console.log('FETCH HAPPENED');
@@ -124,7 +127,8 @@ class MyUserProfile extends Component {
     fetch(`${apiURL}/myprofile/update`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'PUT',
       body: JSON.stringify({userInfo})
@@ -207,6 +211,7 @@ class MyUserProfile extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    authToken: state.authToken,
     apiURL: state.apiURL,
     loggedInUser: state.loggedInUser
   }

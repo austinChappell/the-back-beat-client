@@ -12,7 +12,8 @@ class Users extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

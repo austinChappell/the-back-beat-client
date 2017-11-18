@@ -21,7 +21,8 @@ class ProfileEvents extends Component {
     fetch(`${url}/api/events/attending/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       console.log('RESPONSE', response);

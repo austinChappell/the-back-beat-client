@@ -33,7 +33,8 @@ class BandBox extends Component {
     fetch(`${url}/api/bands/user/${userId}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

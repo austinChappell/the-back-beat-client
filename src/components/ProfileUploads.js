@@ -170,7 +170,8 @@ class ProfileUploads extends Component {
     fetch(`${apiURL}/api/user/${this.state.mediaType}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'DELETE',
     }).then(() => {
@@ -207,7 +208,8 @@ class ProfileUploads extends Component {
     fetch(`${apiURL}/api/user/${query}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: method,
       body: JSON.stringify({
@@ -228,7 +230,8 @@ class ProfileUploads extends Component {
       fetch(`${apiURL}/api/user/${this.state.mediaType}`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         },
         method: 'POST',
         body: JSON.stringify({item})
@@ -252,7 +255,8 @@ class ProfileUploads extends Component {
     fetch(`${url}/api/user/tracks/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

@@ -46,7 +46,8 @@ class NewsFeed extends Component {
     fetch(`${url}/api/addsong`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify(result)
@@ -64,7 +65,8 @@ class NewsFeed extends Component {
     fetch(`${url}/api/getnews`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

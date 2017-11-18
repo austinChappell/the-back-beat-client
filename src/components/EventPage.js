@@ -20,7 +20,8 @@ class EventPage extends Component {
     fetch(`${url}/api/${eventType}/${eventId}/details`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

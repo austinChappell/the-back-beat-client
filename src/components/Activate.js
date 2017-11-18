@@ -21,7 +21,8 @@ class Activate extends Component {
 
     fetch(`${apiURL}/api/activate`, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({

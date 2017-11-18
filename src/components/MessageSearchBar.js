@@ -27,7 +27,8 @@ class MessageSearchBar extends Component {
           fetch(`${url}/api/searchusernames/${val}`, {
             credentials: 'include',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'token': localStorage.getItem('token')
             }
           }).then((response) => {
             console.log('THIS IS THE RESPONSE SECTION');

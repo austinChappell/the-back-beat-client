@@ -23,7 +23,8 @@ class MessagePage extends Component {
       fetch(`${url}/messages/all`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         }
       }).then((response) => {
         return response.json();
@@ -88,7 +89,8 @@ class MessagePage extends Component {
           fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
             credentials: 'include',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'token': localStorage.getItem('token')
             },
             method: 'PUT'
           })

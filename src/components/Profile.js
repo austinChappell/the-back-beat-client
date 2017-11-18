@@ -14,7 +14,8 @@ class Profile extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -41,7 +42,8 @@ class Profile extends Component {
     fetch(`${url}/api/instrumentuser/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -57,7 +59,8 @@ class Profile extends Component {
     fetch(`${url}/api/user/tracks/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -73,7 +76,8 @@ class Profile extends Component {
     fetch(`${url}/api/user/vids/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

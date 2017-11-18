@@ -31,7 +31,8 @@ class Navbar extends Component {
       fetch(`${apiURL}/api/performers/requests`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         },
       }).then((response) => {
         return response.json();
@@ -72,7 +73,8 @@ class Navbar extends Component {
       fetch(`${url}/messages/unread`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         }
       }).then((response) => {
         return response.json();
@@ -95,7 +97,8 @@ class Navbar extends Component {
     fetch(`${url}/myprofile`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
     }).then((response) => {
       return response.json();

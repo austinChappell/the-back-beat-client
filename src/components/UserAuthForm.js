@@ -101,7 +101,8 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -134,6 +135,7 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST'
     }).then(() => {
@@ -148,7 +150,8 @@ class UserAuthForm extends Component {
     fetch(`${apiURL}/api/user/styles`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -163,10 +166,12 @@ class UserAuthForm extends Component {
 
   setUser = (submitType) => {
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile`, {
+    fetch(`${url}/myprofile/${localStorage.getItem('userid')}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
+        // 'token': 'something'
       },
     }).then((response) => {
       return response.json();
@@ -203,7 +208,8 @@ class UserAuthForm extends Component {
     fetch(`${this.props.apiURL}/${submitType}/`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify(userInfo)
@@ -211,10 +217,15 @@ class UserAuthForm extends Component {
       return response.json();
     }).then((results) => {
       const data = results;
+      console.log('data', data);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userid', data.userid);
+      this.props.setAuthToken(data.token);
       this.props.clearUserInfo(userInfo.username);
       this.setUser(submitType);
 
       if (submitType === 'signup') {
+        // TODO: Store and auth token upon sign up
         fetch(`${this.props.apiURL}/uploaddefault`, {
           credentials: 'include',
           headers: {
@@ -414,6 +425,7 @@ class UserAuthForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    authToken: state.authToken,
     apiURL: state.apiURL,
     attemptedLogin: state.attemptedLogin,
     authorize: state.authorized,
@@ -446,6 +458,11 @@ const mapDispatchToProps = (dispatch) => {
 
     getMusicians: (data) => {
       const action = { type: 'GET_COMPATIBLE_MUSICIANS', data };
+      dispatch(action);
+    },
+
+    setAuthToken: (token) => {
+      const action = { type: 'SET_AUTH_TOKEN', token };
       dispatch(action);
     },
 

@@ -32,7 +32,8 @@ class PerformedWithPage extends Component {
     fetch(url, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method,
       body: JSON.stringify({
@@ -57,7 +58,8 @@ class PerformedWithPage extends Component {
     fetch(`${apiURL}/api/performers/${status}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
     }).then((response) => {
       return response.json();
@@ -74,7 +76,8 @@ class PerformedWithPage extends Component {
     fetch(`${apiURL}/api/performers/remove`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'DELETE',
       body: JSON.stringify({
@@ -110,9 +113,9 @@ class PerformedWithPage extends Component {
                   onClick={() => this.removePerformer(performer.id)}
                 >
                 </i>
-                <ListItem 
-                  key={index} 
-                  className="performer" 
+                <ListItem
+                  key={index}
+                  className="performer"
                   primaryText={`${performer.first_name} ${performer.last_name}`}
                   rightAvatar={<Avatar src={performer.profile_image_url} />}
                 />

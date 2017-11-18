@@ -13,6 +13,7 @@ const initialState = {
   // GENERAL ITEMS
   apiURL: apiURL,
   attemptedLogin: false,
+  authToken: 'noToken',
   authorized: false,
   showUserAuthForm: false,
   userAuthType: '',
@@ -116,6 +117,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentMessage: '' });
     case 'SET_ALL_MESSAGES':
       return Object.assign({}, state, { allMessages: action.allMessages });
+    case 'SET_AUTH_TOKEN':
+      return Object.assign({}, state, { authToken: action.token });
     case 'SET_CURRENT_USER_TRACKS':
       return Object.assign({}, state, { currentUserTracks: action.tracks });
     case 'SET_CURRENT_USER_VIDS':

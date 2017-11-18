@@ -26,7 +26,8 @@ class LeftMainPageSideBar extends Component {
     fetch(`${url}/api/my_band_events/${type}/${limit}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -46,7 +47,8 @@ class LeftMainPageSideBar extends Component {
     fetch(`${url}/api/events/city`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       console.log('RESPONSE', response);

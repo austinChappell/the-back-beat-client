@@ -42,7 +42,8 @@ class ProfileInfoMain extends Component {
     fetch(`${apiURL}/api/skills`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'DELETE'
     }).then((response) => {
@@ -60,7 +61,8 @@ class ProfileInfoMain extends Component {
     fetch(`${apiURL}/api/skills/endorse`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method,
       body: JSON.stringify(skill)
@@ -97,7 +99,8 @@ class ProfileInfoMain extends Component {
     fetch(`${apiURL}/api/skills/endorsements/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
     }).then((response) => {
       return response.json();
@@ -113,7 +116,8 @@ class ProfileInfoMain extends Component {
     fetch(`${apiURL}/api/skills`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -169,7 +173,8 @@ class ProfileInfoMain extends Component {
     fetch(`${apiURL}/api/skills/show/${user.id}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -210,7 +215,8 @@ class ProfileInfoMain extends Component {
       fetch(`${apiURL}/api/skills`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         },
         method: 'POST',
         body: JSON.stringify({ skill })
@@ -273,14 +279,14 @@ class ProfileInfoMain extends Component {
             {this.state.userSkills.map((skill, index) => {
 
               const endArr = this.getCountPerSkill(this.state.endorsements, skill.skill_id);
-              
+
               let endorsementButton;
               let myProfile = user.id === this.props.loggedInUser.id;
               let isEndorsedByVisitor = this.findEndorsementByEndorserId(this.state.endorsements, this.props.loggedInUser.id, skill.skill_id);
 
               if (!myProfile) {
-                endorsementButton = <i 
-                  className={isEndorsedByVisitor ? "fa fa-thumbs-up" : "fa fa-thumbs-o-up"} 
+                endorsementButton = <i
+                  className={isEndorsedByVisitor ? "fa fa-thumbs-up" : "fa fa-thumbs-o-up"}
                   onClick={() => this.endorse(skill, isEndorsedByVisitor)}
                   aria-hidden="true"
                 ></i>

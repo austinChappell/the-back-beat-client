@@ -8,7 +8,8 @@ let UserData = {
     fetch(`${url}/api/instrumentuser/${this.props.user.id}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

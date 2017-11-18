@@ -41,7 +41,8 @@ class BandPageBrowseMusicians extends Component {
     fetch(`${url}/api/instruments`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -91,7 +92,8 @@ class BandPageBrowseMusicians extends Component {
     fetch(`${url}/api/band/${bandId}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -121,7 +123,8 @@ class BandPageBrowseMusicians extends Component {
       fetch(`${url}/api/users/instrumentid/${instrumentId}/city/${city}/skilllevel/${skillLevel}`, {
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
         }
       }).then((response) => {
         return response.json();
@@ -180,7 +183,8 @@ class BandPageBrowseMusicians extends Component {
     fetch(`${url}/message/send`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({

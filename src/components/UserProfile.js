@@ -34,7 +34,8 @@ class UserProfile extends Component {
     fetch(`${apiURL}/api/perform/add`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({recipientid: this.props.user.id})
@@ -47,7 +48,8 @@ class UserProfile extends Component {
     fetch(`${apiURL}/api/performers/findmatch/${performerid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -67,7 +69,8 @@ class UserProfile extends Component {
     fetch(`${url}/message/send`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({

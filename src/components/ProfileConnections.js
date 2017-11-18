@@ -31,7 +31,8 @@ class ProfileConnections extends Component {
         fetch(`${apiURL}/api/user/${performer}`, {
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
           }
         }).then((response) => {
           return response.json();

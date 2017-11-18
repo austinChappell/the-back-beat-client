@@ -36,7 +36,8 @@ class ProfileContent extends Component {
     fetch(`${apiURL}/api/performers/mutual/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
@@ -71,7 +72,8 @@ class ProfileContent extends Component {
     fetch(`${url}/api/instrumentuser/${userid}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

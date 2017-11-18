@@ -27,7 +27,8 @@ class MessageHistorySideBar extends Component {
     fetch(`${url}/api/user/${id}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();

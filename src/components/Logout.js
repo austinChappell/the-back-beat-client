@@ -10,7 +10,8 @@ class Logout extends Component {
     const url = this.props.apiURL;
     fetch(`${url}/logout`, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       },
       method: 'POST',
       body: JSON.stringify({})

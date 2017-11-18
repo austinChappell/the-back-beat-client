@@ -19,7 +19,8 @@ class ProfileBands extends Component {
     fetch(`${url}/api/bands/user/${this.props.currentUser.id}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       }
     }).then((response) => {
       return response.json();
