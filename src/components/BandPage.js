@@ -4,19 +4,24 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'material-ui/Avatar';
+import Dialog from 'material-ui/Dialog';
 import EventCreator from './EventCreator';
 import EventList from './EventList';
+import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
 import Modal from './Modal';
+import TextField from 'material-ui/TextField';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { RaisedButton } from 'material-ui';
 
 class BandPage extends Component {
 
   state = {
     bandEvents: [],
     bandInfoArr: [],
+    chartTitle: '',
     displayModal: false,
     eventTypes: [
       { value: 'Gig', text: 'Gig' },
@@ -24,6 +29,7 @@ class BandPage extends Component {
     ],
     searchMember: '',
     searchMemberResuts: [],
+    showCharModal: false,
     members: [],
     showDeleteForm: false,
   }
@@ -47,6 +53,33 @@ class BandPage extends Component {
     })
 
     this.getEvents();
+  }
+
+  addChart = (evt) => {
+    evt.preventDefault();
+    const apiURL = this.props.apiURL;
+    fetch(`${apiURL}/band/upload/pdf/:bandid`, {
+      credentials: 'include',
+      encoding: null,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ 
+        title: this.state.chartTitle, 
+        pdf: this.state.currentPdf 
+      })
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('results', results.rows);
+    }).catch((err) => {
+      console.log('error', err);
+    })
+  }
+
+  displayChartModal = (show) => {
+    this.setState({ showCharModal: show });
   }
 
   filterMembers = (evt) => {
@@ -82,6 +115,21 @@ class BandPage extends Component {
     }).then((results) => {
       this.setState({ bandEvents: results.rows });
     })
+  }
+
+  handleInputChange = (val) => {
+    this.setState({ chartTitle: val });
+  }
+
+  handleFileChange = (evt) => {
+    console.log(evt.target.files[0]);
+    const self = this;
+    // this.setState({ currentPdf: evt.target.files[0].name });
+    let reader = new FileReader();
+    reader.onload = function (event) {
+      self.setState({ currentPdf: event.currentTarget.result });
+    };
+    reader.readAsText(evt.target.files[0]);
   }
 
   addMember = (evt, user) => {
@@ -156,6 +204,8 @@ class BandPage extends Component {
 
   render() {
 
+    console.log('STATE', this.state);
+
     const randomCache = Math.floor(Math.random() * 1000000);
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
       const imageSrc = user.profile_image_url;
@@ -169,6 +219,20 @@ class BandPage extends Component {
         </ListItem>
       )
     });
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={() => this.displayChartModal(false)}
+      />,
+      <FlatButton
+        disabled={this.state.messages === ''}
+        label="Submit"
+        primary={true}
+        onClick={(evt) => this.addChart(evt)}
+      />,
+    ];
 
     if (this.state.searchMember.length === 0) {
       searchResultsDisplay = null
@@ -186,6 +250,7 @@ class BandPage extends Component {
     let confirmDeleteForm;
     let searchMembersLink;
     let createEventForm;
+    let addCharts;
 
     if (this.state.bandInfoArr.length > 0) {
       bandData = this.state.bandInfoArr[0];
@@ -264,7 +329,20 @@ class BandPage extends Component {
       />
       :
       null;
+      
+      addCharts = this.props.loggedInUser.id === bandData.band_admin_id ? 
+      <div>
+        <FloatingActionButton
+          mini={true}
+          secondary={true}
+          onClick={() => this.displayChartModal(true)}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
+      </div> 
+      : null;
     }
+
 
     let bandInfo = bandData === undefined ? null :
     <div className="band-info-section">
@@ -301,6 +379,24 @@ class BandPage extends Component {
           { addMembers }
         </div>
         { confirmDeleteForm }
+        <div className="charts">
+          <h1>Charts</h1>
+          {addCharts}
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.showCharModal}
+              onRequestClose={() => this.displayChartModal(false)}
+            >
+              <TextField
+                floatingLabelText="Chart Title"
+                floatingLabelStyle={{ textAlign: 'left' }}
+                onChange={(evt) => this.handleInputChange(evt.target.value)}
+                value={this.state.chartTitle}
+              />
+              <input type="file" accept=".pdf" onChange={(evt) => this.handleFileChange(evt)} />
+            </Dialog>
+        </div>
       </div>
 
     </div>
