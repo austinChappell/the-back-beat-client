@@ -102,7 +102,8 @@ class UserAuthForm extends Component {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('token'),
+        'Content-Length': 0
       }
     }).then((response) => {
       return response.json();
@@ -135,7 +136,8 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('token'),
+        'Content-Length': 0
       },
       method: 'POST'
     }).then(() => {
@@ -151,7 +153,8 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('token'),
+        'Content-Length': 0
       }
     }).then((response) => {
       return response.json();
@@ -170,7 +173,8 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('token'),
+        'Content-Length': 0
         // 'token': 'something'
       },
     }).then((response) => {
@@ -209,7 +213,8 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('token'),
+        'Content-Length': 0
       },
       method: 'POST',
       body: JSON.stringify(userInfo)
