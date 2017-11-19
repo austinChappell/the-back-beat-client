@@ -16,11 +16,11 @@ class MyProfile extends Component {
   updateUserTracks = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/tracks/${userid}`, {
+    fetch(`${url}/api/user/tracks/${userid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -33,11 +33,11 @@ class MyProfile extends Component {
   updateUserVids = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/vids/${userid}`, {
+    fetch(`${url}/api/user/vids/${userid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();

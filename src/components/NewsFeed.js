@@ -43,11 +43,11 @@ class NewsFeed extends Component {
 
   addSong = (result) => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/addsong`, {
+    fetch(`${url}/api/addsong?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify(result)
@@ -62,11 +62,11 @@ class NewsFeed extends Component {
 
   getNews = () => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/getnews`, {
+    fetch(`${url}/api/getnews?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();

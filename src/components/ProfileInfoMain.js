@@ -39,11 +39,11 @@ class ProfileInfoMain extends Component {
 
   deleteSkills = () => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/skills`, {
+    fetch(`${apiURL}/api/skills?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'DELETE'
     }).then((response) => {
@@ -58,11 +58,11 @@ class ProfileInfoMain extends Component {
   endorse = (skill, isEndorsedByVisitor) => {
     const apiURL = this.props.apiURL;
     const method = isEndorsedByVisitor ? 'DELETE' : 'POST'
-    fetch(`${apiURL}/api/skills/endorse`, {
+    fetch(`${apiURL}/api/skills/endorse?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method,
       body: JSON.stringify(skill)
@@ -96,11 +96,11 @@ class ProfileInfoMain extends Component {
 
   getEndorsementCount = (userid) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/skills/endorsements/${userid}`, {
+    fetch(`${apiURL}/api/skills/endorsements/${userid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
     }).then((response) => {
       return response.json();
@@ -113,11 +113,11 @@ class ProfileInfoMain extends Component {
 
   getSkills = () => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/skills`, {
+    fetch(`${apiURL}/api/skills?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -170,11 +170,11 @@ class ProfileInfoMain extends Component {
 
   setUserSkills = (user) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/skills/show/${user.id}`, {
+    fetch(`${apiURL}/api/skills/show/${user.id}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -212,11 +212,11 @@ class ProfileInfoMain extends Component {
     const apiURL = this.props.apiURL;
     this.setState({ showDialog: false, userSkills: this.state.pendingSkills });
     this.state.pendingSkills.forEach((skill) => {
-      fetch(`${apiURL}/api/skills`, {
+      fetch(`${apiURL}/api/skills?&token=${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'token': localStorage.getItem('token')
+
         },
         method: 'POST',
         body: JSON.stringify({ skill })

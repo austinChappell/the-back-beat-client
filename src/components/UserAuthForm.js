@@ -97,12 +97,12 @@ class UserAuthForm extends Component {
 
     const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
-    fetch(url, {
+    fetch(`${url}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'token': localStorage.getItem('token'),
+
         'Content-Length': 0
       }
     }).then((response) => {
@@ -132,11 +132,11 @@ class UserAuthForm extends Component {
   setDefaultPhoto = () => {
     console.log('DELETE PHOTO FUNCTION RUNNING');
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/uploaddefault`, {
+    fetch(`${apiURL}/uploaddefault?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token'),
+
         'Content-Length': 0
       },
       method: 'POST'
@@ -149,11 +149,11 @@ class UserAuthForm extends Component {
 
   getUserStyles = (loggedInUser) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/user/styles`, {
+    fetch(`${apiURL}/api/user/styles?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token'),
+
         'Content-Length': 0
       }
     }).then((response) => {
@@ -169,11 +169,11 @@ class UserAuthForm extends Component {
 
   setUser = (submitType) => {
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile/${localStorage.getItem('userid')}`, {
+    fetch(`${url}/myprofile/${localStorage.getItem('userid')}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token'),
+
         'Content-Length': 0
         // 'token': 'something'
       },
@@ -209,11 +209,11 @@ class UserAuthForm extends Component {
     if (submitType === 'signup') {
       userInfo.activation_key = activation_key;
     }
-    fetch(`${this.props.apiURL}/${submitType}/`, {
+    fetch(`${this.props.apiURL}/${submitType}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token'),
+
         'Content-Length': 0
       },
       method: 'POST',

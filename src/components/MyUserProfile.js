@@ -55,12 +55,12 @@ class MyUserProfile extends Component {
   }
 
   handleSubmit = () => {
-    const url = `${this.props.apiURL}/upload`;
+    const url = `${this.props.apiURL}/upload?&token=${localStorage.token}`;
     fetch(url, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify({
@@ -78,11 +78,11 @@ class MyUserProfile extends Component {
   deletePhoto = () => {
     console.log('DELETE PHOTO FUNCTION RUNNING');
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/uploaddefault`, {
+    fetch(`${apiURL}/uploaddefault?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST'
     }).then((response) => {
@@ -97,11 +97,11 @@ class MyUserProfile extends Component {
   setUser = () => {
     console.log('SET USER FUNCTION RUNNING');
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile/${localStorage.getItem('userid')}`, {
+    fetch(`${url}/myprofile/${localStorage.getItem('userid')}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
     }).then((response) => {
       console.log('FETCH HAPPENED');
@@ -124,11 +124,11 @@ class MyUserProfile extends Component {
   updateProfile = (evt, userInfo) => {
     console.log('USER INFO INSIDE UPDATE PROFILE FUNCTION', userInfo);
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/myprofile/update`, {
+    fetch(`${apiURL}/myprofile/update?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'PUT',
       body: JSON.stringify({userInfo})

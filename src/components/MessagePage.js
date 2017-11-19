@@ -20,11 +20,11 @@ class MessagePage extends Component {
     // this.props.clearCurrentRecipient();
     const url = this.props.apiURL;
     const fetchAllMessages = () => {
-      fetch(`${url}/messages/all`, {
+      fetch(`${url}/messages/all?&token=${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'token': localStorage.getItem('token')
+
         }
       }).then((response) => {
         return response.json();
@@ -86,11 +86,11 @@ class MessagePage extends Component {
       filteredMessages.map((message) => {
         if (message.read === false && message.sender_id === newUser.id) {
           message.read = true;
-          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
+          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread?&token=${localStorage.token}`, {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
-              'token': localStorage.getItem('token')
+
             },
             method: 'PUT'
           })
@@ -106,7 +106,7 @@ class MessagePage extends Component {
   fetchUsers = () => {
     const url = this.props.apiURL;
     const val = this.state.searchValue;
-    fetch(`${url}/api/searchusernames/${val}`, {
+    fetch(`${url}/api/searchusernames/${val}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'

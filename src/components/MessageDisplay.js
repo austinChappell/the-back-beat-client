@@ -24,11 +24,11 @@ class MessageDisplay extends Component {
       evt.preventDefault();
     // }
     const api = this.props.apiURL;
-    fetch(`${api}/message/send`, {
+    fetch(`${api}/message/send?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify({

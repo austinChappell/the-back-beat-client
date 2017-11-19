@@ -33,11 +33,11 @@ class ProfileContent extends Component {
 
   getPerformers = (userid, performerArray) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/mutual/${userid}`, {
+    fetch(`${apiURL}/api/performers/mutual/${userid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -69,11 +69,11 @@ class ProfileContent extends Component {
   updateUserInstruments = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/instrumentuser/${userid}`, {
+    fetch(`${url}/api/instrumentuser/${userid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();

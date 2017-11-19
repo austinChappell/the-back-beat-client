@@ -64,11 +64,11 @@ class CalendarPage extends Component {
     const url = this.props.apiURL;
     const userid = this.props.loggedInUser.id
     console.log('FETCING USER EVENTS', url, userid);
-    fetch(`${url}/api/events/attending/${userid}`, {
+    fetch(`${url}/api/events/attending/${userid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       console.log('RESPONSE', response);
@@ -85,7 +85,7 @@ class CalendarPage extends Component {
 
   fetchEventDetails = (id) => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/event/${id}/details`, {
+    fetch(`${url}/api/event/${id}/details?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -138,11 +138,11 @@ class CalendarPage extends Component {
     let stringDateTime = `${shortDate} ${shortTime}`;
     let date = new Date(stringDateTime);
 
-    fetch(`${apiURL}/api/calendar/add`, {
+    fetch(`${apiURL}/api/calendar/add?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify({

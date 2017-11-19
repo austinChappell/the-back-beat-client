@@ -24,11 +24,11 @@ class MessageHistorySideBar extends Component {
 
   setRecipient = (id) => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/${id}`, {
+    fetch(`${url}/api/user/${id}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();

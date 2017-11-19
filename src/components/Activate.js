@@ -19,10 +19,10 @@ class Activate extends Component {
     const apiURL = this.props.apiURL;
     const username = this.props.match.params.username;
 
-    fetch(`${apiURL}/api/activate`, {
+    fetch(`${apiURL}/api/activate?&token=${localStorage.token}`, {
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify({

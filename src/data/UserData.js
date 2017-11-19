@@ -5,11 +5,11 @@ let UserData = {
   getInstruments: (userId) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/instrumentuser/${this.props.user.id}`, {
+    fetch(`${url}/api/instrumentuser/${this.props.user.id}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();

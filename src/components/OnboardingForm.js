@@ -55,11 +55,11 @@ class OnboardingForm extends Component {
   componentDidMount() {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/genres`, {
+    fetch(`${url}/api/genres?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -73,11 +73,11 @@ class OnboardingForm extends Component {
       })
     });
 
-    fetch(`${url}/api/instruments`, {
+    fetch(`${url}/api/instruments?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -251,11 +251,11 @@ class OnboardingForm extends Component {
   addPrimaryToUser = (videoId) => {
     const url = this.props.apiURL;
 
-    fetch(`${url}/api/user/vidprimary/${videoId}`, {
+    fetch(`${url}/api/user/vidprimary/${videoId}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST'
     }).then((response) => {
@@ -270,11 +270,11 @@ class OnboardingForm extends Component {
   addPrimaryTrackToUser = (track_url) => {
     const url = this.props.apiURL;
 
-    fetch(`${url}/api/user/trackprimary`, {
+    fetch(`${url}/api/user/trackprimary?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'PUT',
       body: JSON.stringify({
@@ -313,12 +313,12 @@ class OnboardingForm extends Component {
 
     const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
-    fetch(url, {
+    fetch(`${url}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -346,11 +346,11 @@ class OnboardingForm extends Component {
 
   getUserStyles = (loggedInUser) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/user/styles`, {
+    fetch(`${apiURL}/api/user/styles?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -373,11 +373,11 @@ class OnboardingForm extends Component {
 
       this.state[onboardingCategory].forEach((item) => {
 
-        fetch(`${url}/api/${query}`, {
+        fetch(`${url}/api/${query}?&token=${localStorage.token}`, {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
+
           },
           body: JSON.stringify({
             item: item
@@ -395,11 +395,11 @@ class OnboardingForm extends Component {
 
       })
 
-      fetch(`${url}/user/onboarding/plus`, {
+      fetch(`${url}/user/onboarding/plus?&token=${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'token': localStorage.getItem('token')
+
         },
         method: 'PUT'
       }).then((response) => {

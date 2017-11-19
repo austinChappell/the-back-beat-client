@@ -9,12 +9,12 @@ class Main extends Component {
 
   componentDidMount() {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/profile/${this.props.currentUsername}`, {
+    fetch(`${apiURL}/api/profile/${this.props.currentUsername}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();

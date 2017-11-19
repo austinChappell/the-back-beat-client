@@ -28,11 +28,11 @@ class Navbar extends Component {
 
     const fetchData = () => {
 
-      fetch(`${apiURL}/api/performers/requests`, {
+      fetch(`${apiURL}/api/performers/requests?&token=${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'token': localStorage.getItem('token')
+
         },
       }).then((response) => {
         return response.json();
@@ -70,11 +70,11 @@ class Navbar extends Component {
 
     const fetchData = () => {
 
-      fetch(`${url}/messages/unread`, {
+      fetch(`${url}/messages/unread?&token=${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          'token': localStorage.getItem('token')
+
         }
       }).then((response) => {
         return response.json();
@@ -94,11 +94,11 @@ class Navbar extends Component {
 
   setUser = () => {
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile`, {
+    fetch(`${url}/myprofile?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
     }).then((response) => {
       return response.json();

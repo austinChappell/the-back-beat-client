@@ -11,7 +11,7 @@ class Logout extends Component {
     fetch(`${url}/logout`, {
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+        
       },
       method: 'POST',
       body: JSON.stringify({})

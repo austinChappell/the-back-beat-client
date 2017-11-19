@@ -29,11 +29,11 @@ class PerformedWithPage extends Component {
       method = 'DELETE';
     }
 
-    fetch(url, {
+    fetch(`${url}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method,
       body: JSON.stringify({
@@ -55,11 +55,11 @@ class PerformedWithPage extends Component {
 
   getPerformers = (status) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/${status}`, {
+    fetch(`${apiURL}/api/performers/${status}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
     }).then((response) => {
       return response.json();
@@ -73,11 +73,11 @@ class PerformedWithPage extends Component {
   removePerformer = (performerid) => {
     console.log('removing performer', performerid)
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/remove`, {
+    fetch(`${apiURL}/api/performers/remove?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'DELETE',
       body: JSON.stringify({

@@ -31,11 +31,11 @@ class UserProfile extends Component {
   addPerformer = () => {
     const apiURL = this.props.apiURL;
 
-    fetch(`${apiURL}/api/perform/add`, {
+    fetch(`${apiURL}/api/perform/add?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify({recipientid: this.props.user.id})
@@ -45,11 +45,11 @@ class UserProfile extends Component {
   hasPerformedWith = (performerid) => {
     console.log('has performed with function starting');
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/findmatch/${performerid}`, {
+    fetch(`${apiURL}/api/performers/findmatch/${performerid}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       }
     }).then((response) => {
       return response.json();
@@ -66,11 +66,11 @@ class UserProfile extends Component {
     let message = this.state.message;
     let musician = this.props.user;
     const url = this.props.apiURL;
-    fetch(`${url}/message/send`, {
+    fetch(`${url}/message/send?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+
       },
       method: 'POST',
       body: JSON.stringify({
