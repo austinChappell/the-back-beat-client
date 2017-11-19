@@ -175,7 +175,6 @@ class UserAuthForm extends Component {
         'Content-Type': 'application/json',
 
         'Content-Length': 0
-        // 'token': 'something'
       },
     }).then((response) => {
       return response.json();
