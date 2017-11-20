@@ -163,14 +163,17 @@ class UserAuthForm extends Component {
 
   setUser = (submitType) => {
     const url = this.props.apiURL;
+    console.log('about to set user');
     fetch(`${url}/myprofile/${localStorage.getItem('userid')}?&token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
     }).then((response) => {
+      console.log('response', response);
       return response.json();
     }).then((results) => {
+      console.log('results', results);
       const loggedInUser = results.rows[0];
       console.log('LOGGED IN USER', loggedInUser);
       this.getUserStyles(loggedInUser);
@@ -189,6 +192,8 @@ class UserAuthForm extends Component {
         this.props.newProps.history.goBack();
       }
 
+    }).catch((err) => {
+      console.log('error', err);
     })
   }
 
