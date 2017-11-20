@@ -100,8 +100,8 @@ class UserAuthForm extends Component {
     fetch(`${url}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        // 'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
       }
     }).then((response) => {
       return response.json();
@@ -148,7 +148,7 @@ class UserAuthForm extends Component {
     fetch(`${apiURL}/api/user/styles?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
       }
     }).then((response) => {
       return response.json();
@@ -168,7 +168,7 @@ class UserAuthForm extends Component {
     fetch(`${url}/myprofile/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
       },
     }).then((response) => {
       console.log('response', response);
