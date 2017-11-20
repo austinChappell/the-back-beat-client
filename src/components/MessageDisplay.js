@@ -24,7 +24,7 @@ class MessageDisplay extends Component {
       evt.preventDefault();
     // }
     const api = this.props.apiURL;
-    fetch(`${api}/message/send/token/${localStorage.token}`, {
+    fetch(`${api}/message/send?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

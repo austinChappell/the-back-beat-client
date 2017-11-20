@@ -55,7 +55,7 @@ class MyUserProfile extends Component {
   }
 
   handleSubmit = () => {
-    const url = `${this.props.apiURL}/upload/token/${localStorage.token}`;
+    const url = `${this.props.apiURL}/upload?token=${localStorage.token}`;
     fetch(url, {
       credentials: 'include',
       headers: {
@@ -78,7 +78,7 @@ class MyUserProfile extends Component {
   deletePhoto = () => {
     console.log('DELETE PHOTO FUNCTION RUNNING');
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/uploaddefault/token/${localStorage.token}`, {
+    fetch(`${apiURL}/uploaddefault?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ class MyUserProfile extends Component {
   setUser = () => {
     console.log('SET USER FUNCTION RUNNING');
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile/${localStorage.getItem('userid')}/token/${localStorage.token}`, {
+    fetch(`${url}/myprofile/${localStorage.getItem('userid')}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ class MyUserProfile extends Component {
   updateProfile = (evt, userInfo) => {
     console.log('USER INFO INSIDE UPDATE PROFILE FUNCTION', userInfo);
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/myprofile/update/token/${localStorage.token}`, {
+    fetch(`${apiURL}/myprofile/update?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

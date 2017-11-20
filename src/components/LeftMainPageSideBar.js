@@ -23,7 +23,7 @@ class LeftMainPageSideBar extends Component {
   getMyEvents = (type) => {
     const url = this.props.apiURL;
     const limit = 'nolimit';
-    fetch(`${url}/api/my_band_events/${type}/${limit}/token/${localStorage.token}`, {
+    fetch(`${url}/api/my_band_events/${type}/${limit}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ class LeftMainPageSideBar extends Component {
     const url = this.props.apiURL;
     console.log('LOAD EVENTS RUNNING URL', url);
     console.log('CITY', this.props.loggedInUser.city);
-    fetch(`${url}/api/events/city/token/${localStorage.token}`, {
+    fetch(`${url}/api/events/city?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

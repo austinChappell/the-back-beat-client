@@ -97,7 +97,7 @@ class UserAuthForm extends Component {
 
     const url = `${apiURL}/api/users/styleidone/${styleidone}/styleidtwo/${styleidtwo}/styleidthree/${styleidthree}/city/${user.city}/skill_level_one/${skill_level_one}/skill_level_two/${skill_level_two}/skill_level_three/${skill_level_three}`;
 
-    fetch(`${url}/token/${localStorage.token}`, {
+    fetch(`${url}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ class UserAuthForm extends Component {
   setDefaultPhoto = () => {
     console.log('DELETE PHOTO FUNCTION RUNNING');
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/uploaddefault/token/${localStorage.token}`, {
+    fetch(`${apiURL}/uploaddefault?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ class UserAuthForm extends Component {
 
   getUserStyles = (loggedInUser) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/user/styles/token/${localStorage.token}`, {
+    fetch(`${apiURL}/api/user/styles?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ class UserAuthForm extends Component {
     const url = this.props.apiURL;
     console.log('about to set user');
     const userid = localStorage.getItem('userid');
-    fetch(`${url}/myprofile/${userid}/token/${localStorage.token}`, {
+    fetch(`${url}/myprofile/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

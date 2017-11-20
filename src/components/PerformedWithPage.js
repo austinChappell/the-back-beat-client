@@ -29,7 +29,7 @@ class PerformedWithPage extends Component {
       method = 'DELETE';
     }
 
-    fetch(`${url}/token/${localStorage.token}`, {
+    fetch(`${url}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ class PerformedWithPage extends Component {
 
   getPerformers = (status) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/${status}/token/${localStorage.token}`, {
+    fetch(`${apiURL}/api/performers/${status}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ class PerformedWithPage extends Component {
   removePerformer = (performerid) => {
     console.log('removing performer', performerid)
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/remove/token/${localStorage.token}`, {
+    fetch(`${apiURL}/api/performers/remove?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
