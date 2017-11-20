@@ -16,7 +16,7 @@ class ProfileBands extends Component {
 
   fetchUserBands = () => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/bands/user/${this.props.currentUser.id}?&token=${localStorage.token}`, {
+    fetch(`${url}/api/bands/user/${this.props.currentUser.id}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

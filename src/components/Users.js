@@ -8,7 +8,7 @@ class Users extends Component {
 
   componentDidMount() {
     // const url = 'http://localhost:6001/api/users';
-    fetch(`${url}?&token=${localStorage.token}`, {
+    fetch(`${url}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

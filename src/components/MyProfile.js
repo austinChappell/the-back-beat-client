@@ -16,7 +16,7 @@ class MyProfile extends Component {
   updateUserTracks = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/tracks/${userid}?&token=${localStorage.token}`, {
+    fetch(`${url}/api/user/tracks/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ class MyProfile extends Component {
   updateUserVids = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/vids/${userid}?&token=${localStorage.token}`, {
+    fetch(`${url}/api/user/vids/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

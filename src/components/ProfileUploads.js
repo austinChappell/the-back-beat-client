@@ -167,7 +167,7 @@ class ProfileUploads extends Component {
   deleteMediaItems = () => {
     const apiURL = this.props.apiURL;
     console.log('delete fetch about to run');
-    fetch(`${apiURL}/api/user/${this.state.mediaType}?&token=${localStorage.token}`, {
+    fetch(`${apiURL}/api/user/${this.state.mediaType}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ class ProfileUploads extends Component {
     let query = this.state.mediaType === 'tracks' ? `trackprimary` : `vidprimary/${id}`;
     let method = this.state.mediaType === 'tracks' ? 'PUT' : 'POST'
 
-    fetch(`${apiURL}/api/user/${query}?&token=${localStorage.token}`, {
+    fetch(`${apiURL}/api/user/${query}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -227,7 +227,7 @@ class ProfileUploads extends Component {
     console.log('about to loop over media items');
     this.state.currentMediaItems.forEach((item) => {
       console.log('running fetch');
-      fetch(`${apiURL}/api/user/${this.state.mediaType}?&token=${localStorage.token}`, {
+      fetch(`${apiURL}/api/user/${this.state.mediaType}?token=${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ class ProfileUploads extends Component {
   updateUserTracks = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/tracks/${userid}?&token=${localStorage.token}`, {
+    fetch(`${url}/api/user/tracks/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -269,7 +269,7 @@ class ProfileUploads extends Component {
   updateUserVids = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/vids/${userid}?&token=${localStorage.token}`, {
+    fetch(`${url}/api/user/vids/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'

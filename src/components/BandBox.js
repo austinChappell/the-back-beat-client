@@ -30,7 +30,7 @@ class BandBox extends Component {
 
     const url = this.props.apiURL;
     const userId = this.props.loggedInUser.id;
-    fetch(`${url}/api/bands/user/${userId}?&token=${localStorage.token}`, {
+    fetch(`${url}/api/bands/user/${userId}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

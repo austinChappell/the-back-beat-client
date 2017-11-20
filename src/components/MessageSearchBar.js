@@ -24,7 +24,7 @@ class MessageSearchBar extends Component {
     this.setState({ searchBarValue: evt.target.value }, () => {
       setTimeout(() => {
         if (val === this.state.searchBarValue && val.length > 0) {
-          fetch(`${url}/api/searchusernames/${val}?&token=${localStorage.token}`, {
+          fetch(`${url}/api/searchusernames/${val}?token=${localStorage.token}`, {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json',

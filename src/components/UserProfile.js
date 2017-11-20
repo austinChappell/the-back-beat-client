@@ -31,7 +31,7 @@ class UserProfile extends Component {
   addPerformer = () => {
     const apiURL = this.props.apiURL;
 
-    fetch(`${apiURL}/api/perform/add?&token=${localStorage.token}`, {
+    fetch(`${apiURL}/api/perform/add?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ class UserProfile extends Component {
   hasPerformedWith = (performerid) => {
     console.log('has performed with function starting');
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/findmatch/${performerid}?&token=${localStorage.token}`, {
+    fetch(`${apiURL}/api/performers/findmatch/${performerid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ class UserProfile extends Component {
     let message = this.state.message;
     let musician = this.props.user;
     const url = this.props.apiURL;
-    fetch(`${url}/message/send?&token=${localStorage.token}`, {
+    fetch(`${url}/message/send?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
