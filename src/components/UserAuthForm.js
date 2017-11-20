@@ -169,6 +169,7 @@ class UserAuthForm extends Component {
       credentials: 'include',
       headers: {
         // 'Content-Type': 'application/json',
+        Accept: 'application/json'
       },
     }).then((response) => {
       console.log('response', response);
