@@ -38,7 +38,7 @@ class BandPageBrowseMusicians extends Component {
   fetchInstruments = () => {
     const url = this.props.apiURL;
 
-    fetch(`${url}/api/instruments?token=${localStorage.token}`, {
+    fetch(`${url}/api/instruments/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ class BandPageBrowseMusicians extends Component {
     const url = this.props.apiURL;
     const bandId = this.props.match.params.bandId;
 
-    fetch(`${url}/api/band/${bandId}?token=${localStorage.token}`, {
+    fetch(`${url}/api/band/${bandId}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ class BandPageBrowseMusicians extends Component {
 
       const skillLevel = this.props.skillLevels[skillIndex];
 
-      fetch(`${url}/api/users/instrumentid/${instrumentId}/city/${city}/skilllevel/${skillLevel}?token=${localStorage.token}`, {
+      fetch(`${url}/api/users/instrumentid/${instrumentId}/city/${city}/skilllevel/${skillLevel}/token/${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ class BandPageBrowseMusicians extends Component {
     let musicianIndex = Math.abs(this.state.sliderPosition / 100);
     let musician = this.state.searchResults[musicianIndex];
     const url = this.props.apiURL;
-    fetch(`${url}/message/send?token=${localStorage.token}`, {
+    fetch(`${url}/message/send/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

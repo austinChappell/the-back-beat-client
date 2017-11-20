@@ -17,7 +17,7 @@ class EventPage extends Component {
     const eventId = this.props.match.params.eventId;
     console.log('EVENT TYPE', eventType);
     console.log('EVENT ID', eventId);
-    fetch(`${url}/api/${eventType}/${eventId}/details?token=${localStorage.token}`, {
+    fetch(`${url}/api/${eventType}/${eventId}/details/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ class EventPage extends Component {
     } else {
       evt.target.previousElementSibling.style.display = 'none';
     }
-    fetch(`${url}/api/event/attendance?token=${localStorage.token}`, {
+    fetch(`${url}/api/event/attendance/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'

@@ -32,7 +32,7 @@ class SiteSearch extends Component {
     const url = this.props.apiURL;
     if (val.length > 0) {
 
-      fetch(`${url}/api/${cat}/${val}?token=${localStorage.token}`, {
+      fetch(`${url}/api/${cat}/${val}/token/${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',

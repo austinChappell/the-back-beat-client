@@ -37,7 +37,7 @@ class BandPage extends Component {
   componentDidMount() {
     const url = this.props.apiURL;
     const bandId = this.props.match.params.bandId;
-    fetch(`${url}/api/band/${bandId}?token=${localStorage.token}`, {
+    fetch(`${url}/api/band/${bandId}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ class BandPage extends Component {
   addChart = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/band/upload/pdf/:bandid?token=${localStorage.token}`, {
+    fetch(`${apiURL}/band/upload/pdf/:bandid/token/${localStorage.token}`, {
       credentials: 'include',
       encoding: null,
       headers: {
@@ -89,7 +89,7 @@ class BandPage extends Component {
     const url = this.props.apiURL;
     this.setState({searchMember: value}, () => {
       if (this.state.searchMember !== '') {
-        fetch(`${url}/api/searchusernames/${value}?token=${localStorage.token}`, {
+        fetch(`${url}/api/searchusernames/${value}/token/${localStorage.token}`, {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ class BandPage extends Component {
   getEvents = () => {
     const url = this.props.apiURL;
     const bandId = this.props.match.params.bandId;
-    fetch(`${url}/api/gig/band/${bandId}?token=${localStorage.token}`, {
+    fetch(`${url}/api/gig/band/${bandId}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ class BandPage extends Component {
   }
 
   addMember = (evt, user) => {
-    fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/addmember/${user.id}?token=${localStorage.token}`, {
+    fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/addmember/${user.id}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ class BandPage extends Component {
   }
 
   removeMember = (userId, index) => {
-    fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/removemember/${userId}?token=${localStorage.token}`, {
+    fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/removemember/${userId}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ class BandPage extends Component {
   deleteBand = () => {
     const url = this.props.apiURL;
     const bandId = this.props.match.params.bandId;
-    fetch(`${url}/band/delete/${bandId}?token=${localStorage.token}`, {
+    fetch(`${url}/band/delete/${bandId}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

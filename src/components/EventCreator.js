@@ -110,7 +110,7 @@ class EventCreator extends Component {
     let date = new Date(stringDateTime);
 
 
-    fetch(`${url}?token=${localStorage.token}`, {
+    fetch(`${url}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

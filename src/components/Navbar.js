@@ -28,7 +28,7 @@ class Navbar extends Component {
 
     const fetchData = () => {
 
-      fetch(`${apiURL}/api/performers/requests?token=${localStorage.token}`, {
+      fetch(`${apiURL}/api/performers/requests/token/${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ class Navbar extends Component {
 
     const fetchData = () => {
 
-      fetch(`${url}/messages/unread?token=${localStorage.token}`, {
+      fetch(`${url}/messages/unread/token/${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ class Navbar extends Component {
 
   setUser = () => {
     const url = this.props.apiURL;
-    fetch(`${url}/myprofile?token=${localStorage.token}`, {
+    fetch(`${url}/myprofile/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

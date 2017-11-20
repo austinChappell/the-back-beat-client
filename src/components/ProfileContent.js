@@ -33,7 +33,7 @@ class ProfileContent extends Component {
 
   getPerformers = (userid, performerArray) => {
     const apiURL = this.props.apiURL;
-    fetch(`${apiURL}/api/performers/mutual/${userid}?token=${localStorage.token}`, {
+    fetch(`${apiURL}/api/performers/mutual/${userid}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ class ProfileContent extends Component {
   updateUserInstruments = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/instrumentuser/${userid}?token=${localStorage.token}`, {
+    fetch(`${url}/api/instrumentuser/${userid}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ class BandCreateForm extends Component {
   getGenres = () => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/genres?token=${localStorage.token}`, {
+    fetch(`${url}/api/genres/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ class BandCreateForm extends Component {
 
   loadBandData = (bandId) => {
     const url = this.props.apiURL;
-    fetch(`${url}/api/band/${bandId}?token=${localStorage.token}`, {
+    fetch(`${url}/api/band/${bandId}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ class BandCreateForm extends Component {
       bandCity: this.state.bandCity,
       bandDescription: this.state.bandDescription
     };
-    fetch(`${url}/band/${submitType}?token=${localStorage.token}`, {
+    fetch(`${url}/band/${submitType}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ class BandCreateForm extends Component {
     const url = this.props.apiURL;
     this.state.members.forEach((member) => {
       let memberId = member.id;
-      fetch(`${url}/editband/${bandId}/addmember/${memberId}?token=${localStorage.token}`, {
+      fetch(`${url}/editband/${bandId}/addmember/${memberId}/token/${localStorage.token}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',

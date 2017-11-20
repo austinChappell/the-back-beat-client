@@ -12,7 +12,7 @@ class EventList extends Component {
     } else {
       evt.target.previousElementSibling.style.display = 'none';
     }
-    fetch(`${url}/api/event/attendance?token=${localStorage.token}`, {
+    fetch(`${url}/api/event/attendance/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

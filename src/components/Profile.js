@@ -10,7 +10,7 @@ class Profile extends Component {
   componentDidMount() {
     const url = this.props.apiURL;
     const username = this.props.match.params.username;
-    fetch(`${url}/api/profile/${username}?token=${localStorage.token}`, {
+    fetch(`${url}/api/profile/${username}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ class Profile extends Component {
   updateUserInstruments = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/instrumentuser/${userid}?token=${localStorage.token}`, {
+    fetch(`${url}/api/instrumentuser/${userid}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ class Profile extends Component {
   updateUserTracks = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/tracks/${userid}?token=${localStorage.token}`, {
+    fetch(`${url}/api/user/tracks/${userid}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ class Profile extends Component {
   updateUserVids = (userid) => {
 
     const url = this.props.apiURL;
-    fetch(`${url}/api/user/vids/${userid}?token=${localStorage.token}`, {
+    fetch(`${url}/api/user/vids/${userid}/token/${localStorage.token}`, {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

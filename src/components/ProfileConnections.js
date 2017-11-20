@@ -28,7 +28,7 @@ class ProfileConnections extends Component {
     performers.forEach((performer) => {
       if (performer !== this.props.loggedInUser.id) {
         const apiURL = this.props.apiURL;
-        fetch(`${apiURL}/api/user/${performer}?token=${localStorage.token}`, {
+        fetch(`${apiURL}/api/user/${performer}/token/${localStorage.token}`, {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
