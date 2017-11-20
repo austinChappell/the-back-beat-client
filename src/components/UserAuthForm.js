@@ -162,10 +162,12 @@ class UserAuthForm extends Component {
   }
 
   setUser = (submitType) => {
-    const url = this.props.apiURL;
+    const apiURL = this.props.apiURL;
     console.log('about to set user');
     const userid = localStorage.getItem('userid');
-    fetch(`${url}/myprofile/${userid}?token=${localStorage.token}`, {
+    const url = `${apiURL}/myprofile/${userid}?token=${localStorage.token}`;
+    console.log('URL', url);
+    fetch(url, {
       credentials: 'include',
       headers: {
         // 'Content-Type': 'application/json',
