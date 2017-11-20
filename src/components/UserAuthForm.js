@@ -169,7 +169,7 @@ class UserAuthForm extends Component {
     console.log('URL', url);
     fetch(url, {
       credentials: 'include',
-      redirect: 'error',
+      redirect: false,
       headers: {
         // 'Content-Type': 'application/json',
         Accept: 'application/json'
