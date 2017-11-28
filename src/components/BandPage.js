@@ -38,6 +38,7 @@ class BandPage extends Component {
         searchMemberResuts: [],
         showCharModal: false,
         members: [],
+        instruments: [],
         showDeleteForm: false,
     }
 
@@ -190,6 +191,24 @@ class BandPage extends Component {
             const member = Object.assign({}, user, { admin: false });
             members.push(member);
             this.setState({ members, searchMember: '' });
+        })
+    }
+
+    addInstrument = (evt, instrument) => {
+        fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/addinstrument/${instrument.instrument_id}?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            method: 'POST',
+            body: JSON.stringify({ bandId: this.props.match.params.bandId, instrumentId: instrument.instrument_id })
+        }).then((response) => {
+            return response.json();
+        }).then((results) => {
+            let instruments = this.state.instruments.slice();
+            instrument.push(instrument);
+            this.setState({ instruments, searchInstrument: '' });
         })
     }
 
