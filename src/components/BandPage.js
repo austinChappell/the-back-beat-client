@@ -10,7 +10,9 @@ import EventCreator from './EventCreator';
 import EventList from './EventList';
 import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
+import MenuItem from 'material-ui/MenuItem';
 import Modal from './Modal';
+import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -27,7 +29,7 @@ class BandPage extends Component {
             {id: 3, name: 'Trumpet'},
             {id: 7, name: 'Acoustic Guitar'}
         ],
-        chartTitle: '',
+        chartTitle: 'Hello',
         displayModal: false,
         eventTypes: [
             { value: 'Gig', text: 'Gig' },
@@ -37,10 +39,11 @@ class BandPage extends Component {
         searchInstrumentResults: [],
         searchMember: '',
         searchMemberResuts: [],
-        showCharModal: false,
+        showModal: false,
         members: [],
         instruments: [],
         showDeleteForm: false,
+        submitModal: () => {}
     }
 
     componentDidMount() {
@@ -56,8 +59,20 @@ class BandPage extends Component {
             return response.json();
         }).then((results) => {
             let members = [];
+            const allInstruments = this.props.allInstruments;
             results.rows.forEach((member) => {
-                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city, profile_image_url: member.profile_image_url });
+                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city, profile_image_url: member.profile_image_url, instrument_id: member.instrument_id });
+            })
+            members.forEach((member) => {
+                if (member.instrument_id === null) {
+                    member.instrument = 'unassigned';
+                } else {
+                    allInstruments.forEach((instrument) => {
+                        if (member.instrument_id === instrument.instrument_id) {
+                            member.instrument = instrument.name;
+                        }
+                    })
+                }
             })
             this.setState({ bandInfoArr: results.rows, members });
         })
@@ -67,8 +82,7 @@ class BandPage extends Component {
         this.getInstruments();
     }
 
-    addChart = (evt) => {
-        evt.preventDefault();
+    addChart = () => {
         const apiURL = this.props.apiURL;
         const bandId = this.props.match.params.bandId;
         fetch(`${apiURL}/band/upload/pdf/${bandId}?token=${localStorage.token}`, {
@@ -94,7 +108,7 @@ class BandPage extends Component {
     }
 
     displayChartModal = (show) => {
-        this.setState({ showCharModal: show });
+        this.setState({ showModal: show });
     }
 
     displayPreview = (url) => {
@@ -180,7 +194,9 @@ class BandPage extends Component {
         })
     }
 
+    // TODO: This is not working properly
     handleInputChange = (val) => {
+        console.log('changing', val);
         this.setState({ chartTitle: val });
     }
 
@@ -229,6 +245,33 @@ class BandPage extends Component {
         }).then((results) => {
             this.getInstruments();
         })
+    }
+
+    // TODO: This is a mess. We need to look at the submit function. HINT: this.state.submitModal
+    editMember = (member) => {
+        const bandId = this.props.match.params.bandId;
+        const memberId = member.id;
+        const instrumentId = this.state.pendingInstrumentId;
+        const submitFunc = this.saveUserInstrument;
+        const editMemberDialogChildren = <div>
+            <h2>{member.first_name} {member.last_name}</h2>
+            <SelectField
+              floatingLabelText="Instrument"
+              value={member.instrument_id}
+              onChange={this.updateUserInstrument}
+            >
+              {this.state.bandInstruments.map((instrument) => {
+                return (
+                  <MenuItem
+                    value={instrument.instrument_id}
+                    primaryText={instrument.name}
+                  />
+                )
+              })}
+            </SelectField>
+        </div>
+
+        this.setState({ dialogChildren: editMemberDialogChildren, showModal: true, submitModal: () => submitFunc(bandId, memberId, instrumentId) });
     }
 
     removeInstrument = (instrumentId, index) => {
@@ -301,6 +344,29 @@ class BandPage extends Component {
         this.setState({ displayModal: true });
     }
 
+    saveUserInstrument = (bandId, memberId, instrumentId) => {
+        const apiURL = this.props.apiURL;
+        fetch(`${apiURL}/api/band/member/instrument/edit/?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                bandId,
+                memberId,
+                instrumentId
+            })
+        })
+    }
+
+    updateUserInstrument = (evt, index, value) => {
+        console.log('EVENT', evt);
+        console.log('INDEX', index);
+        console.log('VALUE', value);
+        this.setState({ pendingInstrumentId: value });
+    }
+
     render() {
 
         console.log('STATE', this.state);
@@ -350,6 +416,12 @@ class BandPage extends Component {
                     primary={true}
                     onClick={(evt) => this.addChart(evt)}
                 />,
+                <FlatButton
+                    disabled={this.state.messages === ''}
+                    label="Submit"
+                    primary={true}
+                    onClick={(evt) => this.state.submitModal(evt)}
+                />,
             ];
 
             if (this.state.searchInstrument.length === 0) {
@@ -370,6 +442,16 @@ class BandPage extends Component {
         let searchMembersLink;
         let createEventForm;
         let addCharts;
+
+        const chartModalChildren = <div>
+            <TextField
+                floatingLabelText="Chart Title"
+                floatingLabelStyle={{ textAlign: 'left' }}
+                onChange={(evt) => this.handleInputChange(evt.target.value)}
+                value={this.state.chartTitle}
+            />
+            <input type="file" accept=".pdf" onChange={(evt) => this.handleFileChange(evt)} />
+        </div>
 
         if (this.state.bandInfoArr.length > 0) {
             bandData = this.state.bandInfoArr[0];
@@ -472,7 +554,10 @@ class BandPage extends Component {
                 <FloatingActionButton
                     mini={true}
                     secondary={true}
-                    onClick={() => this.displayChartModal(true)}
+                    onClick={() => {
+                        this.setState({ dialogChildren: chartModalChildren, submitModal: this.addChart })
+                        this.displayChartModal(true);
+                    }}
                 >
                     <ContentAdd />
                 </FloatingActionButton>
@@ -530,13 +615,14 @@ class BandPage extends Component {
                         console.log('MEMBER', member);
 
                         return (
-                            <Card key={index}>
+                            <Card
+                                key={index}
+                                onClick={() => this.editMember(member)}
+                            >
                                 <CardHeader
                                     title={`${member.first_name} ${member.last_name}`}
-                                    subtitle={member.city}
+                                    subtitle={member.instrument}
                                     avatar={member.profile_image_url}
-                                    actAsExpander={true}
-                                    showExpandableButton={true}
                                 />
                             </Card>
                         )
@@ -562,16 +648,10 @@ class BandPage extends Component {
                     <Dialog
                         actions={actions}
                         modal={false}
-                        open={this.state.showCharModal}
+                        open={this.state.showModal}
                         onRequestClose={() => this.displayChartModal(false)}
                     >
-                        <TextField
-                            floatingLabelText="Chart Title"
-                            floatingLabelStyle={{ textAlign: 'left' }}
-                            onChange={(evt) => this.handleInputChange(evt.target.value)}
-                            value={this.state.chartTitle}
-                        />
-                        <input type="file" accept=".pdf" onChange={(evt) => this.handleFileChange(evt)} />
+                        {this.state.dialogChildren}
                     </Dialog>
                 </div>
             </div>
@@ -598,6 +678,7 @@ class BandPage extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        allInstruments: state.allInstruments,
         apiURL: state.apiURL,
         loggedInUser: state.loggedInUser
     }

@@ -143,6 +143,20 @@ class UserAuthForm extends Component {
     })
   }
 
+  getAllInstruments = () => {
+      const apiURL = this.props.apiURL;
+      fetch(`${apiURL}/api/instruments/all`, {
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then((response) => {
+          return response.json();
+      }).then((results) => {
+          console.log('ALL INSTRUMENTS', results.rows);
+          this.props.setAllInstruments(results.rows);
+      })
+  }
+
   getUserStyles = (loggedInUser) => {
     const apiURL = this.props.apiURL;
     fetch(`${apiURL}/api/user/styles?token=${localStorage.token}`, {
@@ -182,6 +196,7 @@ class UserAuthForm extends Component {
       const loggedInUser = results.rows[0];
       console.log('LOGGED IN USER', loggedInUser);
       this.getUserStyles(loggedInUser);
+      this.getAllInstruments();
       this.props.addLoggedInUser(loggedInUser);
       const active = loggedInUser.is_active;
 
@@ -463,6 +478,11 @@ const mapDispatchToProps = (dispatch) => {
     getMusicians: (data) => {
       const action = { type: 'GET_COMPATIBLE_MUSICIANS', data };
       dispatch(action);
+    },
+
+    setAllInstruments: (instruments) => {
+        const action = { type: 'SET_ALL_INSTRUMENTS', instruments };
+        dispatch(action);
     },
 
     setAuthToken: (token) => {
