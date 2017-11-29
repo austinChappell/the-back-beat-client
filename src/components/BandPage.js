@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'material-ui/Avatar';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import EventCreator from './EventCreator';
 import EventList from './EventList';
@@ -56,13 +57,14 @@ class BandPage extends Component {
         }).then((results) => {
             let members = [];
             results.rows.forEach((member) => {
-                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city });
+                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city, profile_image_url: member.profile_image_url });
             })
             this.setState({ bandInfoArr: results.rows, members });
         })
 
         this.getCharts();
         this.getEvents();
+        this.getInstruments();
     }
 
     addChart = (evt) => {
@@ -160,6 +162,24 @@ class BandPage extends Component {
         })
     }
 
+    getInstruments = () => {
+        const apiURL = this.props.apiURL;
+        const bandId = this.props.match.params.bandId;
+        fetch(`${apiURL}/api/band/${bandId}/instruments?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((results) => {
+            console.log('INSTRUMENTS', results.rows);
+            this.setState({ bandInstruments: results.rows, searchInstrument: '' });
+        }).catch((err) => {
+            console.log('ERROR', err);
+        })
+    }
+
     handleInputChange = (val) => {
         this.setState({ chartTitle: val });
     }
@@ -194,6 +214,7 @@ class BandPage extends Component {
         })
     }
 
+    // TODO: CHANGE instrument_id in DB to id. Then addInstrument and addMember can be the same function. Or pass in the id of the member/instrument, in addition to the entire object.
     addInstrument = (evt, instrument) => {
         fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/addinstrument/${instrument.instrument_id}?token=${localStorage.token}`, {
             credentials: 'include',
@@ -206,9 +227,23 @@ class BandPage extends Component {
         }).then((response) => {
             return response.json();
         }).then((results) => {
-            let instruments = this.state.instruments.slice();
-            instrument.push(instrument);
-            this.setState({ instruments, searchInstrument: '' });
+            this.getInstruments();
+        })
+    }
+
+    removeInstrument = (instrumentId, index) => {
+        fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/removeinstrument/${instrumentId}?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            method: 'DELETE',
+            body: JSON.stringify({ bandId: this.props.match.params.bandId, instrumentId })
+        }).then((response) => {
+            return response.json();
+        }).then((results) => {
+            this.getInstruments();
         })
     }
 
@@ -458,9 +493,17 @@ class BandPage extends Component {
                 <div className="instruments">
                     <h2>Instrumentation</h2>
                     {this.state.bandInstruments.map((instrument, index) => {
+                        let removeButton;
+
+                        removeButton = this.props.loggedInUser.id === bandData.band_admin_id
+                        ?
+                        <i className="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeInstrument(instrument.instrument_id, index)}></i>
+                        :
+                        null;
+
                         return (
                             <div key={index} className="instrument">
-                                <h3>{instrument.name}</h3>
+                                <h3>{instrument.name} {removeButton}</h3>
                             </div>
                         )
                     })}
@@ -484,16 +527,25 @@ class BandPage extends Component {
                         :
                         <span>{ removeButton }</span>;
 
+                        console.log('MEMBER', member);
+
                         return (
-                            <h4 key={index}>{member.first_name} {member.last_name} - {member.city} {adminLabel}</h4>
+                            <Card key={index}>
+                                <CardHeader
+                                    title={`${member.first_name} ${member.last_name}`}
+                                    subtitle={member.city}
+                                    avatar={member.profile_image_url}
+                                    actAsExpander={true}
+                                    showExpandableButton={true}
+                                />
+                            </Card>
                         )
                     })}
                     { addMembers }
                 </div>
                 { confirmDeleteForm }
                 <div className="charts">
-                    <h1>Charts</h1>
-                    {addCharts}
+                    <h3>Charts</h3>
                     <List className="band-charts">
                         {this.state.bandCharts.map((chart, index) => {
                             return (
@@ -506,6 +558,7 @@ class BandPage extends Component {
                             )
                         })}
                     </List>
+                    {addCharts}
                     <Dialog
                         actions={actions}
                         modal={false}
