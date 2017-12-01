@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'material-ui/Avatar';
+import BandMemberMgmt from './BandMemberMgmt';
 import Dialog from 'material-ui/Dialog';
 import EventCreator from './EventCreator';
 import EventList from './EventList';
@@ -28,6 +29,7 @@ class BandPage extends Component {
             { value: 'Gig', text: 'Gig' },
             { value: 'Rehearsal', text: 'Rehearsal' }
         ],
+        instruments: [],
         searchMember: '',
         searchMemberResuts: [],
         showCharModal: false,
@@ -36,9 +38,15 @@ class BandPage extends Component {
     }
 
     componentDidMount() {
-        const url = this.props.apiURL;
+        this.getMembers();
+        this.getCharts();
+        this.getEvents();
+    }
+
+    getMembers = () => {
+        const apiURL = this.props.apiURL;
         const bandId = this.props.match.params.bandId;
-        fetch(`${url}/api/band/${bandId}?token=${localStorage.token}`, {
+        fetch(`${apiURL}/api/band/${bandId}?token=${localStorage.token}`, {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,13 +57,10 @@ class BandPage extends Component {
         }).then((results) => {
             let members = [];
             results.rows.forEach((member) => {
-                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city });
+                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city, profile_image_url: member.profile_image_url });
             })
             this.setState({ bandInfoArr: results.rows, members });
         })
-
-        this.getCharts();
-        this.getEvents();
     }
 
     addChart = (evt) => {
@@ -453,6 +458,10 @@ class BandPage extends Component {
                                 <div className="band-info">
                                     {bandInfo}
                                     {createEventForm}
+                                    <BandMemberMgmt
+                                        instruments={this.state.instruments}
+                                        members={this.state.members}
+                                    />
                                     <div className="band-events">
                                         <h2>Gigs and Rehearsals {addButton}</h2>
                                         <EventList

@@ -1434,6 +1434,13 @@ button, input, textarea {
     .ScrollBox ul li {
       list-style: none; }
 
+.Slider {
+  display: flex;
+  width: 500px;
+  overflow-x: scroll; }
+  .Slider div {
+    margin: 10px; }
+
 .hide {
   display: none; }
 
