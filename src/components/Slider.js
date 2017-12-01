@@ -5,12 +5,15 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 class Slider extends Component {
     render() {
 
+        console.log('SLIDER PROPS', this.props);
+
         return (
             <div className="Slider">
                 {this.props.items.map((item, index) => {
                     console.log(item);
                     return (
                         <Card
+                            draggable={true}
                             style={{ width: '200px' }}
                         >
                             <CardHeader

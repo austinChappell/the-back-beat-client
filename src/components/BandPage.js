@@ -34,6 +34,7 @@ class BandPage extends Component {
         searchMemberResuts: [],
         showCharModal: false,
         members: [],
+        membersAsItems: [],
         showDeleteForm: false,
     }
 
@@ -56,11 +57,26 @@ class BandPage extends Component {
             return response.json();
         }).then((results) => {
             let members = [];
+            let membersAsItems = [];
             results.rows.forEach((member) => {
                 members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city, profile_image_url: member.profile_image_url });
             })
+            this.membersToItems(members);
             this.setState({ bandInfoArr: results.rows, members });
         })
+    }
+
+    membersToItems = (members) => {
+        const output = [];
+        members.forEach((member) => {
+            const item = {
+                title: `${member.first_name} ${member.last_name}`,
+                subtitle: 'Instrument Goes Here Yo!',
+                avatar: member.profile_image_url
+            }
+            output.push(item);
+        })
+        this.setState({ membersAsItems: output });
     }
 
     addChart = (evt) => {
@@ -184,6 +200,7 @@ class BandPage extends Component {
             let members = this.state.members.slice();
             const member = Object.assign({}, user, { admin: false });
             members.push(member);
+            this.membersToItems(members);
             this.setState({ members, searchMember: '' });
         })
     }
@@ -202,6 +219,7 @@ class BandPage extends Component {
         }).then((results) => {
             let members = this.state.members.slice();
             members.splice(index, 1);
+            this.membersToItems(members);
             this.setState({ members });
         })
     }
@@ -460,7 +478,7 @@ class BandPage extends Component {
                                     {createEventForm}
                                     <BandMemberMgmt
                                         instruments={this.state.instruments}
-                                        members={this.state.members}
+                                        members={this.state.membersAsItems}
                                     />
                                     <div className="band-events">
                                         <h2>Gigs and Rehearsals {addButton}</h2>
