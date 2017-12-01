@@ -24,6 +24,7 @@ class Slider extends Component {
                                   floatingLabelText="Assign Instrument"
                                   onChange={this.filterSearch}
                                   style={{textAlign: 'left', width: '150px'}}
+                                  value={item.instrument_id}
                                 >
                                     {this.props.instruments.map((instrument, index) => {
                                         return (

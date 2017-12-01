@@ -78,7 +78,14 @@ class BandPage extends Component {
             let members = [];
             let membersAsItems = [];
             results.rows.forEach((member) => {
-                members.push({ first_name: member.first_name, last_name: member.last_name, id: member.id, city: member.city, profile_image_url: member.profile_image_url });
+                members.push({
+                    city: member.city,
+                    id: member.id,
+                    instrument_id: member.instrument_id,
+                    first_name: member.first_name,
+                    last_name: member.last_name,
+                    profile_image_url: member.profile_image_url
+                });
             })
             this.membersToItems(members);
             this.setState({ bandInfoArr: results.rows, members });
@@ -89,9 +96,10 @@ class BandPage extends Component {
         const output = [];
         members.forEach((member) => {
             const item = {
-                title: `${member.first_name} ${member.last_name}`,
+                avatar: member.profile_image_url,
+                instrument_id: member.instrument_id,
                 subtitle: 'Instrument Goes Here Yo!',
-                avatar: member.profile_image_url
+                title: `${member.first_name} ${member.last_name}`
             }
             output.push(item);
         })
