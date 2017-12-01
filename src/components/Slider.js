@@ -1,45 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import { DragSource } from 'react-dnd';
-
-/**
-* Implements the drag source contract.
-*/
-const cardSource = {
-    beginDrag(props) {
-        return {
-            text: props.text
-        };
-    }
-};
-
-/**
- * Specifies the props to inject into your component.
- */
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
-  };
-}
-
-const propTypes = {
-  text: PropTypes.string.isRequired,
-
-  // Injected by React DnD:
-  isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired
-};
 
 class Slider extends Component {
     render() {
 
-        const { isDragging, connectDragSource, text } = this.props;
-
-        return connectDragSource(
-            <div className="Slider" style={{ opacity: isDragging ? 0.5 : 1 }}>
+        return (
+            <div className="Slider">
                 {this.props.items.map((item, index) => {
                     console.log(item);
                     return (
@@ -63,4 +30,4 @@ class Slider extends Component {
     }
 }
 
-export default DragSource('something', cardSource, collect)(Slider);
+export default Slider;
