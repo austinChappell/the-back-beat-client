@@ -1438,8 +1438,15 @@ button, input, textarea {
   display: flex;
   width: 500px;
   overflow-x: scroll; }
-  .Slider div {
+  .Slider .card {
+    width: 200px;
+    border: 1px solid #070649;
+    padding: 10px;
     margin: 10px; }
+    .Slider .card input {
+      width: 150px; }
+    .Slider .card .card-image img {
+      width: 100%; }
 
 .hide {
   display: none; }

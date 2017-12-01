@@ -23,13 +23,13 @@ class BandPage extends Component {
         bandCharts: [],
         bandEvents: [],
         bandInfoArr: [],
+        bandInstruments: [],
         chartTitle: '',
         displayModal: false,
         eventTypes: [
             { value: 'Gig', text: 'Gig' },
             { value: 'Rehearsal', text: 'Rehearsal' }
         ],
-        instruments: [],
         searchMember: '',
         searchMemberResuts: [],
         showCharModal: false,
@@ -42,6 +42,25 @@ class BandPage extends Component {
         this.getMembers();
         this.getCharts();
         this.getEvents();
+        this.getInstruments();
+    }
+
+    getInstruments = () => {
+        const apiURL = this.props.apiURL;
+        const bandId = this.props.match.params.bandId;
+        fetch(`${apiURL}/api/band/${bandId}/instruments?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((results) => {
+            console.log('BAND INSTRUMENTS', results.rows);
+            this.setState({ bandInstruments: results.rows });
+        }).catch((err) => {
+            console.log('ERROR', err);
+        })
     }
 
     getMembers = () => {
@@ -262,7 +281,7 @@ class BandPage extends Component {
 
     render() {
 
-        console.log('STATE', this.state);
+        console.log('BAND PAGE STATE', this.state);
 
         const randomCache = Math.floor(Math.random() * 1000000);
         let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
@@ -477,7 +496,7 @@ class BandPage extends Component {
                                     {bandInfo}
                                     {createEventForm}
                                     <BandMemberMgmt
-                                        instruments={this.state.instruments}
+                                        instruments={this.state.bandInstruments}
                                         members={this.state.membersAsItems}
                                     />
                                     <div className="band-events">

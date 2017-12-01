@@ -2,7 +2,18 @@
     display: flex;
     width: 500px;
     overflow-x: scroll;
-    div {
+    .card {
+        width: 200px;
+        border: 1px solid $color-primary;
+        padding: 10px;
         margin: 10px;
+        input {
+            width: 150px;
+        }
+        .card-image {
+            img {
+                width: 100%;
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
 
 class Slider extends Component {
     render() {
@@ -12,20 +14,33 @@ class Slider extends Component {
                 {this.props.items.map((item, index) => {
                     console.log(item);
                     return (
-                        <Card
-                            draggable={true}
-                            style={{ width: '200px' }}
+                        <div
+                            className="card"
+                            key={index}
                         >
-                            <CardHeader
-                                title={item.title}
-                                subtitle={item.subtitle}
-                                subtitleStyle={{ whiteSpace: 'nowrap' }}
-                                titleStyle={{ whiteSpace: 'nowrap' }}
-                            />
-                            <CardMedia>
+                            <div className="header">
+                                <h3>{item.title}</h3>
+                                <SelectField
+                                  floatingLabelText="Assign Instrument"
+                                  onChange={this.filterSearch}
+                                  style={{textAlign: 'left', width: '150px'}}
+                                >
+                                    {this.props.instruments.map((instrument, index) => {
+                                        return (
+                                            <MenuItem
+                                                key={index}
+                                                value={instrument.instrument_id}
+                                                primaryText={instrument.name}
+                                            />
+                                        )
+                                    })}
+                                </SelectField>
+
+                            </div>
+                            <div className="card-image">
                                 <img src={item.avatar} alt={item.title} />
-                            </CardMedia>
-                        </Card>
+                            </div>
+                        </div>
                     )
                 })}
             </div>

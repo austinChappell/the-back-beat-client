@@ -9,7 +9,7 @@ class BandMemberMgmt extends Component {
         console.log('BAND MEMBER MGMT PROPS', this.props);
         return (
             <div className="BandMemberMgmt">
-                <Slider items={this.props.members}/>
+                <Slider items={this.props.members} instruments={this.props.instruments} />
             </div>
         )
     }
