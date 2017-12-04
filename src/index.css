@@ -1442,11 +1442,26 @@ button, input, textarea {
     width: 200px;
     border: 1px solid #070649;
     padding: 10px;
-    margin: 10px; }
+    margin: 10px;
+    position: relative; }
     .Slider .card input {
       width: 150px; }
     .Slider .card .card-image img {
       width: 100%; }
+  .Slider .remove-member-button {
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0; }
+    .Slider .remove-member-button button {
+      background-color: #C91208;
+      font-size: 16px;
+      padding: 4px 10px;
+      color: white;
+      cursor: pointer; }
+      .Slider .remove-member-button button:hover {
+        background-color: #890C05; }
 
 .hide {
   display: none; }

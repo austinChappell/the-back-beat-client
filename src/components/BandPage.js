@@ -20,12 +20,14 @@ import { RaisedButton } from 'material-ui';
 class BandPage extends Component {
 
     state = {
+        bandAdminId: null,
         bandCharts: [],
         bandEvents: [],
         bandInfoArr: [],
         bandInstruments: [],
         chartTitle: '',
         displayModal: false,
+        editingUserId: null,
         eventTypes: [
             { value: 'Gig', text: 'Gig' },
             { value: 'Rehearsal', text: 'Rehearsal' }
@@ -43,6 +45,38 @@ class BandPage extends Component {
         this.getCharts();
         this.getEvents();
         this.getInstruments();
+    }
+
+    assignInstrument(evt, index, val) {
+        console.log(evt);
+        console.log(index);
+        console.log(val);
+        this.updateUserInstrument(val);
+    }
+
+    updateUserInstrument = (instrumentId) => {
+        const apiURL = this.props.apiURL;
+        const bandId = this.props.match.params.bandId;
+        const memberId = this.state.editingUserId;
+        fetch(`${apiURL}/api/band/member/instrument/edit?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                bandId,
+                instrumentId,
+                memberId
+            })
+        }).then((response) => {
+            return response.json();
+        }).then((results) => {
+            console.log('UPDATE INSTRUMENT RESULTS', results.rows);
+            this.getMembers();
+        }).catch((err) => {
+            console.log('ERROR', err);
+        })
     }
 
     getInstruments = () => {
@@ -89,6 +123,7 @@ class BandPage extends Component {
             })
             this.membersToItems(members);
             this.setState({ bandInfoArr: results.rows, members });
+            this.setState({ bandAdminId: results.rows[0].band_admin_id });
         })
     }
 
@@ -97,6 +132,7 @@ class BandPage extends Component {
         members.forEach((member) => {
             const item = {
                 avatar: member.profile_image_url,
+                id: member.id,
                 instrument_id: member.instrument_id,
                 subtitle: 'Instrument Goes Here Yo!',
                 title: `${member.first_name} ${member.last_name}`
@@ -232,6 +268,10 @@ class BandPage extends Component {
         })
     }
 
+    setEditingUser = (id) => {
+        this.setState({ editingUserId: id });
+    }
+
     removeMember = (userId, index) => {
         fetch(`${this.props.apiURL}/editband/${this.props.match.params.bandId}/removemember/${userId}?token=${localStorage.token}`, {
             credentials: 'include',
@@ -245,9 +285,7 @@ class BandPage extends Component {
             return response.json();
         }).then((results) => {
             let members = this.state.members.slice();
-            members.splice(index, 1);
-            this.membersToItems(members);
-            this.setState({ members });
+            this.getMembers();
         })
     }
 
@@ -441,26 +479,6 @@ class BandPage extends Component {
 
 
                             <div className="members">
-                                <h3>Members:</h3>
-                                {this.state.members.map((member, index) => {
-                                    let removeButton;
-
-                                    removeButton = this.props.loggedInUser.id === bandData.band_admin_id
-                                    ?
-                                    <i className="fa fa-times-circle" aria-hidden="true" onClick={() => this.removeMember(member.id, index)}></i>
-                                    :
-                                    null;
-
-                                    let adminLabel = bandData.band_admin_id === member.id
-                                    ?
-                                    <span>(admin)</span>
-                                    :
-                                    <span>{ removeButton }</span>;
-
-                                    return (
-                                        <h4 key={index}>{member.first_name} {member.last_name} - {member.city} {adminLabel}</h4>
-                                    )
-                                })}
                                 { addMembers }
                             </div>
                             { confirmDeleteForm }
@@ -504,8 +522,12 @@ class BandPage extends Component {
                                     {bandInfo}
                                     {createEventForm}
                                     <BandMemberMgmt
+                                        adminId={this.state.bandAdminId}
+                                        assignInstrument={this.assignInstrument.bind(this)}
                                         instruments={this.state.bandInstruments}
                                         members={this.state.membersAsItems}
+                                        removeMember={this.removeMember}
+                                        setEditingUser={this.setEditingUser}
                                     />
                                     <div className="band-events">
                                         <h2>Gigs and Rehearsals {addButton}</h2>
