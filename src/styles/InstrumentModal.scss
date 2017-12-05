@@ -1,0 +1,40 @@
+.InstrumentModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .modal {
+        background-color: white;
+        padding: 50px;
+        max-width: 600px;
+        width: 90%;
+        text-align: center;
+        .instruments {
+            display: flex;
+            flex-wrap: wrap;
+            .icon {
+                text-align: center;
+                border: 1px solid $color-primary;
+                margin: 5px;
+                border-radius: 3px;
+                padding: 3px;
+                &.selected {
+                    background-color: $color-secondary;
+                }
+                img {
+                    margin: 0 auto;
+                    display: block;
+                }
+                span {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}

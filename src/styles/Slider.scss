@@ -3,11 +3,18 @@
     width: 500px;
     overflow-x: scroll;
     .card {
-        width: 200px;
+        width: 250px;
+        flex-basis: 250px;
         border: 1px solid $color-primary;
-        padding: 10px;
+        box-sizing: border-box;
+        padding: 10px 10px 50px;
         margin: 10px;
         position: relative;
+        .header {
+            h3 {
+                white-space: nowrap;
+            }
+        }
         input {
             width: 150px;
         }

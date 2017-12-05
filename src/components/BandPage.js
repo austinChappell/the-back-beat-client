@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import EventCreator from './EventCreator';
 import EventList from './EventList';
 import FlatButton from 'material-ui/FlatButton';
+import InstrumentModal from './InstrumentModal';
 import {List, ListItem} from 'material-ui/List';
 import Modal from './Modal';
 import TextField from 'material-ui/TextField';
@@ -26,6 +27,7 @@ class BandPage extends Component {
         bandInfoArr: [],
         bandInstruments: [],
         chartTitle: '',
+        displayInstrumentModal: false,
         displayModal: false,
         editingUserId: null,
         eventTypes: [
@@ -374,6 +376,7 @@ class BandPage extends Component {
         let searchMembersLink;
         let createEventForm;
         let addCharts;
+        let editInstruments;
 
         if (this.state.bandInfoArr.length > 0) {
             bandData = this.state.bandInfoArr[0];
@@ -464,7 +467,22 @@ class BandPage extends Component {
                             </FloatingActionButton>
                         </div>
                         : null;
-                    }
+
+                        editInstruments = this.props.loggedInUser.id === bandData.band_admin_id ?
+                        <div>
+                            <h1>Edit Instruments</h1>
+                            <FloatingActionButton
+                                mini={true}
+                                secondary={true}
+                                onClick={() => this.displayInstrumentModal(true)}
+                                >
+                                    <ContentAdd />
+                                </FloatingActionButton>
+                            </div>
+                        :
+                        null;
+
+        }
 
 
                     let bandInfo = bandData === undefined ? null :
@@ -485,6 +503,7 @@ class BandPage extends Component {
                             <div className="charts">
                                 <h1>Charts</h1>
                                 {addCharts}
+                                {editInstruments}
                                 <List className="band-charts">
                                     {this.state.bandCharts.map((chart, index) => {
                                         return (
@@ -537,6 +556,7 @@ class BandPage extends Component {
                                         />
                                     </div>
                                 </div>
+                                <InstrumentModal show={this.state.displayInstrumentModal} />
                             </div>
                         )
                     }
