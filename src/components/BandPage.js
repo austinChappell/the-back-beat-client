@@ -36,6 +36,7 @@ class BandPage extends Component {
         ],
         searchMember: '',
         searchMemberResuts: [],
+        selectedInstrumentIds: [],
         showCharModal: false,
         members: [],
         membersAsItems: [],
@@ -49,14 +50,26 @@ class BandPage extends Component {
         this.getInstruments();
     }
 
-    addInstrument() {
-        
+    addInstrument = (instrumentId) => {
+        const apiURL = this.props.apiURL;
+        const bandId = this.props.match.params.bandId;
+        console.log('api url', apiURL);
+        console.log('band id', bandId);
+        console.log('instrument id', instrumentId);
+        fetch(`${apiURL}/editband/${bandId}/addinstrument/${instrumentId}?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+        }).then((results) => {
+            this.getInstruments();
+        }).catch((err) => {
+            console.log('error', err);
+        })
     }
 
     assignInstrument(evt, index, val) {
-        console.log(evt);
-        console.log(index);
-        console.log(val);
         this.updateUserInstrument(val);
     }
 
@@ -101,7 +114,11 @@ class BandPage extends Component {
             return response.json();
         }).then((results) => {
             console.log('BAND INSTRUMENTS', results.rows);
-            this.setState({ bandInstruments: results.rows });
+            const selectedInstrumentIds = [];
+            results.rows.forEach((instrument) => {
+                selectedInstrumentIds.push(instrument.instrument_id);
+            })
+            this.setState({ bandInstruments: results.rows, selectedInstrumentIds });
         }).catch((err) => {
             console.log('ERROR', err);
         })
@@ -135,6 +152,21 @@ class BandPage extends Component {
             this.setState({ bandInfoArr: results.rows, members });
             this.setState({ bandAdminId: results.rows[0].band_admin_id });
         })
+    }
+
+    handleInstrumentClick = (instrumentid) => {
+
+        console.log('instrument clicked');
+        const selectedInstrumentIds = this.state.selectedInstrumentIds;
+        const index = selectedInstrumentIds.indexOf(instrumentid);
+
+        if (index !== -1) {
+            selectedInstrumentIds.splice(index, 1);
+        } else {
+            selectedInstrumentIds.push(instrumentid);
+        }
+
+        this.setState({ selectedInstrumentIds });
     }
 
     membersToItems = (members) => {
@@ -565,6 +597,10 @@ class BandPage extends Component {
                                     </div>
                                 </div>
                                 <InstrumentModal
+                                    addInstrument={this.addInstrument}
+                                    bandInstruments={this.state.bandInstruments}
+                                    handleInstrumentClick={this.handleInstrumentClick}
+                                    selectedInstrumentIds={this.state.selectedInstrumentIds}
                                     displayInstrumentModal={this.displayInstrumentModal}
                                     show={this.state.displayInstrumentModal}
                                 />
