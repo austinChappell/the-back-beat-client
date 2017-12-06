@@ -49,11 +49,19 @@ class BandPage extends Component {
         this.getInstruments();
     }
 
+    addInstrument() {
+        
+    }
+
     assignInstrument(evt, index, val) {
         console.log(evt);
         console.log(index);
         console.log(val);
         this.updateUserInstrument(val);
+    }
+
+    displayInstrumentModal = (bool) => {
+        this.setState({ displayInstrumentModal: bool });
     }
 
     updateUserInstrument = (instrumentId) => {
@@ -521,7 +529,7 @@ class BandPage extends Component {
                                     modal={false}
                                     open={this.state.showCharModal}
                                     onRequestClose={() => this.displayChartModal(false)}
-                                    >
+                                >
                                         <TextField
                                             floatingLabelText="Chart Title"
                                             floatingLabelStyle={{ textAlign: 'left' }}
@@ -556,7 +564,10 @@ class BandPage extends Component {
                                         />
                                     </div>
                                 </div>
-                                <InstrumentModal show={this.state.displayInstrumentModal} />
+                                <InstrumentModal
+                                    displayInstrumentModal={this.displayInstrumentModal}
+                                    show={this.state.displayInstrumentModal}
+                                />
                             </div>
                         )
                     }

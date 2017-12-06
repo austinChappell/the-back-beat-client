@@ -720,39 +720,28 @@ button, input, textarea {
       font-size: 50px;
       text-align: center; }
 
-.InstrumentModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+.InstrumentModal .instruments {
   display: flex;
-  justify-content: center;
-  align-items: center; }
-  .InstrumentModal .modal {
-    background-color: white;
-    padding: 50px;
-    max-width: 600px;
-    width: 90%;
-    text-align: center; }
-    .InstrumentModal .modal .instruments {
-      display: flex;
-      flex-wrap: wrap; }
-      .InstrumentModal .modal .instruments .icon {
-        text-align: center;
-        border: 1px solid #070649;
-        margin: 5px;
-        border-radius: 3px;
-        padding: 3px; }
-        .InstrumentModal .modal .instruments .icon.selected {
-          background-color: #B8B7D5; }
-        .InstrumentModal .modal .instruments .icon img {
-          margin: 0 auto;
-          display: block; }
-        .InstrumentModal .modal .instruments .icon span {
-          font-size: 10px; }
+  justify-content: space-between;
+  flex-wrap: wrap; }
+  .InstrumentModal .instruments .icon {
+    text-align: center;
+    border: 1px solid #070649;
+    margin: 5px;
+    border-radius: 3px;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer; }
+    .InstrumentModal .instruments .icon:hover {
+      background-color: #E0E0E0; }
+    .InstrumentModal .instruments .icon.selected {
+      background-color: #B8B7D5; }
+    .InstrumentModal .instruments .icon img {
+      margin: 0 auto;
+      display: block; }
+    .InstrumentModal .instruments .icon span {
+      font-size: 10px; }
 
 .LeftMainPageSideBar {
   color: #030303;

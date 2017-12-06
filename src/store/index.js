@@ -12,6 +12,7 @@ const initialState = {
 
   // GENERAL ITEMS
   apiURL: apiURL,
+  allInstruments: [],
   attemptedLogin: false,
   authToken: 'noToken',
   authorized: false,
@@ -115,6 +116,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, initialState);
     case 'RESET_CURRENT_MESSAGE':
       return Object.assign({}, state, { currentMessage: '' });
+    case 'SET_ALL_INSTRUMENTS':
+        return Object.assign({}, state, { allInstruments: action.instruments });
     case 'SET_ALL_MESSAGES':
       return Object.assign({}, state, { allMessages: action.allMessages });
     case 'SET_AUTH_TOKEN':
