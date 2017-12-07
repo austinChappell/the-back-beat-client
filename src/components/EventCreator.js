@@ -297,9 +297,10 @@ class EventCreator extends Component {
                   value={this.state.eventTypeSelected}
                   onChange={this.handleSelectChange}
                 >
-                  {this.props.eventTypes.map((eventType) => {
+                  {this.props.eventTypes.map((eventType, index) => {
                     return (
                       <MenuItem
+                        key={index}
                         value={eventType.value}
                         primaryText={eventType.text}
                       />

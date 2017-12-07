@@ -10,9 +10,6 @@ class Slider extends Component {
 
     render() {
 
-        console.log('SLIDER PROPS', this.props);
-        console.log('SLIDER STATE', this.state);
-
         return (
             <div className="Slider">
                 {this.props.items.map((item, index) => {
@@ -24,7 +21,6 @@ class Slider extends Component {
                             Remove
                         </button>
                     </div> : null;
-                    console.log(item);
                     return (
                         <div
                             className="card"
@@ -39,7 +35,7 @@ class Slider extends Component {
                                   style={{textAlign: 'left', width: '150px'}}
                                   value={item.instrument_id}
                                 >
-                                    {this.props.instruments.map((instrument, index) => {
+                                    {this.props.bandInstruments.map((instrument, index) => {
                                         return (
                                             <MenuItem
                                                 key={index}
@@ -66,6 +62,7 @@ class Slider extends Component {
 const mapStateToProps = (state) => {
     return {
         apiURL: state.apiURL,
+        bandInstruments: state.bandInstruments,
         loggedInUser: state.loggedInUser
     }
 }

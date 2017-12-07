@@ -6,7 +6,6 @@ import Slider from './Slider';
 class BandMemberMgmt extends Component {
 
     render() {
-        console.log('BAND MEMBER MGMT PROPS', this.props);
         return (
             <div className="BandMemberMgmt">
                 <Slider

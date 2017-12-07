@@ -16,6 +16,8 @@ const initialState = {
   attemptedLogin: false,
   authToken: 'noToken',
   authorized: false,
+  bandInstruments: [],
+  selectedInstrumentIds: [],
   showUserAuthForm: false,
   userAuthType: '',
   skillLevels: ['Professional', 'Semi-Professional', 'Amateur', 'Novice'],
@@ -122,6 +124,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { allMessages: action.allMessages });
     case 'SET_AUTH_TOKEN':
       return Object.assign({}, state, { authToken: action.token });
+    case 'SET_BAND_INSTRUMENTS':
+      return Object.assign({}, state, { bandInstruments: action.instruments });
     case 'SET_CURRENT_USER_TRACKS':
       return Object.assign({}, state, { currentUserTracks: action.tracks });
     case 'SET_CURRENT_USER_VIDS':
@@ -138,6 +142,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { messageHistory: action.output });
     case 'SET_ONBOARDING_STAGE':
       return Object.assign({}, state, { onboardingStage: action.stage });
+    case 'SET_SELECTED_INSTRUMENT_IDS':
+      return Object.assign({}, state, { selectedInstrumentIds: action.selectedInstrumentIds });
     case 'SET_USER_STYLE_IDS':
       return Object.assign({}, state, { userStyleIds: action.styles });
     case 'TOGGLE_USER_AUTH_FORM':
@@ -151,6 +157,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentUserInstruments: action.instruments });
     case 'UPDATE_ONBOARDING_STAGE':
       return Object.assign({}, state, { onboardingStage: action.stage });
+    case 'UPDATE_SELECTED_INSTRUMENT_IDS':
+      return Object.assign({}, state, { selectedInstrumentIds: action.selectedInstrumentIds });
     case 'UPDATE_USER':
       return Object.assign({}, state, { currentUser: action.user });
     case 'UPDATE_USER_INFO':
