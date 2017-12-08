@@ -20,26 +20,33 @@ import { RaisedButton } from 'material-ui';
 
 class BandPage extends Component {
 
-  state = {
-    bandAdminId: null,
-    bandCharts: [],
-    bandEvents: [],
-    bandInfoArr: [],
-    chartTitle: '',
-    displayInstrumentModal: false,
-    displayModal: false,
-    editingUserId: null,
-    eventTypes: [
-      { value: 'Gig', text: 'Gig' },
-      { value: 'Rehearsal', text: 'Rehearsal' }
-    ],
-    searchMember: '',
-    searchMemberResuts: [],
-    showCharModal: false,
-    members: [],
-    membersAsItems: [],
-    showDeleteForm: false,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      bandAdminId: null,
+      bandCharts: [],
+      bandEvents: [],
+      bandId: props.match.params.bandId,
+      bandInfoArr: [],
+      chartTitle: '',
+      displayInstrumentModal: false,
+      displayModal: false,
+      editingUserId: null,
+      eventTypes: [
+        { value: 'Gig', text: 'Gig' },
+        { value: 'Rehearsal', text: 'Rehearsal' }
+      ],
+      searchMember: '',
+      searchMemberResuts: [],
+      showCharModal: false,
+      members: [],
+      membersAsItems: [],
+      showDeleteForm: false,
+    }
+
   }
+
 
   componentDidMount() {
     this.getMembers();
@@ -71,7 +78,9 @@ class BandPage extends Component {
   displayInstrumentModal = (bool) => {
     const self = this;
     this.setState({ displayInstrumentModal: bool }, () => {
-      self.getInstruments();
+      setTimeout(() => {
+        self.getInstruments();
+      }, 200);
     });
   }
 
@@ -285,6 +294,7 @@ class BandPage extends Component {
     }).then((results) => {
       let members = this.state.members.slice();
       const member = Object.assign({}, user, { admin: false });
+      member.instrument_id = -1;
       members.push(member);
       this.membersToItems(members);
       this.setState({ members, searchMember: '' });
@@ -328,6 +338,27 @@ class BandPage extends Component {
       if (!found) {
         // DELETE INSTRUMENT
         console.log('DELETE INSTRUMENT FOR', member);
+        const apiURL = this.props.apiURL;
+        const bandId = this.props.match.params.bandId;
+        fetch(`${apiURL}/api/band/member/instrument/edit?token=${localStorage.token}`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'PUT',
+          body: JSON.stringify({
+            bandId,
+            instrumentId: -1,
+            memberId: member.id
+          })
+        }).then((response) => {
+          return response.json();
+        }).then((results) => {
+          this.getMembers();
+          console.log('success');
+        }).catch((err) => {
+          console.log('error', err);
+        })
       }
     })
   }
@@ -508,14 +539,23 @@ class BandPage extends Component {
 
             editInstruments = this.props.loggedInUser.id === bandData.band_admin_id ?
             <div>
-              <h1>Edit Instruments</h1>
-              <FloatingActionButton
-                mini={true}
-                secondary={true}
+              <h1>Instrumentation</h1>
+                {this.props.bandInstruments.map((instrument, index) => {
+                  return (
+                    <div
+                      className="instrument-list"
+                      key={index}
+                    >
+                      <p>{instrument.name}</p>
+                    </div>
+                  )
+                })}
+
+              <RaisedButton
+                label="Edit Instrumentation"
                 onClick={() => this.displayInstrumentModal(true)}
-                >
-                  <ContentAdd />
-                </FloatingActionButton>
+                secondary={true}
+              />
               </div>
               :
               null;
@@ -576,12 +616,14 @@ class BandPage extends Component {
               return (
                 <div className="BandPage">
                   <div className="band-info">
+                    <Link className="chat-button" to={`/band/${this.state.bandId}/chat`}>
+                      Chat
+                    </Link>
                     {bandInfo}
                     {createEventForm}
                     <BandMemberMgmt
                       adminId={this.state.bandAdminId}
                       assignInstrument={this.assignInstrument.bind(this)}
-                      instruments={this.props.bandInstruments}
                       members={this.state.membersAsItems}
                       removeMember={this.removeMember}
                       setEditingUser={this.setEditingUser}

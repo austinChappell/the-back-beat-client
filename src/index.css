@@ -54,6 +54,23 @@ button, input, textarea {
     flex-wrap: wrap;
     justify-content: center; }
 
+.BandChat .chat-section {
+  width: 40%;
+  margin: 20px 10% 20px 50%;
+  height: calc(100vh - 300px); }
+  .BandChat .chat-section .chat-window {
+    border: 1px solid #070649;
+    height: calc(100% - 40px);
+    width: 100%; }
+  .BandChat .chat-section .message-bar {
+    height: 36px;
+    width: 100%;
+    border: 1px solid #070649;
+    font-size: 18px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 4px 0 0; }
+
 .BandCreateForm form {
   width: 80%;
   max-width: 600px;

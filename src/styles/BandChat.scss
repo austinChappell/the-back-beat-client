@@ -1,0 +1,21 @@
+.BandChat {
+  .chat-section {
+    width: 40%;
+    margin: 20px 10% 20px 50%;
+    height: calc(100vh - 300px);
+    .chat-window {
+      border: 1px solid $color-primary;
+      height: calc(100% - 40px);
+      width: 100%;
+    }
+    .message-bar {
+      height: 36px;
+      width: 100%;
+      border: 1px solid $color-primary;
+      font-size: 18px;
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 4px 0 0;
+    }
+  }
+}
