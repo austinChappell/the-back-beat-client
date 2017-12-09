@@ -11,7 +11,8 @@ class BandChat extends Component {
       bandId: props.match.params.bandId,
       bandInfoArr: [],
       currentMessage: '',
-      members: []
+      members: [],
+      messages: []
     }
 
   }
@@ -95,19 +96,57 @@ class BandChat extends Component {
         message: this.state.currentMessage,
         senderId: this.props.loggedInUser.id
       })
+    }).then(() => {
+      this.getMessages();
+      this.setState({ currentMessage: '' });
+    }).catch((err) => {
+      console.log('sendMessage error', err);
     })
-    this.setState({ currentMessage: '' });
   }
 
   render() {
 
     console.log('BAND CHAT STATE', this.state);
+    const now = new Date();
+    const today = now.toDateString();
 
     return (
       <div className="BandChat">
-        Band Chat Component
         <section className="chat-section">
           <div className="chat-window">
+            {this.state.messages.map((message, index) => {
+              const date = new Date(message.created_at);
+              if (date.toDateString() === today) {
+                message.date = 'Today';
+              } else {
+                message.date = date.toDateString();
+              }
+              message.time = date.toLocaleTimeString();
+              let dateClass = 'date';
+              for (let i = 0; i < index; i++) {
+                if (this.state.messages[i].date === message.date) {
+                  dateClass = 'hide';
+                }
+              }
+              return (
+                <div className="message" key={index}>
+                  <div className={dateClass}>
+                    <hr />
+                    <span>{message.date}</span>
+                    <hr />
+                  </div>
+                  <div className="time">
+                    <div className="user">
+                      <img src={message.profile_image_url} /><span>{message.first_name} {message.last_name}</span>
+                    </div>
+                    <div className="time-stamp">
+                      <span>{message.time}</span>
+                    </div>
+                  </div>
+                  <p>{message.content}</p>
+                </div>
+              )
+            })}
 
           </div>
           <input

@@ -61,7 +61,9 @@ button, input, textarea {
   .BandChat .chat-section .chat-window {
     border: 1px solid #070649;
     height: calc(100% - 40px);
-    width: 100%; }
+    overflow: scroll;
+    width: 100%;
+    padding: 10px; }
   .BandChat .chat-section .message-bar {
     height: 36px;
     width: 100%;
@@ -70,6 +72,32 @@ button, input, textarea {
     padding: 10px;
     box-sizing: border-box;
     margin: 4px 0 0; }
+
+.BandChat .message {
+  padding-top: 20px; }
+  .BandChat .message .date {
+    display: flex;
+    margin-bottom: 10px; }
+    .BandChat .message .date hr {
+      flex-grow: 1; }
+    .BandChat .message .date span {
+      margin: auto 10px; }
+  .BandChat .message .time {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px; }
+    .BandChat .message .time > div {
+      display: flex;
+      align-items: center; }
+    .BandChat .message .time img {
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      margin-right: 10px; }
+    .BandChat .message .time span {
+      color: #999999; }
+  .BandChat .message .hide {
+    display: none; }
 
 .BandCreateForm form {
   width: 80%;
