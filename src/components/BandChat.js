@@ -66,7 +66,9 @@ class BandChat extends Component {
       return response.json();
     }).then((results) => {
       console.log('results', results.rows);
-      this.setState({ messages: results.rows });
+      this.setState({ messages: results.rows }, () => {
+        this.refs.chatWindow.scrollTop = this.refs.chatWindow.scrollHeight;
+      });
     }).catch((err) => {
       console.log('getmessages error', err);
     })
@@ -113,7 +115,7 @@ class BandChat extends Component {
     return (
       <div className="BandChat">
         <section className="chat-section">
-          <div className="chat-window">
+          <div className="chat-window" ref="chatWindow">
             {this.state.messages.map((message, index) => {
               const date = new Date(message.created_at);
               if (date.toDateString() === today) {
@@ -121,7 +123,7 @@ class BandChat extends Component {
               } else {
                 message.date = date.toDateString();
               }
-              message.time = date.toLocaleTimeString();
+              message.time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
               let dateClass = 'date';
               for (let i = 0; i < index; i++) {
                 if (this.state.messages[i].date === message.date) {

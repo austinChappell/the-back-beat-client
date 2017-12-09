@@ -60,6 +60,7 @@ button, input, textarea {
   height: calc(100vh - 300px); }
   .BandChat .chat-section .chat-window {
     border: 1px solid #070649;
+    box-sizing: border-box;
     height: calc(100% - 40px);
     overflow: scroll;
     width: 100%;
