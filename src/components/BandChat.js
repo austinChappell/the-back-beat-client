@@ -49,7 +49,7 @@ class BandChat extends Component {
       this.setState({ bandInfoArr: results.rows, members });
       this.setState({ bandAdminId: results.rows[0].band_admin_id });
     }).catch((err) => {
-      console.log('error', err);
+      console.log('getmembers error', err);
     })
   }
 
@@ -57,7 +57,7 @@ class BandChat extends Component {
     const apiURL = this.props.apiURL;
     const bandId = this.state.bandId;
     fetch(`${apiURL}/api/band/${bandId}/messages/?token=${localStorage.token}`, {
-      credential: 'include',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       }
@@ -67,7 +67,7 @@ class BandChat extends Component {
       console.log('results', results.rows);
       this.setState({ messages: results.rows });
     }).catch((err) => {
-      console.log('error', err);
+      console.log('getmessages error', err);
     })
   }
 
