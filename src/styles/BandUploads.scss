@@ -1,0 +1,30 @@
+.BandUploads {
+  .charts {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .add-chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-secondary;
+  }
+  .band-chart {
+    width: 150px;
+    box-shadow: 2px 2px 10px black;
+    color: $color-primary;
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    h2 {
+      font-size: 14px;
+    }
+    img {
+      width: 80%;
+    }
+  }
+}
