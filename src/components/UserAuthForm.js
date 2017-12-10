@@ -147,6 +147,12 @@ class UserAuthForm extends Component {
 
     }
 
+    handleKeyUp = (evt) => {
+      if (evt.keyCode === 13) {
+        this.submitForm(evt, this.props.userInfo);
+      }
+    }
+
     setDefaultPhoto = () => {
         console.log('DELETE PHOTO FUNCTION RUNNING');
         const apiURL = this.props.apiURL;
@@ -261,16 +267,6 @@ class UserAuthForm extends Component {
                 })
             }
 
-            // if (submitType === 'login') {
-            //   this.props.newProps.history.push('/');
-            // } else if (submitType === 'signup') {
-            //   this.setDefaultPhoto();
-            //   this.props.newProps.history.push('/onboarding');
-            //   // this.props.newProps.history.push(`/profile/${userInfo.username}`);
-            // } else {
-            //   this.props.newProps.history.goBack();
-            // }
-
         }).catch((err) => {
             if (submitType === 'login') {
                 this.setState({ errorMessage: 'The username and/or password is invalid.' });
@@ -343,11 +339,13 @@ class UserAuthForm extends Component {
             <TextField
                 floatingLabelText="Username"
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'username')}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.username}
             />
             <TextField
                 floatingLabelText="Password"
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'password')}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 type="password"
                 value={this.props.userInfo.password}
             />
@@ -357,28 +355,33 @@ class UserAuthForm extends Component {
             <TextField
                 floatingLabelText="First Name"
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'firstName')}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.firstName}
             />
             <TextField
                 floatingLabelText="Last Name"
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'lastName')}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.lastName}
             />
             <TextField
                 floatingLabelText="Email"
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'email')}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.email}
             />
             <TextField
                 floatingLabelText="Username"
                 onChange={(evt) => this.handleChange(evt, 'username', true)}
                 onBlur={(evt) => this.checkUserNameLength(evt)}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.username}
             />
             <TextField
                 floatingLabelText="Password"
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'password')}
                 type="password"
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.password}
             />
             <TextField
@@ -388,6 +391,7 @@ class UserAuthForm extends Component {
                 floatingLabelStyle={bioCounterWarning}
                 floatingLabelText={`Bio ( ${this.props.userInfo.bio ? 500 - this.props.userInfo.bio.length : 500} Characters Remaining )`}
                 onChange={(evt) => this.props.handleFormInputChange(evt.target.value, 'bio')}
+                onKeyUp={(evt) => this.handleKeyUp(evt)}
                 value={this.props.userInfo.bio}
             />
             <SelectField
