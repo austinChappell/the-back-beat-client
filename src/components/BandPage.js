@@ -616,8 +616,11 @@ class BandPage extends Component {
               return (
                 <div className="BandPage">
                   <div className="band-info">
-                    <Link className="chat-button" to={`/band/${this.state.bandId}/chat`}>
+                    <Link className="sidebar-link" to={`/band/${this.state.bandId}/chat`}>
                       Chat
+                    </Link>
+                    <Link className="sidebar-link" to={`/band/${this.state.bandId}/uploads`}>
+                      Uploads
                     </Link>
                     {bandInfo}
                     {createEventForm}

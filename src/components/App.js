@@ -8,6 +8,7 @@ import Activate from './Activate';
 import ActivateInstructions from './ActivateInstructions';
 import BandChat from './BandChat';
 import BandCreateForm from './BandCreateForm';
+import BandUploads from './BandUploads';
 import EventPage from './EventPage';
 import BandPage from './BandPage';
 import BandPageBrowseMusicians from './BandPageBrowseMusicians';
@@ -73,6 +74,7 @@ class App extends Component {
                   <PrivateRoute path="/band/create" component={BandCreateForm} />
                   <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
                   <PrivateRoute path="/band/:bandId/chat" component={BandChat} />
+                  <PrivateRoute path="/band/:bandId/uploads" component={BandUploads} />
                   <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
                   <PrivateRoute path="/band/:bandId" component={BandPage} />
                   <PrivateRoute path="/band_event/:eventId" component={EventPage} />
