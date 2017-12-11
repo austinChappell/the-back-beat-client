@@ -6,17 +6,12 @@ import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import BandMemberMgmt from './BandMemberMgmt';
 import Dialog from 'material-ui/Dialog';
-import EventCreator from './EventCreator';
-import EventList from './EventList';
 import FlatButton from 'material-ui/FlatButton';
 import InstrumentModal from './InstrumentModal';
 import {List, ListItem} from 'material-ui/List';
-import Modal from './Modal';
 import SideBar from './SideBar';
 import TextField from 'material-ui/TextField';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import { RaisedButton } from 'material-ui';
 
 class BandPage extends Component {
@@ -28,18 +23,10 @@ class BandPage extends Component {
 
     this.state = {
       bandAdminId: null,
-      bandCharts: [],
-      bandEvents: [],
-      bandId: props.match.params.bandId,
+      bandId,
       bandInfoArr: [],
-      chartTitle: '',
       displayInstrumentModal: false,
-      displayModal: false,
       editingUserId: null,
-      eventTypes: [
-        { value: 'Gig', text: 'Gig' },
-        { value: 'Rehearsal', text: 'Rehearsal' }
-      ],
       searchMember: '',
       searchMemberResuts: [],
       showCharModal: false,
@@ -57,11 +44,8 @@ class BandPage extends Component {
 
   }
 
-
   componentDidMount() {
     this.getMembers();
-    this.getCharts();
-    this.getEvents();
     this.getInstruments();
   }
 
@@ -189,39 +173,6 @@ class BandPage extends Component {
     this.setState({ membersAsItems: output });
   }
 
-  addChart = (evt) => {
-    evt.preventDefault();
-    const apiURL = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
-    fetch(`${apiURL}/band/upload/pdf/${bandId}?token=${localStorage.token}`, {
-      credentials: 'include',
-      encoding: null,
-      headers: {
-        'Content-Type': 'application/json',
-
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        title: this.state.chartTitle,
-        pdf: this.state.currentPdf
-      })
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.displayChartModal(false);
-    }).catch((err) => {
-      console.log('error', err);
-    })
-  }
-
-  displayChartModal = (show) => {
-    this.setState({ showCharModal: show });
-  }
-
-  displayPreview = (url) => {
-    window.open(url, '_blank');
-  }
-
   filterMembers = (evt) => {
     const value = evt.target.value;
     const url = this.props.apiURL;
@@ -240,54 +191,6 @@ class BandPage extends Component {
         })
       }
     })
-  }
-
-  getCharts = () => {
-    const apiURL = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
-    const url = `${apiURL}/api/band/charts/pdf/${bandId}?token=${localStorage.token}`;
-    fetch(url, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.setState({ bandCharts: results.rows });
-    }).catch((err) => {
-      console.log('error', err);
-    })
-  }
-
-  getEvents = () => {
-    const url = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
-    fetch(`${url}/api/gig/band/${bandId}?token=${localStorage.token}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.setState({ bandEvents: results.rows });
-    })
-  }
-
-  handleInputChange = (val) => {
-    this.setState({ chartTitle: val });
-  }
-
-  handleFileChange = (evt) => {
-    const self = this;
-    // this.setState({ currentPdf: evt.target.files[0].name });
-    let reader = new FileReader();
-    reader.onload = function (event) {
-      self.setState({ currentPdf: event.currentTarget.result });
-    };
-    reader.readAsBinaryString(evt.target.files[0]);
   }
 
   addMember = (evt, user) => {
@@ -395,20 +298,10 @@ class BandPage extends Component {
     })
   }
 
-  toggleModal = () => {
-    this.setState({ displayModal: !this.state.displayModal });
-    this.getEvents();
-  }
-
-  closeModal = () => {
-    this.setState({ displayModal: false })
-  }
-
-  showModal = () => {
-    this.setState({ displayModal: true });
-  }
-
   render() {
+
+    console.log('URL', this.props.match);
+    console.log('STATE', this.state);
 
     const randomCache = Math.floor(Math.random() * 1000000);
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
@@ -424,20 +317,6 @@ class BandPage extends Component {
         )
       });
 
-      const actions = [
-        <FlatButton
-          label="Cancel"
-          primary={true}
-          onClick={() => this.displayChartModal(false)}
-        />,
-        <FlatButton
-          disabled={this.state.messages === ''}
-          label="Submit"
-          primary={true}
-          onClick={(evt) => this.addChart(evt)}
-        />,
-      ];
-
       if (this.state.searchMember.length === 0) {
         searchResultsDisplay = null
       } else if (this.state.searchMember.length > 0 && this.state.searchMemberResuts.length === 0) {
@@ -449,12 +328,9 @@ class BandPage extends Component {
     let bandData;
     let addMembers;
     let editButton;
-    let addButton;
     let deleteButton;
     let confirmDeleteForm;
     let searchMembersLink;
-    let createEventForm;
-    let addCharts;
     let editInstruments;
 
     if (this.state.bandInfoArr.length > 0) {
@@ -493,18 +369,6 @@ class BandPage extends Component {
         :
         null;
 
-        addButton = this.props.loggedInUser.id === bandData.band_admin_id ?
-        // <i className="fa fa-plus add-button" aria-hidden="true" onClick={this.toggleModal}></i>
-        <FloatingActionButton
-          mini={true}
-          secondary={true}
-          onClick={this.showModal}
-          >
-            <ContentAdd />
-          </FloatingActionButton>
-          :
-          null;
-
           confirmDeleteForm = this.props.loggedInUser.id === bandData.band_admin_id
           ?
           <div className={this.state.showDeleteForm ? "delete-band-form" : "hide"}>
@@ -524,28 +388,6 @@ class BandPage extends Component {
           </span>
           :
           null;
-
-          createEventForm = this.props.loggedInUser.id === bandData.band_admin_id ?
-          <EventCreator
-            closeModal={this.closeModal}
-            displayModal={this.state.displayModal}
-            eventTypes={this.state.eventTypes}
-            submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
-          />
-          :
-          null;
-
-          addCharts = this.props.loggedInUser.id === bandData.band_admin_id ?
-          <div>
-            <FloatingActionButton
-              mini={true}
-              secondary={true}
-              onClick={() => this.displayChartModal(true)}
-              >
-                <ContentAdd />
-              </FloatingActionButton>
-            </div>
-            : null;
 
             editInstruments = this.props.loggedInUser.id === bandData.band_admin_id ?
             <div>
@@ -572,7 +414,6 @@ class BandPage extends Component {
 
             }
 
-
             let bandInfo = bandData === undefined ? null :
             <div className="band-info-section">
               <div className="band-details">
@@ -582,43 +423,10 @@ class BandPage extends Component {
                 <h3>{bandData.band_skill_level}</h3>
                 <p>{bandData.band_description}</p>
 
-
-
                 <div className="members">
                   { addMembers }
                 </div>
                 { confirmDeleteForm }
-                <div className="charts">
-                  <h1>Charts</h1>
-                  {addCharts}
-                  {editInstruments}
-                  <List className="band-charts">
-                    {this.state.bandCharts.map((chart, index) => {
-                      return (
-                        <ListItem
-                          className="band-chart"
-                          key={index}
-                          onClick={() => this.displayPreview(chart.url)}
-                          primaryText={chart.chart_title}
-                        />
-                      )
-                    })}
-                  </List>
-                  <Dialog
-                    actions={actions}
-                    modal={false}
-                    open={this.state.showCharModal}
-                    onRequestClose={() => this.displayChartModal(false)}
-                    >
-                      <TextField
-                        floatingLabelText="Chart Title"
-                        floatingLabelStyle={{ textAlign: 'left' }}
-                        onChange={(evt) => this.handleInputChange(evt.target.value)}
-                        value={this.state.chartTitle}
-                      />
-                      <input type="file" accept=".pdf" onChange={(evt) => this.handleFileChange(evt)} />
-                    </Dialog>
-                  </div>
                 </div>
 
               </div>
@@ -627,16 +435,10 @@ class BandPage extends Component {
                 <div className="BandPage">
                   <SideBar
                     links={this.state.sideBarLinks}
+                    url={this.props.match.url}
                   />
                   <div className="band-info">
-                    <Link className="sidebar-link" to={`/band/${this.state.bandId}/chat`}>
-                      Chat
-                    </Link>
-                    <Link className="sidebar-link" to={`/band/${this.state.bandId}/uploads`}>
-                      Uploads
-                    </Link>
                     {bandInfo}
-                    {createEventForm}
                     <BandMemberMgmt
                       adminId={this.state.bandAdminId}
                       assignInstrument={this.assignInstrument.bind(this)}
@@ -644,13 +446,6 @@ class BandPage extends Component {
                       removeMember={this.removeMember}
                       setEditingUser={this.setEditingUser}
                     />
-                    <div className="band-events">
-                      <h2>Gigs and Rehearsals {addButton}</h2>
-                      <EventList
-                        data={this.state.bandEvents}
-                        url="band_event"
-                      />
-                    </div>
                   </div>
                   <InstrumentModal
                     addInstrument={this.addInstrument}

@@ -7,8 +7,9 @@ class SideBar extends Component {
     return (
       <div className="SideBar">
         {this.props.links.map((link, index) => {
+          const linkClassName = link.path === this.props.url ? "sidebar-link active" : "sidebar-link";
           return (
-            <Link key={index} className="sidebar-link" to={link.path}>
+            <Link key={index} className={linkClassName} to={link.path}>
               {link.title}
             </Link>
           )

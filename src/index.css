@@ -54,51 +54,57 @@ button, input, textarea {
     flex-wrap: wrap;
     justify-content: center; }
 
-.BandChat .chat-section {
-  width: 40%;
-  margin: 20px 10% 20px 50%;
-  height: calc(100vh - 300px); }
-  .BandChat .chat-section .chat-window {
-    border: 1px solid #070649;
-    box-sizing: border-box;
-    height: calc(100% - 40px);
-    overflow: scroll;
-    width: 100%;
-    padding: 10px; }
-  .BandChat .chat-section .message-bar {
-    height: 36px;
-    width: 100%;
-    border: 1px solid #070649;
-    font-size: 18px;
-    padding: 10px;
-    box-sizing: border-box;
-    margin: 4px 0 0; }
+.BandCalendar {
+  margin-left: 250px;
+  margin-right: 50px; }
 
-.BandChat .message {
-  padding-top: 20px; }
-  .BandChat .message .date {
-    display: flex;
-    margin-bottom: 10px; }
-    .BandChat .message .date hr {
-      flex-grow: 1; }
-    .BandChat .message .date span {
-      margin: auto 10px; }
-  .BandChat .message .time {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px; }
-    .BandChat .message .time > div {
+.BandChat {
+  margin-left: 250px;
+  margin-right: 50px; }
+  .BandChat .chat-section {
+    width: 100%;
+    margin: 20px 0;
+    height: calc(100vh - 150px); }
+    .BandChat .chat-section .chat-window {
+      border: 1px solid #070649;
+      box-sizing: border-box;
+      height: calc(100% - 40px);
+      overflow: scroll;
+      width: 100%;
+      padding: 10px; }
+    .BandChat .chat-section .message-bar {
+      height: 48px;
+      width: 100%;
+      border: 1px solid #070649;
+      font-size: 18px;
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 4px 0 0; }
+  .BandChat .message {
+    padding-top: 20px; }
+    .BandChat .message .date {
       display: flex;
-      align-items: center; }
-    .BandChat .message .time img {
-      width: 30px;
-      height: 30px;
-      border-radius: 5px;
-      margin-right: 10px; }
-    .BandChat .message .time span {
-      color: #999999; }
-  .BandChat .message .hide {
-    display: none; }
+      margin-bottom: 10px; }
+      .BandChat .message .date hr {
+        flex-grow: 1; }
+      .BandChat .message .date span {
+        margin: auto 10px; }
+    .BandChat .message .time {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px; }
+      .BandChat .message .time > div {
+        display: flex;
+        align-items: center; }
+      .BandChat .message .time img {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        margin-right: 10px; }
+      .BandChat .message .time span {
+        color: #999999; }
+    .BandChat .message .hide {
+      display: none; }
 
 .BandCreateForm form {
   width: 80%;
@@ -232,7 +238,7 @@ button, input, textarea {
   flex-wrap: wrap; }
   .BandPage .band-info {
     text-align: left;
-    flex-basis: 100%;
+    flex-basis: 80%;
     display: flex;
     justify-content: space-around; }
     .BandPage .band-info .add-button {
@@ -356,31 +362,32 @@ button, input, textarea {
   .BandPageBrowseMusicians h1 {
     margin-bottom: 30px; }
 
-.BandUploads .charts {
-  display: flex;
-  align-items: stretch;
-  flex-wrap: wrap; }
-
-.BandUploads .add-chart {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #B8B7D5; }
-
-.BandUploads .band-chart {
-  width: 150px;
-  box-shadow: 2px 2px 10px black;
-  color: #070649;
-  margin: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-  text-align: center;
-  cursor: pointer; }
-  .BandUploads .band-chart h2 {
-    font-size: 14px; }
-  .BandUploads .band-chart img {
-    width: 80%; }
+.BandUploads {
+  margin-left: 250px;
+  margin-right: 50px; }
+  .BandUploads .charts {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap; }
+  .BandUploads .add-chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #B8B7D5; }
+  .BandUploads .band-chart {
+    width: 150px;
+    box-shadow: 2px 2px 10px black;
+    color: #070649;
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer; }
+    .BandUploads .band-chart h2 {
+      font-size: 14px; }
+    .BandUploads .band-chart img {
+      width: 80%; }
 
 .BaseLayout {
   display: flex;
@@ -1528,6 +1535,29 @@ button, input, textarea {
     padding: 0; }
     .ScrollBox ul li {
       list-style: none; }
+
+.SideBar {
+  position: absolute;
+  width: 200px;
+  background-color: #555555;
+  left: 0;
+  top: 0;
+  padding: 100px 0;
+  box-sizing: border-box;
+  height: 100vh; }
+  .SideBar a {
+    color: #FFFFFF;
+    display: block;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 200; }
+    .SideBar a:hover {
+      background-color: #222222; }
+  .SideBar .active {
+    background-color: #9A6197; }
+    .SideBar .active:hover {
+      background-color: #894586; }
 
 .Slider {
   display: flex;

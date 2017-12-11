@@ -8,19 +8,34 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {List, ListItem} from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import SideBar from './SideBar';
 import TextField from 'material-ui/TextField';
 
 class BandUploads extends Component {
 
-  state = {
-    bandAdminId: null,
-    bandCharts: [],
-    bandInfoArr: [],
-    chartFilter: -1,
-    charTitle: '',
-    currentPDF: null,
-    currentPdfInstrumentId: -1,
-    showCharModal: false,
+  constructor(props) {
+    super(props);
+
+    const bandId = props.match.params.bandId;
+
+    this.state = {
+      bandAdminId: null,
+      bandCharts: [],
+      bandInfoArr: [],
+      chartFilter: -1,
+      charTitle: '',
+      currentPDF: null,
+      currentPdfInstrumentId: -1,
+      showCharModal: false,
+      sideBarLinks: [
+        { title: 'Band Info', path: `/band/${bandId}` },
+        { title: 'Dashboard', path: `/band/${bandId}/dashboard` },
+        { title: 'Calendar', path: `/band/${bandId}/calendar` },
+        { title: 'Uploads', path: `/band/${bandId}/uploads` },
+        { title: 'Chat', path: `/band/${bandId}/chat` }
+      ],
+    }
+
   }
 
   componentDidMount() {
@@ -220,6 +235,11 @@ class BandUploads extends Component {
 
     return (
       <div className="BandUploads">
+
+        <SideBar
+          links={this.state.sideBarLinks}
+          url={this.props.match.url}
+        />
 
         <SelectField
           floatingLabelText="Filter By Instrument"

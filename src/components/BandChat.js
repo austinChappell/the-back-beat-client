@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import SideBar from './SideBar';
+
 class BandChat extends Component {
 
   constructor(props) {
     super(props);
+
+    const bandId = props.match.params.bandId;
 
     this.state = {
       bandAdminId: null,
@@ -12,7 +16,14 @@ class BandChat extends Component {
       bandInfoArr: [],
       currentMessage: '',
       members: [],
-      messages: []
+      messages: [],
+      sideBarLinks: [
+        { title: 'Band Info', path: `/band/${bandId}` },
+        { title: 'Dashboard', path: `/band/${bandId}/dashboard` },
+        { title: 'Calendar', path: `/band/${bandId}/calendar` },
+        { title: 'Uploads', path: `/band/${bandId}/uploads` },
+        { title: 'Chat', path: `/band/${bandId}/chat` }
+      ],
     }
 
   }
@@ -114,6 +125,10 @@ class BandChat extends Component {
 
     return (
       <div className="BandChat">
+        <SideBar
+          links={this.state.sideBarLinks}
+          url={this.props.match.url}
+        />
         <section className="chat-section">
           <div className="chat-window" ref="chatWindow">
             {this.state.messages.map((message, index) => {

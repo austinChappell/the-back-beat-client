@@ -1,8 +1,10 @@
 .BandChat {
+  margin-left: 250px;
+  margin-right: 50px;
   .chat-section {
-    width: 40%;
-    margin: 20px 10% 20px 50%;
-    height: calc(100vh - 300px);
+    width: 100%;
+    margin: 20px 0;
+    height: calc(100vh - 150px);
     .chat-window {
       border: 1px solid $color-primary;
       box-sizing: border-box;
@@ -12,7 +14,7 @@
       padding: 10px;
     }
     .message-bar {
-      height: 36px;
+      height: 48px;
       width: 100%;
       border: 1px solid $color-primary;
       font-size: 18px;

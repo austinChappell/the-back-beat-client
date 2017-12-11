@@ -6,8 +6,10 @@ import store from '../store/';
 import {indigo900, purple400} from 'material-ui/styles/colors';
 import Activate from './Activate';
 import ActivateInstructions from './ActivateInstructions';
+import BandCalendar from './BandCalendar';
 import BandChat from './BandChat';
 import BandCreateForm from './BandCreateForm';
+import BandDashboard from './BandDashboard';
 import BandUploads from './BandUploads';
 import EventPage from './EventPage';
 import BandPage from './BandPage';
@@ -73,7 +75,9 @@ class App extends Component {
                   <PrivateRoute path="/profile/:username" component={Profile} />
                   <PrivateRoute path="/band/create" component={BandCreateForm} />
                   <PrivateRoute path="/band/:bandId/edit" component={BandCreateForm} />
+                  <PrivateRoute path="/band/:bandId/calendar" component={BandCalendar} />
                   <PrivateRoute path="/band/:bandId/chat" component={BandChat} />
+                  <PrivateRoute path="/band/:bandId/dashboard" component={BandDashboard} />
                   <PrivateRoute path="/band/:bandId/uploads" component={BandUploads} />
                   <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
                   <PrivateRoute path="/band/:bandId" component={BandPage} />

@@ -1,0 +1,27 @@
+.SideBar {
+  position: absolute;
+  width: 200px;
+  background-color: #555555;
+  a {
+    color: $light-font;
+    display: block;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 200;
+    &:hover {
+      background-color: #222222;
+    }
+  }
+  .active {
+    background-color: $color-tertiary;
+    &:hover {
+      background-color: $color-tertiary-hover;
+    }
+  }
+  left: 0;
+  top: 0;
+  padding: 100px 0;
+  box-sizing: border-box;
+  height: 100vh;
+}
