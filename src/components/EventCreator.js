@@ -246,6 +246,7 @@ class EventCreator extends Component {
                 <DatePicker
                   onChange={this.handleNewDateChange}
                   floatingLabelText="Event Date"
+                  firstDayOfWeek={0}
                   DatePicker={DatePickerDialog}
                   TimePicker={TimePickerDialog}
                 />
