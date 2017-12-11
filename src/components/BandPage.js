@@ -12,6 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import InstrumentModal from './InstrumentModal';
 import {List, ListItem} from 'material-ui/List';
 import Modal from './Modal';
+import SideBar from './SideBar';
 import TextField from 'material-ui/TextField';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -22,6 +23,8 @@ class BandPage extends Component {
 
   constructor(props) {
     super(props);
+
+    const bandId = props.match.params.bandId;
 
     this.state = {
       bandAdminId: null,
@@ -40,6 +43,13 @@ class BandPage extends Component {
       searchMember: '',
       searchMemberResuts: [],
       showCharModal: false,
+      sideBarLinks: [
+        { title: 'Band Info', path: `/band/${bandId}` },
+        { title: 'Dashboard', path: `/band/${bandId}/dashboard` },
+        { title: 'Calendar', path: `/band/${bandId}/calendar` },
+        { title: 'Uploads', path: `/band/${bandId}/uploads` },
+        { title: 'Chat', path: `/band/${bandId}/chat` }
+      ],
       members: [],
       membersAsItems: [],
       showDeleteForm: false,
@@ -615,6 +625,9 @@ class BandPage extends Component {
 
               return (
                 <div className="BandPage">
+                  <SideBar
+                    links={this.state.sideBarLinks}
+                  />
                   <div className="band-info">
                     <Link className="sidebar-link" to={`/band/${this.state.bandId}/chat`}>
                       Chat
