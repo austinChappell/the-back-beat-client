@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import BigCalendar from 'react-big-calendar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import EventCreator from './EventCreator';
 import EventList from './EventList';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import moment from 'moment';
 import SideBar from './SideBar';
+
+moment().format();
+
+BigCalendar.setLocalizer(
+  BigCalendar.momentLocalizer(moment)
+);
 
 class BandCalendar extends Component {
 
@@ -45,6 +53,26 @@ class BandCalendar extends Component {
     })
   }
 
+  EventAgenda = ({ event }) => {
+    return <span>
+      <em style={{ color: '#9A6197', fontWeight: '600' }}>{event.title}</em>
+      <p style={{ fontWeight: '100' }}>{ event.desc }</p>
+    </span>
+  }
+
+  eventStyle = (event, start, end, isSelected) => {
+    let backgroundColor = '#070649';
+    if (event.event_type === 'Rehearsal') {
+      backgroundColor = '#9A6197';
+    }
+    const style = {
+      backgroundColor,
+    };
+    return {
+      style
+    };
+  }
+
   getEvents = () => {
     const url = this.props.apiURL;
     const bandId = this.props.match.params.bandId;
@@ -57,7 +85,16 @@ class BandCalendar extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      this.setState({ bandEvents: results.rows });
+      const events = results.rows;
+      events.forEach((event) => {
+        let d = new Date(event.event_date_time);
+        const endTime = new Date(d.getTime() + (60*60*1000));
+        event.title = event.event_title;
+        event.desc = event.event_details;
+        event.start = d;
+        event.end = endTime;
+      })
+      this.setState({ bandEvents: events });
     })
   }
 
@@ -78,11 +115,17 @@ class BandCalendar extends Component {
     })
   }
 
+  previewEvent = (event) => {
+    this.setState({ currentEvent: event });
+  }
+
   showModal = () => {
     this.setState({ displayModal: true });
   }
 
   render() {
+
+    console.log('STATE', this.state);
 
     let addButton;
     let createEventForm;
@@ -119,6 +162,26 @@ class BandCalendar extends Component {
           url={this.props.match.url}
         />
         {createEventForm}
+        <BigCalendar
+          selectable
+          events={this.state.bandEvents}
+          components={{
+            agenda: {
+              event: this.EventAgenda
+            }
+          }}
+          defaultView='month'
+          scrollToTime={new Date(1970, 1, 1, 6)}
+          defaultDate={new Date()}
+          eventPropGetter={this.eventStyle}
+          style={{ height: '500px' }}
+          onSelectEvent={event => this.previewEvent(event)}
+          onSelectSlot={(slotInfo) => alert(
+            `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
+            `\nend: ${slotInfo.end.toLocaleString()}` +
+            `\naction: ${slotInfo.action}`
+          )}
+        />
         <div className="band-events">
           <h2>Gigs and Rehearsals {addButton}</h2>
           <EventList
