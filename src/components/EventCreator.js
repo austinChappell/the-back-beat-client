@@ -178,6 +178,9 @@ class EventCreator extends Component {
 
   render() {
 
+    console.log('EVENT CREATOR STATE', this.state);
+    console.log('EVENT CREATOR PROPS', this.props);
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -190,8 +193,6 @@ class EventCreator extends Component {
         onClick={(evt) => this.submitForm(evt)}
       />,
     ];
-
-    console.log('STATE', this.state);
 
     return (
       <div className="EventCreator">

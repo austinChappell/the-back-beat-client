@@ -29,6 +29,7 @@ class BandCalendar extends Component {
       bandInfoArr: [],
       currentEvent: null,
       displayModal: false,
+      eventPendingDate: {},
       eventTypes: [
         { value: 'Gig', text: 'Gig' },
         { value: 'Rehearsal', text: 'Rehearsal' }
@@ -132,7 +133,9 @@ class BandCalendar extends Component {
 
   addEvent = (evt) => {
     console.log('event', evt);
-    this.showModal();
+    this.setState({ eventPendingDate: evt }, () => {
+      this.showModal();
+    });
   }
 
   render() {
@@ -149,6 +152,7 @@ class BandCalendar extends Component {
         closeModal={this.closeModal}
         displayModal={this.state.displayModal}
         eventTypes={this.state.eventTypes}
+        pendingDate={this.state.eventPendingDate}
         submitQuery={`api/gig/band/${this.props.match.params.bandId}`}
       />
       :
@@ -204,15 +208,16 @@ class BandCalendar extends Component {
           //   `\nend: ${slotInfo.end.toLocaleString()}` +
           //   `\naction: ${slotInfo.action}`
           // )}
-          onSelectSlot={(evt) => this.addEvent(evt)}
+          // onSelectSlot={(evt) => this.addEvent(evt)}
         />
-        <div className="band-events">
+        {addButton}
+        {/* <div className="band-events">
           <h2>Gigs and Rehearsals {addButton}</h2>
           <EventList
             data={this.state.bandEvents}
             url="band_event"
           />
-        </div>
+        </div> */}
         <Previewer
           closePreviewer={this.closePreviewer}
           display={this.state.previewEvent}
