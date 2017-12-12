@@ -62,6 +62,10 @@ button, input, textarea {
   outline: none;
 }
 
+.hide {
+  display: none;
+}
+
 @import './BandBox';
 @import './BandCalendar';
 @import './BandChat';
@@ -97,6 +101,7 @@ button, input, textarea {
 @import './Navbar';
 @import './NewsFeed';
 @import './PerformedWithPage';
+@import './Previewer';
 @import './Profile';
 @import './ProfileConnections';
 @import './ProfileContent';

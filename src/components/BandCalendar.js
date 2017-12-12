@@ -7,6 +7,7 @@ import EventCreator from './EventCreator';
 import EventList from './EventList';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import moment from 'moment';
+import Previewer from './Previewer';
 import SideBar from './SideBar';
 
 moment().format();
@@ -26,11 +27,13 @@ class BandCalendar extends Component {
       bandAdminId: null,
       bandEvents: [],
       bandInfoArr: [],
+      currentEvent: null,
       displayModal: false,
       eventTypes: [
         { value: 'Gig', text: 'Gig' },
         { value: 'Rehearsal', text: 'Rehearsal' }
       ],
+      previewEvent: false,
       sideBarLinks: [
         { title: 'Band Info', path: `/band/${bandId}` },
         { title: 'Dashboard', path: `/band/${bandId}/dashboard` },
@@ -53,8 +56,12 @@ class BandCalendar extends Component {
     })
   }
 
+  closePreviewer = () => {
+    this.setState({ previewEvent: false });
+  }
+
   EventAgenda = ({ event }) => {
-    return <span>
+    return <span style={{ color: '#ffffff' }}>
       <em style={{ color: '#9A6197', fontWeight: '600' }}>{event.title}</em>
       <p style={{ fontWeight: '100' }}>{ event.desc }</p>
     </span>
@@ -116,11 +123,16 @@ class BandCalendar extends Component {
   }
 
   previewEvent = (event) => {
-    this.setState({ currentEvent: event });
+    this.setState({ currentEvent: event, previewEvent: true });
   }
 
   showModal = () => {
     this.setState({ displayModal: true });
+  }
+
+  addEvent = (evt) => {
+    console.log('event', evt);
+    this.showModal();
   }
 
   render() {
@@ -155,6 +167,17 @@ class BandCalendar extends Component {
 
     }
 
+    const currentEventDetails = this.state.currentEvent === null ? null :
+    <div className="current-event-details">
+      <h1>{this.state.currentEvent.event_title}</h1>
+      <h2>{this.state.currentEvent.event_type}</h2>
+      <p>{this.state.currentEvent.desc}</p>
+      <p>{this.state.currentEvent.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+      <p>{this.state.currentEvent.start.toLocaleDateString()}</p>
+      <p>{this.state.currentEvent.event_city}</p>
+      <p>{this.state.currentEvent.event_location}</p>
+    </div>
+
     return (
       <div className="BandCalendar">
         <SideBar
@@ -176,11 +199,12 @@ class BandCalendar extends Component {
           eventPropGetter={this.eventStyle}
           style={{ height: '500px' }}
           onSelectEvent={event => this.previewEvent(event)}
-          onSelectSlot={(slotInfo) => alert(
-            `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-            `\nend: ${slotInfo.end.toLocaleString()}` +
-            `\naction: ${slotInfo.action}`
-          )}
+          // onSelectSlot={(slotInfo) => alert(
+          //   `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
+          //   `\nend: ${slotInfo.end.toLocaleString()}` +
+          //   `\naction: ${slotInfo.action}`
+          // )}
+          onSelectSlot={(evt) => this.addEvent(evt)}
         />
         <div className="band-events">
           <h2>Gigs and Rehearsals {addButton}</h2>
@@ -189,6 +213,12 @@ class BandCalendar extends Component {
             url="band_event"
           />
         </div>
+        <Previewer
+          closePreviewer={this.closePreviewer}
+          display={this.state.previewEvent}
+        >
+          {currentEventDetails}
+        </Previewer>
       </div>
     )
   }
