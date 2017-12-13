@@ -151,7 +151,8 @@ class BandPage extends Component {
           last_name: member.last_name,
           profile_image_url: member.profile_image_url
         });
-      })
+      });
+      members.sort((a, b) => a.last_name > b.last_name)
       this.membersToItems(members);
       this.setState({ bandInfoArr: results.rows, members });
       this.setState({ bandAdminId: results.rows[0].band_admin_id });
@@ -390,24 +391,12 @@ class BandPage extends Component {
           null;
 
             editInstruments = this.props.loggedInUser.id === bandData.band_admin_id ?
-            <div>
-              <h1>Instrumentation</h1>
-                {this.props.bandInstruments.map((instrument, index) => {
-                  return (
-                    <div
-                      className="instrument-list"
-                      key={index}
-                    >
-                      <p>{instrument.name}</p>
-                    </div>
-                  )
-                })}
-
-              <RaisedButton
-                label="Edit Instrumentation"
-                onClick={() => this.displayInstrumentModal(true)}
-                secondary={true}
-              />
+              <div>
+                <RaisedButton
+                  label="Edit Instrumentation"
+                  onClick={() => this.displayInstrumentModal(true)}
+                  secondary={true}
+                />
               </div>
               :
               null;
@@ -426,6 +415,7 @@ class BandPage extends Component {
                 <div className="members">
                   { addMembers }
                 </div>
+                { editInstruments }
                 { confirmDeleteForm }
                 </div>
 
