@@ -95,12 +95,13 @@ class BandCalendar extends Component {
     }).then((results) => {
       const events = results.rows;
       events.forEach((event) => {
+        console.log('THE EVENT', event);
         let d = new Date(event.event_date_time);
         const endTime = new Date(d.getTime() + (60*60*1000));
         event.title = event.event_title;
         event.desc = event.event_details;
         event.start = d;
-        event.end = endTime;
+        event.end = event.event_end;
       })
       this.setState({ bandEvents: events });
     })
@@ -176,7 +177,7 @@ class BandCalendar extends Component {
       <h1>{this.state.currentEvent.event_title}</h1>
       <h2>{this.state.currentEvent.event_type}</h2>
       <p>{this.state.currentEvent.desc}</p>
-      <p>{this.state.currentEvent.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+      <p>{this.state.currentEvent.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(this.state.currentEvent.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
       <p>{this.state.currentEvent.start.toLocaleDateString()}</p>
       <p>{this.state.currentEvent.event_city}</p>
       <p>{this.state.currentEvent.event_location}</p>

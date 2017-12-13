@@ -108,7 +108,10 @@ class EventCreator extends Component {
     let shortTime = stringTime.slice(16, stringTime.length);
     let stringDateTime = `${shortDate} ${shortTime}`;
     let date = new Date(stringDateTime);
+    const end = new Date(date.getTime() + 60000 * 60 * this.state.eventDuration);
 
+    console.log('start date', date);
+    console.log('end date', end);
 
     fetch(`${url}?token=${localStorage.token}`, {
       credentials: 'include',
@@ -121,7 +124,7 @@ class EventCreator extends Component {
         eventCity: this.state.eventCity,
         eventDateTime: date,
         eventDetails: this.state.eventDetails,
-        eventDuration: this.state.eventDuration,
+        eventEnd: end,
         eventTitle: this.state.eventTitle,
         eventType: this.state.eventTypeSelected,
         eventVenue: this.state.eventVenue,
@@ -151,6 +154,64 @@ class EventCreator extends Component {
     })
   }
 
+  initialize = () => {
+    const mapOptions = {
+      center: {lat: -33.8688, lng: 151.2195},
+      zoom: 13,
+      scrollwheel: false
+    };
+    const map = new google.maps.Map(document.getElementById('map'),
+    mapOptions);
+
+    const input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+
+      // Create the autocomplete helper, and associate it with
+      // an HTML text input box.
+      const autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo('bounds', map);
+
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      const infowindow = new google.maps.InfoWindow();
+      const marker = new google.maps.Marker({
+        map: map
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map, marker);
+      });
+
+      // Get the full place details when the user selects a place from the
+      // list of suggestions.
+      google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        infowindow.close();
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          return;
+        }
+
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
+        }
+
+        // Set the position of the marker using the place ID and location.
+        marker.setPlace(/** @type {!google.maps.Place} */ ({
+          placeId: place.place_id,
+          location: place.geometry.location
+        }));
+        marker.setVisible(true);
+
+        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+        'Place ID: ' + place.place_id + '<br>' +
+        place.formatted_address + '</div>');
+        infowindow.open(map, marker);
+      });
+    }
+
+
   handleChange = (evt, name) => {
     const updateObj = {};
     updateObj[name] = evt.target.value;
@@ -163,12 +224,6 @@ class EventCreator extends Component {
 
   handleClose = (submit) => {
     this.props.closeModal();
-    // this.setState({open: false});
-    // if (submit) {
-    //   console.log('true');
-    // } else {
-    //   console.log('false');
-    // }
   };
 
   handleSelectChange = (evt, index, value) => {
@@ -197,20 +252,7 @@ class EventCreator extends Component {
     return (
       <div className="EventCreator">
 
-        {/* <div className="exit-button-div">
-          <i
-            id="exit-button"
-            className="fa fa-times"
-            onClick={this.props.exitClick}
-            aria-hidden="true"></i>
-        </div>
- */}
         <div className="event-form">
-
-          {/* <Form
-            onSubmit={(evt) => this.submitForm(evt)}
-            submitBtnText={`Add ${this.state.eventType}`}
-            > */}
 
             <Dialog
               title="Create An Event"
@@ -221,14 +263,6 @@ class EventCreator extends Component {
             >
 
               <div className="form-inputs">
-
-                {/* <FormInput
-                  name="eventTitle"
-                  placeholder="Title"
-                  onChange={this.handleInputChange}
-                  type="text"
-                  value={this.state.eventTitle}
-                /> */}
 
                 <TextField
                   floatingLabelText="Title"
@@ -258,41 +292,15 @@ class EventCreator extends Component {
                   onChange={this.handleNewTimeChange}
                 />
 
-
-
-                {/* <DatePicker
-                  name="selectedDate"
-                  onChange={this.handleDateChange}
-                  selected={this.state.startDate}
-                />
-
-                <TimePicker
-                  showSecond={false}
-                  defaultValue={now}
-                  className="xxx"
-                  onChange={this.onTimeChange}
-                  format={format}
-                  use12Hours
-                /> */}
-
-                {/* <FormInput
-                  name="eventDuration"
-                  placeholder="Event Duration (in hours)"
-                  step={1}
-                  min={1}
-                  max={12}
-                  onChange={this.handleInputChange}
+                <TextField
+                  floatingLabelText="Duration (hrs)"
+                  onChange={(evt) => this.handleChange(evt, 'eventDuration')}
+                  min={0}
+                  max={24}
+                  step={0.5}
                   type="number"
                   value={this.state.eventDuration}
-                /> */}
-
-                {/* <TextArea
-                  name="eventDetails"
-                  placeholder="Description"
-                  charLimit={150}
-                  onChange={this.handleInputChange}
-                  value={this.state.eventDetails}
-                /> */}
+                />
 
                 <SelectField
                   floatingLabelText="Type"
@@ -310,14 +318,6 @@ class EventCreator extends Component {
                   })}
                 </SelectField>
 
-{/*
-                <FormSelect
-                  name="eventType"
-                  onChange={this.handleInputChange}
-                  options={this.props.eventTypes}
-                  value={this.state.eventTypeSelected}
-                /> */}
-
                 <TextField
                   floatingLabelText="Venue"
                   onChange={(evt) => this.handleChange(evt, 'eventVenue')}
@@ -328,28 +328,9 @@ class EventCreator extends Component {
                   onChange={(evt) => this.handleChange(evt, 'eventCity')}
                 />
 
-
-                {/* <FormInput
-                  name="eventVenue"
-                  placeholder="Venue"
-                  onChange={this.handleInputChange}
-                  type="text"
-                  value={this.state.eventVenue}
-                />
-
-                <FormInput
-                  name="eventCity"
-                  placeholder="City"
-                  onChange={this.handleInputChange}
-                  type="text"
-                  value={this.state.eventCity}
-                /> */}
-
               </div>
 
             </Dialog>
-
-            {/* </Form> */}
 
         </div>
       </div>
