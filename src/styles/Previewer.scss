@@ -14,4 +14,15 @@
     background-color: white;
     padding: 50px;
   }
-} 
+
+  .header {
+    display: flex;
+    align-items: center;
+    h1 {
+      flex-grow: 1;
+    }
+    a {
+      @include button($color-primary, white);
+    }
+  }
+}

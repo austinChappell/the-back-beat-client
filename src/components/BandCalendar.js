@@ -165,6 +165,7 @@ class BandCalendar extends Component {
       <FloatingActionButton
         mini={true}
         secondary={true}
+        style={{ marginBottom: '20px' }}
         onClick={this.showModal}
         >
           <ContentAdd />
@@ -174,9 +175,23 @@ class BandCalendar extends Component {
 
     }
 
+    function convertDate(date) {
+
+      const arr = date.toISOString().split('T');
+      let day = arr[0].split('-').join('');
+      let time = arr[1].split('.')[0].split(':').join('');
+
+      return `${day}T${time}Z`;
+
+    }
+
+
     const currentEventDetails = this.state.currentEvent === null ? null :
     <div className="current-event-details">
-      <h1>{this.state.currentEvent.event_title}</h1>
+      <div className="header">
+        <h1>{this.state.currentEvent.event_title}</h1>
+        <a href={`https://www.google.com/calendar/render?action=TEMPLATE&text=${this.state.currentEvent.event_title}&dates=${convertDate(this.state.currentEvent.start)}/${convertDate(new Date(this.state.currentEvent.end))}&details=${this.state.currentEvent.desc}&location=${this.state.currentEvent.event_address}&sf=true&output=xml`} target="_blank">Add To Calendar</a>
+      </div>
       <h2>{this.state.currentEvent.event_type}</h2>
       <p>{this.state.currentEvent.desc}</p>
       <p>{this.state.currentEvent.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(this.state.currentEvent.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
@@ -200,6 +215,7 @@ class BandCalendar extends Component {
           url={this.props.match.url}
         />
         {createEventForm}
+        {addButton}
         <BigCalendar
           selectable
           events={this.state.bandEvents}
@@ -221,7 +237,6 @@ class BandCalendar extends Component {
           // )}
           // onSelectSlot={(evt) => this.addEvent(evt)}
         />
-        {addButton}
         {/* <div className="band-events">
           <h2>Gigs and Rehearsals {addButton}</h2>
           <EventList

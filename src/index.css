@@ -59,7 +59,8 @@ button, input, textarea {
 
 .BandCalendar {
   margin-left: 250px;
-  margin-right: 50px; }
+  margin-right: 50px;
+  margin-top: -30px; }
 
 .BandChat {
   margin-left: 250px;
@@ -401,7 +402,8 @@ button, input, textarea {
   justify-content: space-between; }
   .BaseLayout .children {
     flex-grow: 1;
-    padding-top: 80px; }
+    padding-top: 80px;
+    align-items: flex-start; }
 
 .BrowseBox {
   text-align: center; }
@@ -1457,6 +1459,23 @@ button, input, textarea {
     margin: 10vh auto;
     background-color: white;
     padding: 50px; }
+  .Previewer .header {
+    display: flex;
+    align-items: center; }
+    .Previewer .header h1 {
+      flex-grow: 1; }
+    .Previewer .header a {
+      border: 3px solid #070649;
+      text-decoration: none;
+      background-color: transparent;
+      color: #070649;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 8px; }
+      .Previewer .header a:hover {
+        background-color: #070649;
+        color: white; }
 
 .Profile {
   background-color: white;
