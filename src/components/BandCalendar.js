@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import ClientKeys from '../data/ClientKeys';
+
 import BigCalendar from 'react-big-calendar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import EventCreator from './EventCreator';
@@ -179,8 +181,16 @@ class BandCalendar extends Component {
       <p>{this.state.currentEvent.desc}</p>
       <p>{this.state.currentEvent.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(this.state.currentEvent.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
       <p>{this.state.currentEvent.start.toLocaleDateString()}</p>
-      <p>{this.state.currentEvent.event_city}</p>
+      <p>{this.state.currentEvent.event_address}</p>
       <p>{this.state.currentEvent.event_location}</p>
+      <iframe
+        width={400}
+        height={350}
+        frameborder={0}
+        style={{ border: '0'}}
+        src={`https://www.google.com/maps/embed/v1/place?key=${ClientKeys.google_maps}&q=${this.state.currentEvent.event_address}`}
+        allowfullscreen>
+      </iframe>
     </div>
 
     return (

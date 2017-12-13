@@ -1,5 +1,6 @@
 .Previewer {
   position: fixed;
+  overflow: scroll;
   top: 0;
   bottom: 0;
   left: 0;
@@ -9,8 +10,8 @@
   .modal {
     width: 70%;
     max-width: 600px;
-    margin: 20vh auto;
+    margin: 10vh auto;
     background-color: white;
     padding: 50px;
   }
-}
+} 

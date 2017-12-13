@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import DatePicker from 'react-datepicker';
 import moment from 'moment';
-// import TimePicker from 'rc-time-picker';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
+
+import GooglePlaceAutocomplete from './GooglePlaceAutocomplete';
 
 import Form from './Form';
 import FormInput from './FormInput';
@@ -31,7 +31,7 @@ const now = moment().hour(0).minute(0);
 class EventCreator extends Component {
 
   state = {
-    eventCity: '',
+    eventAddress: '',
     eventDate: '',
     eventDetails: '',
     eventDuration: 2,
@@ -121,7 +121,7 @@ class EventCreator extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
-        eventCity: this.state.eventCity,
+        eventAddress: this.state.eventAddress,
         eventDateTime: date,
         eventDetails: this.state.eventDetails,
         eventEnd: end,
@@ -154,64 +154,6 @@ class EventCreator extends Component {
     })
   }
 
-  initialize = () => {
-    const mapOptions = {
-      center: {lat: -33.8688, lng: 151.2195},
-      zoom: 13,
-      scrollwheel: false
-    };
-    const map = new google.maps.Map(document.getElementById('map'),
-    mapOptions);
-
-    const input = /** @type {HTMLInputElement} */(
-      document.getElementById('pac-input'));
-
-      // Create the autocomplete helper, and associate it with
-      // an HTML text input box.
-      const autocomplete = new google.maps.places.Autocomplete(input);
-      autocomplete.bindTo('bounds', map);
-
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-      const infowindow = new google.maps.InfoWindow();
-      const marker = new google.maps.Marker({
-        map: map
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map, marker);
-      });
-
-      // Get the full place details when the user selects a place from the
-      // list of suggestions.
-      google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        infowindow.close();
-        const place = autocomplete.getPlace();
-        if (!place.geometry) {
-          return;
-        }
-
-        if (place.geometry.viewport) {
-          map.fitBounds(place.geometry.viewport);
-        } else {
-          map.setCenter(place.geometry.location);
-          map.setZoom(17);
-        }
-
-        // Set the position of the marker using the place ID and location.
-        marker.setPlace(/** @type {!google.maps.Place} */ ({
-          placeId: place.place_id,
-          location: place.geometry.location
-        }));
-        marker.setVisible(true);
-
-        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-        'Place ID: ' + place.place_id + '<br>' +
-        place.formatted_address + '</div>');
-        infowindow.open(map, marker);
-      });
-    }
-
-
   handleChange = (evt, name) => {
     const updateObj = {};
     updateObj[name] = evt.target.value;
@@ -231,6 +173,16 @@ class EventCreator extends Component {
     this.setState({ eventTypeSelected: value });
   }
 
+  onClickLocationFct = (selectedData, searchedText, selectedDataIndex) => {
+    console.log('SELECTED DATA', selectedData);
+    console.log('SEARCHED TEXT', searchedText);
+    console.log('SELECTED DATA INDEX', selectedDataIndex);
+  }
+
+  addressChange = (address) => {
+    this.setState({ eventAddress: address })
+  }
+
   render() {
 
     console.log('EVENT CREATOR STATE', this.state);
@@ -248,6 +200,12 @@ class EventCreator extends Component {
         onClick={(evt) => this.submitForm(evt)}
       />,
     ];
+
+    const inputProps = {
+      value: this.state.eventAddress,
+      onChange: this.addressChange
+    }
+
 
     return (
       <div className="EventCreator">
@@ -323,9 +281,12 @@ class EventCreator extends Component {
                   onChange={(evt) => this.handleChange(evt, 'eventVenue')}
                 />
 
-                <TextField
-                  floatingLabelText="City"
-                  onChange={(evt) => this.handleChange(evt, 'eventCity')}
+                <GooglePlaceAutocomplete
+                  floatingLabelText="Address"
+                  searchText={this.state.eventAddress}
+                  onChange={(evt) => this.handleChange(evt, 'eventAddress')}
+                  onNewRequest={this.onClickLocationFct}
+                  name={'location'}
                 />
 
               </div>
