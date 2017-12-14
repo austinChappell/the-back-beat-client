@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from "socket.io-client";
 
 import MessageDisplay from './MessageDisplay';
 import MessageHistorySideBar from './MessageHistorySideBar';
@@ -7,40 +8,62 @@ import MessageSearchBar from './MessageSearchBar';
 
 class MessagePage extends Component {
 
-  state = {
-    currentRecipient: {},
-    fetchHistory: true,
-    messageHistory: [],
-    searchBarActive: false,
-    searchValue: '',
-    users: []
-  }
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    // this.props.clearCurrentRecipient();
-    const url = this.props.apiURL;
-    const fetchAllMessages = () => {
-      fetch(`${url}/messages/all?token=${localStorage.token}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-
-        }
-      }).then((response) => {
-        return response.json();
-      }).then((results) => {
-        this.props.setAllMessages(results.rows);
-      })
+    this.state = {
+      currentRecipient: {},
+      fetchHistory: true,
+      messageHistory: [],
+      searchBarActive: false,
+      searchValue: '',
+      users: []
     }
 
-    fetchAllMessages();
-    this.stopFetch = setInterval(() => {
-      fetchAllMessages();
+    this.socket = io(props.apiURL);
+
+    this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
+      this.fetchAllMessages();
       this.getMessageHistory();
       if (this.props.currentRecipient) {
         this.filterMessages();
       }
-    }, 1000);
+    })
+
+  }
+
+
+  componentDidMount() {
+    // this.props.clearCurrentRecipient();
+
+    this.fetchAllMessages();
+    // this.stopFetch = setInterval(() => {
+    // this.fetchAllMessages();
+    // }, 1000);
+  }
+
+  componentWillReceiveProps() {
+    this.fetchAllMessages();
+  }
+
+  fetchAllMessages = () => {
+    const apiURL = this.props.apiURL;
+
+    fetch(`${apiURL}/messages/all?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setAllMessages(results.rows);
+    })
+    this.getMessageHistory();
+    if (this.props.currentRecipient) {
+      this.filterMessages();
+    }
   }
 
   componentWillUnmount() {

@@ -29,7 +29,8 @@
     "react-scripts": "1.0.13",
     "react-tooltip": "^3.4.0",
     "react-youtube": "^7.4.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "socket.io-client": "^2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

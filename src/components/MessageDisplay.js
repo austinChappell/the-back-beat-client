@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from "socket.io-client";
 
 class MessageDisplay extends Component {
 
-  state = {
-    numOfSelectedMessages: 0
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      numOfSelectedMessages: 0
+    }
+
+    this.socket = io(props.apiURL);
+
   }
+
 
   componentDidUpdate() {
     // this.refs.messageBox.scrollTop = 200;
@@ -44,6 +53,7 @@ class MessageDisplay extends Component {
       console.log('RESULTS', results.rows);
       // this.filterMessages(this.props.currentRecipient);
       this.props.clearCurrentMessageText();
+      this.socket.emit('SEND_INDIVIDUAL_MESSAGE');
     })
   };
 

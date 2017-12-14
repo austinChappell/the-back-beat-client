@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from "socket.io-client";
 
 import SideBar from './SideBar';
 
@@ -25,6 +26,12 @@ class BandChat extends Component {
         { title: 'Chat', path: `/band/${bandId}/chat` }
       ],
     }
+
+    this.socket = io(this.props.apiURL);
+
+    this.socket.on('RECEIVE_MESSAGE', () => {
+      this.getMessages();
+    })
 
   }
 
@@ -112,9 +119,12 @@ class BandChat extends Component {
     }).then(() => {
       this.getMessages();
       this.setState({ currentMessage: '' });
+      this.socket.emit('SEND_MESSAGE');
     }).catch((err) => {
       console.log('sendMessage error', err);
     })
+
+
   }
 
   render() {
