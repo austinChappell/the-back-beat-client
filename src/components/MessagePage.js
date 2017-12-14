@@ -32,14 +32,8 @@ class MessagePage extends Component {
 
   }
 
-
   componentDidMount() {
-    // this.props.clearCurrentRecipient();
-
     this.fetchAllMessages();
-    // this.stopFetch = setInterval(() => {
-    // this.fetchAllMessages();
-    // }, 1000);
   }
 
   componentWillReceiveProps() {
@@ -64,12 +58,6 @@ class MessagePage extends Component {
     if (this.props.currentRecipient) {
       this.filterMessages();
     }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.stopFetch);
-    // this.props.clearCurrentRecipient();
-    // this.props.clearSelectedMessages();
   }
 
   getMessageHistory = () => {

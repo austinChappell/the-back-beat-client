@@ -2,15 +2,26 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { connect } from 'react-redux';
+import io from "socket.io-client";
 
 import ReactTooltip from 'react-tooltip';
 import SiteSearch from './SiteSearch';
 
 class Navbar extends Component {
 
-  state = {
-    numOfUnreadMessages: 0,
-    performerRequests: false
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      performerRequests: false
+    }
+
+    this.socket = io(props.apiURL);
+
+    this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
+      this.getUnreadMessages();
+    })
+
   }
 
   componentDidMount() {
@@ -68,27 +79,18 @@ class Navbar extends Component {
   getUnreadMessages = () => {
     const url = this.props.apiURL;
 
-    const fetchData = () => {
+    fetch(`${url}/messages/unread?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
 
-      fetch(`${url}/messages/unread?token=${localStorage.token}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-
-        }
-      }).then((response) => {
-        return response.json();
-      }).then((results) => {
-        this.setState({ numOfUnreadMessages: results.rows.length });
-      })
-
-    }
-
-    fetchData();
-
-    this.stopMsgFetch = setInterval(() => {
-      fetchData();
-    }, 5000);
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.updateNumOfUnreadMsgs(results.rows.length);
+      // this.setState({ numOfUnreadMessages: results.rows.length });
+    })
 
   }
 
@@ -116,10 +118,6 @@ class Navbar extends Component {
     this.props.logout();
   }
 
-  showNotifications = () => {
-    alert('notification');
-  }
-
   render() {
 
     let leftNavBarItems = this.props.authorized ?
@@ -145,7 +143,7 @@ class Navbar extends Component {
       </NavLink>
       <NavLink className="relative-navlink" to="/messages" data-tip="Messages">
         <i className="fa fa-envelope" aria-hidden="true"></i>
-        <i className={this.state.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
+        <i className={this.props.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>
       <NavLink className="relative-navlink" to="/performed_with" data-tip="Performers">
         <i className="fa fa-music" aria-hidden="true"></i>
@@ -177,6 +175,7 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     authorized: state.authorized,
     loggedInUser: state.loggedInUser,
+    numOfUnreadMessages: state.numOfUnreadMessages,
     showUserAuthForm: state.showUserAuthForm,
     userAuthType: state.userAuthType,
     username: state.currentUsername
@@ -192,6 +191,11 @@ const mapDispatchToProps = (dispatch) => {
 
     toggleUserAuthForm: () => {
       const action = { type: 'TOGGLE_USER_AUTH_FORM', userAuthType: 'Login' };
+      dispatch(action);
+    },
+
+    updateNumOfUnreadMsgs: (num) => {
+      const action = { type: 'UPDATE_NUM_OF_UNREAD_MSGS', num };
       dispatch(action);
     },
 

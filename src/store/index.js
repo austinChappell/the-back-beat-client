@@ -17,6 +17,7 @@ const initialState = {
   authToken: 'noToken',
   authorized: false,
   bandInstruments: [],
+  numOfUnreadMessages: 0,
   selectedInstrumentIds: [],
   showUserAuthForm: false,
   userAuthType: '',
@@ -155,6 +156,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { currentMessage: action.val });
     case 'UPDATE_INSTRUMENTS':
       return Object.assign({}, state, { currentUserInstruments: action.instruments });
+    case 'UPDATE_NUM_OF_UNREAD_MSGS':
+      return Object.assign({}, state, { numOfUnreadMessages: action.num });
     case 'UPDATE_ONBOARDING_STAGE':
       return Object.assign({}, state, { onboardingStage: action.stage });
     case 'UPDATE_SELECTED_INSTRUMENT_IDS':

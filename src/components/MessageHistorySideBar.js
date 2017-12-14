@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from "socket.io-client";
 
 import Avatar from 'material-ui/Avatar';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
@@ -8,9 +9,23 @@ import Subheader from 'material-ui/Subheader';
 
 class MessageHistorySideBar extends Component {
 
-  state = {
-    fetchHistory: true,
-    messageHistory: []
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fetchHistory: true,
+      messageHistory: []
+    }
+
+    this.socket = io(props.apiURL);
+
+    this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
+      this.getMessageHistory();
+      setTimeout(() => {
+        this.getUnreadMessages();
+      })
+    })
+
   }
 
   componentDidMount() {
@@ -20,6 +35,24 @@ class MessageHistorySideBar extends Component {
 
   componentWillUnmount() {
     clearInterval(this.stopFetch);
+  }
+
+  getUnreadMessages = () => {
+    const url = this.props.apiURL;
+
+    fetch(`${url}/messages/unread?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.updateNumOfUnreadMsgs(results.rows.length);
+      // this.setState({ numOfUnreadMessages: results.rows.length });
+    })
+
   }
 
   setRecipient = (id) => {
@@ -34,6 +67,7 @@ class MessageHistorySideBar extends Component {
       return response.json();
     }).then((results) => {
       this.props.setCurrentRecipient(results);
+      this.getUnreadMessages();
     })
   }
 
@@ -142,7 +176,12 @@ const mapDispatchToProps = (dispatch) => {
     setMessageHistory: (output) => {
       const action = { type: 'SET_MSG_HISTORY', output };
       dispatch(action);
-    }
+    },
+
+    updateNumOfUnreadMsgs: (num) => {
+      const action = { type: 'UPDATE_NUM_OF_UNREAD_MSGS', num };
+      dispatch(action);
+    },
 
   }
 }
