@@ -77,7 +77,6 @@ class MessageDisplay extends Component {
   };
 
   handleChange = (evt) => {
-    console.log(evt.target.value);
     this.props.handleChange(evt);
   }
 

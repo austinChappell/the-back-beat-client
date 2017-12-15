@@ -80,8 +80,8 @@ class Navbar extends Component {
       return response.json();
     }).then((results) => {
       this.props.setAllMessages(results.rows);
+      this.getMessageHistory();
     })
-    this.getMessageHistory();
     if (this.props.currentRecipient) {
       this.filterMessages();
     }
