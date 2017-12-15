@@ -42,8 +42,6 @@ class LeftMainPageSideBar extends Component {
 
   loadEvents = () => {
     const url = this.props.apiURL;
-    console.log('LOAD EVENTS RUNNING URL', url);
-    console.log('CITY', this.props.loggedInUser.city);
     fetch(`${url}/api/events/city?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
@@ -51,11 +49,8 @@ class LeftMainPageSideBar extends Component {
 
       }
     }).then((response) => {
-      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('RESULTS', results);
-      console.log('EVENTS', results.rows);
       if (results.rows) {
         this.props.loadEvents(results.rows);
         this.setState({ loading: false });

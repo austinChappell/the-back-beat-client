@@ -69,7 +69,6 @@ class MessageDisplay extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('RESULTS', results.rows);
       // this.filterMessages(this.props.currentRecipient);
       this.props.clearCurrentMessageText();
       this.socket.emit('SEND_INDIVIDUAL_MESSAGE');

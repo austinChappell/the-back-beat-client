@@ -16,6 +16,7 @@ import BandPage from './BandPage';
 import BandPageBrowseMusicians from './BandPageBrowseMusicians';
 import BaseLayout from './BaseLayout';
 import CalendarPage from './CalendarPage';
+import Chat from './Chat';
 import ConnectPage from './ConnectPage';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import GigPage from './GigPage';
@@ -83,6 +84,7 @@ class App extends Component {
                   <PrivateRoute path="/band/:bandId" component={BandPage} />
                   <PrivateRoute path="/band_event/:eventId" component={EventPage} />
                   <PrivateRoute path="/calendar" component={CalendarPage} />
+                  <PrivateRoute path="/chat" component={Chat} />
                   <PrivateRoute path="/connect" component={ConnectPage} />
                   <PrivateRoute path="/gigs" component={GigPage} />
                   <PrivateRoute path="/messages" component={MessagePage} />

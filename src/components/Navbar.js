@@ -61,10 +61,10 @@ class Navbar extends Component {
 
     fetchData();
 
-    this.stopPerfReqFetch = setInterval(() => {
-      fetchData();
-    }, 5000);
-
+    // this.stopPerfReqFetch = setInterval(() => {
+    //   fetchData();
+    // }, 5000);
+    //
   }
 
   fetchAllMessages = () => {
@@ -187,7 +187,7 @@ class Navbar extends Component {
       <NavLink to="/calendar" data-tip="Calendar">
         <i className="fa fa-calendar" aria-hidden="true"></i>
       </NavLink>
-      <NavLink className="relative-navlink" to="/messages" data-tip="Messages">
+      <NavLink className="relative-navlink" to="/chat" data-tip="Messages">
         <i className="fa fa-envelope" aria-hidden="true"></i>
         <i className={this.props.numOfUnreadMessages > 0 ? "fa fa-circle" : "fa fa-circle hidden"} aria-hidden="true"></i>
       </NavLink>

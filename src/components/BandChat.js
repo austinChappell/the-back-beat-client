@@ -35,7 +35,6 @@ class BandChat extends Component {
 
   }
 
-
   componentDidMount() {
     this.getMembers();
     this.getMessages();
@@ -123,7 +122,6 @@ class BandChat extends Component {
     }).catch((err) => {
       console.log('sendMessage error', err);
     })
-
 
   }
 

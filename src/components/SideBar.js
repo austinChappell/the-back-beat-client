@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class SideBar extends Component {
   render() {
     return (
-      <div className="SideBar">
+      <div className="SideBar" onClick={this.props.onClick}>
         {this.props.links.map((link, index) => {
           const linkClassName = link.path === this.props.url ? "sidebar-link active" : "sidebar-link";
           return (

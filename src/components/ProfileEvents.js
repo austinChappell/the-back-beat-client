@@ -17,7 +17,6 @@ class ProfileEvents extends Component {
   fetchUserEvents = () => {
     const url = this.props.apiURL;
     const userid = this.props.currentUser.id;
-    console.log('USER ID', userid);
     fetch(`${url}/api/events/attending/${userid}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
@@ -25,10 +24,8 @@ class ProfileEvents extends Component {
 
       }
     }).then((response) => {
-      console.log('RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('RESULTS', results.rows);
       this.setState({ userEvents: results.rows }, () => {
         this.state.userEvents.map((event) => {
           this.fetchEventDetails(event.event_id);
