@@ -26,6 +26,25 @@ class MessageDisplay extends Component {
         this.refs.messageBox.scrollTop = this.refs.messageBox.scrollHeight;
       })
     }
+    this.getUnreadMessages();
+  }
+
+  getUnreadMessages = () => {
+    const url = this.props.apiURL;
+
+    fetch(`${url}/messages/unread?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.updateNumOfUnreadMsgs(results.rows.length);
+      // this.setState({ numOfUnreadMessages: results.rows.length });
+    })
+
   }
 
   sendMessage = (evt) => {
@@ -143,7 +162,12 @@ const mapDispatchToProps = (dispatch) => {
     setCurrentRecipientAndMessages: (user, messages) => {
       const action = { type: 'SET_CURRENT_RECIPIENT_AND_MESSAGES', user, messages };
       dispatch(action);
-    }
+    },
+
+    updateNumOfUnreadMsgs: (num) => {
+      const action = { type: 'UPDATE_NUM_OF_UNREAD_MSGS', num };
+      dispatch(action);
+    },
 
   }
 }

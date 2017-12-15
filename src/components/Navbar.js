@@ -20,12 +20,14 @@ class Navbar extends Component {
 
     this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
       this.getUnreadMessages();
+      this.getMessageHistory();
     })
 
   }
 
   componentDidMount() {
     this.fetchMessagesAfterLogin();
+    this.getMessageHistory();
     // TODO: Maybe move setUser out to UserAuth component
     // TODO: Store loggedInUser differently. The code immediately after this comment is not storing loggedInUser.
     // if (this.props.authorized) {
@@ -65,15 +67,59 @@ class Navbar extends Component {
 
   }
 
+  fetchAllMessages = () => {
+    const apiURL = this.props.apiURL;
+
+    fetch(`${apiURL}/messages/all?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.setAllMessages(results.rows);
+    })
+    this.getMessageHistory();
+    if (this.props.currentRecipient) {
+      this.filterMessages();
+    }
+  }
+
   fetchMessagesAfterLogin = () => {
     if (this.props.loggedInUser.id && this.props.loggedInUser.is_active) {
       this.getUnreadMessages();
       this.fetchPerformerRequests();
+      this.fetchAllMessages();
     } else {
       setTimeout(() => {
         this.fetchMessagesAfterLogin();
       }, 1000);
     }
+  }
+
+  getMessageHistory = () => {
+
+    // this.stopFetch = setInterval(() => {
+
+      const output = [];
+      const messages = this.props.allMessages;
+      const loggedInUser = this.props.loggedInUser;
+      console.log('MESSAGE HISTORY SIDEBAR', messages, loggedInUser);
+      for (let i = messages.length - 1; i >= 0; i--) {
+        let found = false;
+        output.forEach((item) => {
+          if ( (item.sender_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.sender_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) || (item.recipient_id === messages[i].sender_id && messages[i].sender_id !== loggedInUser.id) || (item.recipient_id === messages[i].recipient_id && messages[i].recipient_id !== loggedInUser.id) ) {
+            found = true;
+          }
+        })
+        if (!found) {
+          output.push(messages[i]);
+        }
+      }
+      this.props.setMessageHistory(output);
+    // }, 1000)
   }
 
   getUnreadMessages = () => {
@@ -172,6 +218,7 @@ class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    allMessages: state.allMessages,
     apiURL: state.apiURL,
     authorized: state.authorized,
     loggedInUser: state.loggedInUser,
@@ -186,6 +233,16 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addLoggedInUser: (user) => {
       const action = { type: 'ADD_LOGGED_IN_USER', user };
+      dispatch(action);
+    },
+
+    setAllMessages: (allMessages) => {
+      const action = { type: 'SET_ALL_MESSAGES', allMessages };
+      dispatch(action);
+    },
+
+    setMessageHistory: (output) => {
+      const action = { type: 'SET_MSG_HISTORY', output };
       dispatch(action);
     },
 

@@ -1,5 +1,8 @@
 .BrowseBox {
   text-align: center;
+  a {
+    text-decoration: none;
+  }
   .browse-box-flex {
     display: flex;
     align-items: center;

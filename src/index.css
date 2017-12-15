@@ -407,6 +407,8 @@ button, input, textarea {
 
 .BrowseBox {
   text-align: center; }
+  .BrowseBox a {
+    text-decoration: none; }
   .BrowseBox .browse-box-flex {
     display: flex;
     align-items: center; }

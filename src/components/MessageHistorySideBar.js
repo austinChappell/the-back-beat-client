@@ -75,12 +75,12 @@ class MessageHistorySideBar extends Component {
 
   getMessageHistory = () => {
 
-    this.stopFetch = setInterval(() => {
-      console.log('MESSAGE HISTORY SIDEBAR');
+    // this.stopFetch = setInterval(() => {
 
       const output = [];
       const messages = this.props.allMessages;
       const loggedInUser = this.props.loggedInUser;
+      console.log('MESSAGE HISTORY SIDEBAR', messages, loggedInUser);
       for (let i = messages.length - 1; i >= 0; i--) {
         let found = false;
         output.forEach((item) => {
@@ -93,7 +93,7 @@ class MessageHistorySideBar extends Component {
         }
       }
       this.props.setMessageHistory(output);
-    }, 1000)
+    // }, 1000)
   }
 
   render() {
