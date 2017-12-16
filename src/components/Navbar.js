@@ -23,6 +23,10 @@ class Navbar extends Component {
       this.getMessageHistory();
     })
 
+    this.socket.on('MESSAGE_READ', () => {
+      this.getUnreadMessages();
+    })
+
   }
 
   componentDidMount() {
@@ -123,6 +127,9 @@ class Navbar extends Component {
   }
 
   getUnreadMessages = () => {
+
+    console.log('GETTING UNREAD MESSAGES IN NAVBAR');
+
     const url = this.props.apiURL;
 
     fetch(`${url}/messages/unread?token=${localStorage.token}`, {

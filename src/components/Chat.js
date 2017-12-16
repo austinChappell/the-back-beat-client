@@ -22,7 +22,7 @@ class Chat extends Component {
 
     this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
       this.getMessages();
-      this.filterMessages();
+      // this.filterMessages();
     })
 
   }
@@ -32,13 +32,18 @@ class Chat extends Component {
     this.filterMessages();
   }
 
-  filterMessages = () => {
+  componentDidUpdate() {
+    console.log('CHAT COMPONENT UPDATED', this.props.selectedMessages);
+    this.readMessages();
+  }
 
-    console.log('FILTER MESSAGES RUNNING');
+  componentWillUnmount() {
+    this.props.clearSelectedMessages();
+  }
+
+  readMessages() {
 
     if (this.state.currentRecipient) {
-
-      console.log('THERE IS A RECIPIENT');
 
       let newUser = this.state.currentRecipient;
 
@@ -48,6 +53,10 @@ class Chat extends Component {
           filteredMessages.push(message);
         }
       });
+
+      console.log('SELECTED MESSAGES', this.props.selectedMessages);
+
+      console.log('FILTERED MESSAGES', filteredMessages);
 
       filteredMessages.map((message) => {
         if (message.read === false && message.sender_id === newUser.id) {
@@ -59,8 +68,56 @@ class Chat extends Component {
 
             },
             method: 'PUT'
-          }).then(() => {
+          }).then((response) => {
+            this.socket.emit('READ_MESSAGE');
+          }).catch((err) => {
+            console.error('FILTER MESSAGES ERROR');
+            console.error(err);
+          })
+        }
+      })
+
+
+    }
+
+  }
+
+  filterMessages = () => {
+
+    console.log('FILTER MESSAGES RUNNING');
+
+    if (this.state.currentRecipient) {
+
+      let newUser = this.state.currentRecipient;
+
+      const filteredMessages = [];
+      this.props.selectedMessages.map((message) => {
+        if (message.sender_id === newUser.id || message.recipient_id === newUser.id) {
+          filteredMessages.push(message);
+        }
+      });
+
+      console.log('SELECTED MESSAGES', this.props.selectedMessages);
+
+      console.log('FILTERED MESSAGES', filteredMessages);
+
+      filteredMessages.map((message) => {
+        if (message.read === false && message.sender_id === newUser.id) {
+          message.read = true;
+          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+
+            },
+            method: 'PUT'
+          }).then((response) => {
             this.props.setCurrentMessages(filteredMessages);
+            console.log('ABOUT TO GET UNREAD MESSAGES');
+            this.getUnreadMessages();
+          }).catch((err) => {
+            console.error('FILTER MESSAGES ERROR');
+            console.error(err);
           })
         }
       })
@@ -71,6 +128,9 @@ class Chat extends Component {
   }
 
   getMessages = () => {
+
+    console.log('GET MESSAGES RUNNING');
+
     const apiURL = this.props.apiURL;
     const recipientId = this.props.location.search.split('=')[1];
     this.setUser(recipientId);
@@ -82,15 +142,36 @@ class Chat extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('results', results.rows);
+      this.filterMessages();
       // this.setState({ messages: results.rows }, () => {
       //   this.refs.chatWindow.scrollTop = this.refs.chatWindow.scrollHeight;
       // });
       this.props.setCurrentMessages(results.rows);
       this.refs.chatWindow.scrollTop = this.refs.chatWindow.scrollHeight;
     }).catch((err) => {
-      console.log('getmessages error', err);
+      console.error('getmessages error', err);
     })
+  }
+
+  getUnreadMessages = () => {
+
+    console.log('GETTING UNREAD MESSAGES IN CHAT COMPONENT');
+
+    const url = this.props.apiURL;
+
+    fetch(`${url}/messages/unread?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.updateNumOfUnreadMsgs(results.rows.length);
+      // this.setState({ numOfUnreadMessages: results.rows.length });
+    })
+
   }
 
   handleInputChange = (evt) => {
@@ -125,7 +206,6 @@ class Chat extends Component {
   }
 
   setUser = (id) => {
-    console.log('SET USER RUNNING', id);
     const apiURL = this.props.apiURL;
 
     fetch(`${apiURL}/api/user/id/${id}?token=${localStorage.token}`, {
@@ -134,20 +214,18 @@ class Chat extends Component {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-      console.log('SET USER RESPONSE', response);
       return response.json();
     }).then((results) => {
-      console.log('SET USER RESULTS', results);
       this.setState({ currentRecipient: results[0] });
     }).catch((err) => {
-      console.log('SET USER ERROR', err);
+      console.error('SET USER ERROR', err);
     })
   }
 
   sideBarClick = () => {
     setTimeout(() => {
       this.getMessages();
-      this.filterMessages();
+      // this.filterMessages();
     }, 0)
   }
 
@@ -220,10 +298,22 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearSelectedMessages: () => {
+      const action = { type: 'CLEAR_SELECTED_MESSAGES' };
+      dispatch(action);
+    },
+
     setCurrentMessages: (messages) => {
       const action = { type: 'SET_CURRENT_MESSAGES', messages };
       dispatch(action);
-    }
+    },
+
+    updateNumOfUnreadMsgs: (num) => {
+      const action = { type: 'UPDATE_NUM_OF_UNREAD_MSGS', num };
+      dispatch(action);
+    },
+
+
   }
 }
 

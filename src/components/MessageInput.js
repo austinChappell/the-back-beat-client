@@ -60,8 +60,6 @@ class MessageInput extends Component {
 
   render() {
 
-    console.log('INPUT PROPS', this.props);
-
     return (
       <div className="MessageInput">
         <input
