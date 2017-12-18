@@ -26,11 +26,17 @@ class MessageHistorySideBar extends Component {
       })
     })
 
+    this.socket.on('RECEIVE_UNREAD_MESSAGE', () => {
+      this.getUnreadMessages();
+      this.getMessageHistory();
+    })
+
   }
 
   componentDidMount() {
     // this.setState({fetchHistory: true});
     this.getMessageHistory();
+    this.getUnreadMessages();
   }
 
   componentWillUnmount() {
@@ -106,6 +112,7 @@ class MessageHistorySideBar extends Component {
     if (this.props.messageHistory.length > 0) {
       messageHistoryDisplay = <div>
         {this.props.messageHistory.map((message, index) => {
+          // console.log('MESSAGE', message);
           let recipientId;
           let displayName;
           let msgPreview;
@@ -158,7 +165,8 @@ const mapStateToProps = (state) => {
     apiURL: state.apiURL,
     allMessages: state.allMessages,
     loggedInUser: state.loggedInUser,
-    messageHistory: state.messageHistory
+    messageHistory: state.messageHistory,
+    selectedMessages: state.selectedMessages
   }
 }
 

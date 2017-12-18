@@ -24,8 +24,9 @@ class MessagePage extends Component {
 
     this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
       this.fetchAllMessages();
-      this.getMessageHistory();
-      if (this.props.currentRecipient) {
+      // this.getMessageHistory();
+      console.log('MESSAGE PAGE PROPS FOR SOCKET', this.props);
+      if (this.props.currentRecipient.id !== undefined) {
         this.filterMessages();
       }
     })
@@ -34,6 +35,7 @@ class MessagePage extends Component {
 
   componentDidMount() {
     this.fetchAllMessages();
+    this._ismounted = true;
   }
 
   // componentWillReceiveProps() {
@@ -61,7 +63,7 @@ class MessagePage extends Component {
       console.log('FETCHED MESSAGES', results.rows);
       this.props.setAllMessages(results.rows);
       this.getMessageHistory();
-      if (this.props.currentRecipient) {
+      if (this.props.currentRecipient.id !== undefined) {
         this.filterMessages();
       }
     })
@@ -83,14 +85,19 @@ class MessagePage extends Component {
         output.push(messages[i]);
       }
     }
-    this.setState({ messageHistory: output })
+    // this.setState({ messageHistory: output })
+    this.props.setMessageHistory(output);
 
   }
 
 
   filterMessages = () => {
 
-    if (this.props.currentRecipient.id) {
+    console.log('FILTERING MESSAGES');
+
+    if (this.props.currentRecipient.id !== undefined) {
+
+      console.log('THERE IS AN ID', this.props.currentRecipient);
 
       let newUser = this.props.currentRecipient;
 
@@ -101,16 +108,23 @@ class MessagePage extends Component {
         }
       });
 
+      console.log('newuserid', newUser.id);
       filteredMessages.map((message) => {
+        // console.log('MESSAGE', message);
         if (message.read === false && message.sender_id === newUser.id) {
           message.read = true;
           fetch(`${this.props.apiURL}/message/${message.message_id}/markasread?token=${localStorage.token}`, {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
-
             },
             method: 'PUT'
+          }).then((response) => {
+            return response.json();
+          }).then((results) => {
+            this.getUnreadMessages();
+          }).catch((err) => {
+            console.error('FILTER MESSAGES ERROR', err);
           })
         }
       })
@@ -136,6 +150,24 @@ class MessagePage extends Component {
     })
   }
 
+  getUnreadMessages = () => {
+    const url = this.props.apiURL;
+
+    fetch(`${url}/messages/unread?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+
+      }
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.props.updateNumOfUnreadMsgs(results.rows.length);
+      // this.setState({ numOfUnreadMessages: results.rows.length });
+    })
+
+  }
+
   handleChange = (evt) => {
     if (evt.target.value.length === 0) {
       this.setState({
@@ -151,7 +183,7 @@ class MessagePage extends Component {
 
   render() {
 
-    console.log('RENDER MESSAGE PAGE');
+    console.log('RENDER MESSAGE PAGE', this.props.currentRecipient.id);
 
     return (
       <div className="MessagePage">
@@ -197,7 +229,17 @@ const mapDispatchToProps = (dispatch) => {
     setCurrentMessages: (messages) => {
       const action = { type: 'SET_CURRENT_MESSAGES', messages };
       dispatch(action);
-    }
+    },
+
+    setMessageHistory: (output) => {
+      const action = { type: 'SET_MSG_HISTORY', output };
+      dispatch(action);
+    },
+
+    updateNumOfUnreadMsgs: (num) => {
+      const action = { type: 'UPDATE_NUM_OF_UNREAD_MSGS', num };
+      dispatch(action);
+    },
 
   }
 }

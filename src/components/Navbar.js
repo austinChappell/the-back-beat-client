@@ -159,6 +159,8 @@ class Navbar extends Component {
     }).then((results) => {
       console.log('RESULTS', results.rows);
       this.getUnreadMessages();
+      this.getMessageHistory();
+      this.socket.emit('MARK_MESSAGE_UNREAD');
     }).catch((err) => {
       console.error('MARK AS READ ERROR', err);
     })
