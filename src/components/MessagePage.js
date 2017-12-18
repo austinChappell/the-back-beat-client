@@ -36,11 +36,17 @@ class MessagePage extends Component {
     this.fetchAllMessages();
   }
 
-  componentWillReceiveProps() {
-    this.fetchAllMessages();
+  // componentWillReceiveProps() {
+  //   this.fetchAllMessages();
+  // }
+
+  componentWillUnmount() {
+    this.props.clearCurrentRecipient();
+    this.props.clearSelectedMessages();
   }
 
   fetchAllMessages = () => {
+    console.log('FETCHING ALL MESSAGES');
     const apiURL = this.props.apiURL;
 
     fetch(`${apiURL}/messages/all?token=${localStorage.token}`, {
@@ -52,12 +58,13 @@ class MessagePage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
+      console.log('FETCHED MESSAGES', results.rows);
       this.props.setAllMessages(results.rows);
+      this.getMessageHistory();
+      if (this.props.currentRecipient) {
+        this.filterMessages();
+      }
     })
-    this.getMessageHistory();
-    if (this.props.currentRecipient) {
-      this.filterMessages();
-    }
   }
 
   getMessageHistory = () => {
@@ -83,7 +90,7 @@ class MessagePage extends Component {
 
   filterMessages = () => {
 
-    if (this.props.currentRecipient) {
+    if (this.props.currentRecipient.id) {
 
       let newUser = this.props.currentRecipient;
 
@@ -143,12 +150,17 @@ class MessagePage extends Component {
   }
 
   render() {
+
+    console.log('RENDER MESSAGE PAGE');
+
     return (
       <div className="MessagePage">
         <MessageDisplay currentRecipient={this.state.currentRecipient} />
         <div style={{width: '300px'}}>
           <MessageSearchBar />
-          <MessageHistorySideBar />
+          <MessageHistorySideBar
+            fetchAllMessages={this.fetchAllMessages}
+          />
         </div>
       </div>
     )

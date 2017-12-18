@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from "socket.io-client";
 
+import MessageInput from './MessageInput';
+
 class MessageDisplay extends Component {
 
   constructor(props) {
@@ -114,12 +116,7 @@ class MessageDisplay extends Component {
           );
         })}
       </div>
-      <form className="message-editor" onSubmit={(evt) => this.sendMessage(evt)}>
-        <input className={recipient ? '' : 'disabled'} value={this.props.currentMessage} onChange={(evt) => this.handleChange(evt)} disabled={recipient === null}></input>
-        <button
-          className={recipient === null ? "send-message-button disabled" : "send-message-button"}
-          disabled={recipient === null}>Send</button>
-      </form>
+      <MessageInput />
     </div>
 
     return (

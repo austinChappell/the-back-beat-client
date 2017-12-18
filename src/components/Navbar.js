@@ -18,7 +18,12 @@ class Navbar extends Component {
 
     this.socket = io(props.apiURL);
 
-    this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
+    this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', (data) => {
+      console.log('DATA', data);
+      if (data.sender_id !== this.props.currentRecipient.id && data.sender_id !== this.props.loggedInUser.id) {
+        this.markAsUnread(data.message_id);
+      }
+
       this.getUnreadMessages();
       this.getMessageHistory();
     })
@@ -82,9 +87,6 @@ class Navbar extends Component {
       this.props.setAllMessages(results.rows);
       this.getMessageHistory();
     })
-    if (this.props.currentRecipient) {
-      this.filterMessages();
-    }
   }
 
   fetchMessagesAfterLogin = () => {
@@ -138,6 +140,28 @@ class Navbar extends Component {
       // this.setState({ numOfUnreadMessages: results.rows.length });
     })
 
+  }
+
+  markAsUnread = (id) => {
+
+    console.log('MARKING AS UNREAD');
+
+    const apiURL = this.props.apiURL;
+
+    fetch(`${apiURL}/message/${id}/markasunread?token=${localStorage.token}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'PUT'
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      console.log('RESULTS', results.rows);
+      this.getUnreadMessages();
+    }).catch((err) => {
+      console.error('MARK AS READ ERROR', err);
+    })
   }
 
   setUser = () => {
@@ -221,6 +245,7 @@ const mapStateToProps = (state) => {
     allMessages: state.allMessages,
     apiURL: state.apiURL,
     authorized: state.authorized,
+    currentRecipient: state.currentRecipient,
     loggedInUser: state.loggedInUser,
     numOfUnreadMessages: state.numOfUnreadMessages,
     showUserAuthForm: state.showUserAuthForm,

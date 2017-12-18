@@ -67,7 +67,7 @@ const initialState = {
   messageSearchBarVal: '',
   messageHistory: [],
   selectedMessages: [],
-  currentRecipient: null,
+  currentRecipient: {},
   users: [],
 
   // GLOBAL VARIABLES
@@ -98,7 +98,7 @@ const reducer = (state = initialState, action) => {
     case 'CLEAR_CURRENT_MESSAGE_TEXT':
       return Object.assign({}, state, { currentMessage: '' });
     case 'CLEAR_CURRENT_RECIPIENT':
-      return Object.assign({}, state, { currentRecipient: null });
+      return Object.assign({}, state, { currentRecipient: {} });
     case 'CLEAR_MESSAGE_HISTORY':
       return Object.assign({}, state, { messageHistory: [] });
     case 'CLEAR_SELECTED_MESSAGES':

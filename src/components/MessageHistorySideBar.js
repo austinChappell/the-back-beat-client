@@ -69,6 +69,7 @@ class MessageHistorySideBar extends Component {
       this.props.setCurrentRecipient(results);
       this.getUnreadMessages();
       this.getMessageHistory();
+      this.props.fetchAllMessages();
     })
   }
 
