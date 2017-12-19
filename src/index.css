@@ -72,7 +72,7 @@ button, input, textarea {
     .BandChat .chat-section .chat-window {
       border: 1px solid #070649;
       box-sizing: border-box;
-      height: calc(100% - 40px);
+      height: calc(100% - 120px);
       overflow: scroll;
       width: 100%;
       padding: 10px; }
@@ -931,78 +931,16 @@ button, input, textarea {
 
 .MessageDisplay {
   flex-basis: 50%;
+  margin-left: -150px;
+  flex-grow: 1;
   box-sizing: border-box; }
   .MessageDisplay .currentRecipient {
-    text-align: center;
-    background-color: #070649;
-    padding: 6px;
-    color: #FFFFFF; }
-  .MessageDisplay .message-box {
-    height: calc(100vh - 160px);
-    width: 80%;
-    max-width: 500px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column; }
-  .MessageDisplay .messages {
-    flex-basis: 80%;
-    border: 1px solid black;
-    overflow: scroll; }
-    .MessageDisplay .messages .message {
-      margin: 10px;
-      position: relative; }
-      .MessageDisplay .messages .message .sent {
-        background-color: teal;
-        color: #FFFFFF; }
-      .MessageDisplay .messages .message .message-wrapper {
-        max-width: 70%;
-        display: inline-block;
-        border: 1px solid #070649;
-        border-radius: 15px;
-        padding: 0 10px; }
-    .MessageDisplay .messages .sent {
-      text-align: right; }
-  .MessageDisplay .message-date {
-    color: #E0E0E0; }
-  .MessageDisplay .message-editor {
-    width: 100%;
-    margin: 10px auto;
-    display: flex; }
-    .MessageDisplay .message-editor input {
-      flex-grow: 1;
-      resize: none;
-      font-size: 16px;
-      padding: 10px 20px;
-      border: 1px solid #070649;
-      border-radius: 20px;
-      outline: none; }
-    .MessageDisplay .message-editor .send-message-button {
-      border: none;
-      border-radius: 5px;
-      flex-basis: 100px;
-      font-size: 16px;
-      text-transform: uppercase;
-      font-weight: bold;
-      letter-spacing: 1px;
-      background-color: #9A6197;
-      color: #FFFFFF;
-      cursor: pointer;
-      margin-left: 10px;
-      outline: none; }
-      .MessageDisplay .message-editor .send-message-button:hover {
-        background-color: #894586; }
-    .MessageDisplay .message-editor .disabled {
-      background-color: #EEEEEE;
-      border: 1px solid #DDDDDD;
-      color: #DDDDDD; }
-      .MessageDisplay .message-editor .disabled:hover {
-        background-color: #EEEEEE;
-        color: #DDDDDD;
-        cursor: not-allowed; }
+    margin-top: -5px; }
 
 .MessageHistorySideBar {
-  flex-basis: 20%;
+  flex-basis: 30%;
   box-sizing: border-box;
+  margin-right: 100px;
   border: 1px solid gray;
   padding: 0;
   height: calc((100vh - 160px) * .8);
@@ -1030,7 +968,8 @@ button, input, textarea {
   justify-content: center; }
 
 .MessageSearchBar {
-  flex-basis: 20%;
+  flex-basis: 30%;
+  margin-right: 100px;
   box-sizing: border-box; }
   .MessageSearchBar input {
     border-radius: 20px;
