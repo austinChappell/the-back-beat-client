@@ -44,6 +44,7 @@ class MessagePage extends Component {
   componentWillUnmount() {
     this.props.clearCurrentRecipient();
     this.props.clearSelectedMessages();
+    this.socket.close();
   }
 
   fetchAllMessages = () => {

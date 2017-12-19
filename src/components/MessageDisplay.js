@@ -17,7 +17,6 @@ class MessageDisplay extends Component {
 
     this.socket = io(props.apiURL);
 
-
   }
 
   componentWillMount() {
@@ -35,6 +34,10 @@ class MessageDisplay extends Component {
       })
     }
     this.getUnreadMessages();
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   getUnreadMessages = () => {
@@ -55,11 +58,11 @@ class MessageDisplay extends Component {
 
   }
 
-  sendMessage = (evt) => {
-    // if (evt) {
-      evt.preventDefault();
-    // }
+  sendMessage = (message) => {
+
     const api = this.props.apiURL;
+    const recipientId = this.props.currentRecipient.id;
+
     fetch(`${api}/message/send?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
@@ -68,8 +71,9 @@ class MessageDisplay extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
-        message: this.props.currentMessage,
-        recipientId: this.props.currentRecipient.id,
+        date: new Date(),
+        message,
+        recipientId,
         recipientFirstName: this.props.currentRecipient.first_name,
         recipientLastName: this.props.currentRecipient.last_name,
         recipientEmail: this.props.currentRecipient.email
@@ -77,10 +81,8 @@ class MessageDisplay extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      console.log('RESULTS', results.rows);
       // this.filterMessages(this.props.currentRecipient);
-      this.props.clearCurrentMessageText();
-      this.socket.emit('SEND_INDIVIDUAL_MESSAGE');
+      this.socket.emit('SEND_INDIVIDUAL_MESSAGE', results.rows[0]);
     })
   };
 
@@ -124,7 +126,10 @@ class MessageDisplay extends Component {
           );
         })}
       </div>
-      <MessageInput />
+      <MessageInput
+        parentName="MessageDisplay"
+        sendMessage={this.sendMessage}
+      />
     </div>
 
     return (

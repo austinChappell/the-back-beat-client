@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from "socket.io-client";
 
+import MessageInput from './MessageInput';
 import SideBar from './SideBar';
 
 class BandChat extends Component {
@@ -39,6 +40,10 @@ class BandChat extends Component {
   componentDidMount() {
     this.getMembers();
     this.getMessages();
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   // TODO: Check this. there might be an issue with this.state.bandId
@@ -102,7 +107,7 @@ class BandChat extends Component {
     }
   }
 
-  sendMessage = () => {
+  sendMessage = (message) => {
     const apiURL = this.props.apiURL;
     fetch(`${apiURL}/api/band/message/new?token=${localStorage.token}`, {
       credentials: 'include',
@@ -113,7 +118,7 @@ class BandChat extends Component {
       body: JSON.stringify({
         bandId: this.state.bandId,
         date: new Date(),
-        message: this.state.currentMessage,
+        message,
         senderId: this.props.loggedInUser.id
       })
     }).then(() => {
@@ -176,13 +181,11 @@ class BandChat extends Component {
             })}
 
           </div>
-          <input
-            className="message-bar"
-            onChange={(evt) => this.handleInputChange(evt)}
-            onKeyUp={(evt) => this.handleKeyUp(evt)}
-            type="text"
-            value={this.state.currentMessage}
-          ></input>
+          <MessageInput
+            bandId={this.props.match.params.bandId}
+            parentName="BandChat"
+            sendMessage={this.sendMessage}
+          />
         </section>
       </div>
     )

@@ -43,6 +43,10 @@ class Navbar extends Component {
     // }
   }
 
+  componentWillUnmount() {
+    this.socket.close();
+  }
+
   fetchPerformerRequests = () => {
 
     const apiURL = this.props.apiURL;

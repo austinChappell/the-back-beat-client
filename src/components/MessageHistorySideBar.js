@@ -41,6 +41,7 @@ class MessageHistorySideBar extends Component {
 
   componentWillUnmount() {
     clearInterval(this.stopFetch);
+    this.socket.close();
   }
 
   getUnreadMessages = () => {

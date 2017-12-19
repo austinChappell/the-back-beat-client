@@ -17,15 +17,33 @@ class MessageInput extends Component {
 
   componentDidMount() {
     this.socket.on('NOTIFY_TYPING', (user) => {
-      if (this.props.currentRecipient.id === user.id) {
-        clearTimeout(this.cancelTimeout);
-        this.setState({ userIsTyping: true, userTyping: `${user.firstName} ${user.lastName}` }, () => {
-          this.cancelTimeout = setTimeout(() => {
-            this.setState({ userIsTyping: false, userTyping: null });
-          }, 2000);
-        })
+      // console.log('TYPING', user);
+      console.log(this.props)
+      console.log(user);
+      const isFromBandChat = this.props.parentName === 'BandChat' && user.bandId === this.props.bandId && user.id !== this.props.loggedInUser.id;
+      const isFromMessage = this.props.parentName === 'MessageDisplay' && this.props.currentRecipient.id === user.id;
+      const fromSameParent = user.parentName === this.props.parentName;
+      const notFromSelf = user.id !== this.props.loggedInUser.id;
+      console.log('FROM SAME PARENT', fromSameParent);
+      if (fromSameParent && notFromSelf) {
+        if (isFromMessage || isFromBandChat) {
+          clearTimeout(this.cancelTimeout);
+          this.setState({ userIsTyping: true, userTyping: `${user.firstName} ${user.lastName}` }, () => {
+            this.cancelTimeout = setTimeout(() => {
+              this.setState({ userIsTyping: false, userTyping: null });
+            }, 2000);
+          })
+        }
       }
     })
+
+    this.socket.on('REMOVE_TYPING_USER', () => {
+      this.setState({ userIsTyping: false, userTyping: null });
+    })
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   clearCurrentMessageText = () => {
@@ -34,42 +52,21 @@ class MessageInput extends Component {
 
   handleChange = (evt) => {
     this.setState({ inputValue: evt.target.value })
-    this.socket.emit('MESSAGE_TYPING', { firstName: this.props.loggedInUser.first_name, lastName: this.props.loggedInUser.last_name, id: this.props.loggedInUser.id })
+    this.socket.emit('MESSAGE_TYPING', {
+      firstName: this.props.loggedInUser.first_name,
+      lastName: this.props.loggedInUser.last_name,
+      id: this.props.loggedInUser.id,
+      bandId: this.props.bandId,
+      parentName: this.props.parentName
+    })
   }
 
   handleKeyUp = (evt) => {
     if (evt.keyCode === 13) {
-      this.sendMessage();
-    }
-  }
-
-  sendMessage = () => {
-
-    const apiURL = this.props.apiURL;
-    const recipientId = this.props.currentRecipient.id;
-
-    fetch(`${apiURL}/message/send?token=${localStorage.token}`, {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        date: new Date(),
-        message: this.state.inputValue,
-        recipientId,
-        recipientFirstName: this.props.currentRecipient.first_name,
-        recipientLastName: this.props.currentRecipient.last_name,
-        recipientEmail: this.props.currentRecipient.email
-      })
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      // this.filterMessages(this.props.currentRecipient);
+      this.socket.emit('STOP_TYPING');
+      this.props.sendMessage(this.state.inputValue);
       this.clearCurrentMessageText();
-      this.socket.emit('SEND_INDIVIDUAL_MESSAGE', results.rows[0]);
-    })
+    }
   }
 
   render() {
