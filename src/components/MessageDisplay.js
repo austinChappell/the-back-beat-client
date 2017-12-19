@@ -10,17 +10,19 @@ class MessageDisplay extends Component {
     super(props);
 
     this.state = {
-      numOfSelectedMessages: 0
+      numOfSelectedMessages: 0,
+      userIsTyping: false,
+      userTyping: null
     }
 
     this.socket = io(props.apiURL);
+
 
   }
 
   componentWillMount() {
     this.props.clearSelectedMessages();
   }
-
 
   componentDidUpdate() {
     // this.refs.messageBox.scrollTop = 200;

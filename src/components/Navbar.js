@@ -23,9 +23,6 @@ class Navbar extends Component {
       // console.log('THE PROPS', props);
 
       if (data.sender_id !== this.props.currentRecipient.id && data.sender_id !== this.props.loggedInUser.id) {
-        console.log('DATA', data);
-        console.log('PROPS', this.props);
-        console.log('MARK THIS AS UNREAD');
         this.markAsUnread(data.message_id);
         this.filterMessages();
       }
