@@ -188,6 +188,7 @@ class Navbar extends Component {
       return response.json();
     }).then((results) => {
       this.props.updateNumOfUnreadMsgs(results.rows.length);
+      this.fetchAllMessages();
       // this.setState({ numOfUnreadMessages: results.rows.length });
     })
 

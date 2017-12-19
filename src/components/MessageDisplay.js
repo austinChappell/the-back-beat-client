@@ -86,21 +86,6 @@ class MessageDisplay extends Component {
     })
   };
 
-  handleChange = (evt) => {
-    this.props.handleChange(evt);
-  }
-
-  // filterMessages = (user) => {
-  //   const filteredMessages = [];
-  //   this.props.allMessages.map((message) => {
-  //     if (message.sender_id === user.id || message.recipient_id === user.id) {
-  //       filteredMessages.push(message);
-  //     }
-  //   });
-  //   console.log('FILTERED MESSAGES', filteredMessages);
-  //   // TODO: Add a set interval in here to refresh the current message string
-  // }
-
   render() {
 
     console.log('MESSAGE DISPLAY PROPS', this.props);
@@ -153,28 +138,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearCurrentMessageText: () => {
-      const action = { type: 'CLEAR_CURRENT_MESSAGE_TEXT' };
-      dispatch(action);
-    },
 
     clearSelectedMessages: () => {
       const action = { type: 'CLEAR_SELECTED_MESSAGES' };
-      dispatch(action);
-    },
-
-    handleChange: (evt) => {
-      const action = { type: 'UPDATE_CURRENT_MESSAGE', val: evt.target.value };
-      dispatch(action);
-    },
-
-    resetMessage: () => {
-      const action = { type: 'RESET_CURRENT_MESSAGE' };
-      dispatch(action);
-    },
-
-    setCurrentRecipientAndMessages: (user, messages) => {
-      const action = { type: 'SET_CURRENT_RECIPIENT_AND_MESSAGES', user, messages };
       dispatch(action);
     },
 

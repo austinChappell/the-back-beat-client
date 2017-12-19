@@ -107,7 +107,6 @@ class MessageHistorySideBar extends Component {
 
   render() {
 
-    const randomCache = Math.floor(Math.random() * 1000000);
     let messageHistoryDisplay = null;
 
     if (this.props.messageHistory.length > 0) {

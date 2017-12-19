@@ -16,7 +16,6 @@ class BandChat extends Component {
       bandAdminId: null,
       bandId: props.match.params.bandId,
       bandInfoArr: [],
-      currentMessage: '',
       members: [],
       messages: [],
       sideBarLinks: [
@@ -97,16 +96,6 @@ class BandChat extends Component {
     })
   }
 
-  handleInputChange = (evt) => {
-    this.setState({ currentMessage: evt.target.value });
-  }
-
-  handleKeyUp = (evt) => {
-    if (evt.keyCode === 13) {
-      this.sendMessage();
-    }
-  }
-
   sendMessage = (message) => {
     const apiURL = this.props.apiURL;
     fetch(`${apiURL}/api/band/message/new?token=${localStorage.token}`, {
@@ -129,12 +118,10 @@ class BandChat extends Component {
       console.log('sendMessage error', err);
     })
 
-
   }
 
   render() {
 
-    console.log('BAND CHAT STATE', this.state);
     const now = new Date();
     const today = now.toDateString();
 
