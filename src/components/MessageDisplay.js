@@ -17,6 +17,10 @@ class MessageDisplay extends Component {
 
   }
 
+  componentWillMount() {
+    this.props.clearSelectedMessages();
+  }
+
 
   componentDidUpdate() {
     // this.refs.messageBox.scrollTop = 200;
@@ -95,6 +99,8 @@ class MessageDisplay extends Component {
 
   render() {
 
+    console.log('MESSAGE DISPLAY PROPS', this.props);
+
     const loggedInUserId = this.props.loggedInUser.id;
     // console.log('MY ID', loggedInUserId);
     const recipient = this.props.currentRecipient ? <h2>{this.props.currentRecipient.first_name} {this.props.currentRecipient.last_name}</h2> : null;
@@ -142,6 +148,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearCurrentMessageText: () => {
       const action = { type: 'CLEAR_CURRENT_MESSAGE_TEXT' };
+      dispatch(action);
+    },
+
+    clearSelectedMessages: () => {
+      const action = { type: 'CLEAR_SELECTED_MESSAGES' };
       dispatch(action);
     },
 

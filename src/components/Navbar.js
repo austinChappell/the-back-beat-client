@@ -19,9 +19,15 @@ class Navbar extends Component {
     this.socket = io(props.apiURL);
 
     this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', (data) => {
-      console.log('DATA', data);
+      // console.log('DATA', data);
+      // console.log('THE PROPS', props);
+
       if (data.sender_id !== this.props.currentRecipient.id && data.sender_id !== this.props.loggedInUser.id) {
+        console.log('DATA', data);
+        console.log('PROPS', this.props);
+        console.log('MARK THIS AS UNREAD');
         this.markAsUnread(data.message_id);
+        this.filterMessages();
       }
 
       this.getUnreadMessages();
@@ -99,6 +105,50 @@ class Navbar extends Component {
         this.fetchMessagesAfterLogin();
       }, 1000);
     }
+  }
+
+  filterMessages = () => {
+
+    console.log('FILTERING MESSAGES');
+
+    if (this.props.currentRecipient.id !== undefined) {
+
+      console.log('THERE IS AN ID', this.props.currentRecipient);
+
+      let newUser = this.props.currentRecipient;
+
+      const filteredMessages = [];
+      this.props.allMessages.map((message) => {
+        if (message.sender_id === newUser.id || message.recipient_id === newUser.id) {
+          filteredMessages.push(message);
+        }
+      });
+
+      console.log('newuserid', newUser.id);
+      filteredMessages.map((message) => {
+        // console.log('MESSAGE', message);
+        if (message.read === false && message.sender_id === newUser.id) {
+          message.read = true;
+          fetch(`${this.props.apiURL}/message/${message.message_id}/markasread?token=${localStorage.token}`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'PUT'
+          }).then((response) => {
+            return response.json();
+          }).then((results) => {
+            this.getUnreadMessages();
+          }).catch((err) => {
+            console.error('FILTER MESSAGES ERROR', err);
+          })
+        }
+      })
+
+      this.props.setCurrentMessages(filteredMessages);
+
+    }
+
   }
 
   getMessageHistory = () => {
@@ -265,6 +315,11 @@ const mapDispatchToProps = (dispatch) => {
 
     setAllMessages: (allMessages) => {
       const action = { type: 'SET_ALL_MESSAGES', allMessages };
+      dispatch(action);
+    },
+
+    setCurrentMessages: (messages) => {
+      const action = { type: 'SET_CURRENT_MESSAGES', messages };
       dispatch(action);
     },
 

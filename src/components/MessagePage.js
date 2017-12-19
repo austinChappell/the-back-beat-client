@@ -25,17 +25,16 @@ class MessagePage extends Component {
     this.socket.on('RECEIVE_INDIVIDUAL_MESSAGE', () => {
       this.fetchAllMessages();
       // this.getMessageHistory();
-      console.log('MESSAGE PAGE PROPS FOR SOCKET', this.props);
-      if (this.props.currentRecipient.id !== undefined) {
-        this.filterMessages();
-      }
+      console.log('MESSAGE PAGE PROPS FOR SOCKET', props);
+      // if (this.props.currentRecipient.id !== undefined) {
+      //   this.filterMessages();
+      // }
     })
 
   }
 
   componentDidMount() {
     this.fetchAllMessages();
-    this._ismounted = true;
   }
 
   // componentWillReceiveProps() {
@@ -93,7 +92,7 @@ class MessagePage extends Component {
 
   filterMessages = () => {
 
-    console.log('FILTERING MESSAGES');
+    console.log('FILTERING MESSAGES', this.props);
 
     if (this.props.currentRecipient.id !== undefined) {
 
@@ -128,6 +127,7 @@ class MessagePage extends Component {
           })
         }
       })
+
 
       this.props.setCurrentMessages(filteredMessages);
 
