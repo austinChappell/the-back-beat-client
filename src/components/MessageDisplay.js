@@ -78,6 +78,8 @@ class MessageDisplay extends Component {
     }).then((results) => {
       // this.filterMessages(this.props.currentRecipient);
       this.socket.emit('SEND_INDIVIDUAL_MESSAGE', results.rows[0]);
+    }).catch((err) => {
+      console.error('SEND MESSAGE ERROR', err);
     })
   };
 
@@ -93,7 +95,7 @@ class MessageDisplay extends Component {
 
     messageDisplay = <div className="BandChat">
       <section className="chat-section">
-        <div className={this.props.currentRecipient ? 'currentRecipient' : ''}>
+        <div className={this.props.currentRecipient ? 'currentRecipient' : 'hide'}>
           {recipient}
         </div>
         <div className="chat-window" ref="chatWindow">

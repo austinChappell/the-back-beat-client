@@ -188,7 +188,7 @@ class MessagePage extends Component {
 
     return (
       <div className="MessagePage">
-        <MessageDisplay currentRecipient={this.state.currentRecipient} />
+        <MessageDisplay />
         <div style={{width: '300px'}}>
           <MessageSearchBar />
           <MessageHistorySideBar

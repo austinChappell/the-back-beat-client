@@ -188,6 +188,7 @@ class BandPageBrowseMusicians extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
+        date: new Date(),
         message,
         recipientId: musician.id,
         recipientFirstName: musician.first_name,

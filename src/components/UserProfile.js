@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ProfileInfo from './ProfileInfo';
+import io from "socket.io-client";
 
 import { connect } from 'react-redux';
 
@@ -16,12 +17,19 @@ import TextArea from './TextArea';
 
 class UserProfile extends Component {
 
-  state = {
-    displayModal: false,
-    hasPerformedWith: true,
-    message: '',
-    modalStage: 0,
-    showExitButton: true,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      displayModal: false,
+      hasPerformedWith: true,
+      message: '',
+      modalStage: 0,
+      showExitButton: true,
+    }
+
+    this.socket = io(props.apiURL);
+
   }
 
   componentDidMount() {
@@ -74,18 +82,24 @@ class UserProfile extends Component {
       },
       method: 'POST',
       body: JSON.stringify({
+        date: new Date(),
         message,
         recipientId: musician.id,
         recipientFirstName: musician.first_name,
         recipientLastName: musician.last_name,
         recipientEmail: musician.email
       })
-    }).then(() => {
+    }).then((response) => {
+      return response.json();
+    }).then((results) => {
+      this.socket.emit('SEND_INDIVIDUAL_MESSAGE', results.rows[0]);
       this.setState({ message: '', modalStage: 1, showExitButton: false }, () => {
         setTimeout(() => {
           this.setState({ displayModal: false, modalStage: 0, showExitButton: true });
         }, 2000);
-      });
+      })
+    }).catch((err) => {
+      console.error('SEND MESSAGE ERROR', err);
     })
   }
 
