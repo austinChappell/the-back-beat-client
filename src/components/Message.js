@@ -12,7 +12,7 @@ class Message extends Component {
         </div>
         <div className="time">
           <div className="user">
-            <img src={message.profile_image_url} /><span>{message.first_name} {message.last_name}</span>
+            <img src={message.profile_image_url} alt={message.first_name} /><span>{message.first_name} {message.last_name}</span>
           </div>
           <div className="time-stamp">
             <span>{message.time}</span>

@@ -196,32 +196,6 @@ class BandCreateForm extends Component {
 
     console.log('STATE', this.state);
 
-    let genreOptions;
-
-    if (this.state.genreOptions.length > 0) {
-      genreOptions = this.state.genreOptions.map((option) => {
-        return (
-          <option key={option.style_id} id={option.style_id} value={option.style_name}>{option.style_name}</option>
-        )
-      })
-    }
-
-    let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
-      return (
-        <div className="single-search-result" onClick={(evt) => this.addMember(evt, user)}>
-          <h4>{user.first_name} {user.last_name} <span>{user.city}</span></h4>
-        </div>
-      )
-    });
-
-    if (this.state.searchMember.length === 0) {
-      searchResultsDisplay = null
-    } else if (this.state.searchMember.length > 0 && this.state.searchMemberResuts.length === 0) {
-      searchResultsDisplay = <div className="no-results">
-          <span>(No results)</span>
-        </div>
-    }
-
     let submitButtonText = this.state.isEditing ? 'Update Band' : 'Create Band';
 
     return (

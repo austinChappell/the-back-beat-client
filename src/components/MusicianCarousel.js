@@ -19,7 +19,6 @@ class MusicianCarousel extends Component {
   render() {
 
     let resultsDisplay;
-    let slider;
     if (this.props.searchResults.length > 0) {
       resultsDisplay = <div className="slider">
         {this.props.searchResults.map((musician, index) => {
@@ -31,7 +30,7 @@ class MusicianCarousel extends Component {
               ref={'video' + index}
             />
           } else {
-            primaryVid = <img src={musician.profile_image_url} />
+            primaryVid = <img src={musician.profile_image_url} alt={musician.first_name} />
           }
 
           let left = (index * 100) + this.props.sliderPosition;

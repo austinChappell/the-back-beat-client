@@ -123,8 +123,7 @@ class BandChat extends Component {
 
   render() {
 
-    const now = new Date();
-    const today = now.toDateString();
+    const today = new Date().toDateString();
 
     return (
       <div className="BandChat">
@@ -176,10 +175,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BandChat);
+export default connect(mapStateToProps)(BandChat);

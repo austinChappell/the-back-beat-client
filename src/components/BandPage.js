@@ -5,12 +5,9 @@ import { Link } from 'react-router-dom';
 
 import Avatar from 'material-ui/Avatar';
 import BandMemberMgmt from './BandMemberMgmt';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import InstrumentModal from './InstrumentModal';
 import {List, ListItem} from 'material-ui/List';
 import SideBar from './SideBar';
-import TextField from 'material-ui/TextField';
 
 import { RaisedButton } from 'material-ui';
 
@@ -141,7 +138,6 @@ class BandPage extends Component {
       return response.json();
     }).then((results) => {
       let members = [];
-      let membersAsItems = [];
       results.rows.forEach((member) => {
         members.push({
           city: member.city,
@@ -231,7 +227,6 @@ class BandPage extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      let members = this.state.members.slice();
       this.getMembers();
     })
   }
@@ -301,10 +296,6 @@ class BandPage extends Component {
 
   render() {
 
-    console.log('URL', this.props.match);
-    console.log('STATE', this.state);
-
-    const randomCache = Math.floor(Math.random() * 1000000);
     let searchResultsDisplay = this.state.searchMemberResuts.map((user) => {
       const imageSrc = user.profile_image_url;
 

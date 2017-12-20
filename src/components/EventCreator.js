@@ -6,19 +6,12 @@ import TimePicker from 'material-ui/TimePicker';
 
 import GooglePlaceAutocomplete from './GooglePlaceAutocomplete';
 
-import Form from './Form';
-import FormInput from './FormInput';
-import FormSelect from './FormSelect';
-import TextArea from './TextArea';
-
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 
-import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
 
@@ -47,8 +40,6 @@ class EventCreator extends Component {
     startDate: moment(),
     unconvertedDate: ''
   }
-
-  // TODO: Add the ability to set event duration and integrate add to calendar feature
 
   componentDidMount() {
     this.convertDate(this.state.startDate, this.state.eventTime);
@@ -200,12 +191,6 @@ class EventCreator extends Component {
         onClick={(evt) => this.submitForm(evt)}
       />,
     ];
-
-    const inputProps = {
-      value: this.state.eventAddress,
-      onChange: this.addressChange
-    }
-
 
     return (
       <div className="EventCreator">

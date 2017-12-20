@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import AppBar from 'material-ui/AppBar';
 import Navbar from './Navbar';
-import Footer from './Footer';
 
 class BaseLayout extends Component {
   render() {

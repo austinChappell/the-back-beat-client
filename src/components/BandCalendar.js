@@ -6,7 +6,6 @@ import ClientKeys from '../data/ClientKeys';
 import BigCalendar from 'react-big-calendar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import EventCreator from './EventCreator';
-import EventList from './EventList';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import moment from 'moment';
 import Previewer from './Previewer';
@@ -99,7 +98,6 @@ class BandCalendar extends Component {
       events.forEach((event) => {
         console.log('THE EVENT', event);
         let d = new Date(event.event_date_time);
-        const endTime = new Date(d.getTime() + (60*60*1000));
         event.title = event.event_title;
         event.desc = event.event_details;
         event.start = d;
@@ -199,6 +197,7 @@ class BandCalendar extends Component {
       <p>{this.state.currentEvent.event_address}</p>
       <p>{this.state.currentEvent.event_location}</p>
       <iframe
+        title={this.state.currentEvent.event_title}
         width={400}
         height={350}
         frameborder={0}

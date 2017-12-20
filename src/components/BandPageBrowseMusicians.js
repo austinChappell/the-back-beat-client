@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
-import Modal from './Modal';
 import MusicianCarousel from './MusicianCarousel';
 import SelectField from 'material-ui/SelectField';
-import TextArea from './TextArea';
 import TextField from 'material-ui/TextField';
 
 class BandPageBrowseMusicians extends Component {
@@ -157,7 +155,6 @@ class BandPageBrowseMusicians extends Component {
   }
 
   handleTextAreaChange = (evt, message) => {
-    const value = evt.target.value;
     const updateObj = {};
     updateObj[message] = evt.target.value;
     this.setState(updateObj);

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import store from '../store/';
 
-import {indigo900, purple400} from 'material-ui/styles/colors';
 import Activate from './Activate';
 import ActivateInstructions from './ActivateInstructions';
 import BandCalendar from './BandCalendar';
@@ -21,7 +20,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import GigPage from './GigPage';
 import Home from './Home';
 import LocalEventsPage from './LocalEventsPage';
-import LoggedIn from './LoggedIn';
 import Logout from './Logout';
 import Main from './Main';
 import MessagePage from './MessagePage';

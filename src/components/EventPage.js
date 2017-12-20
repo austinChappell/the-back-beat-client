@@ -94,7 +94,6 @@ class EventPage extends Component {
     let hour = Number(formattedDate.slice(16, 18));
     let minute = formattedDate.slice(18, 21);
     let period = 'PM';
-    let successColor = 'green';
 
     if (hour === 0) {
       hour = 12;

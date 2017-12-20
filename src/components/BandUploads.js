@@ -5,7 +5,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import {List, ListItem} from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import SideBar from './SideBar';
@@ -273,11 +272,11 @@ class BandUploads extends Component {
                   className="band-chart"
                   key={index}
                   onClick={() => this.displayPreview(chart.url)}
-                  >
-                    <h2>{chart.chart_title}</h2>
-                    <img src={thumbnail} alt={chart.chart_title} />
-                  </div>
-                )
+                >
+                  <h2>{chart.chart_title}</h2>
+                  <img src={thumbnail} alt={chart.chart_title} />
+                </div>
+              )
             }
           })}
         </div>
