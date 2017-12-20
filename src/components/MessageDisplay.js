@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from "socket.io-client";
 
+import Message from './Message';
 import MessageInput from './MessageInput';
 
 class MessageDisplay extends Component {
@@ -19,12 +20,7 @@ class MessageDisplay extends Component {
 
   }
 
-  componentWillMount() {
-    this.props.clearSelectedMessages();
-  }
-
   componentDidUpdate() {
-    // this.refs.chatWindow.scrollTop = 200;
     let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
     if (this.props.currentRecipient && selectedMessages.length !== this.state.numOfSelectedMessages) {
       this.setState({
@@ -53,7 +49,6 @@ class MessageDisplay extends Component {
       return response.json();
     }).then((results) => {
       this.props.updateNumOfUnreadMsgs(results.rows.length);
-      // this.setState({ numOfUnreadMessages: results.rows.length });
     })
 
   }
@@ -92,7 +87,6 @@ class MessageDisplay extends Component {
     const today = now.toDateString();
 
     const loggedInUserId = this.props.loggedInUser.id;
-    // console.log('MY ID', loggedInUserId);
     const recipient = this.props.currentRecipient ? <h2>{this.props.currentRecipient.first_name} {this.props.currentRecipient.last_name}</h2> : null;
     let messageDisplay;
     let selectedMessages = this.props.selectedMessages ? this.props.selectedMessages : [];
@@ -118,22 +112,11 @@ class MessageDisplay extends Component {
               }
             }
             return (
-              <div key={index} className="message">
-                <div className={dateClass}>
-                  <hr />
-                  <span>{message.date}</span>
-                  <hr />
-                </div>
-                <div className="time">
-                  <div className="user">
-                    <img src={message.profile_image_url} /><span>{message.first_name} {message.last_name}</span>
-                  </div>
-                  <div className="time-stamp">
-                    <span>{message.time}</span>
-                  </div>
-                </div>
-                <p>{message.message_text}</p>
-              </div>
+              <Message
+                key={index}
+                dateClass={dateClass}
+                message={message}
+              />
             );
           })}
         </div>

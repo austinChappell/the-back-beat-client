@@ -17,14 +17,12 @@ class MessageInput extends Component {
 
   componentDidMount() {
     this.socket.on('NOTIFY_TYPING', (user) => {
-      // console.log('TYPING', user);
-      console.log(this.props)
-      console.log(user);
+
       const isFromBandChat = this.props.parentName === 'BandChat' && user.bandId === this.props.bandId && user.id !== this.props.loggedInUser.id;
       const isFromMessage = this.props.parentName === 'MessageDisplay' && this.props.currentRecipient.id === user.id;
       const fromSameParent = user.parentName === this.props.parentName;
       const notFromSelf = user.id !== this.props.loggedInUser.id;
-      console.log('FROM SAME PARENT', fromSameParent);
+
       if (fromSameParent && notFromSelf) {
         if (isFromMessage || isFromBandChat) {
           clearTimeout(this.cancelTimeout);

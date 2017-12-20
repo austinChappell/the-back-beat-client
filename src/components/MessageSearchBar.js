@@ -9,15 +9,6 @@ class MessageSearchBar extends Component {
     searchBarValue: ''
   }
 
-  // state = {
-  //   searchBarActive: false
-  // }
-  //
-  // stopFetch = () => {
-  //   console.log('STOP FETCH RUNNING');
-  //   this.setState({ searchBarActive: true });
-  // }
-
   handleChangeAndFetch = (evt) => {
     const url = this.props.apiURL;
     const val = evt.target.value;
@@ -28,10 +19,8 @@ class MessageSearchBar extends Component {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
-
             }
           }).then((response) => {
-            console.log('THIS IS THE RESPONSE SECTION');
             return response.json();
           }).then((results) => {
             this.props.handleInputChange(val, results.rows);
@@ -49,48 +38,6 @@ class MessageSearchBar extends Component {
     });
   }
 
-  // filterMessages = (user) => {
-  //   let newUser = user;
-  //   this.props.setCurrentRecipient(newUser);
-  //   this.setState({ searchBarActive: false });
-  //   let stopFetch = setInterval(() => {
-  //
-  //     if (this.state.searchBarActive === true) {
-  //       clearInterval(stopFetch);
-  //     }
-  //
-  //     if (this.props.currentRecipient) {
-  //
-  //       newUser = this.props.currentRecipient;
-  //
-  //       const filteredMessages = [];
-  //       this.props.allMessages.map((message) => {
-  //         if (message.sender_id === newUser.id || message.recipient_id === newUser.id) {
-  //           filteredMessages.push(message);
-  //         }
-  //       });
-  //       filteredMessages.map((message) => {
-  //         if (message.read === false && message.sender_id === newUser.id) {
-  //           message.read = true;
-  //           fetch(`${this.props.apiURL}/message/${message.message_id}/markasread`, {
-  //             credentials: 'include',
-  //             headers: {
-  //               'Content-Type': 'application/json'
-  //             },
-  //             method: 'PUT'
-  //           })
-  //         }
-  //       })
-  //       this.props.setCurrentMessages(filteredMessages);
-  //       // console.log('FILTERED MESSAGES', filteredMessages);
-  //
-  //     }
-  //
-  //   }, 100);
-  //
-  //
-  // }
-  //
   render() {
     return (
       <div className="MessageSearchBar">

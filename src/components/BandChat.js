@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from "socket.io-client";
 
+import Message from './Message';
 import MessageInput from './MessageInput';
 import SideBar from './SideBar';
 
@@ -148,22 +149,11 @@ class BandChat extends Component {
                 }
               }
               return (
-                <div className="message" key={index}>
-                  <div className={dateClass}>
-                    <hr />
-                    <span>{message.date}</span>
-                    <hr />
-                  </div>
-                  <div className="time">
-                    <div className="user">
-                      <img src={message.profile_image_url} /><span>{message.first_name} {message.last_name}</span>
-                    </div>
-                    <div className="time-stamp">
-                      <span>{message.time}</span>
-                    </div>
-                  </div>
-                  <p>{message.content}</p>
-                </div>
+                <Message
+                  key={index}
+                  dateClass={dateClass}
+                  message={message}
+                />
               )
             })}
 

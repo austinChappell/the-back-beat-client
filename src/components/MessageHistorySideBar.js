@@ -127,10 +127,10 @@ class MessageHistorySideBar extends Component {
             displayName = message.sender_name;
             recipientId = message.sender_id;
           }
-          if (message.message_text.length > 20) {
-            msgPreview = message.message_text.slice(0, 20) + '...';
+          if (message.content.length > 20) {
+            msgPreview = message.content.slice(0, 20) + '...';
           } else {
-            msgPreview = message.message_text;
+            msgPreview = message.content;
           }
 
           unreadNotification = !message.read && message.recipient_id === this.props.loggedInUser.id ? true : false;
