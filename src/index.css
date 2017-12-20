@@ -395,6 +395,20 @@ button, input, textarea {
     .BandUploads .band-chart img {
       width: 80%; }
 
+.BandUploads2 .band-songs {
+  margin-left: 200px; }
+
+.BandUploads2 .song-display {
+  display: flex; }
+  .BandUploads2 .song-display .song {
+    box-shadow: 2px 2px 10px #E0E0E0;
+    margin: 10px;
+    flex-basis: 200px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    height: 200px; }
+
 .BaseLayout {
   display: flex;
   flex-direction: column;

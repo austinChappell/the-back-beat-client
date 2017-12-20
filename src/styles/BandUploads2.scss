@@ -1,0 +1,17 @@
+.BandUploads2 {
+  .band-songs {
+    margin-left: 200px;
+  }
+  .song-display {
+    display: flex;
+    .song {
+      box-shadow: 2px 2px 10px $gray-background-dark;
+      margin: 10px;
+      flex-basis: 200px;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+      height: 200px;
+    }
+  }
+}

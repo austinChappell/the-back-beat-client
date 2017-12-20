@@ -10,6 +10,7 @@ import BandChat from './BandChat';
 import BandCreateForm from './BandCreateForm';
 import BandDashboard from './BandDashboard';
 import BandUploads from './BandUploads';
+import BandUploads2 from './BandUploads2';
 import EventPage from './EventPage';
 import BandPage from './BandPage';
 import BandPageBrowseMusicians from './BandPageBrowseMusicians';
@@ -76,7 +77,7 @@ class App extends Component {
                   <PrivateRoute path="/band/:bandId/calendar" component={BandCalendar} />
                   <PrivateRoute path="/band/:bandId/chat" component={BandChat} />
                   <PrivateRoute path="/band/:bandId/dashboard" component={BandDashboard} />
-                  <PrivateRoute path="/band/:bandId/uploads" component={BandUploads} />
+                  <PrivateRoute path="/band/:bandId/uploads" component={BandUploads2} />
                   <PrivateRoute exact path="/band/:bandId/search_musicians/admin/:adminId" component={BandPageBrowseMusicians} />
                   <PrivateRoute path="/band/:bandId" component={BandPage} />
                   <PrivateRoute path="/band_event/:eventId" component={EventPage} />

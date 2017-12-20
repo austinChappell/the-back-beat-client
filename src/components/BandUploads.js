@@ -7,7 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
-import SideBar from './SideBar';
+import Song from './Song';
 import TextField from 'material-ui/TextField';
 
 class BandUploads extends Component {
@@ -15,7 +15,7 @@ class BandUploads extends Component {
   constructor(props) {
     super(props);
 
-    const bandId = props.match.params.bandId;
+    const bandId = props.bandId;
 
     this.state = {
       bandAdminId: null,
@@ -26,26 +26,27 @@ class BandUploads extends Component {
       currentPDF: null,
       currentPdfInstrumentId: -1,
       showCharModal: false,
-      sideBarLinks: [
-        { title: 'Band Info', path: `/band/${bandId}` },
-        { title: 'Dashboard', path: `/band/${bandId}/dashboard` },
-        { title: 'Calendar', path: `/band/${bandId}/calendar` },
-        { title: 'Uploads', path: `/band/${bandId}/uploads` },
-        { title: 'Chat', path: `/band/${bandId}/chat` }
-      ],
+      songTitle: ''
     }
 
   }
 
   componentDidMount() {
-    this.getCharts();
+    // this.getCharts();
     this.getMembers();
+  }
+
+  componentWillReceiveProps() {
+    this.setDefaultChartFilter();
+    if (this.props.songId) {
+      this.getSongTitle(this.props.songId);
+    }
   }
 
   addChart = (evt) => {
     evt.preventDefault();
     const apiURL = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
+    const bandId = this.props.bandId;
     fetch(`${apiURL}/band/upload/pdf/${bandId}?token=${localStorage.token}`, {
       credentials: 'include',
       encoding: null,
@@ -57,7 +58,8 @@ class BandUploads extends Component {
       body: JSON.stringify({
         title: this.state.chartTitle,
         pdf: this.state.currentPdf,
-        instrument_id: this.state.currentPdfInstrumentId
+        instrument_id: this.state.currentPdfInstrumentId,
+        song_id: this.props.songId
       })
     }).then((response) => {
       return response.json();
@@ -90,7 +92,7 @@ class BandUploads extends Component {
 
   getCharts = () => {
     const apiURL = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
+    const bandId = this.props.bandId;
     const url = `${apiURL}/api/band/charts/pdf/${bandId}?token=${localStorage.token}`;
     fetch(url, {
       credentials: 'include',
@@ -108,7 +110,7 @@ class BandUploads extends Component {
 
   getMembers = () => {
     const apiURL = this.props.apiURL;
-    const bandId = this.props.match.params.bandId;
+    const bandId = this.props.bandId;
     fetch(`${apiURL}/api/band/${bandId}?token=${localStorage.token}`, {
       credentials: 'include',
       headers: {
@@ -130,6 +132,16 @@ class BandUploads extends Component {
       });
       this.setState({ bandAdminId: results.rows[0].band_admin_id });
     })
+  }
+
+  getSongTitle = (songId) => {
+    let output;
+    this.props.songs.forEach((song) => {
+      if (song.id === songId) {
+        output = song.title;
+      }
+    })
+    this.setState({ songTitle: output })
   }
 
   handleInputChange = (val) => {
@@ -156,6 +168,8 @@ class BandUploads extends Component {
         })[0];
         console.log('USER', user);
         this.setState({ chartFilter: user.instrument_id });
+      } else {
+        this.setState({ chartFilter: -1 });
       }
     }
   }
@@ -235,11 +249,6 @@ class BandUploads extends Component {
     return (
       <div className="BandUploads">
 
-        <SideBar
-          links={this.state.sideBarLinks}
-          url={this.props.match.url}
-        />
-
         <SelectField
           floatingLabelText="Filter By Instrument"
           onChange={this.filterCharts}
@@ -264,7 +273,7 @@ class BandUploads extends Component {
 
         <div className="charts">
           {addCharts}
-          {this.state.bandCharts.map((chart, index) => {
+          {this.props.charts.map((chart, index) => {
             const thumbnail = chart.url.slice(0, chart.url.length - 4) + '.png';
             if (this.state.chartFilter === -1 || chart.instrument_id === this.state.chartFilter || chart.instrument_id === -1) {
               return (
@@ -273,7 +282,7 @@ class BandUploads extends Component {
                   key={index}
                   onClick={() => this.displayPreview(chart.url)}
                 >
-                  <h2>{chart.chart_title}</h2>
+                  <h2>{this.state.songTitle}</h2>
                   <img src={thumbnail} alt={chart.chart_title} />
                 </div>
               )
