@@ -159,7 +159,7 @@ class Navbar extends Component {
       const output = [];
       const messages = this.props.allMessages;
       const loggedInUser = this.props.loggedInUser;
-      console.log('MESSAGE HISTORY SIDEBAR', messages, loggedInUser);
+      console.log('MESSAGE HISTORY SIDEBAR FROM NAVBAR', messages, loggedInUser);
       for (let i = messages.length - 1; i >= 0; i--) {
         let found = false;
         output.forEach((item) => {
