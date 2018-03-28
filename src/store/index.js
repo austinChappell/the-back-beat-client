@@ -5,7 +5,7 @@ let apiURL;
 if (process.env.NODE_ENV === 'development') {
   apiURL = 'http://localhost:6001';
 } else {
-  apiURL = 'https://back-beat-server.herokuapp.com';
+  apiURL = 'https://old-backbeat-server.herokuapp.com/';
 }
 
 const initialState = {
