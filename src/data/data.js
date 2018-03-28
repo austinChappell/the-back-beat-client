@@ -1,6 +1,6 @@
 const devAPI = 'http://localhost:6001';
 const prodAPI = 'https://old-backbeat-server.herokuapp.com/';
-const apiURL = process.env.NODE_ENV === 'development' ? devAPI : prodAPI;
+const apiURL = process.env.REACT_APP_ENV === 'development' ? devAPI : prodAPI;
 // const apiURL = prodAPI;
 
 const data = {

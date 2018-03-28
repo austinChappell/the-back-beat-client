@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 
 let apiURL;
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_ENV === 'development') {
   apiURL = 'http://localhost:6001';
 } else {
   apiURL = 'https://old-backbeat-server.herokuapp.com/';

@@ -31,6 +31,8 @@ import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
 import RehearsalPage from './RehearsalPage';
 
+require('dotenv');
+
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#070649',
