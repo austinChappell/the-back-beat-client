@@ -290,6 +290,8 @@ class UserAuthForm extends Component {
 
   render() {
 
+    console.log('USER AUTH PROPS URL', this.props.apiURL)
+
     const errorMessageStyle = {
       color: '$color-failure',
       border: '1px solid $color-failure',
